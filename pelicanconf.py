@@ -18,7 +18,7 @@ GITHUB_SHOW_USER_LINK = True
 # GITHUB_URL = 'http://github.com/honmaple/honmaple.github.io'
 # DISQUS_SITENAME = "HonMaple"
 REVERSE_CATEGORY_ORDER = True
-DEFAULT_PAGINATION = 4
+DEFAULT_PAGINATION = 5
 
 DEFAULT_METADATA = {}
 PATH = 'content'
@@ -35,8 +35,8 @@ STATIC_PATHS = [
 	'extra/custom.css',
     ]
 
-ARTICLE_URL = 'articles/{date:%Y}/{date:%b}/{slug}.html'
-ARTICLE_SAVE_AS = 'articles/{date:%Y}/{date:%b}/{slug}.html'
+ARTICLE_URL = 'articles/{date:%Y}/{date:%m}/{slug}.html'
+ARTICLE_SAVE_AS = 'articles/{date:%Y}/{date:%m}/{slug}.html'
 PAGE_URL = '{slug}.html'
 PAGE_SAVE_AS = '{slug}.html'
 # CATEGORY_URL = '{slug}/index.html'
@@ -62,6 +62,7 @@ SOCIAL = (
 THEME = 'pelican-themes/pelican-bootstrap3'
 # SEARCH_URL = 'tag/search.html'
 # SEARCH_SAVE_AS = SEARCH_URL
+TAG_CLOUD_MAX_ITEMS = 10
 DISPLAY_PAGES_ON_MENU = True
 DISPLAY_CATEGORIES_ON_MENU = True
 DISPLAY_TAGS_ON_SIDEBAR = True

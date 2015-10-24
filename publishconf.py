@@ -10,15 +10,14 @@ import sys
 sys.path.append(os.curdir)
 from pelicanconf import *
 
-SITEURL = 'http://honmaple.github.io'
-RELATIVE_URLS = False
+SITEURL = 'http://honmaple.tk'
 
 FEED_ALL_ATOM = 'feeds/all.atom.xml'
 CATEGORY_FEED_ATOM = 'feeds/%s.atom.xml'
 
 DELETE_OUTPUT_DIRECTORY = True
 
-# Following items are often useful when publishing
+DISQUS_SITENAME = 'honmaple'
 
-DISQUS_SITENAME = "honmaple"
-#GOOGLE_ANALYTICS = ""
+RELATIVE_URLS = False
+

@@ -1,0 +1,11 @@
+XTermTheme = transparent-background
+ReadTags = no
+ShowFormat = no
+SavePlaylist = yes
+PlaylistFullPaths = no
+Layout1 = directory(0,0,30%,100%):playlist(30%,0,FILL,100%)
+# Turn on repeat.
+Repeat  = no
+# Turn on shuffle.
+Shuffle = yes
+FollowPlayedFile = yes

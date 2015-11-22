@@ -1,0 +1,148 @@
+/*************************
+ * Sidebar & Source list *
+ *************************/
+
+.sidebar,
+.sidebar.view,
+.sidebar .view,
+.source-list,
+.source-list.view
+.sidebar GtkScrolledWindow {
+    background-color: @background;
+    color: @foreground;   
+    border: solid @border;
+    border-width: 0;
+}
+
+.sidebar,
+.source-list {
+    -GtkTreeView-horizontal-separator: 1px;
+    -GtkTreeView-vertical-separator: 6px;
+}
+
+
+/* Separator */
+.sidebar.view.separator,
+.view.separator,
+.separator {
+    border: none;
+    color: transparent;
+}
+
+/* Shadows */
+.sidebar,
+.sidebar.view,
+.sidebar.view:selected:backdrop,
+.sidebar.view:prelight:selected:backdrop,
+.source-list,
+.source-list.view,
+.source-list.view:selected:backdrop,
+.source-list.view:prelight:selected:backdrop {
+    text-shadow: 0 1px @text_shadow;
+    icon-shadow: 0 1px @text_shadow;
+}
+
+/* Frame */
+.sidebar .frame {
+    border: solid @border;
+    border-width: 0px 1px 1px 1px;
+}
+
+.sidebar .frame:insensitive {
+    border-color: @insensitive_border;
+}
+
+.sidebar .frame:backdrop {
+    background-color: @backdrop_background;
+    border-color: @backdrop_border;
+    color: @backdrop_text;
+}
+
+/* Insensitive */
+.sidebar:insensitive,
+.sidebar.view:insensitive,
+.sidebar.view:hover:insensitive,
+.sidebar .view:insensitive,
+.sidebar .view:hover:insensitive,
+.source-list.view:insensitive,
+.source-list.view:hover:insensitive,
+.source-list.view:focus:insensitive,
+.source-list.category-expander:hover {
+
+    color: @insensitive_text;
+    background: @insensitive_background;
+    border: none;
+    box-shadow: none;
+    text-shadow: none;
+    icon-shadow: none;
+}
+
+
+/* Backdrop */
+.sidebar:backdrop,
+.sidebar.view:backdrop,
+.sidebar.view:hover:backdrop,
+.sidebar .view:backdrop,
+.sidebar .view:hover:backdrop,
+.source-list.view:backdrop,
+.source-list.view:hover:backdrop,
+.source-list.view:focus:backdrop,
+.source-list.category-expander:hover {
+
+    color: @backdrop_text;
+    background: @backdrop_background;
+    border: none;
+    box-shadow: none;
+    text-shadow: none;
+    icon-shadow: none;
+}
+
+/* Selected */
+.sidebar.view:selected,
+.sidebar.view:hover:selected,
+.sidebar .view:selected,
+.sidebar .view:hover:selected,
+.source-list.view:selected,
+.source-list.view:hover:selected,
+.source-list.view:focus:selected,
+.source-list.category-expander:hover {
+
+    color: white;
+    border: none;
+
+    background: @selection;
+    box-shadow: inset 0 1px 0 0 alpha (#000, 0.15),
+                inset 0 -1px 0 0 alpha (#000, 0.08);
+    text-shadow: 0 1px alpha (#000, 0.4);
+    icon-shadow: 0 1px alpha (#000, 0.4);
+}
+
+/* Hover */
+.sidebar.view:hover,
+.sidebar .view:hover,
+.source-list.view:hover,
+.source-list.view:focus:hover,
+.source-list.category-expander:hover {
+
+    color: @text;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    text-shadow: none;
+    icon-shadow: none;
+}
+
+/* Selected Backdrop */
+.sidebar.view:selected:backdrop,
+.sidebar.view:hover:selected:backdrop,
+.sidebar .view:selected:backdrop,
+.sidebar .view:hover:selected:backdrop,
+.source-list.view:selected:backdrop,
+.source-list.view:hover:selected:backdrop {
+    color: @backdrop_foreground;
+    background: shade(@backdrop_background,0.8);
+    border: none;
+    box-shadow: none;
+    text-shadow: none;
+    icon-shadow: none;
+}

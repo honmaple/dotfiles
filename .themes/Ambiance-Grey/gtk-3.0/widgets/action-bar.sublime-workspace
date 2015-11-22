@@ -1,0 +1,823 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"bac",
+				"background"
+			],
+			[
+				"pad",
+				"padding"
+			],
+			[
+				"slece",
+				"selected_background"
+			],
+			[
+				"in",
+				"insensitive_background"
+			],
+			[
+				"co",
+				"color"
+			],
+			[
+				"bo",
+				"border-radius"
+			],
+			[
+				"ba",
+				"background-color"
+			],
+			[
+				"sl",
+				"selected"
+			],
+			[
+				"s",
+				"separator"
+			],
+			[
+				"r",
+				"transparent"
+			],
+			[
+				"c",
+				"color"
+			],
+			[
+				"rg",
+				"rgba()"
+			],
+			[
+				"bod",
+				"border"
+			],
+			[
+				"so",
+				"solid"
+			],
+			[
+				"ins",
+				"insensitive_borders"
+			],
+			[
+				"backdrop",
+				"backdrop_borders"
+			],
+			[
+				"border-w",
+				"border-bottom-width"
+			],
+			[
+				"l",
+				"list-style"
+			],
+			[
+				"f",
+				"font-size"
+			],
+			[
+				"background-c",
+				"background-color"
+			],
+			[
+				"b",
+				"background-image"
+			],
+			[
+				"m",
+				"margin"
+			],
+			[
+				"di",
+				"display"
+			],
+			[
+				"a",
+				"auto"
+			],
+			[
+				"p",
+				"padding"
+			],
+			[
+				"d",
+				"div	Tag"
+			],
+			[
+				"ma",
+				"margin"
+			],
+			[
+				"fon",
+				"font-size"
+			],
+			[
+				"pa",
+				"padding-bottom"
+			],
+			[
+				"h",
+				"h3	Tag"
+			],
+			[
+				"blo",
+				"inline-block"
+			],
+			[
+				"de",
+				"devices"
+			],
+			[
+				"ch",
+				"chrome-gchdledhagjbhhodjjhiclbnaioljomj-Default"
+			],
+			[
+				"st",
+				"style	Attr"
+			],
+			[
+				"inlin",
+				"inline-block"
+			],
+			[
+				"me",
+				"margin-left"
+			],
+			[
+				"margin-",
+				"margin-top"
+			],
+			[
+				"mar",
+				"margin-top"
+			],
+			[
+				"fli",
+				"flickr-image"
+			],
+			[
+				"Cla",
+				"Clear-Sans-Bold"
+			],
+			[
+				"margin",
+				"margin-top"
+			],
+			[
+				"te",
+				"text-align"
+			],
+			[
+				"al",
+				"alt	Attr"
+			],
+			[
+				"o",
+				"opacity"
+			],
+			[
+				"do",
+				"dotted"
+			],
+			[
+				"he",
+				"height"
+			],
+			[
+				"Fir",
+				"Fira-Mono"
+			],
+			[
+				"rub",
+				"ruby-devel"
+			],
+			[
+				"ruby",
+				"rubygems"
+			],
+			[
+				"re",
+				"resources"
+			],
+			[
+				"fo",
+				"font-weight"
+			],
+			[
+				"t",
+				"text-decoration"
+			],
+			[
+				"ta",
+				"target	Attr"
+			],
+			[
+				"max-",
+				"max-width"
+			],
+			[
+				"ar",
+				"article	Tag"
+			],
+			[
+				"tre",
+				"text-decoration"
+			],
+			[
+				"min",
+				"min-height"
+			],
+			[
+				"li",
+				"list-style"
+			],
+			[
+				"tex",
+				"text-transform"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
+				"ac",
+				"activity"
+			],
+			[
+				"Star",
+				"StartupActivity"
+			],
+			[
+				"ff",
+				"f7f7f7"
+			],
+			[
+				"tr",
+				"transparent"
+			],
+			[
+				"u",
+				"ul	Tag"
+			],
+			[
+				"WI",
+				"width"
+			],
+			[
+				"se",
+				"section	Tag"
+			],
+			[
+				"wi",
+				"width"
+			],
+			[
+				"cl",
+				"clear"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"marg",
+				"margin-bottom"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 272.0,
+		"selected_items":
+		[
+		],
+		"width": 575.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/sam/checkout/orchis-gtk-theme/Orchis/gtk-3.0/apps/nautilus.css",
+		"/home/sam/untitled",
+		"/home/sam/checkout/moka-gtk-theme/Moka/gtk-3.0/widgets/spinbutton.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/base-states.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/notebook.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/osd.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/buttons.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/linked-buttons.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/sidebar.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/entry.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/expander.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/floating-bar.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/list-boxes.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/toolbars.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/tooltips.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/switches.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/spinbutton.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/spinner.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/statusbar.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/separators.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/scrollbars.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/scales.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/progressbars.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/selection-mode.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/menus.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/miscellaneous.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/menu-button.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/levelbars.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/images.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/infobars.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/destructive-action-buttons.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/csd.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/combobox.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/column-header.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/color-chooser.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/cell-row.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/check-radio.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/views.css",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-3.0/widgets/calendar.css",
+		"/home/sam/checkout/doppio-gtk-theme/debian/control",
+		"/home/sam/checkout/doppio-gtk-theme/debian/changelog",
+		"/home/sam/checkout/doppio-gtk-theme/debian/install",
+		"/home/sam/checkout/doppio-gtk-theme/debian/rules",
+		"/home/sam/checkout/doppio-gtk-theme/debian/compat",
+		"/home/sam/checkout/doppio-gtk-theme/debian/copyright",
+		"/home/sam/dev/TMP/Numix/gtk-2.0/gtkrc",
+		"/home/sam/checkout/doppio-gtk-theme/Doppio/gtk-2.0/gtkrc",
+		"/home/sam/dev/TMP/Numix/index.theme",
+		"/home/sam/dev/TMP/Numix/CREDITS",
+		"/home/sam/dev/moka-gtk-theme/Moka/gtk-3.0/widgets/linked-buttons.css",
+		"/home/sam/Downloads/tmp/trelby-2.2/README",
+		"/home/sam/dev/moka-gtk-theme/Moka/gtk-3.0/widgets/menu-button.css",
+		"/home/sam/dev/post-install-script-fedora/fedora-20-post-install-script.sh",
+		"/home/sam/dev/RESOURCES/gnome-themes-standard/themes/Adwaita/gtk-3.0/gtk-widgets.css",
+		"/home/sam/dev/RESOURCES/gnome-themes-standard/themes/Adwaita/gtk-3.0/gtk-main.css",
+		"/home/sam/dev/RESOURCES/gnome-themes-standard/themes/Adwaita/gtk-3.0/gtk.css",
+		"/home/sam/checkout/doppio-gtk-theme/quick.sh",
+		"/home/sam/checkout/home:snwh/moka-gtk-theme/moka-gtk-theme.spec",
+		"/home/sam/checkout/home:snwh/moka-icon-theme/moka-icon-theme.spec",
+		"/home/sam/checkout/home:snwh/faba-icon-theme-symbolic/faba-icon-theme-symbolic.spec",
+		"/home/sam/checkout/home:snwh/faba-icon-theme/faba-icon-theme.spec",
+		"/home/sam/checkout/home:snwh/faba-mono-icons/faba-mono-icons.spec",
+		"/home/sam/checkout/home:snwh/faba-mono-icons/faba-icon-theme-symbolic.spec",
+		"/home/sam/checkout/home:snwh/faba-icon-theme-symbolic/faba-icon-theme.spec",
+		"/home/sam/.oscrc",
+		"/home/sam/checkout/home:snwh/.osc/_project",
+		"/home/sam/checkout/home:snwh/.osc/_packages",
+		"/home/sam/checkout/home:snwh/.osc/_apiurl",
+		"/home/sam/website/site/source/stylesheets/all.css",
+		"/home/sam/website/mokaproject/source/moka-gtk-theme.html.erb",
+		"/home/sam/website/mokaproject/source/layouts/partials/_social.erb",
+		"/home/sam/checkout/moka-icon-theme/README.md",
+		"/home/sam/website/mokaproject/source/layouts/partials/_button-irc.erb",
+		"/home/sam/irc-symbolic2.svg",
+		"/home/sam/checkout/faba-icon-theme/quick.sh",
+		"/home/sam/checkout/faba-icon-theme-symbolic/quick.sh",
+		"/home/sam/checkout/faba-mono-icons/src/light/tray-applications.svg",
+		"/home/sam/checkout/moka-icon-theme/quick.sh",
+		"/home/sam/website/mokaproject/source/moka-icon-theme.html.erb",
+		"/home/sam/website/mokaproject/source/moka-icon-theme/download.html.erb",
+		"/home/sam/website/mokaproject/source/resources/css/style.css",
+		"/home/sam/website/mokaproject/source/layouts/partials/_button-twitter.erb",
+		"/home/sam/website/mokaproject/source/resources/css/button.css",
+		"/home/sam/website/snwh/source/resources/css/style.css",
+		"/home/sam/website/mokaproject/source/resources/css/cookiebar.css",
+		"/home/sam/facebook-symbolic.svg",
+		"/home/sam/facebook-symbolic2.svg",
+		"/home/sam/website/mokaproject/source/layouts/partials/_button-download.erb",
+		"/home/sam/website/mokaproject/source/layouts/partials/_social-facebook.erb",
+		"/home/sam/website/mokaproject/source/layouts/partials/_social-googleplus.erb",
+		"/home/sam/website/mokaproject/source/moka-for-android.html.erb",
+		"/home/sam/website/mokaproject/source/resources/img/scalable/social-googleplus.svg",
+		"/home/sam/website/mokaproject/source/resources/img/scalable/social-facebook.svg",
+		"/home/sam/website/mokaproject/source/layouts/partials/_footer.erb",
+		"/home/sam/website/mokaproject/source/resources/css/jcarousel.css",
+		"/home/sam/website/mokaproject/source/copyright.html.erb",
+		"/home/sam/website/mokaproject/source/faba-icon-theme.html.erb",
+		"/home/sam/website/mokaproject/source/layouts/partials/_moka-analysis.erb",
+		"/home/sam/website/mokaproject/source/faba-icon-theme/download.html.erb",
+		"/home/sam/website/mokaproject/source/faba-icon-theme/download.htm",
+		"/home/sam/website/snwh/source/layouts/partials/_social.erb",
+		"/home/sam/checkout/faba-mono-icons/INSTALL",
+		"/home/sam/website/mokaproject/source/moka-gtk-theme/download.html.erb",
+		"/home/sam/website/mokaproject/source/privacy-policy.html.erb",
+		"/home/sam/website/mokaproject/source/layouts/partials/_moka-icons.erb",
+		"/home/sam/website/mokaproject/source/layouts/partials/_moka-android.erb",
+		"/home/sam/website/mokaproject/source/layouts/partials/_faba-icons.erb",
+		"/home/sam/website/mokaproject/source/resources/css/normalize.css",
+		"/home/sam/website/mokaproject/source/resources/css/fancybox.css",
+		"/home/sam/website/mokaproject/source/resources/js/jcarousel.min.js",
+		"/home/sam/website/mokaproject/source/resources/js/jcarousel-responsive.min.js",
+		"/home/sam/website/mokaproject/source/layouts/partials/_sharebox.erb",
+		"/home/sam/website/snwh/source/blog/2013-12-18-chocolate-chip-cookies.html.markdown",
+		"/home/sam/website/snwh/source/blog/2013-06-17-no-knead-bread-recipe.html.markdown",
+		"/home/sam/website/snwh/build/resources/css/style.css",
+		"/home/sam/website/snwh/source/blog/2014-01-06-moka-2-0-released.html.markdown",
+		"/home/sam/website/snwh/source/blog/2013-09-25-moka-for-android.html.markdown",
+		"/home/sam/checkout/moka-icon-theme/LICENSE",
+		"/home/sam/website/mokaproject/source/moka-icon-theme/2.html.erb",
+		"/home/sam/dev/moka-gtk-theme/INSTALL",
+		"/home/sam/Downloads/tmp/amd-catalyst-13.11-beta V9.4-linux-x86.x86_64.run",
+		"/home/sam/checkout/faba-icon-theme/debian/rules",
+		"/home/sam/checkout/faba-icon-theme/debian/install",
+		"/home/sam/checkout/faba-icon-theme/debian/copyright",
+		"/home/sam/checkout/faba-icon-theme/debian/control",
+		"/home/sam/checkout/faba-icon-theme/debian/compat",
+		"/home/sam/checkout/faba-icon-theme/debian/changelog",
+		"/home/sam/checkout/moka-icon-theme/INSTALL"
+	],
+	"find":
+	{
+		"height": 22.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"prelight",
+			"selected",
+			"prelight",
+			"#fff",
+			"_color",
+			"box-sh",
+			"@border",
+			"border",
+			"box-shadow:",
+			"box-shadow ",
+			"overlay",
+			"borders",
+			"bg",
+			"borders",
+			"_color",
+			"_color ",
+			"icon-shadow: 0 1px alpha(white,0.3);",
+			"text-shadow",
+			"text-shadow: 0 1px alpha(white,0.3);",
+			"shadow",
+			"unfocused",
+			"borders",
+			"bg",
+			"_color",
+			"2013 - 2014",
+			"scrollbar",
+			"doppio",
+			"Doppio",
+			"background",
+			"Moka",
+			"moka",
+			"separator",
+			"hover",
+			"separator",
+			": 6px;",
+			"_color",
+			"bg",
+			"hover",
+			"0px",
+			"hover",
+			"border",
+			"borders",
+			"_color",
+			"@selection",
+			"/* Copyright 2013 - 2014 Sam Hewitt.\n*\n* This file is part of the Doppio GTK theme.\n*\n* The Doppio GTK theme is free software: you can redistribute it\n* and/or modify it under the terms of the GNU General Public License as\n* published by the Free Software Foundation, either version 3 of the\n* License, or (at your option) any later version.\n*\n* The Doppio GTK theme is distributed in the hope that it will be\n* useful, but WITHOUT ANY WARRANTY; without even the implied warranty of\n* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General\n* Public License for more details.\n*\n* You should have received a copy of the GNU General Public License along\n* with the Doppio GTK theme. If not, see http://www.gnu.org/licenses/.\n*/\n\n",
+			"@selected_background",
+			"backdrop",
+			"padding",
+			"hover",
+			";\n",
+			"_fg",
+			"_bg",
+			"theme_",
+			"2013",
+			"button",
+			"border-",
+			"padding",
+			"active",
+			"backdrop",
+			"border",
+			"primary-toolbar",
+			"padding",
+			"unfocused",
+			"fg",
+			"bg",
+			"_color",
+			"borders",
+			"border-width",
+			"1px",
+			"toolbar button",
+			"backdrop",
+			".toolbar",
+			"primary-",
+			"padding",
+			"border",
+			"selected_foreground",
+			"gtkImage",
+			"border-radius: 6px;",
+			"border-radius: 0;",
+			"selection",
+			"hover_selection",
+			"hover",
+			"8px",
+			"hover",
+			"sepa",
+			"text-shadow",
+			"#000",
+			"sepa",
+			"border",
+			"radius",
+			"padding",
+			"button",
+			"sidebar",
+			"_color",
+			"theme_",
+			"_bg",
+			"theme_selected_bg_color",
+			"theme_bg_color",
+			"Egg",
+			"theme_selected_bg_color",
+			"list",
+			"insensitive",
+			"backdrop",
+			"insensitive",
+			"border",
+			"middle",
+			"border",
+			": 6px;",
+			"padding",
+			"gtkimage",
+			"backdro",
+			"theme_unfocused_base_color",
+			"theme_text_color",
+			"borders",
+			"theme_base_color",
+			"_fg",
+			"backdrop_text",
+			"backdrop",
+			"_bg_color",
+			"_borders",
+			"_fg_color",
+			"insensitive_bg_color",
+			"theme_selected_fg_color",
+			"theme_selected_bg_color",
+			"theme_unfocused_fg_color",
+			"theme_bg_color",
+			"theme_fg_color",
+			"icon-shadow"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"hover",
+			"@base",
+			"",
+			"border",
+			"background",
+			"border",
+			"",
+			" ",
+			"icon-shadow: 0 1px alpha(@base,0.3);",
+			"text-shadow: 0 1px alpha(@base,0.3);",
+			"backdrop",
+			"border",
+			"background",
+			"",
+			"2014",
+			"orchis",
+			"Orchis",
+			"inset_dark",
+			"Doppio",
+			"doppio",
+			": 4px;",
+			": 4x;",
+			"",
+			"background",
+			"border",
+			"",
+			"@selection",
+			"_foreground",
+			"_background",
+			"",
+			"2013 - 2014",
+			"backdrop",
+			"background",
+			"",
+			"border",
+			"base",
+			"border-radius: 4px;",
+			"border-radius: 6px;",
+			"hover_border",
+			"black",
+			"",
+			"_background",
+			"selection",
+			"background",
+			"backdrop",
+			": 4px;",
+			"unfocused_base",
+			"text",
+			"border",
+			"base",
+			"_foreground",
+			"_background",
+			"_border",
+			"_foreground",
+			"insensitive_background",
+			"selected_foreground",
+			"selected_background",
+			"unfocused_foreground",
+			"background",
+			"foreground",
+			"border-radius: 4px;",
+			"background",
+			"border-radius: 4px;",
+			"border",
+			"background",
+			"border-radius: 6px;",
+			"border",
+			"_foreground",
+			"_background",
+			"border-radius: 0;",
+			"3px",
+			"4px",
+			"tab",
+			"@foreground",
+			"@background",
+			"",
+			"border-color:",
+			"border-bottom-width",
+			"border: 1px solid ",
+			"padding: none;",
+			"Doppio",
+			"backdrop",
+			"8px",
+			"0.5em",
+			"mokaproject",
+			"doppio",
+			"Doppio",
+			"/themes",
+			"faba-mono-icons",
+			"Faba",
+			"Moka",
+			"icons/Moka",
+			"moka",
+			"snwh",
+			"#dddddd;",
+			".otf",
+			"Dosis",
+			"<span>",
+			"</span>",
+			"carousel",
+			"class=\"fancybox\" id=\"scaled\" ",
+			"",
+			"id=\"scaled\"",
+			"class=\"scaled\" ",
+			"on <strong>#moka</strong> over",
+			"For the more direct, feel free to come chat on #moka over on the Freenode IRC network.",
+			".png",
+			"continued development",
+			"/distros",
+			"Faba",
+			"archive-manager",
+			"faba",
+			"Faba",
+			"",
+			"icon-name-mapping",
+			"/checkout/",
+			"Faba",
+			"faba-mono-icons ",
+			"bash ",
+			"-Light",
+			"ln -sfr",
+			"-Light",
+			"Faba",
+			"16",
+			"24",
+			"32",
+			"22",
+			"48"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 22.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "action-bar.sublime-project",
+	"replace":
+	{
+		"height": 40.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 162.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

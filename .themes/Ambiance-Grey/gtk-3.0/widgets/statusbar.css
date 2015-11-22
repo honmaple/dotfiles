@@ -1,0 +1,14 @@
+/*************
+ * statusbar *
+ *************/
+GtkStatusbar {
+    padding: 0;
+    color: @foreground;
+    border-width: 0px;
+}
+
+GtkStatusbar .frame {
+    padding: 0;
+    border: none;
+    background-color: @background;
+}

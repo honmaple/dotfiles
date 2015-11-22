@@ -1,0 +1,78 @@
+/*****************
+ * Check Buttons *
+ *****************/
+
+GtkCheckButton:hover,
+GtkCheckButton:active:hover,
+GtkCheckButton:selected,
+GtkCheckButton:selected:focus {
+    background-color: transparent;
+}
+
+.check,
+.check row:selected,
+.check row:selected:focus {
+	background-color: transparent;
+    color: @text;
+}
+
+.check:insensitive,
+.check row:selected:insensitive,
+.check row:selected:focus:insensitive {
+    background-color: transparent;
+    color: @insensitive_text;
+}
+
+
+.check:backdrop,
+.check row:selected:backdrop,
+.check row:selected:focus:backdrop {
+    background-color: transparent;
+    color: @backdrop_text;
+}
+
+.check:insensitive:backdrop,
+.check row:selected:insensitive:backdrop,
+.check row:selected:focus:insensitive:backdrop {
+    background-color: transparent;
+    color: @backdrop_insensitive_text;
+}
+
+.check:selected {
+    color: @selected_foreground;
+}
+
+
+.check:selected:backdrop {
+    color: @backdrop_selected_foreground;
+}
+
+
+
+/*****************
+ * Radio Buttons *
+ *****************/
+
+.radio {
+    background-color: transparent;
+}
+
+.radio:insensitive {
+    color: @insensitive_text;
+}
+
+.radio:selected {
+    color: @selected_foreground;
+}
+
+.radio:backdrop {
+    color: @backdrop_text;
+}
+
+.radio:insensitive:backdrop {
+    color: @backdrop_insensitive_text;
+}
+
+.radio:selected:backdrop {
+    color: @backdrop_selected_foreground;
+}

@@ -1,0 +1,11 @@
+${image /tmp/conkycolors/conkyCover.png -s 63x55 -p 24,491}
+${if_running rhythmbox}
+${voffset -18}${color0}${font ConkyColors:size=15}G${font}${color}${voffset -8}${goto 32}Status:${alignr}${color2}[--datatype=ST]${color}
+${goto 100}${voffset 4}${color2}[--datatype=AR]${color}
+${goto 100}${color2}[--datatype=AL]${color}
+${goto 100}${color2}[--datatype=TI]${color}
+${goto 100}${color2}[--datatype=PT]/[--datatype=LE]${color}${voffset -8}
+$else
+${voffset -18}${color0}${font ConkyColors:size=15}G${font}${color}${voffset -8}${goto 32}Status:${alignr}${color2}off${color}
+${goto 105}${voffset 24}${execi 10 /home/liberize/.conkycolors/bin/conkyCover}${font Droid Sans:style=Bold:size=8}${color2}Rhythmbox${color}${font}${voffset 8}
+$endif

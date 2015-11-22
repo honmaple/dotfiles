@@ -1,0 +1,138 @@
+######################
+# - Conky settings - #
+######################
+update_interval 1
+total_run_times 0
+net_avg_samples 1
+cpu_avg_samples 1
+if_up_strictness link
+
+imlib_cache_size 0
+double_buffer yes
+no_buffers yes
+
+format_human_readable
+
+#####################
+# - Text settings - #
+#####################
+use_xft yes
+xftfont WenQuanYi Micro Hei:size=8
+override_utf8_locale yes
+text_buffer_size 2048
+
+#############################
+# - Window specifications - #
+#############################
+own_window_class Conky
+own_window yes
+own_window_type normal
+own_window_transparent yes
+own_window_argb_visual yes
+own_window_argb_value 200
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+
+alignment top_right
+gap_x 25
+gap_y 40
+minimum_size 230 700
+maximum_width 230
+
+default_bar_size 60 8
+
+#########################
+# - Graphics settings - #
+#########################
+draw_shades no
+
+default_color cccccc
+
+color0 cyan
+color1 green
+color2 orange
+color3 green
+
+TEXT
+${font WenQuanYi Micro Hei:style=Bold:size=8}系统状态 $stippled_hr${font}
+##############
+# - SYSTEM - #
+##############
+${color0}${voffset 6}${font ConkyColorsLogos:size=19}a${font}${color}${goto 32}${voffset -14}内核版本:  ${alignr}${color2}${kernel}${color}
+# |--CPU
+${voffset 4}${color0}${font ConkyColors:size=16}c${font}${offset -20}${voffset 6}${cpubar cpu0 4,17}${color}${voffset -16}${goto 32}CPU0 负荷: ${font Ubuntu:style=Bold:size=8}${color1}${cpu cpu1}%${color}${font} ${alignr}${color2}${cpugraph cpu1 10,90 }${color}
+${goto 32}CPU1 负荷: ${font Ubuntu:style=Bold:size=8}${color1}${cpu cpu2}%${color}${font} ${alignr}${color2}${cpugraph cpu2 10,90 }${color}
+${goto 32}CPU2 负荷: ${font Ubuntu:style=Bold:size=8}${color1}${cpu cpu3}%${color}${font} ${alignr}${color2}${cpugraph cpu3 10,90 }${color}
+${goto 32}CPU3 负荷: ${font Ubuntu:style=Bold:size=8}${color1}${cpu cpu4}%${color}${font} ${alignr}${color2}${cpugraph cpu4 10,90 }${color}
+${goto 32}CPU0 温度: ${font Ubuntu:style=Bold:size=8}${color1}${execi 4 sensors | grep "Core 0" | awk -F ' ' '{print $3}' | tr -d +}${color}${font}${goto 145}CPU1 温度: ${font Ubuntu:style=Bold:size=8}${color1}${execi 4 sensors | grep "Core 1" | awk -F ' ' '{print $3}' | tr -d +}${color}${font}
+# |--MEM
+${color0}${font Poky:size=16}M${font}${color}${goto 32}${voffset -7}内存占用率: ${font Ubuntu:style=Bold:size=8}${color1}$memperc%${color}${font}
+${offset 1}${voffset 2}${color0}${membar 4,18}${color}${goto 32}${voffset -2}总共: ${font Ubuntu:style=Bold:size=8}${color1}${memeasyfree}${color}${font}${goto 145}使用: ${font Ubuntu:style=Bold:size=8}${color1}${mem}${color}${font}
+# |--SWAP
+${voffset 2}${color0}${font ConkyColors:size=15}z${font}${color}${voffset -8}${goto 32}SWAP: ${font wqy-microhei:style=Bold:size=8}${color1}${swapperc}%${color}${font}
+${voffset 2}${offset 1}${color0}${swapbar 4,17}${color}${voffset -2}${goto 32}总共: ${font wqy-microhei:style=Bold:size=8}${color1}$swapmax${color}${font}${goto 145}使用: ${font wqy-microhei:style=Bold:size=8}${color1}$swap${color}${font}
+# |--PROC
+${voffset 2}${color0}${font Poky:size=15}a${font}${color}${goto 32}${voffset -10}TOP3 进程: ${color2}${alignr 43}CPU${alignr}RAM${color}
+${voffset 1}${goto 38}${color2}${top name 1}${color}${font Ubuntu:style=Bold:size=8}${color1}${alignr 43}${top cpu 1}${alignr}${top mem 1}${color}${font}
+${voffset -1}${goto 38}${color2}${top name 2}${color}${font Ubuntu:style=Bold:size=8}${color1}${alignr 43}${top cpu 2}${alignr}${top mem 2}${color}${font}
+${voffset -1}${goto 38}${color2}${top name 3}${color}${font Ubuntu:style=Bold:size=8}${color1}${alignr 43}${top cpu 3}${alignr}${top mem 3}${color}${font}
+#############
+# - CLOCK - #
+#############
+${voffset 4}${font wqy-microhei:style=Bold:size=8}日期时间 $stippled_hr${font}
+${voffset 9}${goto 24}${font clockfaces:size=50}P${font}
+${voffset -39}${goto 41}${font zoraclockH:size=30}${color2}${execpi 120 /usr/share/conkycolors/bin/conkyClock hour}${color}${font}
+${voffset -39}${goto 35}${font zoraclockM:size=40}${color2}${execpi 60 /usr/share/conkycolors/bin/conkyClock minute}${color}${font}
+${goto 125}${voffset -60}${font Ubuntu:style=Bold:size=11}${color2}${time %H}${time :%M}${time :%S}${color}${font}
+${goto 125}${voffset 0}${time %Y年%b%d日}${voffset 8}
+${goto 125}${voffset -8}${font WenQuanYi Micro Hei:style=Bold:size=8}${color2}${time %A}${color}${font}
+${goto 125}${voffset 0}${font WenQuanYi Micro Hei:size=8}${alignc}${execpi 300 ~/.conkycolors/bin/lunar}${font}
+
+################
+# - CALENDAR - #
+################
+${voffset 0}${color0}${font Poky:size=14}d${font}${color}${voffset -8}${font Monospace:size=7}${execpi 300 DJS=`date +%_d`; cal -m | sed 's/日 一 二 三 四 五 六/${offset 2}${font WenQuanYi Micro Hei Mono:size=8.5}日 一 二 三 四 五 六${font Monospace:size=7}/' | sed '2,8!d'| sed '/./!d' | sed 's/^/${goto 105} /'| sed 's/$/ /' | sed 's/^/ /' | sed /" $DJS "/s/" $DJS "/" "'${font Arial:style=Bold:size=7}${voffset -1}${color2}'"$DJS"'${color}${font Monospace:size=7}'" "/}
+${voffset -60}${goto 36}${font WenQuanYi Micro Hei:size=8}今夜月相${font}${voffset 3}
+${goto 43}${font Weather:size=30}${execpi 300 ~/.conkycolors/bin/mond}${font}
+${voffset -10}
+##########
+# - HD - #
+##########
+${voffset 4}${font WenQuanYi Micro Hei:style=Bold:size=8}硬盘 $stippled_hr${font}
+# |--HDTEMP1
+#${voffset 7}${color0}${font Weather:size=15}y${font}${color}${voffset -6}${goto 32}温度: ${font Ubuntu:style=Bold:size=8}${color1}${execi 120 hddtemp /dev/sda -n --unit=C}°C${color}${font}${alignr}${color2}/dev/sda${color}
+${voffset 3}${execpi 30 /usr/share/conkycolors/bin/conkyHD1}
+###############
+# - NETWORK - #
+###############
+${voffset -8}${font WenQuanYi Micro Hei:style=Bold:size=8}网络 $stippled_hr${font}
+# |--WLAN0
+${if_up wlp6s0}
+${voffset -13}${color0}${font VariShapes Solid:size=14}q${font}${color}${goto 32}${voffset -6}上传: ${font Ubuntu:style=Bold:size=8}${color1}${upspeed wlp6s0}${color}${font} ${alignr}${color2}${upspeedgraph wlp6s0 10,90 }${color}
+${goto 32}总计: ${font Ubuntu:style=Bold:size=8}${color2}${totalup wlp6s0}${color}${font}
+${voffset 0}${color0}${font VariShapes Solid:size=14}Q${font}${color}${goto 32}${voffset -8}下载: ${font Ubuntu:style=Bold:size=8}${color1}${downspeed wlp6s0}${color}${font} ${alignr}${color2}${downspeedgraph wlp6s0 10,90 }${color}
+${goto 32}总计: ${font Ubuntu:style=Bold:size=8}${color2}${totaldown wlp6s0}${color}${font}
+${voffset -3}${color0}${font Poky:size=14}Y${font}${color}${goto 32}${voffset -3}信号: ${font Ubuntu:style=Bold:size=8}${color1}${wireless_link_qual_perc wlp6s0}%${color}${font} ${alignr}${color2}${wireless_link_bar 10,90 wlp6s0}${color}
+${voffset 6}${color0}${font Poky:size=13}w${font}${color}${goto 32}${voffset -10}本地 IP: ${alignr}${color2}${addr wlp6s0}${color}
+# |--ETH0
+${else}${if_up enp7s0}
+${voffset -13}${color0}${font VariShapes Solid:size=14}q${font}${color}${goto 32}${voffset -6}上传: ${font Ubuntu:style=Bold:size=8}${color1}${upspeed enp7s0}${color}${font} ${alignr}${color2}${upspeedgraph enp7s0 10,90 }${color}
+${goto 32}总计: ${font Ubuntu:style=Bold:size=8}${color2}${totalup enp7s0}${color}${font}
+${voffset 0}${color0}${font VariShapes Solid:size=14}Q${font}${color}${goto 32}${voffset -8}下载: ${font Ubuntu:style=Bold:size=8}${color1}${downspeed enp7s0}${color}${font} ${alignr}${color2}${downspeedgraph enp7s0 10,90 }${color}
+${goto 32}总计: ${font Ubuntu:style=Bold:size=8}${color2}${totaldown enp7s0}${color}${font}
+${voffset 3}${color0}${font Poky:size=13}w${font}${color}${goto 32}${voffset -9}本地 IP: ${alignr}${color2}${addr enp7s0}${color}
+# |--PPP0
+${else}${if_up ppp0}
+${voffset -13}${color0}${font VariShapes Solid:size=14}q${font}${color}${goto 32}${voffset -6}上传: ${font Ubuntu:style=Bold:size=8}${color1}${upspeed ppp0}${color}${font} ${alignr}${color2}${upspeedgraph ppp0 10,90 }${color}
+${goto 32}总计: ${font Ubuntu:style=Bold:size=8}${color2}${totalup ppp0}${color}${font}
+${voffset 0}${color0}${font VariShapes Solid:size=14}Q${font}${color}${goto 32}${voffset -8}下载: ${font Ubuntu:style=Bold:size=8}${color1}${downspeed ppp0}${color}${font} ${alignr}${color2}${downspeedgraph ppp0 10,90 }${color}
+${goto 32}总计: ${font Ubuntu:style=Bold:size=8}${color2}${totaldown ppp0}${color}${font}
+${voffset -1}${color0}${font Poky:size=13}w${font}${color}${goto 32}${voffset -5}本地 IP: ${alignr}${color2}${addr ppp0}${color}
+${else}${voffset 8}${color0}${font ConkyColors:size=15}q${font}${color}${goto 32}${voffset -7}网络不可用${voffset 14}${endif}${endif}${endif}
+##################
+# - CN WEATHER - #
+##################
+# http://www.weather.com.cn/
+${voffset -8}${font WenQuanYi Micro Hei:style=Bold:size=8}天气 $stippled_hr${font}
+${if_gw}${execpi 300 ~/.conkycolors/bin/weather 101191101 realtime}
+${execpi 1800 ~/.conkycolors/bin/weather 101191101 sixdays}
+${else}${voffset 8}${color0}${font ConkyColors:size=15}q${font}${color}${voffset -8}${goto 32}天气信息不可用${voffset 14}${endif}

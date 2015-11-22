@@ -4,11 +4,12 @@ from __future__ import unicode_literals
 AUTHOR = 'honmaple'
 AUTHOR_EMAIL = 'xiyang0807@gmail.com'
 SITENAME = "HonMaple"
-SITEURL = 'http://honmaple.tk'
+SITEURL = 'http://honmaple.com'
 TIMEZONE = "Asia/Shanghai"
 
 DEFAULT_LANG = 'en'
 # can be useful in development, but set to False when you're ready to publish
+# RELATIVE_URLS = False
 RELATIVE_URLS = False
 
 GITHUB_USER = 'honmaple'
@@ -44,8 +45,8 @@ TAG_URL = 'tags/{slug}.html'
 TAG_SAVE_AS = TAG_URL
 TAGS_URL = 'tags.html'
 TAGS_SAVE_AS = TAGS_URL
-SEARCH_URL = 'search.html'
-SEARCH_SAVE_AS = SEARCH_URL
+# SEARCH_URL = 'search.html'
+# SEARCH_SAVE_AS = SEARCH_URL
 
 
 FEED_ALL_ATOM = 'feeds/all.rss.xml'
@@ -63,6 +64,9 @@ SOCIAL = (
 
 # Theme
 THEME = 'pelican-themes/pelican-bootstrap3'
+# THEME = 'pelican-themes/pelican-bootstrap3-lovers'
+# HEADER_IMAGE = 'head.png'
+# PROFILE_PICTURE = 'header.png'
 # SEARCH_URL = 'tag/search.html'
 # SEARCH_SAVE_AS = SEARCH_URL
 TAG_CLOUD_MAX_ITEMS = 10
@@ -70,9 +74,9 @@ DISPLAY_PAGES_ON_MENU = True
 DISPLAY_CATEGORIES_ON_MENU = True
 DISPLAY_TAGS_ON_SIDEBAR = True
 # DISPLAY_ARTICLE_INFO_ON_INDEX = True
-AVATAR = "images/head.png"
-BOOTSTRAP_THEME = 'yeti'
-PYGMENTS_STYLE = 'monokai'
+AVATAR = "images/header.png"
+# BOOTSTRAP_THEME = 'yeti'
+PYGMENTS_STYLE = 'emacs'
 DIRECT_TEMPLATES = ('index', 'categories', 'authors', 'archives',  'search')
 SHOW_ABOUTME = True
 ABOUT_ME = """

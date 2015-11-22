@@ -1,0 +1,131 @@
+/*************
+ * scrollbar *
+ *************/
+.scrollbar {
+	-GtkScrollbar-activate-slider: 1;
+	-GtkScrollbar-trough-border: 0;
+	-GtkScrollbar-min-slider-length: 20; 
+	-GtkScrollbar-has-forward-stepper: 1;
+	-GtkScrollbar-has-backward-stepper: 1;
+	-GtkScrollbar-has-secondary-forward-stepper: 0;
+	-GtkScrollbar-has-secondary-backward-stepper: 0;
+	-GtkRange-arrow-scaling: 0.6;
+	-GtkRange-trough-border: 0;
+	-GtkRange-stepper-size: 16;
+	-GtkRange-slider-width: 15; 
+	-GtkScrollbar-slider-width: 15; 
+	engine: unico;
+	border-width: 0;
+	color: #f0f0f0;
+
+	background-color: #f0f0f0;
+}
+
+.scrollbar.button,
+.scrollbar.button:insensitive {
+	-unico-outer-stroke-width: 0;
+	border-width: 0px;
+	border-style: none;
+	color: @transparent;
+}
+
+.scrollbar.button.vertical.top,
+.scrollbar.button.vertical.top:insensitive {
+	background-image: url("assets/stepper-up-insens.png");
+}
+
+.scrollbar.button.vertical.bottom,
+.scrollbar.button.vertical.bottom:insensitive {
+	background-image: url("assets/stepper-down-insens.png");
+}
+
+.scrollbar.button.horizontal.left,
+.scrollbar.button.horizontal.left:insensitive {
+	background-image: url("assets/stepper-left-insens.png");
+}
+
+.scrollbar.button.horizontal.right,
+.scrollbar.button.horizontal.right:insensitive {
+	background-image: url("assets/stepper-right-insens.png");
+}
+
+.scrollbar.button.vertical.top:prelight {
+	background-image: url("assets/stepper-up-prelight.png");
+}
+
+.scrollbar.button.vertical.bottom:prelight {
+	background-image: url("assets/stepper-down-prelight.png");
+}
+
+.scrollbar.button.horizontal.left:prelight {
+	background-image: url("assets/stepper-left-prelight.png");
+}
+
+.scrollbar.button.horizontal.right:prelight {
+	background-image: url("assets/stepper-right-prelight.png");
+}
+
+.scrollbar.trough {
+	border-radius: 0;
+	background-color: #f0f0f0;
+}
+
+.scrollbar.trough.vertical {
+	border-radius: 0px;
+	background-color: #f0f0f0;
+}
+
+.scrollbar.trough.horizontal {
+	border-radius: 0px;
+	background-color: #f0f0f0;
+}
+
+.scrollbar.slider {
+	border-width: 0; 
+	border-radius: 0px;
+	background-color: #f0f0f0;
+}
+
+.scrollbar.slider.vertical {
+	border-radius: 0px;
+	background-color:#f0f0f0;
+}
+
+.scrollbar.slider.horizontal { 
+	border-radius: 0px;
+	background-color:#cdcdcd;
+
+}
+
+.scrollbar.slider.horizontal:prelight,
+.scrollbar.slider.horizontal:hover {
+	border-radius: 0px;
+	background-color:#a6a6a6;
+} 
+
+.scrollbar.slider.vertical:prelight,
+.scrollbar.slider.vertical:hover {
+	border-radius: 0px;
+	background-color:#a6a6a6;
+} 
+
+/* overlay scrollbar */
+OsThumb,
+OsScrollbar {
+	color: @theme_fg_color;
+	background-color: #f0f0f0;
+}
+
+OsThumb:selected,
+OsScrollbar:selected {
+	background-color: #f0f0f0;
+}
+
+OsThumb:active,
+OsScrollbar:active {
+}
+
+OsThumb:insensitive,
+OsScrollbar:insensitive {
+}
+

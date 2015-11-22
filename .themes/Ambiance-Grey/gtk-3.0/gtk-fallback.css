@@ -1,0 +1,19 @@
+/************
+ * Fallback *
+ ************/
+
+.menu {
+    border-image: linear-gradient(to top,
+                                  alpha(@border, 0.80),
+                                  alpha(@border, 0.60) 33%,
+                                  alpha(@border, 0.50) 66%,
+                                  alpha(@border, 0.15)) 1 1 1 1/ 1px 1px 1px 1px;
+}
+
+.menubar .menu {
+    border-image: linear-gradient(to top,
+                                  alpha(@border, 0.80),
+                                  alpha(@border, 0.60) 33%,
+                                  alpha(@border, 0.50) 66%,
+                                  transparent 99%) 1 1 1 1/ 1px 1px 1px 1px;
+}

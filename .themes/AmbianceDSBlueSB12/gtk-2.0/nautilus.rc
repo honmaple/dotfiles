@@ -1,0 +1,187 @@
+style "nautilus-breadcrumbs"
+{
+	xthickness = 3
+	ythickness = 0
+	
+	GtkButton::child-displacement-y		= 0
+	GtkButton::inner-border			= { 1.2, 1.0, 1.0, 0.9}
+
+	engine "pixmap"
+	{	
+		image
+		{
+			function        	= BOX
+			shadow			= OUT
+			recolorable     	= TRUE
+			state			= PRELIGHT
+			file			= "nautilus/breadcrumb_prelight.png"
+			border			= { 3, 13, 3, 3 }
+			stretch         	= TRUE
+		}		
+
+		image
+		{
+			function        	= BOX
+			recolorable     	= TRUE
+			shadow			= IN
+			state			= PRELIGHT
+			file			= "nautilus/breadcrumb_active.png"
+			border			= { 3, 13, 3, 3 }
+			stretch         	= TRUE
+		}
+	  
+		image
+		{
+			function        	= BOX
+			recolorable     	= TRUE
+			state			= NORMAL
+			file			= "nautilus/breadcrumb_normal.png"
+			border			= { 3, 13, 3, 3 }
+			stretch         	= TRUE
+		}
+		
+		image
+		{
+			function        	= BOX
+			recolorable     	= TRUE
+			state			= PRELIGHT
+			file			= "nautilus/breadcrumb_active.png"
+			border			= { 3, 13, 3, 3 }
+			stretch         	= TRUE
+		}
+
+		image
+		{
+			function        	= BOX
+			recolorable     	= TRUE
+			state			= ACTIVE
+			file			= "nautilus/breadcrumb_active.png"
+			border			= { 3, 13, 3, 3 }
+			stretch         	= TRUE
+		}  
+
+		image
+		{
+			function        	= BOX
+			recolorable     	= TRUE
+			state			= INSENSITIVE
+			file			= "nautilus/breadcrumb_normal.png"
+			border			= { 3, 13, 3, 3 }
+			stretch         	= TRUE
+		} 
+
+		image
+		{
+			function        	= BOX
+			recolorable     	= TRUE
+			state			= SELECTED
+			file			= "nautilus/breadcrumb_active.png"
+			border			= { 3, 13, 3, 3 }
+			stretch         	= TRUE
+		}
+	}
+}
+
+widget_class "*NautilusPathBar.*ToggleButton" style "nautilus-breadcrumbs"
+
+style "nautilus-left-slider"
+{
+	xthickness = 0
+	ythickness = 0
+	
+	engine "pixmap"
+	{
+		image {
+			function 		= BOX
+			file			= "nautilus/left_slider_normal.png"
+			border			= { 3, 3, 3, 3 }
+			stretch			= TRUE
+		}
+	}
+
+}
+
+widget "Nautilus*left_slider*" style "nautilus-left-slider"
+
+style "nautilus-right-slider"
+{	
+	xthickness = 0
+	ythickness = 0
+	
+	engine "pixmap"
+	{
+		image {
+			function 		= BOX
+			file			= "nautilus/right_slider_normal.png"
+			border			= { 3, 3, 3, 3 }
+			stretch			= TRUE
+		}
+	}
+}
+
+widget "Nautilus*right_slider*" style "nautilus-right-slider"
+
+style "nautilus-menubar-remove-shadow"
+{
+	GtkMenuBar::shadow-type = GTK_SHADOW_NONE
+}
+
+style "nautilus-sidebar"
+{
+	GtkTreeView::horizontal_separator	= 12
+	GtkTreeView::vertical_separator		= 4
+	GtkTreeView::even_row_color   		= "#5c5e61" #Background color of the sidebar
+	
+}
+
+style "nautilus-scale"
+{
+	ythickness = 0
+
+	GtkRange::trough-border		= 0
+	GtkScale::trough-side-details	= 0
+	
+	engine "pixmap" 
+	{
+		image 
+		{
+			function		= BOX
+			detail			= "trough"
+			file			= "nautilus/trough.png"
+			border			= { 10, 10, 5, 15 }
+		}	
+		image 
+		{
+			function		= SLIDER
+			overlay_file		= "nautilus/slider.png"
+			overlay_stretch		= FALSE
+   		}
+  	}
+}
+
+style "Nautilus-Vertical-Separator" {
+
+	GtkPaned::handle-size           = 0	# NO SEPARATOR
+
+}
+
+# widget_class	"*Nautilus*<GtkNotebook>*<GtkEventBox>"	style	"nautilus_info_pane"
+
+# Removing the menubar shadow from Nautilus since there's no menu inside the window.
+# Comment the following line out (add a '#' at the beginning of the line) to enable the menu shadow if you're using Nautilus without a global menu and the menu is enabled.
+widget "*Nautilus**" style "nautilus-menubar-remove-shadow"
+
+# The following line enables the elementary-styled zoom slider for Nautilus
+# widget_class "*Nautilus*Scale*" style "nautilus-scale"
+
+#Enable the custom style for the SidePane
+# widget_class "*Nautilus*NautilusSidePane*" style "nautilus-sidebar"
+
+#Comment out the following line if you'd like to have a vertical separator between the sidebar and the principal panel
+# widget "*Nautilus*Splitter" style "Nautilus-Vertical-Separator"
+
+#Enables a custom style for the ViewModeButton
+# widget "*Nautilus*ModeButton*" style "ViewModeButton"
+
+# Workarounds:
+# widget "*Nautilus*Zoom*" style "dark-toolbar-light-text"

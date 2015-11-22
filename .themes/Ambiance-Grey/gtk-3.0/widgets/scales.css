@@ -1,0 +1,145 @@
+/**********
+ * Scales *
+ **********/
+
+.scale {
+    -GtkScale-slider-length: 16px;
+    -GtkRange-slider-width: 16px;
+    -GtkRange-trough-border: 0px;
+    border-radius: 4px;
+}
+
+.scale.slider,
+.scale.slider:hover,
+.scale.slider:insensitive,
+.scale.slider:backdrop {
+    border-radius: 0;
+    border-style: none;
+    background-color: transparent;
+    background-size: 16px 16px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: transparent;
+
+    /* Images in gtk-assets- variant */
+}
+
+/* Positive fill colors */
+.scale.highlight.left,
+.scale.vertical.highlight.bottom,
+.menubar .menuitem .scale.highlight.left,
+.menubar .menuitem.scale.highlight.bottom {
+    background-color: @selection;
+    border: 1px solid @selected_border;
+    background-image: none;
+}
+
+/* Insensitive fill colors */
+.scale.highlight.left:insensitive,
+.scale.highlight.bottom:insensitive,
+.menubar .menuitem .scale.highlight.left:insensitive,
+.menubar .menuitem .scale.highlight.bottom:insensitive {
+    background-color: @insensitive_background;
+    border: 1px solid @insensitive_border;
+    background-image: none;
+}
+
+/* Hover fill colors */
+.scale.highlight.left:hover,
+.scale.highlight.bottom:hover,
+.menubar .menuitem .scale.highlight.left:hover,
+.menubar .menuitem .scale.highlight.bottom:hover {
+    background-color: @selection;
+    border: 1px solid @selected_border;
+    background-image: none;
+}
+
+/* backdrop fill colors */
+.scale.vertical.highlight.left:backdrop,
+.scale.vertical.highlight.bottom:backdrop,
+.menubar .menuitem.scale.highlight.left:backdrop,
+.menubar .menuitem.scale.highlight.bottom:backdrop {
+    background-color: @backdrop_background;
+    border: 1px solid @backdrop_border;
+    background-image: none;
+}
+
+/***********
+ * Troughs *
+ ***********/
+
+/* Margins */
+.scale.trough {
+    border-width: 1px;
+    margin: 6px 0;
+}
+
+.scale.trough.vertical {
+    border-width: 1px;
+    margin: 0 6px;
+}
+
+/* Trough colors */
+.scale.trough,
+.scale.trough.vertical {
+    background-color: @background;
+    border: 1px solid @border;
+}
+
+/* Hover trough colors */
+.scale.trough:hover,
+.scale.trough.vertical:hover {
+    background-color: @hover_background;
+    border: 1px solid @hover_border;
+}
+
+/* Insensitive trough colors */
+.scale.trough:insensitive,
+.scale.trough.vertical:insensitive {
+    background-color: @insensitive_background;
+    border: 1px solid @insensitive_border;
+}
+
+/* backdrop trough colors */
+.scale.trough:backdrop,
+.scale.trough.vertical:backdrop {
+    background-color: @backdrop_background;
+    border: 1px solid @backdrop_border;
+}
+
+/****************
+ * Progress Bar *
+ ****************/
+.scale.progressbar
+.scale.progressbar.vertical {
+    border-width: 1px;
+    border-style: solid;
+    border: 1px solid shade(@selection, 0.8);
+    background-image: linear-gradient(to bottom,
+                                      @progressbar_background_a,
+                                      @progressbar_background_b
+                                      );
+}
+
+.scale.progressbar:insensitive,
+.scale.progressbar.vertical:insensitive {
+    border-width: 1px;
+    border-style: solid;
+    border: 1px solid shade(@selection, 0.8);
+    background-image: linear-gradient(to bottom,
+                                      @insensitive_progressbar_background_a,
+                                      @insensitive_progressbar_background_b
+                                      );
+}
+
+
+.scale.progressbar:backdrop,
+.scale.progressbar.vertical:backdrop {
+    border-width: 1px;
+    border-style: solid;
+    border: 1px solid shade(@selection, 0.8);
+    background-image: linear-gradient(to bottom,
+                                      @backdrop_progressbar_background_a,
+                                      @backdrop_progressbar_background_b
+                                      );
+}

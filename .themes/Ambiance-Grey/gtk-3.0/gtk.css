@@ -1,0 +1,36 @@
+/**********
+ * Colors *
+ **********/
+
+/* Base colors */
+@define-color base #fff;/* Base color */
+@define-color background #efefef;/* Background color */
+@define-color foreground #555;/* Foreground color */
+@define-color border shade(@background, 0.8);/* Borders color */
+@define-color separator @border;/* Separator color */
+@define-color menu_separator alpha(black, 0.1);/* Separator color */
+@define-color text #555;/* Text color */
+@define-color panel #555;/* Panel color */
+@define-color selection #a0a0a0;/* Selection color */
+@define-color selected_border shade(@selection, 0.8);/* Selection Border */
+@define-color gradient_a @background;/* Gradient color A */
+@define-color gradient_b shade(@gradient_a, 0.95);/* Gradient color B */
+@define-color view_background #fff;/* View background */
+@define-color inactive_frame @border;/* Inactive frame color */
+@define-color panel_text #efefef;/* Panel text color */
+@define-color panel_text_shadow alpha(black, 0.2);/* Panel text color */
+@define-color text_shadow alpha(white, 0.2);/* Text shadow */
+@define-color icon_shadow @text_shadow;/* Icon shadow */
+@define-color titlebar shade(@background, 0.95);/* Titlebar */
+
+
+/***********
+ * Imports *
+ ***********/
+
+/* Import Main CSS */
+@import url("gtk-widgets-assets.css");
+@import url("gtk-widgets-borders.css");
+@import url("gtk-fallback.css");
+@import url("gtk-widgets.css");
+@import url("gtk-common.css");

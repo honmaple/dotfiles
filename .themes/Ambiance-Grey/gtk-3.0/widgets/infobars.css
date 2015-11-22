@@ -1,0 +1,124 @@
+/**************
+ * GtkInfoBar *
+ **************/
+ 
+GtkInfoBar {
+    border-width: 0;
+    border-style: none;
+}
+
+.info,
+.question,
+.warning,
+.error {
+    background-color: @infobar_background;
+    color: @infobar_foreground;
+    text-shadow: 0 1px @text_shadow;
+    border-color: darker(@infobar_background);
+}
+
+.info:backdrop,
+.warning:backdrop,
+.question:backdrop,
+.error:backdrop {
+    text-shadow: none;
+    background-color: @base;
+    color: @backdrop_foreground;
+    border-color: @backdrop_foreground;
+}
+
+.info .button.close,
+.warning .button.close,
+.question .button.close,
+.error .button.close {
+    color: @infobar_fg;
+    icon-shadow: 0 1px @text_shadow;
+}
+
+.info .button.close:hover,
+.warning .button.close:hover,
+.question .button.close:hover,
+.error .button.close:hover {
+    background-image: linear-gradient(to bottom,
+				      alpha(white, 0.3),
+				      alpha(white, 0.2) 30%,
+				      alpha(black, 0.02));
+}
+
+.info .button.close:active,
+.warning .button.close:active,
+.question .button.close:active,
+.error .button.close:active {
+    color: @infobar_fg;
+    background-image: linear-gradient(to bottom,
+				      alpha(black, 0.1),
+				      transparent);
+}
+
+.info .button.close:backdrop,
+.warning .button.close:backdrop,
+.question .button.close:backdrop,
+.error .button.close:backdrop {
+    color: @backdrop_foreground;
+
+    icon-shadow: none;
+}
+
+.info .button.close:backdrop:hover,
+.warning .button.close:backdrop:hover,
+.question .button.close:backdrop:hover,
+.error .button.close:backdrop:hover {
+    background-image: none;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.info .entry,
+.info .entry:focus,
+.info .button,
+.info .button:insensitive,
+.info .button:active,
+.warning .entry,
+.warning .entry:focus,
+.warning .button,
+.warning .button:insensitive,
+.warning .button:active,
+.error .entry,
+.error .entry:focus,
+.error .button,
+.error .button:insensitive,
+.error .button:active,
+.question .entry,
+.question .entry:focus,
+.question .button,
+.question .button:insensitive,
+.question .button:active {
+    border-image: none;
+    color: @foreground;
+    border-color: darker(@infobar_background);
+    border-style: solid;
+    border-width: 1px;
+}
+
+.info .entry:backdrop,
+.info .button:backdrop,
+.info .button:insensitive:backdrop,
+.info .button:active:backdrop,
+.warning .entry:backdrop,
+.warning .button:backdrop,
+.warning .button:insensitive:backdrop,
+.warning .button:active:backdrop,
+.question .entry:backdrop,
+.question .button:backdrop,
+.question .button:insensitive:backdrop,
+.question .button:active:backdrop,
+.error .entry:backdrop,
+.error .button:backdrop,
+.error .button:insensitive:backdrop,
+.error .button:active:backdrop {
+    border-image: none;
+
+    border-color: @backdrop_border;
+    border-style: solid;
+    border-width: 1px;
+}

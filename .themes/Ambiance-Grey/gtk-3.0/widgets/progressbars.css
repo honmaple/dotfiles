@@ -1,0 +1,96 @@
+/****************
+ * Progress bar *
+ ****************/
+
+GtkProgressBar {
+    padding: 0 0 1px 0;
+}
+
+GtkProgressBar.progressbar {
+    border-radius: 3px;
+    background-image: linear-gradient(to bottom,
+                                  shade (@selection, 0.9),
+                                  @selection
+                                  );
+
+}
+
+GtkProgressBar.trough {
+    background-image: linear-gradient(to bottom,
+                                  alpha (#000, 0.06),
+                                  alpha (#000, 0.02)
+                                  );
+}
+
+
+.progressbar row,
+.progressbar row:hover,
+.progressbar row:selected,
+.progressbar row:selected:focus,
+.progressbar.vertical row,
+.progressbar.vertical row:hover,
+.progressbar.vertical row:selected,
+.progressbar.vertical row:selected:focus {
+    border-radius: 3px;
+    background-image: linear-gradient(to bottom,
+                                      @progressbar_background_a,
+                                      @progressbar_background_b
+                                      );
+}
+
+.progressbar row:insensitive,
+.progressbar row:hover:insensitive,
+.progressbar row:selected:insensitive,
+.progressbar row:selected:focus:insensitive,
+.progressbar.vertical row:insensitive,
+.progressbar.vertical row:hover:insensitive,
+.progressbar.vertical row:selected:insensitive,
+.progressbar.vertical row:selected:focus:insensitive {
+    border-radius: 3px;
+    background-image: linear-gradient(to bottom,
+                                      @insensitive_progressbar_background_a,
+                                      @insensitive_progressbar_background_b
+                                      );
+}
+
+
+.progressbar row:backdrop,
+.progressbar row:hover:backdrop,
+.progressbar row:selected:backdrop,
+.progressbar row:selected:focus:backdrop,
+.progressbar.vertical row:backdrop,
+.progressbar.vertical row:hover:backdrop,
+.progressbar.vertical row:selected:backdrop,
+.progressbar.vertical row:selected:focus:backdrop {
+    background-image: linear-gradient(to bottom,
+                                      @backdrop_progressbar_background_a,
+                                      @backdrop_progressbar_background_b
+                                      );
+}
+
+
+/***********
+ * Troughs *
+ ***********/
+.trough row,
+.trough row:hover,
+.trough row:selected,
+.trough row:selected:focus {
+    background-color: @base;
+}
+
+.trough.vertical row,
+.trough.vertical row:selected,
+.trough.vertical row:selected:focus {
+    background-color: @base;
+}
+
+.trough:insensitive,
+.trough.vertical:insensitive {
+    background-color: @insensitive_base;
+}
+
+.trough:backdrop,
+.trough.vertical:backdrop {
+    background-color: @backdrop_background;
+}

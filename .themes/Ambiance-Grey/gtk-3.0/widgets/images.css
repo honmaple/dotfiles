@@ -1,0 +1,45 @@
+/*********
+ * Image *
+ *********/
+ 
+GtkImage,
+GtkImage:active,
+GtkImage:insensitive {
+    background-color: transparent;
+    border:none;
+}
+
+/*******************
+ * Symbolic Images *
+ *******************/
+ 
+.image,
+.view.image {
+    color: alpha(@foreground, 0.5);
+}
+
+.image:hover,
+.view.image:hover {
+    color: @foreground;
+}
+
+.image:selected,
+.image:selected:hover,
+.view.image:selected,
+.view.image:selected:hover {
+    color: @selected_foreground;
+}
+
+.image:backdrop,
+.image:backdrop:hover,
+.view.image:backdrop,
+.view.image:backdrop:hover {
+    color: @backdrop_foreground;
+}
+
+.image:insensitive,
+.image:insensitive:hover,
+.view.image:insensitive,
+.view.image:insensitive:hover {
+    color: @insensitive_foreground;
+}

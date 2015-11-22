@@ -1,0 +1,102 @@
+/*********************
+ * app notifications *
+ *********************/
+.app-notification {
+    border: solid @borders;
+    border-width: 0 1px 1px 1px;
+    border-radius: 0 0 2px 2px;
+    padding: 8px;
+    background-color: @base;
+    background-image: none;
+    color: @text;
+}
+
+/*********
+ * label *
+ *********/
+GtkLabel,
+GtkLabel:active,
+GtkLabel:insensitive {
+    background-color: transparent;
+}
+
+/************
+ * expander *
+ ************/
+.expander {
+    color: alpha(@foreground, 0.7);
+}
+
+.expander:hover {
+    color: alpha(@foreground, 0.8);
+}
+
+/*************
+ * assistant *
+ *************/
+GtkAssistant .sidebar .highlight {
+    font: bold;
+}
+
+GtkAssistant .sidebar {
+    padding: 3px;
+    border-right-width: 3px;
+    border-style: solid;
+    border-right-color: @borders;
+    border-radius: 0;
+    background-color: @background;
+    color: mix(@foreground, @background, 0.1);
+}
+
+
+/***********
+ * gtkhtml *
+ ***********/
+GtkHTML {
+    background-color: @base;
+    color: @text;
+}
+
+/*************************
+ * touch text selections *
+ *************************/
+GtkBubbleWindow {
+    border-radius: 4px;
+    background-clip: border-box;
+}
+
+GtkBubbleWindow.osd.background {
+    background-color: @osd_background;
+}
+
+GtkBubbleWindow .toolbar {
+    background-color: transparent;
+}
+
+
+/* dnd */
+.view.dim-label,
+.dim-label,
+.dim-label:hover,
+.dim-label:focus {
+    color: mix(@foreground, @background, 0.5);
+}
+
+.dim-label:selected,
+.dim-label:selected:focus {
+    color: mix(@selected_foreground, @selection, 0.5);
+}
+
+.dnd {
+    border-width: 1px;
+    border-style: solid;
+    border: 1px solid shade(@selection, 0.9);
+}
+
+.grip {
+    background-color: transparent;
+}
+
+.arrow {
+    color: alpha(@foreground, 0.7);
+}

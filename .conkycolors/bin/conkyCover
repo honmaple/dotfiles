@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# Album art with cd theme in conky
+# by helmuthdu
+
+album="`/usr/share/conkycolors/bin/conkyRhythmbox -d AL`"
+player="`find ~/.cache/rhythmbox/covers/ -name '*'"$album"'*'`"
+#player="`/usr/share/conkycolors/bin/conkyRhythmbox -d CA | sed -e 's/\%20/\\ /g'`"
+icon=/usr/share/conkycolors/icons/Players/rhythmbox.png
+cover=/tmp/conkycolors/conkyCover.png
+
+width=`identify -format %w $photo`
+height=`identify -format %h $photo`
+picture_aspect=`expr $width - $height`
+
+if [ ! -f "$player" ]; then
+	#cp $icon $cover
+	convert /usr/share/conkycolors/icons/CD/base.png /usr/share/conkycolors/icons/CD/top.png -geometry +0+0 -composite $cover
+else
+	cp "$player" $cover
+	convert $cover -thumbnail 196x98 $cover
+	convert $cover -gravity Center -crop 98x98+0+0 +repage $cover
+	convert /usr/share/conkycolors/icons/CD/base.png $cover -geometry +21+5 -composite /usr/share/conkycolors/icons/CD/top.png -geometry +0+0 -composite $cover
+fi
+
+exit 0

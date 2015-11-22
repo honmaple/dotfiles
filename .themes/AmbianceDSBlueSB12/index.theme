@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=AmbianceDSBlueSB12
+Comment=Ambiance Dark Sidebar, modified
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=AmbianceDSBlueSB12
+MetacityTheme=AmbianceDSBlueSB12
+IconTheme=ubuntu-mono-dark
+CursorTheme=DMZ-Black
+ButtonLayout=close,minimize,maximize:

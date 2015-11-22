@@ -1,2 +1,3 @@
-## 我的一些配置
+## My personal config
+
 

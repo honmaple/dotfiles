@@ -1,0 +1,187 @@
+/********
+ * Menu *
+ ********/
+
+GtkTreeMenu.menu,
+GtkMenuButton .menu,
+GtkMenuToolButton.menu,
+GtkComboBox .menu {
+    border:none;
+    background-color: @base;
+}
+
+.primary-toolbar .button .menu,
+.toolbar .menu,
+.toolbar .primary-toolbar .menu,
+.header-bar .menu,
+.header-bar .primary-toolbar .menu,
+.menu {
+    padding: 0;
+    border-radius: 0;
+    border-style: none;
+    background-color: @base;
+    color: @text;
+}
+
+/*************
+ * Menu Item *
+ *************/
+GtkTreeMenu .menuitem,
+GtkTreeMenu .menuitem *,
+.menuitem,
+.menu .menuitem {
+    padding: 6px;
+    border: transparent;
+    border-radius: 0;
+    border-width: 0;
+    /*background-color: transparent;*/
+    color: @text;
+    text-shadow: 0 1px @text_shadow;
+
+    -GtkMenuItem-arrow-scaling: 0.5;
+}
+
+.menu .menuitem:active,
+.menu .menuitem:hover {
+    border: none;
+    background-color: @selection;
+    /*background-image: none;*/
+    text-shadow: 0 1px @panel_text_shadow;
+}
+
+.menu .menuitem:active,
+.menu .menuitem *:active,
+.menu .menuitem:hover,
+.menu .menuitem *:hover {
+    color: white;
+}
+
+.menu .menuitem:insensitive,
+.menu .menuitem *:insensitive {
+    color: @insensitive_text;
+}
+
+/* Arrow color */
+.menuitem.arrow {
+    background-color: @background;
+    color: alpha(@text, 0.6);
+}
+
+/* Separator color */
+.menuitem.separator {
+    padding: 2px 0 2px 0;
+    border: none;
+    color: @menu_separator;
+    -GtkMenuItem-horizontal-padding: 0;
+    -GtkWidget-separator-height: 1;
+}
+
+.menuitem .entry {
+    border: none;
+    background-color: @base;
+    background-image: none;
+    color: @text;
+}
+
+.menuitem .entry:active,
+.menuitem .entry:focus {
+    border: none;
+    color: white;
+}
+
+/* Accelerators */
+.menuitem .accelerator,
+.menuitem .accelerator:insensitive {
+    color: @insensitive_text;
+    text-shadow:none;
+}
+
+
+.menuitem .accelerator:hover,
+.menuitem .accelerator:insensitive:hover {
+    color: white;
+    text-shadow:none;
+}
+
+
+/***********
+ * Menubar *
+ ***********/
+.menubar {
+    -GtkWidget-window-dragging: true;
+
+    border-style: none;
+    background-color: @background;
+    background-image: none;
+    color: @foreground;
+}
+
+.menubar.menuitem,
+.menubar .menuitem {
+    padding: 2px 6px;
+    border: 1px solid transparent;
+    background-color: transparent;
+    /*background-image: none;*/
+    color: @foreground;
+}
+
+.menubar.menuitem:hover,
+.menubar .menuitem:hover,
+.menubar .menuitem *:hover {
+    border: none;
+    background-color: @selection;
+    /*background-image: none;*/
+    color: @selected_foreground;
+}
+
+/* Separator */
+.menubar .menuitem.separator,
+.menubar.menuitem.separator {
+    -GtkMenuItem-horizontal-padding: 0;
+    -GtkWidget-separator-height: 1;
+    border: none;
+    color: @menu_separator;
+}
+
+
+/*******************
+ * Checks & Radios *
+ *******************/
+
+ .menuitem.radio,
+ .menuitem.check {
+    background: none;
+    border-style: none;
+}
+
+
+.menuitem.check,
+.menuitem.radio,
+.menuitem.check:hover,
+.menuitem.radio:hover,
+.menuitem.check:insensitive,
+.menuitem.radio:insensitive {
+    background-color: transparent;
+}
+
+.menuitem.check:active,
+.menuitem.radio:active {
+    border-style: none;
+    background-color: transparent;
+    color: white;
+}
+
+.menuitem.check:active,
+.menuitem.check:active:hover,
+.menuitem.check:active:insensitive,
+.menuitem.check:inconsistent:hover,
+.menuitem.radio:inconsistent:hover ,
+.menuitem.check:inconsistent,
+.menuitem.radio:inconsistent,
+.menuitem.check:inconsistent:insensitive,
+.menuitem.radio:inconsistent:insensitive,
+.menuitem.radio:active,
+.menuitem.radio:active:hover,
+.menuitem.radio:active:insensitive {
+    color: transparent;
+}

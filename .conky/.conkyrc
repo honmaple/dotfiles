@@ -1,0 +1,109 @@
+#conky engine
+own_window yes
+own_window_hints above
+own_window_class Conky
+own_window_type override
+own_window_transparent yes
+
+#conky position
+alignment top_right
+gap_x 0
+gap_y 0
+
+#conky size
+maximum_width 250
+minimum_size 250 700
+
+#fonts and colors
+default_color cccccc
+default_outline_color cccccc
+default_shade_color cccccc
+use_xft yes
+font Monospace:size=10
+xftfont Ubuntu:size=10
+uppercase no
+color0 000000 #black
+color1 ffffff #white
+color2 96d952 #mint green
+color3 ca051b #ubuntu red
+color4 ff6811 #ubuntu orange
+color5 fffb1f #ubuntu yellow
+color6 06204c #fedora dark blue
+color7 3b6db4 #fedora light blue
+color8 00ff00 #green
+color9 ff0000 #red
+
+#other settings
+background yes
+border_width 1
+cpu_avg_samples 2
+double_buffer yes
+draw_borders no
+draw_graph_borders yes
+draw_outline no
+draw_shades no
+net_avg_samples 2
+no_buffers yes
+out_to_console no
+out_to_stderr no
+extra_newline no
+stippled_borders 0
+update_interval 1.0
+use_spacer none
+show_graph_scale no
+show_graph_range no
+
+TEXT
+${font Neuropol:size=20}${voffset 5}${alignr}Fedora${color}${font} 
+
+${alignr}${color7}${kernel}${color}  
+${voffset 5}${goto 25}${alignr}${nodename} ${sysname} ${machine}  
+${font Monospace:size=50}${goto 25}${time %H}${font Monospace:size=20}${voffset -25}${goto 90}:${time %M}${font}  
+${font Monospace:size=20}${voffset -2}${goto 90} ${time %S}${font}    
+${font Monospace:size=10}${voffset -40}
+${alignr}${time %Y-%m-%d}  
+${alignr}[ ${uptime} ]  
+#${voffset 5}${goto 25}[ ${battery_short} ] ${alignr}${battery_bar 10, 135}  
+
+  ${font Ubuntu:style=Bold}${voffset -5}${color7}System ${stippled_hr}${color}${font} 
+    cpu 1 ${goto 60}[ ${cpu cpu1}% ] ${alignr}${cpubar cpu1 10,135}  
+    cpu 2 ${goto 60}[ ${cpu cpu2}% ] ${alignr}${cpubar cpu2 10,135}  
+    cpu 3 ${goto 60}[ ${cpu cpu3}% ] ${alignr}${cpubar cpu3 10,135}  
+    cpu 4 ${goto 60}[ ${cpu cpu4}% ] ${alignr}${cpubar cpu4 10,135}  
+    ${alignc}${cpugraph cpu0 30, 232}    ${voffset 5}
+    Ram ${goto 60}[ ${memperc}% ] ${alignr}${membar 10,135}  
+    ${alignr}${memgraph 30,232}  
+
+  ${font Ubuntu:style=Bold}${voffset -5}${color7}Network ${stippled_hr}${color}${font}
+    ${if_existing /proc/net/route wlp6s0}${wireless_essid wlp6s0} [${wireless_link_qual_perc wlp6s0}%]${alignr}${wireless_bitrate wlp6s0}  
+    local ip: ${alignr}${addrs wlp6s0}  
+    ${else}no network connection !${endif}
+    IP Address: ${alignr}${addrs ppp0}
+    
+    ${upspeed enp7s0}
+    ${totalup enp7s0}
+    ${font PizzaDude Bullets:size=20}${voffset -30}${goto 89}N${font}
+    ${voffset -32}${alignr}${upspeedgraph enp7s0 30,135}  
+    ${downspeed enp7s0}
+    ${totaldown enp7s0}
+    ${font PizzaDude Bullets:size=20}${voffset -30}${goto 89}T${font}
+    ${voffset -32}${alignr}${downspeedgraph enp7s0 30,135}  
+
+  ${font Ubuntu:style=Bold}${voffset -5}${color7}Processes ${stippled_hr}${color}${font}
+    total/running: ${alignr}[${processes} / ${running_processes}]  
+    ${voffset 5}name ${goto 140}pid ${goto 180}mem ${goto 220}cpu${font}
+    ${voffset -10}${stippled_hr}${font Ubuntu:size=8}
+      ${top name 1} ${goto 140}${top pid 1} ${goto 180} ${top cpu 1} ${goto 220} ${top mem 1}
+      ${top name 2} ${goto 140}${top pid 2} ${goto 180} ${top cpu 2} ${goto 220} ${top mem 2}
+      ${top name 3} ${goto 140}${top pid 3} ${goto 180} ${top cpu 3} ${goto 220} ${top mem 3}
+      ${top name 4} ${goto 140}${top pid 4} ${goto 180} ${top cpu 4} ${goto 220} ${top mem 4}
+      ${top name 5} ${goto 140}${top pid 5} ${goto 180} ${top cpu 5} ${goto 220} ${top mem 5}${font}
+
+  ${font Ubuntu:style=Bold}${voffset -5}${color7}Filesystem ${stippled_hr}${color}${font}
+    boot ${goto 85}[${fs_used_perc /boot}%] ${fs_bar 8,125 /boot}${font Ubuntu:size=8}
+        ${fs_type /boot}  ${goto 125}${fs_used /boot} / ${fs_size /boot} ${font}
+    root ${goto 85}[${fs_used_perc /}%] ${fs_bar 8,125 /}${font Ubuntu:size=8}
+        ${fs_type /}  ${goto 125}${fs_used /} / ${fs_size /} ${font}
+    home ${goto 85}[${fs_used_perc /home}%] ${fs_bar 8,125 /home}${font Ubuntu:size=8}
+        ${fs_type /home}  ${goto 125}${fs_used /home} / ${fs_size /home} ${font}
+${image ~/.conky/bg-fedora.png -p -0,-0 -s 250x732}

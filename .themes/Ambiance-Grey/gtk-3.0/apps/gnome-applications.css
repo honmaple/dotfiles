@@ -1,0 +1,20 @@
+/***************
+ * font-viewer *
+ ***************/
+SushiFontWidget {
+    padding: 6px 12px;
+}
+
+/*************
+ * gucharmap *
+ *************/
+GucharmapChartable {
+    background-color: @base;
+}
+
+GucharmapChartable:active,
+GucharmapChartable:focus,
+GucharmapChartable:selected {
+    background-color: @selected_background;
+    color: @selected_foreground;
+}

@@ -1,0 +1,308 @@
+/**********************
+ * Common Definitions *
+ **********************/
+
+/* Insensitive colors */
+@define-color insensitive_base shade(@base, 0.95);
+@define-color insensitive_background alpha(@base, 0.0);
+@define-color insensitive_foreground shade(@foreground, 1.05);
+@define-color insensitive_border shade(@border, 1.05);
+@define-color insensitive_separator shade(@separator, 1.05);
+@define-color insensitive_text alpha(@text, 0.4);
+@define-color insensitive_selection shade(@selection, 1.05);
+
+/* Unfocused colors */
+@define-color backdrop_base shade(@base, 0.95);
+@define-color backdrop_background shade(@background, 0.99);
+@define-color backdrop_foreground shade(@foreground, 1.02);
+@define-color backdrop_border shade(@border, 0.99);
+@define-color backdrop_separator shade(@separator, 0.99);
+@define-color backdrop_text shade(@text, 1.2);
+@define-color backdrop_selection shade(@selection, 1.3);
+@define-color backdrop_gradient_a shade(@background, 0.99);
+@define-color backdrop_gradient_b shade(@background, 0.99);
+
+/* Unfocused-insensitive colors */
+@define-color backdrop_insensitive_border mix(@backdrop_background, @backdrop_border, 0.5);
+@define-color backdrop_insensitive_foreground mix(@backdrop_background, @backdrop_foreground, 0.5);
+@define-color backdrop_insensitive_background mix(@backdrop_background, @backdrop_base, 0.5);
+@define-color backdrop_insensitive_text alpha(@text, 0.4);
+
+/* Unfocused-selected colors */
+@define-color backdrop_selected_background shade(@backdrop_background, 0.95);
+@define-color backdrop_selected_foreground @foreground;
+
+/* Hover colors */
+@define-color hover_base shade(@base, 1.02);
+@define-color hover_background rgba(255,255,255,0.2);
+@define-color hover_foreground shade(@foreground, 1.02);
+@define-color hover_border shade(@border, 1.02);
+@define-color hover_text shade(@text, 1.02);
+@define-color hover_selection shade(@selection, 1.3);
+
+/* Active colors */
+@define-color active_base shade(@base, 0.8);
+@define-color active_background shade(@background, 0.8);
+@define-color active_foreground shade(@foreground, 0.8);
+@define-color active_border shade(@border, 0.8);
+@define-color active_text shade(@text, 1.3);
+@define-color active_selection shade(@selection, 0.8);
+
+/* Selected color */
+@define-color selected_background @selection;
+@define-color selected_foreground white;
+
+/****************
+ * Theme colors *
+  ***************/
+@define-color theme_base @base;
+
+@define-color theme_background @background;
+@define-color theme_foreground @foreground;
+
+@define-color theme_selected_background @selected_background;
+@define-color theme_selected_foreground @selected_foreground;
+
+@define-color theme_text @text;
+
+
+/*****************
+ * Switch colors *
+ *****************/
+
+@define-color switch_background shade(@background, 1.02);
+
+
+/*****************
+ * Button colors *
+ *****************/
+
+@define-color button_gradient_a shade(@gradient_a, 1.02);
+@define-color button_gradient_b shade(@gradient_b, 1.02);
+
+@define-color button_active_gradient_a @gradient_b;
+@define-color button_active_gradient_b @gradient_a;
+
+@define-color button_hover_gradient_a shade(@gradient_a, 1.05);
+@define-color button_hover_gradient_b shade(@gradient_b, 1.05);
+
+@define-color button_insensitive_gradient_a @insensitive_background;
+@define-color button_insensitive_gradient_b @insensitive_background;
+
+@define-color button_backdrop_gradient_a @backdrop_background;
+@define-color button_backdrop_gradient_b @backdrop_background;
+
+@define-color button_active_text @active_text;
+@define-color button_active_text_shadow alpha(@base, 0.2);
+
+@define-color button_text_shadow alpha(@base, 0.2);
+
+@define-color suggested_action_button_a shade(@selection, 1.1);
+@define-color suggested_action_button_b shade(@suggested_action_button_a, 0.95);
+@define-color suggested_action_button_border shade(@selection, 0.8);
+@define-color suggested_action_button_foreground white;
+@define-color suggested_action_button_shadow shade(@suggested_action_button_border, 1.15);
+
+
+/**************
+ * Scrollbars *
+ **************/
+@define-color scrollbar_trough shade(@background,0.95);
+@define-color scrollbar_trough_insensitive shade(@insensitive_background,0.95);
+@define-color scrollbar_trough_backdrop shade(@backdrop_background,0.95);
+
+/****************
+ * Progressbars *
+ ****************/
+
+@define-color progressbar_border @border;
+
+@define-color progressbar_background_a shade(@selected_background, 1.1);
+@define-color progressbar_background_b @selected_background;
+
+@define-color insensitive_progressbar_background_a @insensitive_border;
+@define-color insensitive_progressbar_background_b @insensitive_border;
+
+@define-color backdrop_progressbar_background_a shade(@backdrop_background, 0.85);
+@define-color backdrop_progressbar_background_b shade(@backdrop_background, 0.85);
+
+
+/***********
+ * Troughs *
+ ***********/
+@define-color trough_active @selected_background;
+
+@define-color trough_background shade(@background,0.95);
+@define-color insensitive_trough_background shade(@insensitive_background, 0.95);
+@define-color backdrop_trough_background shade(@backdrop_background, 0.98);
+
+
+/*********************
+ * Internal elements *
+ *********************/
+@define-color internal_element shade(@background, 0.7);
+@define-color internal_element_prelight @text;
+@define-color internal_element_insensitive mix(@internal_element, @base, 0.7);
+
+@define-color inset_light alpha(white, 0.45);
+@define-color inset_dark alpha(black, 0.07);
+
+/*****************
+ * Miscellaneous *
+ *****************/
+@define-color content_view_background @background;
+@define-color list_box_background @background;
+
+@define-color view_separators shade(@border, 1.30);
+@define-color view_symbolic shade(@internal_element, 0.50);
+
+/* Scale colors */
+@define-color scale_progress_fill @selected_background;
+
+/* Insensitive scale border */
+@define-color insensitive_scale_border @insensitive_border;
+
+/* GNOME Apps */
+@define-color entry_tag_background #3465a4;
+@define-color entry_tag_foreground @base;
+
+/* Internal Elements */
+@define-color internal_element_color @border;
+@define-color internal_element_prelight @text;
+@define-color internal_element_insensitive mix(@internal_element_color, @base, 0.7);
+
+/******************************
+ * Destructive action buttons *
+ ******************************/
+@define-color destructive_action_button_a @error;
+@define-color destructive_action_button_b shade(@error, 0.9);
+@define-color destructive_action_button_border shade(@error, 0.8);
+@define-color destructive_action_button_foreground @base;
+@define-color destructive_action_button_shadow alpha(@base, 0.5);
+
+
+/**************************
+ * Selection Mode classes *
+ **************************/
+@define-color selection_toolbar_background_a shade(@selection, 1.1);
+@define-color selection_toolbar_background_b @selection;
+@define-color selection_toolbar_background_backdrop @selection_toolbar_background_a;
+@define-color selection_toolbar_foreground @base;
+@define-color selection_toolbar_shadow alpha(white, 0.40);
+@define-color selection_toolbar_border shade(@selection_toolbar_background_b, 0.75);
+
+@define-color selection_toolbar_button_a @button_gradient_a;
+@define-color selection_toolbar_button_b @button_gradient_b;
+@define-color selection_toolbar_button_foreground @base;
+@define-color selection_toolbar_button_border @border;
+@define-color selection_toolbar_button_border_backdrop alpha(@selection_toolbar_button_border, 0.30);
+@define-color selection_toolbar_button_shadow alpha(white, 0.15);
+
+@define-color selection_toolbar_suggested_button_a @base;
+@define-color selection_toolbar_suggested_button_b @background;
+@define-color selection_toolbar_suggested_button_c #f7f7f7;
+@define-color selection_toolbar_suggested_button_foreground @text;
+@define-color selection_toolbar_suggested_button_border @selection_toolbar_button_border;
+@define-color selection_toolbar_suggested_button_border_backdrop @selection_toolbar_button_border_backdrop;
+
+@define-color selection_menu_foreground @selection_toolbar_foreground;
+@define-color selection_menu_hover shade(@selection_menu_foreground, 0.50);
+@define-color selection_menu_active shade(@selection_menu_foreground, 0.60);
+
+/* OSD */
+@define-color osd_base @panel;
+@define-color osd_foreground @text;
+@define-color osd_background @panel;
+
+/* Tooltips */
+@define-color tooltip_background @text;
+@define-color tooltip_foreground @background;
+@define-color theme_tooltip_background @tooltip_background;
+@define-color theme_tooltip_foreground @tooltip_foreground;
+
+/* Hightlight & shadow colors */
+@define-color highlight #fff;
+@define-color shadow #000;
+
+/***********
+ * Popover *
+ ***********/
+@define-color osd_popover_background alpha(@osd_base, 0.90);
+
+/******************
+ * Infobar colors *
+ ******************/
+
+@define-color infobar_background #a348b1;
+@define-color infobar_foreground @foreground;
+
+@define-color link #a348b1;
+@define-color question #60ade8;
+@define-color warning #f49f25;
+@define-color error #e50e0e;
+@define-color success #6bc810;
+@define-color info #f5f697;
+
+/* Info colors */
+@define-color info_foreground #333333;
+@define-color info_text_shadow alpha(white, 0.2);
+@define-color info_background @info;
+@define-color info_border shade(@info_background, 0.9);
+
+/* Warning colors */
+@define-color warning_foreground #333333;
+@define-color warning_text_shadow alpha(white, 0.2);
+@define-color warning_background @warning;
+@define-color warning_border shade(@warning_background, 0.9);
+
+/* Question colors */
+@define-color question_foreground white;
+@define-color question_text_shadow alpha(black, 0.2);
+@define-color question_background @question;
+@define-color question_border shade(@question_background, 0.9);
+
+/* Error colors */
+@define-color error_foreground white;
+@define-color error_text_shadow alpha(black, 0.5);
+@define-color error_background @error;
+@define-color error_border shade(@error_background, 0.9);
+
+/******
+ * WM *
+ ******/
+@define-color wm_title @text;
+@define-color wm_backdrop_title @backdrop_foreground;
+@define-color wm_highlight #ffffff;
+@define-color wm_title_highlight_dark alpha(#ffffff, 0.2);
+@define-color wm_title_highlight #ffffff;
+@define-color wm_title_shadow @wm_title_highlight;
+
+@define-color wm_gradient_a @gradient_a;
+@define-color wm_gradient_b @gradient_b;
+
+@define-color wm_shadow alpha(black, 0.4);
+
+@define-color wm_button_gradient_a @button_gradient_a;
+@define-color wm_button_gradient_b @button_gradient_b;
+
+@define-color wm_button_hover_gradient_a @button_hover_gradient_a;
+@define-color wm_button_hover_gradient_b @button_hover_gradient_b;
+
+@define-color wm_button_active_gradient_a @button_active_gradient_a;
+@define-color wm_button_active_gradient_b @button_active_gradient_b;
+
+/***********
+ * Imports *
+ ***********/
+
+/* Import App-Specific CSS */
+@import url("apps/baobab.css");
+@import url("apps/fallback-panel.css");
+@import url("apps/gedit.css");
+@import url("apps/gnome-applications.css");
+@import url("apps/gnome-documents.css");
+@import url("apps/gnome-terminal.css");
+@import url("apps/nautilus.css");
+@import url("apps/noise.css");
+@import url("apps/pantheon-applications.css");
+@import url("apps/unity.css");

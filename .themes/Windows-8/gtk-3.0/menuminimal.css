@@ -1,0 +1,81 @@
+* {  
+/*
+	-GtkMenu-horizontal-padding: 2px;
+	-GtkMenu-vertical-padding: 2px;  
+
+*/
+	border-width: 0px;
+	border-color: #f5f6f7;
+	border-style: solid;
+
+	padding: 2px 2px 2px 2px;
+	-GtkMenuBar-internal-padding: 0;
+	-GtkMenuItem-arrow-scaling: 0.6;
+}
+
+/*
+*:insensitive{
+	border-color:none;
+}
+*/
+.menuitem:insensitive,
+.menuitem *:insensitive{
+
+	border-color:none;
+}
+.menu {
+	background-color: @menu_bg_color;
+
+	border-color: #b8cadc;
+}
+
+.menubar,
+.app-menu {
+	background-color: #f5f6f7;
+}
+
+.menubar.menuitem:prelight {
+	background-color:#eaf3fc;
+	border-color: #7eb4ea;
+	border-style: solid;
+}
+
+.menuitem {
+
+	border-radius: 0px;
+	border-style: solid;
+	-unico-inner-stroke-width: 1px;	
+}
+
+.menuitem:active,
+.menuitem:prelight,
+.menuitem *:active,
+.menuitem *:prelight {
+	background-color:#d0deed;
+	border-color: #78aee5;
+
+}
+
+.menuitem.check:active,
+.menuitem.radio:active {
+	engine:unico;
+	color: @theme_fg_color;
+	-unico-bullet-color: @theme_fg_color;
+}
+
+.menuitem.check:active:prelight,
+.menuitem.radio:active:prelight {
+	engine:unico;
+	color: @selected_fg_color;
+	-unico-bullet-color: #3c7fb1;
+}
+
+.menuitem.separator {
+	-GtkMenuItem-horizontal-padding: 0;
+	-GtkWidget-separator-height: 4;
+/*	padding: 2px 0 2px 25px;*/
+	border-style: solid;
+	border-width: 1px;
+	border-color: shade (@theme_bg_color, 0.95);
+}
+

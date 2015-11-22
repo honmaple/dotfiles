@@ -1,0 +1,53 @@
+/*****************
+ * Column header *
+ *****************/
+ 
+column-header .button {
+    border-width: 0 1px 1px 0;
+    border-radius: 0;
+}
+
+column-header .button,
+column-header .button:active,
+column-header .button:focus,
+column-header .button:active:focus {
+    border: solid @border;
+    border-width: 0 1px 1px 0;
+    background-color: @background;
+    background-image: none;
+}
+
+column-header .button:hover,
+column-header .button:active:hover,
+column-header .button:hover:focus,
+column-header .button:active:hover:focus {
+    border: solid @border;
+    border-width: 0 1px 1px 0;
+    background-color: shade(@background,1.02);
+    background-image: none;
+}
+
+column-header .button:backdrop,
+column-header .button:active:backdrop,
+column-header .button:active:focus:backdrop,
+column-header .button:backdrop:focus,
+column-header .button:active:backdrop:focus {
+    border: solid @backdrop_border;
+    border-width: 0 1px 1px 0;
+    background-color: @backdrop_background;
+    background-image: none;
+}
+
+column-header .button:insensitive,
+column-header .button:active:insensitive,
+column-header .button:insensitive:focus,
+column-header .button:active:insensitive:focus {
+    border: solid @insensitive_border;
+    border-width: 0 1px 1px 0;
+    background-color: @backdrop_background;
+    background-image: none;
+}
+
+column-header:last-child .button {
+    border-width: 0 0 1px 0;
+}

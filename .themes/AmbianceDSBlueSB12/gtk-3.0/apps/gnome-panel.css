@@ -1,0 +1,81 @@
+/* Fallback Mode Panel */
+PanelWidget,
+PanelApplet,
+PanelToplevel {
+    background-image: none;
+    background-color: alpha (@bg_color, 0.7);
+    padding: 0;
+
+    color: @dark_fg_color;
+}
+
+.gnome-panel-menu-bar,
+PanelApplet > GtkMenuBar.menubar,
+PanelApplet > GtkMenuBar.menubar.menuitem,
+PanelMenuBar.menubar,
+PanelMenuBar.menubar.menuitem {
+    background-image: none;
+    background-color: alpha (@bg_color, 0.7);
+    border-color: alpha (@fg_color, 0.4);
+    border-style: solid;
+    border-radius: 0px;
+    border-width: 1px 1px 0 1px;
+}
+
+PanelAppletFrame { 
+    background-color: alpha (@_bg_color, 0.7);
+    background-image: none;
+    
+}
+
+PanelApplet .button {
+    background-image: -gtk-gradient (linear, left top, left bottom,
+                                     from (shade (@dark_bg_color, 1.5)),
+                                     to (shade (@dark_bg_color, 1.05)));
+/*    border-color: alpha (@fg_color, 0.2);
+    border-radius: 0;
+    border-width: 0 1px 0 1px; */
+
+    text-shadow: none;
+
+/*    -unico-border-gradient: none;
+    -unico-glow-radius: 0;
+    -unico-inner-stroke-width: 0;
+    -unico-outer-stroke-width: 0; */
+}
+
+PanelApplet .button:prelight:active,
+PanelApplet .button:active {
+    background-image: none;
+    background-color: alpha (@bg_color, 0.7); 
+    border-color: alpha (@fg_color, 0.3);
+    border-radius: 0;
+    border-width: 0 1px 0 1px;
+
+/*    -unico-border-gradient: none;
+    -unico-glow-radius: 0;
+    -unico-inner-stroke-width: 0;
+    -unico-outer-stroke-width: 0; */
+}
+
+PanelApplet .button:prelight {
+    background-image: -gtk-gradient (linear, left top, left bottom,
+                                     from (alpha (@selected_bg_color, 0.5)),
+                                     to (alpha (@selected_bg_color, 0.9)));
+    border-color: alpha (@fg_color, 0.4);
+    border-radius: 0;
+    border-width: 0 1px 0 1px;
+
+/*    -unico-border-gradient: none;
+    -unico-glow-radius: 0;
+    -unico-inner-stroke-width: 0;
+    -unico-outer-stroke-width: 0; */
+}
+
+ClockBox {
+    text-shadow: 0px -1px shade (@dark_bg_color, 0.6);
+}
+
+WnckPager, WnckTasklist {
+    background-color: @dark_bg_color;
+}

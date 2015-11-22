@@ -1,0 +1,22 @@
+/***************
+ * Search bars *
+ ***************/
+
+.search-bar {
+    border-width: 0 0 1px;
+    border-style: solid;
+    border-color: shade(@border, 0.90);
+
+    background-color: shade(@background, 0.98);
+}
+
+.search-bar:backdrop {
+    border: 1px solid @backdrop_border;
+    box-shadow: none;
+
+    background-color: @backdrop_background;
+}
+
+.search-bar .button.close-button {
+    padding: 5px 4px 5px 5px;
+}

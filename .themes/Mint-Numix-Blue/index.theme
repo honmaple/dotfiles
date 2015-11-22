@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Mint-Numix-Blue
+Comment=A Linux Mint theme based on Numix
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Mint-Numix-Blue
+MetacityTheme=Mint-Numix-Blue
+IconTheme=Mint-X-Aqua
+CursorTheme=DMZ-Black

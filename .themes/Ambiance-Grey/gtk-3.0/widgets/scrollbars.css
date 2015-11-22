@@ -1,0 +1,185 @@
+/**************
+ * Scrollbars *
+ **************/
+ 
+.scrollbar {
+    background-image: none;
+    border-style: solid;
+    border: 1px solid transparent;
+    -GtkScrollbar-has-backward-stepper: false;
+    -GtkScrollbar-has-forward-stepper: false;
+    -GtkRange-slider-width: 8;
+    -GtkScrollbar-min-slider-length: 60;/* minimum size for the slider. sadly can't be in '.slider' where it belongs */
+
+    -GtkRange-stepper-spacing: 0;
+    -GtkRange-trough-under-steppers: 1;
+}
+
+/* Buttons */
+.scrollbar.button,
+.scrollbar.button:active,
+.scrollbar.button:active:hover,
+.scrollbar.button:insensitive,
+.scrollbar.button:hover:backdrop,
+.scrollbar.button:active:hover:backdrop {
+    border-style: none;
+    border-image: none;
+    border-radius: 0;
+    background-image: none;
+    background-color: transparent;
+}
+
+.scrollbar.button:active,
+.scrollbar.button:active:hover {
+    background-color: mix(@scrollbar_slider, @scrollbar_trough, 0.8);
+}
+
+.scrollbar.button.top:hover {
+    box-shadow: inset 0 -1px mix(@scrollbar_slider, @scrollbar_trough, 0.8);
+}
+
+.scrollbar.button.bottom:hover {
+    box-shadow: inset 0 1px mix(@scrollbar_slider, @scrollbar_trough, 0.8);
+}
+
+.scrollbar.button.right:hover {
+    box-shadow: inset 1px 0 mix(@scrollbar_slider, @scrollbar_trough, 0.8);
+}
+
+.scrollbar.button.left:hover {
+    box-shadow: inset -1px 0 mix(@scrollbar_slider, @scrollbar_trough, 0.8);
+}
+
+.scrollbar.button.top:hover:backdrop,
+.scrollbar.button.bottom:hover:backdrop,
+.scrollbar.button.right:hover:backdrop,
+.scrollbar.button.left:hover:backdrop {
+    box-shadow: none;
+}
+
+.scrollbar.button {
+    color: @scrollbar_slider;
+}
+
+.scrollbar.button:hover {
+    color: @scrollbar_slider_prelight;
+}
+
+.scrollbar.button:insensitive {
+    color: mix(@scrollbar_slider, @scrollbar_trough, 0.4);
+}
+
+.scrollbar.button:active {
+    color: @scrollbar_slider_active;
+}
+
+.scrollbar.button:backdrop {
+    color: @scrollbar_slider_backdrop;
+}
+
+.scrollbar.button:insensitive:backdrop {
+    color: mix(@scrollbar_slider_backdrop, @scrollbar_trough_backdrop, 0.5);
+}
+
+/* Slider */
+.scrollbar.slider {
+    background-color: alpha(@foreground, 0.2);
+    /* Borders are opposite what you'd expect */
+    border-radius: 10px;
+    border: 1px solid alpha(@foreground, 0.2);
+}
+
+.scrollbar.slider:hover {
+    background-color: alpha(@selection, 0.8);
+    background-image: none;
+    border: 1px solid @selection;
+}
+
+.scrollbar.slider:active {
+    background-color: alpha(@selection, 0.7);
+    background-image: none;
+    border: 1px solid @selection;
+}
+
+.scrollbar.slider:prelight:active {
+    background-image: none;
+    background-color: alpha(@foreground, 0.3);
+    border: 1px solid alpha(@foreground, 0.5);
+}
+
+.scrollbar.slider:insensitive {
+    background-color: alpha(@insensitive_foreground, 0.2);
+    border: 1px solid  alpha(@insensitive_foreground, 0.4);
+}
+
+.scrollbar.slider:backdrop {
+    background-color: alpha(@backdrop_foreground, 0.2);
+    border: 1px solid alpha(@backdrop_foreground, 0.4);
+}
+
+.scrollbar.slider.fine-tune:prelight:active {
+      background-image: none;
+      border: 3px solid transparent;
+}
+
+
+/* Troughs */
+.scrollbars-junction, /* the small square between scrollbars!!! */
+.scrollbar.trough {
+    border-radius: 10px;
+    background-image: none;
+    background-color: transparent;
+    border-width: 0;
+    border-image: none;
+}
+
+.scrollbar.trough:insensitive {
+    background-color: transparent;
+    border: 3px solid transparent;
+}
+
+.scrollbars-junction:backdrop,
+.scrollbar.trough:backdrop {
+    background-image: none;
+    background-color: transparent;
+    border-width: 0;
+    border-radius: 0;
+    border-image: none;
+}
+
+.scrollbar.trough:insensitive:backdrop {
+    background-image: none;
+    background-color: transparent;
+    border-width: 0;
+    border-radius: 0;
+    border-image: none;
+}
+
+/**********************
+ * Overlay Scrollbars *
+ *********************/
+OsThumb {
+    color: @selection;
+}
+
+OsThumb:selected,
+OsScrollbar:selected {
+    background-color: @selection;
+}
+
+OsThumb:active,
+OsScrollbar:active {
+    background-color: @selection;
+}
+
+OsThumb:active:backdrop,
+OsScrollbar:active:backdrop,
+OsThumb:backdrop,
+OsScrollbar:backdrop {
+    background-color: @backdrop_foreground;
+}
+
+OsThumb:insensitive,
+OsScrollbar:insensitive {
+    background-color: @insensitive_foreground;
+}

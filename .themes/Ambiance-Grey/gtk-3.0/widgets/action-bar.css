@@ -1,0 +1,44 @@
+/***************
+ * Action bars *
+ ***************/
+.action-bar {
+    border-width: 1px 0 0;
+    border-style: solid;
+    border-color: shade(@border, 0.90);
+
+    box-shadow: inset 0 -1px shade(@border, 1.30);
+    background-image: linear-gradient(to bottom,
+                                      shade(@background, 1.05),
+                                      shade(@background, 0.95)
+                                      );
+
+    padding: 6px 6px 5px 6px;
+}
+
+.action-bar:backdrop {
+    border-image: linear-gradient(to top,
+                                  @backdrop_border,
+                                  @backdrop_border 1px,
+                                  @backdrop_background 1px) 0 0 2;
+    box-shadow: none;
+    background-image: none;
+    background-color: @backdrop_background;
+}
+
+.action-bar .button.text-button {
+    padding: 2px 16px;
+}
+
+.action-bar .button.image-button {
+    padding: 5px 5px 4px 5px;
+}
+
+.action-bar .title {
+    font: Bold 11;
+    padding: 0px 12px 0px 12px;
+}
+
+.action-bar .subtitle {
+    font: 9;
+    padding: 0px 12px 0px 12px;
+}

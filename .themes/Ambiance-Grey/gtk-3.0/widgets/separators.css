@@ -1,0 +1,39 @@
+/**************
+ * Separators *
+ **************/
+ 
+.pane-separator {
+    -GtkPaned-handle-size: 2px;
+    background-color: @background;
+    color: @base;
+}
+
+.pane-separator:hover,
+.pane-separator:selected {
+    color: @text;
+}
+
+.pane-separator:backdrop,
+.pane-separator:hover:backdrop {
+    background-color: @background;
+}
+
+.notebook .pane-separator,
+.notebook .pane-separator:hover {
+    background-color: @hover_background;
+}
+
+.notebook .pane-separator:backdrop,
+.notebook .pane-separator:hover:backdrop {
+    background-color: @base;
+}
+
+.sidebar-pane-separator,
+.sidebar-pane-separator:hover,
+.sidebar-pane-separator:selected {
+    border-width: 0;
+    -GtkPaned-handle-size: 2px;
+    background-image: none;
+    background-color: @border;
+    border: 1px solid @border;
+}

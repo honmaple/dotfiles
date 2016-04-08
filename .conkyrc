@@ -1,112 +1,146 @@
-#conky engine
+######################
+# - Conky settings - #
+######################
+background yes
+update_interval 1
+total_run_times 0
+net_avg_samples 1
+cpu_avg_samples 1
+if_up_strictness link
+
+imlib_cache_size 0
+double_buffer yes
+no_buffers yes
+
+format_human_readable
+
+#####################
+# - Text settings - #
+#####################
+use_xft yes
+xftfont WenQuanYi Micro Hei:size=8
+override_utf8_locale yes
+text_buffer_size 2048
+
+#############################
+# - Window specifications - #
+#############################
 own_window yes
 own_window_hints above
 own_window_class Conky
 own_window_type override
 own_window_transparent yes
 
-#conky position
+#own_window_class Conky
+#own_window yes
+#own_window_type normal
+#own_window_transparent yes
+#own_window_argb_visual yes
+#own_window_argb_value 200
+#own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+
 alignment top_right
-gap_x 0
-gap_y 0
+gap_x 25
+gap_y 40
+minimum_size 230 700
+maximum_width 230
 
-#conky size
-maximum_width 250
-minimum_size 250 700
+default_bar_size 60 8
 
-#fonts and colors
-default_color cccccc
-default_outline_color cccccc
-default_shade_color cccccc
-use_xft yes
-font Monospace:size=10
-xftfont Ubuntu:size=10
-uppercase no
-color0 000000 #black
-color1 ffffff #white
-color2 96d952 #mint green
-color3 ca051b #ubuntu red
-color4 ff6811 #ubuntu orange
-color5 fffb1f #ubuntu yellow
-color6 06204c #fedora dark blue
-color7 3b6db4 #fedora light blue
-color8 00ff00 #green
-color9 ff0000 #red
-
-#other settings
-background yes
-border_width 1
-cpu_avg_samples 2
-double_buffer yes
-draw_borders no
-draw_graph_borders yes
-draw_outline no
+#########################
+# - Graphics settings - #
+#########################
 draw_shades no
-net_avg_samples 2
-no_buffers yes
-out_to_console no
-out_to_stderr no
-extra_newline no
-stippled_borders 0
-update_interval 1.0
-use_spacer none
-show_graph_scale no
-show_graph_range no
+
+default_color cccccc
+
+color0 cyan
+color1 green
+color2 orange
+color3 green
 
 TEXT
-${font Neuropol:size=20}${voffset 5}${alignr}Fedora${color}${font} 
+${font WenQuanYi Micro Hei:style=Bold:size=8}系统状态 $stippled_hr${font}
+##############
+# - SYSTEM - #
+##############
+${color0}${voffset 6}${font ConkyColorsLogos:size=19}a${font}${color}${goto 32}${voffset -14}内核版本:  ${alignr}${color2}${kernel}${color}
+# |--CPU
+${voffset 4}${color0}${font ConkyColors:size=16}c${font}${offset -20}${voffset 6}${cpubar cpu0 4,17}${color}${voffset -16}${goto 32}CPU0 负荷: ${font Ubuntu:style=Bold:size=8}${color1}${cpu cpu1}%${color}${font} ${alignr}${color2}${cpugraph cpu1 10,90 }${color}
+${goto 32}CPU1 负荷: ${font Ubuntu:style=Bold:size=8}${color1}${cpu cpu2}%${color}${font} ${alignr}${color2}${cpugraph cpu2 10,90 }${color}
+${goto 32}CPU2 负荷: ${font Ubuntu:style=Bold:size=8}${color1}${cpu cpu3}%${color}${font} ${alignr}${color2}${cpugraph cpu3 10,90 }${color}
+${goto 32}CPU3 负荷: ${font Ubuntu:style=Bold:size=8}${color1}${cpu cpu4}%${color}${font} ${alignr}${color2}${cpugraph cpu4 10,90 }${color}
+${goto 32}CPU0 温度: ${font Ubuntu:style=Bold:size=8}${color1}${execi 4 sensors | grep "Core 0" | awk -F ' ' '{print $3}' | tr -d +}${color}${font}${goto 145}CPU1 温度: ${font Ubuntu:style=Bold:size=8}${color1}${execi 4 sensors | grep "Core 1" | awk -F ' ' '{print $3}' | tr -d +}${color}${font}
+# |--MEM
+${color0}${font Poky:size=16}M${font}${color}${goto 32}${voffset -7}内存占用率: ${font Ubuntu:style=Bold:size=8}${color1}$memperc%${color}${font}
+${offset 1}${voffset 2}${color0}${membar 4,18}${color}${goto 32}${voffset -2}总共: ${font Ubuntu:style=Bold:size=8}${color1}${memeasyfree}${color}${font}${goto 145}使用: ${font Ubuntu:style=Bold:size=8}${color1}${mem}${color}${font}
+# |--SWAP
+${voffset 2}${color0}${font ConkyColors:size=15}z${font}${color}${voffset -8}${goto 32}SWAP: ${font wqy-microhei:style=Bold:size=8}${color1}${swapperc}%${color}${font}
+${voffset 2}${offset 1}${color0}${swapbar 4,17}${color}${voffset -2}${goto 32}总共: ${font wqy-microhei:style=Bold:size=8}${color1}$swapmax${color}${font}${goto 145}使用: ${font wqy-microhei:style=Bold:size=8}${color1}$swap${color}${font}
+# |--PROC
+${voffset 2}${color0}${font Poky:size=15}a${font}${color}${goto 32}${voffset -10}TOP3 进程: ${color2}${alignr 43}CPU${alignr}RAM${color}
+${voffset 1}${goto 38}${color2}${top name 1}${color}${font Ubuntu:style=Bold:size=8}${color1}${alignr 43}${top cpu 1}${alignr}${top mem 1}${color}${font}
+${voffset -1}${goto 38}${color2}${top name 2}${color}${font Ubuntu:style=Bold:size=8}${color1}${alignr 43}${top cpu 2}${alignr}${top mem 2}${color}${font}
+${voffset -1}${goto 38}${color2}${top name 3}${color}${font Ubuntu:style=Bold:size=8}${color1}${alignr 43}${top cpu 3}${alignr}${top mem 3}${color}${font}
+#############
+# - CLOCK - #
+#############
+${voffset 4}${font wqy-microhei:style=Bold:size=8}日期时间 $stippled_hr${font}
+${voffset 9}${goto 24}${font clockfaces:size=50}P${font}
+${voffset -39}${goto 41}${font zoraclockH:size=30}${color2}${execpi 120 /usr/share/conkycolors/bin/conkyClock hour}${color}${font}
+${voffset -39}${goto 35}${font zoraclockM:size=40}${color2}${execpi 60 /usr/share/conkycolors/bin/conkyClock minute}${color}${font}
+${goto 125}${voffset -60}${font Ubuntu:style=Bold:size=11}${color2}${time %H}${time :%M}${time :%S}${color}${font}
+${goto 125}${voffset 0}${time %Y年%b%d日}${voffset 8}
+${goto 125}${voffset -8}${font WenQuanYi Micro Hei:style=Bold:size=8}${color2}${time %A}${color}${font}
+${goto 125}${voffset 0}${font WenQuanYi Micro Hei:size=8}${alignc}${execpi 300 ~/.conkycolors/bin/lunar}${font}
 
-${alignr}${color7}${kernel}${color}  
-${voffset 5}${goto 25}${alignr}${nodename} ${sysname} ${machine}  
-${font Ubuntu Mono:size=50}${goto 25}${time %H}${font Ubuntu Mono:size=20}${voffset -25}${goto 90}:${time %M}${font}  
-${font Ubuntu Mono:size=20}${voffset -2}${goto 90} ${time %S}${font}    
-${font Ubuntu Mono:size=10}${voffset -40}
-${alignr}${time %Y-%m-%d}  
-${alignr}[ ${uptime} ]  
-#${voffset 5}${goto 25}[ ${battery_short} ] ${alignr}${battery_bar 10, 135}  
-
-  ${font Ubuntu:style=Bold}${voffset -5}${color7}System ${stippled_hr}${color}${font} 
-    cpu 1 ${goto 60}[ ${cpu cpu1}% ] ${alignr}${cpubar cpu1 10,135}  
-    cpu 2 ${goto 60}[ ${cpu cpu2}% ] ${alignr}${cpubar cpu2 10,135}  
-    cpu 3 ${goto 60}[ ${cpu cpu3}% ] ${alignr}${cpubar cpu3 10,135}  
-    cpu 4 ${goto 60}[ ${cpu cpu4}% ] ${alignr}${cpubar cpu4 10,135}  
-    ${alignc}${cpugraph cpu0 30, 232}    ${voffset 5}
-    Ram ${goto 60}[ ${memperc}% ] ${alignr}${membar 10,135}  
-    Swap ${goto 60}[ ${swapperc}% ] ${alignr}${swapbar 10,135}  
-    ${alignr}${memgraph 30,232}  
-
-  ${font Ubuntu:style=Bold}${voffset -5}${color7}Network ${stippled_hr}${color}${font}
-    ${if_existing /proc/net/route wlp6s0}${wireless_essid wlp6s0} [${wireless_link_qual_perc wlp6s0}%]${alignr}${wireless_bitrate wlp6s0}  
-    local ip: ${alignr}${addrs wlp6s0}  
-    ${else}no network connection !${endif}
-    IP Address: ${alignr}${addrs ppp0}
-    
-    ${upspeed enp7s0}
-    ${totalup enp7s0}
-    ${font PizzaDude Bullets:size=20}${voffset -30}${goto 89}N${font}
-    ${voffset -32}${alignr}${upspeedgraph enp7s0 30,135}  
-    ${downspeed enp7s0}
-    ${totaldown enp7s0}
-    ${font PizzaDude Bullets:size=20}${voffset -30}${goto 89}T${font}
-    ${voffset -32}${alignr}${downspeedgraph enp7s0 30,135}  
-
-  ${font Ubuntu:style=Bold}${voffset -5}${color7}Processes ${stippled_hr}${color}${font}
-    total/running: ${alignr}[${processes} / ${running_processes}]  
-    ${voffset 5}name ${goto 140}pid ${goto 180}mem ${goto 220}cpu${font}
-    ${voffset -10}${stippled_hr}${font Ubuntu:size=8}
-      ${top name 1} ${goto 140}${top pid 1} ${goto 180} ${top cpu 1} ${goto 220} ${top mem 1}
-      ${top name 2} ${goto 140}${top pid 2} ${goto 180} ${top cpu 2} ${goto 220} ${top mem 2}
-      ${top name 3} ${goto 140}${top pid 3} ${goto 180} ${top cpu 3} ${goto 220} ${top mem 3}
-      ${top name 4} ${goto 140}${top pid 4} ${goto 180} ${top cpu 4} ${goto 220} ${top mem 4}
-      ${top name 5} ${goto 140}${top pid 5} ${goto 180} ${top cpu 5} ${goto 220} ${top mem 5}${font}
-
-  ${font Ubuntu:style=Bold}${voffset -5}${color7}Filesystem ${stippled_hr}${color}${font}
-    boot ${goto 85}[${fs_used_perc /boot}%] ${fs_bar 8,125 /boot}${font Ubuntu:size=8}
-        ${fs_type /boot}  ${goto 125}${fs_used /boot} / ${fs_size /boot} ${font}
-    root ${goto 85}[${fs_used_perc /}%] ${fs_bar 8,125 /}${font Ubuntu:size=8}
-        ${fs_type /}  ${goto 125}${fs_used /} / ${fs_size /} ${font}
-    home ${goto 85}[${fs_used_perc /home}%] ${fs_bar 8,125 /home}${font Ubuntu:size=8}
-        ${fs_type /home}  ${goto 125}${fs_used /home} / ${fs_size /home} ${font}
-    swap ${goto 85}[$swapperc%] ${fs_bar 8,125 swap}${font Ubuntu:size=8}
-        ${goto 125}${swap} / ${swapmax} ${font}
-${image ~/.conky/bg-fedora.png -p -0,-0 -s 250x732}
+################
+# - CALENDAR - #
+################
+${voffset 0}${color0}${font Poky:size=14}d${font}${color}${voffset -8}${font Monospace:size=7}${execpi 300 DJS=`date +%_d`; cal -m | sed 's/日 一 二 三 四 五 六/${offset 2}${font WenQuanYi Micro Hei Mono:size=8.5}日 一 二 三 四 五 六${font Monospace:size=7}/' | sed '2,8!d'| sed '/./!d' | sed 's/^/${goto 105} /'| sed 's/$/ /' | sed 's/^/ /' | sed /" $DJS "/s/" $DJS "/" "'${font Arial:style=Bold:size=7}${voffset -1}${color2}'"$DJS"'${color}${font Monospace:size=7}'" "/}
+${voffset -60}${goto 36}${font WenQuanYi Micro Hei:size=8}今夜月相${font}${voffset 3}
+${goto 43}${font Weather:size=30}${execpi 300 ~/.conkycolors/bin/mond}${font}
+${voffset -10}
+##########
+# - HD - #
+##########
+${voffset 4}${font WenQuanYi Micro Hei:style=Bold:size=8}硬盘 $stippled_hr${font}
+# |--HDTEMP1
+#${voffset 7}${color0}${font Weather:size=15}y${font}${color}${voffset -6}${goto 32}温度: ${font Ubuntu:style=Bold:size=8}${color1}${execi 120 hddtemp /dev/sda -n --unit=C}°C${color}${font}${alignr}${color2}/dev/sda${color}
+${voffset 3}${execpi 30 /usr/share/conkycolors/bin/conkyHD1}
+###############
+# - NETWORK - #
+###############
+${voffset -8}${font WenQuanYi Micro Hei:style=Bold:size=8}网络 $stippled_hr${font}
+# |--PPP0
+${if_up ppp0}
+${voffset -13}${color0}${font VariShapes Solid:size=14}q${font}${color}${goto 32}${voffset -6}上传: ${font Ubuntu:style=Bold:size=8}${color1}${upspeed ppp0}${color}${font} ${alignr}${color2}${upspeedgraph ppp0 10,90 }${color}
+${goto 32}总计: ${font Ubuntu:style=Bold:size=8}${color2}${totalup ppp0}${color}${font}
+${voffset 0}${color0}${font VariShapes Solid:size=14}Q${font}${color}${goto 32}${voffset -8}下载: ${font Ubuntu:style=Bold:size=8}${color1}${downspeed ppp0}${color}${font} ${alignr}${color2}${downspeedgraph ppp0 10,90 }${color}
+${goto 32}总计: ${font Ubuntu:style=Bold:size=8}${color2}${totaldown ppp0}${color}${font}
+${voffset -1}${color0}${font Poky:size=13}w${font}${color}${goto 32}${voffset -5}本地 IP: ${alignr}${color2}${addr ppp0}${color}
+# |--WLAN0
+${else}${if_up wlp6s0}
+${voffset -13}${color0}${font VariShapes Solid:size=14}q${font}${color}${goto 32}${voffset -6}上传: ${font Ubuntu:style=Bold:size=8}${color1}${upspeed wlp6s0}${color}${font} ${alignr}${color2}${upspeedgraph wlp6s0 10,90 }${color}
+${goto 32}总计: ${font Ubuntu:style=Bold:size=8}${color2}${totalup wlp6s0}${color}${font}
+${voffset 0}${color0}${font VariShapes Solid:size=14}Q${font}${color}${goto 32}${voffset -8}下载: ${font Ubuntu:style=Bold:size=8}${color1}${downspeed wlp6s0}${color}${font} ${alignr}${color2}${downspeedgraph wlp6s0 10,90 }${color}
+${goto 32}总计: ${font Ubuntu:style=Bold:size=8}${color2}${totaldown wlp6s0}${color}${font}
+${voffset -3}${color0}${font Poky:size=14}Y${font}${color}${goto 32}${voffset -3}信号: ${font Ubuntu:style=Bold:size=8}${color1}${wireless_link_qual_perc wlp6s0}%${color}${font} ${alignr}${color2}${wireless_link_bar 10,90 wlp6s0}${color}
+${voffset 6}${color0}${font Poky:size=13}w${font}${color}${goto 32}${voffset -10}本地 IP: ${alignr}${color2}${addr wlp6s0}${color}
+# |--ETH0
+${else}${if_up enp7s0}
+${voffset -13}${color0}${font VariShapes Solid:size=14}q${font}${color}${goto 32}${voffset -6}上传: ${font Ubuntu:style=Bold:size=8}${color1}${upspeed enp7s0}${color}${font} ${alignr}${color2}${upspeedgraph enp7s0 10,90 }${color}
+${goto 32}总计: ${font Ubuntu:style=Bold:size=8}${color2}${totalup enp7s0}${color}${font}
+${voffset 0}${color0}${font VariShapes Solid:size=14}Q${font}${color}${goto 32}${voffset -8}下载: ${font Ubuntu:style=Bold:size=8}${color1}${downspeed enp7s0}${color}${font} ${alignr}${color2}${downspeedgraph enp7s0 10,90 }${color}
+${goto 32}总计: ${font Ubuntu:style=Bold:size=8}${color2}${totaldown enp7s0}${color}${font}
+${voffset 3}${color0}${font Poky:size=13}w${font}${color}${goto 32}${voffset -9}本地 IP: ${alignr}${color2}${addr enp7s0}${color}
+# |else
+${else}${voffset 8}${color0}${font ConkyColors:size=15}q${font}${color}${goto 32}${voffset -7}网络不可用${voffset 14}${endif}${endif}${endif}
+##################
+# - CN WEATHER - #
+##################
+# http://www.weather.com.cn/
+${voffset -8}${font WenQuanYi Micro Hei:style=Bold:size=8}天气 $stippled_hr${font}
+${if_gw}${execpi 300 ~/.conkycolors/bin/weather 101191101 realtime}
+${execpi 1800 ~/.conkycolors/bin/weather 101191101 sixdays}
+${else}${voffset 8}${color0}${font ConkyColors:size=15}q${font}${color}${voffset -8}${goto 32}天气信息不可用${voffset 14}${endif}

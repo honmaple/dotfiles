@@ -4,6 +4,7 @@
 fortune -a | fmt -80 -s | cowsay -$(shuf -n 1 -e b d g p s t w y) -f $(shuf -n 1 -e $(cowsay -l | tail -n +2)) -n
 
 # If not running interactively, don't do anything
+
 [[ $- != *i* ]] && return
 
 alias ls='ls --color=auto'
@@ -19,6 +20,7 @@ alias ..='cd ..'
 alias ve='. venv/bin/activate'
 alias ssh_honmaple='ssh -qTfnN -D 7070 556284db50044677ca00005e@blog-honmaple.rhcloud.com'
 alias vi='vim'
+# alias vim='gvim'
 #alias gvim='gvim --remote-tab-silent'
 alias da='date "+%A, %B %d, %Y [%T]"'
 alias du1='du --max-depth=1'
@@ -52,4 +54,3 @@ alias pacm="makepkg -fci"  # '[m]ake'           - make package from PKGBUILD fil
 PS1="\[\e[0;37m\]\342\224\214\342\224\200\[[\e[0;33m\]\u\[\e[0;37m\]]\342\224\200[\[\e[1;33m\]\w\[\e[0;37m\]]\n\[\e[0;37m\]\342\224\224\342\224\200\342\224\200\342\225\274\[\e[0m\] "
 
 #PS1="\$(if [[ \$? == 0 ]]; then echo \"\e[01;32m\342\234\223\"; else echo \"\e[01;31m\342\234\227\"; fi)"
-

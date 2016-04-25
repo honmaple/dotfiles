@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 AUTHOR = 'honmaple'
 SITENAME = "HonMaple's Blog"
-SITEURL = 'http://honmaple.gq'
+SITEURL = 'http://honmaple.org'
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
 
@@ -24,6 +24,11 @@ DISQUS_SITENAME = 'honmaple'
 TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
+# 排序
+NEWEST_FIRST_ARCHIVES = False
+ARTICLE_ORDER_BY = 'reversed-date'
+PAGE_ORDER_BY = 'reversed-date'
+REVERSE_CATEGORY_ORDER = False
 
 FEED_ALL_ATOM = 'feeds/all.rss.xml'
 CATEGORY_FEED_ATOM = 'feeds/%s.rss.xml'
@@ -51,8 +56,12 @@ LINKS = (('Pelican', 'http://getpelican.com/'),
 SOCIAL = (('GitHub', 'https://github.com/honmaple'),)
 
 
-PLUGIN_PATHS = ['pelican-plugins']
-PLUGINS = [ 'sitemap']
+# PLUGIN_PATHS = ['pelican-plugins']
+# PLUGINS = [ 'sitemap','org_reader']
+# ORG_READER_EMACS_LOCATION = '/usr/bin/emacs'
+#  READERS = {'org': "org_reader"}
+#  ORG_READER_EMACS_SETTINGS = "/home/jianglin/.emacs.d/init.el"
+
 
 # Sitemap
 SITEMAP = {

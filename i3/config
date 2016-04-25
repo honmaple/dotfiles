@@ -16,8 +16,11 @@ font pango:DejaVu Sans Mono,FontAwesome 8
 floating_modifier $mod
 
 new_window pixel 0
-#for_window [class=".*"] title_format "<b>%title</b>"
-#new_float pixel 4
+new_float normal
+for_window [class="\w*"] border pixel 1
+# hide_edge_borders both
+# new_window pixel 0
+bindsym $mod+b border toggle
 # Volume
 bindsym XF86AudioRaiseVolume exec amixer -D pulse set Master '5%+'
 bindsym XF86AudioLowerVolume exec amixer -D pulse set  Master '5%-'
@@ -30,19 +33,30 @@ bindsym XF86AudioNext exec mocp -f
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10%
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10%
 # Scratchpad
-bindsym $mod+Shift+n move scratchpad
-bindsym $mod+n scratchpad show
+# bindsym $mod+Shift+n move scratchpad
+# bindsym $mod+n scratchpad show
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
 #截图
 bindsym Print exec xfce4-screenshooter
 # start a terminal
 bindsym $mod+Return exec xfce4-terminal
 
+bindsym $mod+Shift+g exec --no-startup-id google-chrome-stable
+bindsym $mod+Shift+t exec  Thunar
+bindsym $mod+Shift+p exec --no-startup-id pgadmin3
+bindsym $mod+Shift+m exec mocp
+bindsym $mod+Shift+v exec --no-startup-id VirtualBox
+bindsym $mod+Shift+x exec i3lock -i ~/Pictures/308556.png
+
+
 # kill focused window
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-#bindsym $mod+d exec dmenu_run
-bindsym $mod+d exec i3-dmenu-desktop
+bindsym $mod+d exec dmenu_run
+# bindsym $mod+d exec i3-dmenu-desktop
 # change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -96,7 +110,7 @@ set $w1  1:
 set $w2  2: 
 set $w3  3: 
 set $w4  4: 
-set $w5 5: 
+set $w5  5:
 set $w6  6: 
 set $w7  7: 
 set $w8  8: 
@@ -128,17 +142,20 @@ bindsym $mod+Shift+8 move container to workspace $w8
 bindsym $mod+Shift+9 move container to workspace $w9
 bindsym $mod+Shift+0 move container to workspace $w10
 
-assign [class="(?i)Google-chrome-stable"] → $w2
+assign [class="^google-chrome"] → $w2
 assign [class="(?i)firefox"] → $w2
 assign [class="(?i)pgadmin3"] → $w3
+assign [class="(?i)matlab"] → $w3
 assign [class="(?i)Vlc"] → $w5
 assign [class="(?i)mocp"] → $w5
 assign [class="(?i)VirtualBox"] → $w4
 # xfce4-notify
 for_window [class="xfce4-notifyd"] floating enable;border none; focus mode_toggle
-for_window [class="Thunar"] floating enable;move left
+for_window [class="Thunar"] floating enable
 for_window [class="Xarchiver"] floating enable
 for_window [class="VirtualBox"] floating enable
+for_window [class="^osdlyrics"] floating enable
+
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -188,13 +205,13 @@ bindsym $mod+Shift+Escape mode "$mode_system"
 bar {
     status_command i3status --config ~/.config/i3/i3status.conf
     position top
-    #mode dock
+    mode hide
     workspace_buttons yes
     #binding_mode_indicator yes
     #tray_output primary
-        font pango:DejaVu Sans Mono,FontAwesome 10
+    font pango:DejaVu Sans Mono,FontAwesome 10
         colors {
-            background #222222
+                background #222222
                 statusline #dddddd
                 separator #666666
                 focused_workspace #0088CC #0088CC #ffffff
@@ -203,6 +220,7 @@ bar {
                 urgent_workspace   #2f343a #900000 #ffffff
         }
 }
+#                       border  background text  indicator
 client.focused          #0088CC #0088CC #ffffff #dddddd
 client.focused_inactive #333333 #333333 #888888 #292d2e
 client.unfocused        #333333 #333333 #888888 #292d2e
@@ -212,11 +230,11 @@ exec --no-startup-id xset dpms 600
 exec --no-startup-id nm-applet
 #exec --no-startup-id xfce4-notifyd
 exec --no-startup-id fcitx
-exec --no-startup-id oneko -tomoyo &
+# exec --no-startup-id oneko -tomoyo &
 #exec --no-startup-id conky
 #exec --no-startup-id xcompmgr -c -C -t-5 -l-5 -r4.2 -o.55 &
 
 # exec --no-startup-id xfce4-power-manager
-exec feh --bg-scale ~/Pictures/308556.jpg
+exec --no-startup-id feh --bg-scale ~/Pictures/308556.jpg
 #exec pulseaudio --start
 #exec --no-startup-id xfce4-panel

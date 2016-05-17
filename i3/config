@@ -37,6 +37,7 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 10%
 # bindsym $mod+n scratchpad show
 bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
+# menu
 
 #截图
 bindsym Print exec xfce4-screenshooter
@@ -55,7 +56,7 @@ bindsym $mod+Shift+x exec i3lock -i ~/Pictures/308556.png
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
+bindsym $mod+d exec dmenu_run -l 10
 # bindsym $mod+d exec i3-dmenu-desktop
 # change focus
 bindsym $mod+h focus left
@@ -150,8 +151,9 @@ assign [class="(?i)Vlc"] → $w5
 assign [class="(?i)mocp"] → $w5
 assign [class="(?i)VirtualBox"] → $w4
 # xfce4-notify
-for_window [class="xfce4-notifyd"] floating enable;border none; focus mode_toggle
+for_window [class="Xfce4-notifyd"] floating enable,border none,focus mode_toggle
 for_window [class="Thunar"] floating enable
+for_window [class="Xfce4-terminal"] floating enable,border pixel 0
 for_window [class="Xarchiver"] floating enable
 for_window [class="VirtualBox"] floating enable
 for_window [class="^osdlyrics"] floating enable
@@ -202,10 +204,13 @@ mode "$mode_system" {
 }
 bindsym $mod+Shift+Escape mode "$mode_system"
 
+bindsym $mod+m bar mode toggle
+
 bar {
     status_command i3status --config ~/.config/i3/i3status.conf
+    # i3bar_command i3bar -t
     position top
-    mode hide
+    # mode hide
     workspace_buttons yes
     #binding_mode_indicator yes
     #tray_output primary

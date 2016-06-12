@@ -14,12 +14,34 @@ Selectively runs either `after-make-console-frame-hooks' or
 
 (add-hook 'after-make-frame-functions 'run-after-make-frame-hooks)
 
-(defconst sanityinc/initial-frame (selected-frame)
+(defconst maple/initial-frame (selected-frame)
   "The frame (if any) active during Emacs initialization.")
 
 (add-hook 'after-init-hook
-          (lambda () (when sanityinc/initial-frame
-                  (run-after-make-frame-hooks sanityinc/initial-frame))))
+          (lambda () (when maple/initial-frame
+                  (run-after-make-frame-hooks maple/initial-frame))))
 
+(defun fix-up-xterm-control-arrows ()
+  (let ((map (if (boundp 'input-decode-map)
+                 input-decode-map
+               function-key-map)))
+    (define-key map "\e[1;5A" [C-up])
+    (define-key map "\e[1;5B" [C-down])
+    (define-key map "\e[1;5C" [C-right])
+    (define-key map "\e[1;5D" [C-left])
+    (define-key map "\e[5A"   [C-up])
+    (define-key map "\e[5B"   [C-down])
+    (define-key map "\e[5C"   [C-right])
+    (define-key map "\e[5D"   [C-left])))
+
+(global-set-key [mouse-4] (lambda () (interactive) (scroll-down 1)))
+(global-set-key [mouse-5] (lambda () (interactive) (scroll-up 1)))
+
+(add-hook 'after-make-console-frame-hooks
+          (lambda ()
+            (xterm-mouse-mode 1) ; Mouse in a terminal (Use shift to paste with middle button)
+            (when (fboundp 'mwheel-install)
+              (mwheel-install))
+            ))
 
 (provide 'init-frame-hooks)

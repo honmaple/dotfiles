@@ -1,40 +1,38 @@
 (require-package 'elpy)
-;; (autoload 'doctest-mode "doctest-mode" "Python doctest editing mode." t)
-;; (setq interpreter-mode-alist
-;;       (cons '("python" . python-mode) interpreter-mode-alist))
-(add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
-(add-to-list 'interpreter-mode-alist '("python" . python-mode))
+;; (require-package 'company-jedi)
+;; (require-package 'py-yapf)
+(require-package 'pip-requirements)
 
-;; (after-load 'python-mode
-;;   )
+(use-package elpy
+  :init (with-eval-after-load 'python (elpy-enable))
+  :diminish elpy-mode "ⓔ"
+  :mode ("\\.py\\'" . python-mode)
+  :config
+  (progn
+    (add-hook 'python-mode-hook
+              (lambda ()
+                (setq tab-width 4)
+                (set-variable 'python-indent-offset 4)
+                (set-variable 'python-indent-guess-indent-offset nil)
+                (setq electric-indent-chars (delq ?: electric-indent-chars))
+                (define-key evil-normal-state-local-map [f6] 'elpy-yapf-fix-code)
+                (define-key evil-normal-state-local-map [f5] 'elpy-shell-send-region-or-buffer)
+                ;; (make-local-variable 'company-backends)
+                ;; (setq company-backends (copy-tree company-backends))
+                ;; (setf (car company-backends)
+                ;;       (append '(company-jedi :with company-yasnippet) (car company-backends)))
+                ))
 
-(with-eval-after-load 'python
-                                        ; (setq-default indent-tabs-mode t)
-                                        ; (setq-default tab-width 4)
-                                        ; (setq-default py-indent-tabs-mode t)
-  (setq tab-width 4)
-  (set-variable 'python-indent-offset 4)
-  (set-variable 'python-indent-guess-indent-offset nil)
-  (require 'elpy)
-  (elpy-enable)
-  (setq electric-indent-chars (delq ?: electric-indent-chars)))
+    (with-eval-after-load 'elpy
+      (setq python-shell-interpreter "ipython")
+      (remove-hook 'elpy-modules 'elpy-module-flymake)
+      ;; (remove-hook 'elpy-modules 'elpy-module-company)
+      )
+    ))
 
-(with-eval-after-load 'elpy
-  (define-key evil-normal-state-map [f6] 'elpy-yapf-fix-code)
-  (define-key evil-normal-state-map [f5] 'elpy-shell-send-region-or-buffer)
-  (remove-hook 'elpy-modules 'elpy-module-flymake))
-
-
-;; (add-hook 'python-mode-hook
-;;           (lambda ()
-;;             (setq tab-width 4)
-;;             (set-variable 'python-indent-offset 4)
-;;             (set-variable 'python-indent-guess-indent-offset nil)
-;;             (require 'elpy)
-;;             (elpy-enable)
-;;             (setq electric-indent-chars (delq ?: electric-indent-chars))
-;;             (define-key evil-normal-state-local-map [f6] 'elpy-yapf-fix-code)
-;;             (define-key evil-normal-state-local-map [f5] 'elpy-shell-send-region-or-buffer)))
-
+;; (use-package py-yapf
+;;   :init
+;;   :config
+;;   (add-hook 'python-mode-hook 'py-yapf-enable-on-save))
 
 (provide 'init-python)

@@ -1,39 +1,20 @@
 ;; Fill column indicator
-(when (eval-when-compile (> emacs-major-version 23))
-  (require-package 'fill-column-indicator)
-  (defun sanityinc/prog-mode-fci-settings ()
-    (turn-on-fci-mode)
-    (when show-trailing-whitespace
-      (set (make-local-variable 'whitespace-style) '(face trailing))
-      (whitespace-mode 1)))
-
-  ;;(add-hook 'prog-mode-hook 'sanityinc/prog-mode-fci-settings)
-
-  (defun sanityinc/fci-enabled-p ()
-    (bound-and-true-p fci-mode))
-
-  (defvar sanityinc/fci-mode-suppressed nil)
-  (make-variable-buffer-local 'sanityinc/fci-mode-suppressed)
-
-  (defadvice popup-create (before suppress-fci-mode activate)
-             "Suspend fci-mode while popups are visible"
-             (let ((fci-enabled (sanityinc/fci-enabled-p)))
-               (when fci-enabled
-                 (setq sanityinc/fci-mode-suppressed fci-enabled)
-                 (turn-off-fci-mode))))
-  (defadvice popup-delete (after restore-fci-mode activate)
-             "Restore fci-mode when all popups have closed"
-             (when (and sanityinc/fci-mode-suppressed
-                        (null popup-instances))
-               (setq sanityinc/fci-mode-suppressed nil)
-               (turn-on-fci-mode)))
-
-  ;; Regenerate fci-mode line images after switching themes
-  (defadvice enable-theme (after recompute-fci-face activate)
-             (dolist (buffer (buffer-list))
-               (with-current-buffer buffer
-                                    (when (sanityinc/fci-enabled-p)
-                                      (turn-on-fci-mode))))))
+;; (require-package 'fill-column-indicator)
+;; (use-package fill-column-indicator
+;;   :config
+;;   (progn
+;;     (setq fci-rule-column 80)
+;;     (defun maple/prog-mode-fci-settings ()
+;;       (turn-on-fci-mode)
+;;       (when show-trailing-whitespace
+;;         (set (make-local-variable 'whitespace-style) '(face trailing))
+;;         (whitespace-mode 1)))
+;;     ;; See:https://github.com/alpaker/Fill-Column-Indicator/issues/46
+;;     (add-hook 'after-change-major-mode-hook
+;;               (lambda () (if (string= major-mode "web-mode")
+;;                         (turn-off-fci-mode) (turn-on-fci-mode))))
+;;     (add-hook 'prog-mode-hook 'maple/prog-mode-fci-settings))
+;;   )
 
 ;; 格式化代码
 (defun indent-buffer ()

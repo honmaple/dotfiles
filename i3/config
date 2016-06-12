@@ -47,7 +47,7 @@ bindsym $mod+Return exec xfce4-terminal
 bindsym $mod+Shift+g exec --no-startup-id google-chrome-stable
 bindsym $mod+Shift+t exec  Thunar
 bindsym $mod+Shift+p exec --no-startup-id pgadmin3
-bindsym $mod+Shift+m exec mocp
+bindsym $mod+Shift+m exec --no-startup-id netease-cloud-music
 bindsym $mod+Shift+v exec --no-startup-id VirtualBox
 bindsym $mod+Shift+x exec i3lock -i ~/Pictures/308556.png
 
@@ -148,8 +148,9 @@ assign [class="(?i)firefox"] → $w2
 assign [class="(?i)pgadmin3"] → $w3
 assign [class="(?i)matlab"] → $w3
 assign [class="(?i)Vlc"] → $w5
-assign [class="(?i)mocp"] → $w5
+assign [class="(?i)netease-cloud-music"] → $w5
 assign [class="(?i)VirtualBox"] → $w4
+assign [class="(?i)Wireshark-gtk"] → $w9
 # xfce4-notify
 for_window [class="Xfce4-notifyd"] floating enable,border none,focus mode_toggle
 for_window [class="Thunar"] floating enable

@@ -60,4 +60,8 @@
 (add-hook 'css-mode-hook 'turn-on-css-eldoc)
 
 
+;; (add-hook 'css-mode-hook
+;;           (lambda ()
+;;             (set (make-local-variable 'company-backends) '(company-css))))
+
 (provide 'init-css)

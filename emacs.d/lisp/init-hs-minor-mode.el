@@ -1,15 +1,17 @@
-(dolist (hook '(c-mode-common-hook
-                emacs-lisp-mode-hook
-                java-mode-hook
-                lisp-mode-hook
-                perl-mode-hook
-                sh-mode-hook
-                js-mode-hook
-                js2-mode-hook))
-      (add-hook hook (lambda ()
-                       (unless (is-buffer-file-temp)
-                         (hs-minor-mode)))))
-
+;; (dolist (hook '(c-mode-common-hook
+;;                 emacs-lisp-mode-hook
+;;                 java-mode-hook
+;;                 lisp-mode-hook
+;;                 perl-mode-hook
+;;                 sh-mode-hook
+;;                 js-mode-hook
+;;                 js2-mode-hook))
+;;   (add-hook hook (lambda ()
+;;                    (unless (is-buffer-file-temp)
+;;                      (hs-minor-mode)))))
+(add-hook 'prog-mode-hook (lambda ()
+                            (hs-minor-mode)
+                            ))
 (setq hs-minor-mode-map
       (let ((map (make-sparse-keymap)))
         (define-key map (kbd "C-c @ h") 'hs-hide-block)
@@ -82,7 +84,7 @@
 
      (defadvice find-tag (after expand-after-find-tag activate compile)
        (save-excursion (hs-show-block)))
+     (diminish 'hs-minor-mode)
      ))
-(add-hook 'c-mode-common-hook #'hs-minor-mode)
-(add-hook 'python-mode-hook #'hs-minor-mode)
+(add-hook 'prog-mode-hook #'hs-minor-mode)
 (provide 'init-hs-minor-mode)

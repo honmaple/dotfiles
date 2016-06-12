@@ -172,7 +172,7 @@
 
     " Snippets & AutoComplete {
         if count(g:bundle_groups, 'youcompleteme')
-            Plugin 'Valloric/YouCompleteMe'
+            " Plugin 'Valloric/YouCompleteMe'
             Plugin 'SirVer/ultisnips'
             Plugin 'honza/vim-snippets'
         endif
@@ -1226,10 +1226,11 @@
     "粘贴快捷键
     set pastetoggle=<F12>
     "搜索文件内容
-    nnoremap <Leader>ff :CtrlSF <CR>
+    nnoremap <Leader>ff :CtrlSF<CR>
 
+    " nmap <Leader>cc :call NERDComToggleComment<CR>
     "<C-y>,  emmet快捷键
-    "<leader><leader>fa 快速移动
+    " "<leader><leader>fa 快速移动
     "<leader>cc，注释当前选中文本，如果选中的是整行则在每行首添加 //，如果选中一行的部分内容则在选中部分前后添加分别 / 、 /；
     "<leader>cu，取消选中文本块的注释
     "

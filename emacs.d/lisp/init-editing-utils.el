@@ -8,24 +8,27 @@
 ;;----------------------------------------------------------------------------
 ;; Some basic preferences
 ;;----------------------------------------------------------------------------
+(setq x-select-enable-clipboard t) ;;激活粘贴板
+;; (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
 (setq-default
-  blink-cursor-interval 0.4
-  bookmark-default-file (expand-file-name ".bookmarks.el" user-emacs-directory)
-  buffers-menu-max-size 30
-  case-fold-search t
-  column-number-mode t
-  delete-selection-mode t
-  ediff-split-window-function 'split-window-horizontally
-  ediff-window-setup-function 'ediff-setup-windows-plain
-  indent-tabs-mode nil
-  make-backup-files nil
-  mouse-yank-at-point t
-  save-interprogram-paste-before-kill t
-  scroll-preserve-screen-position 'always
-  set-mark-command-repeat-pop t
-  tooltip-delay 1.5
-  truncate-lines nil
-  truncate-partial-width-windows nil)
+ blink-cursor-interval 0.4
+ bookmark-default-file (expand-file-name ".bookmarks.el" user-emacs-directory)
+ buffers-menu-max-size 30
+ case-fold-search t
+ column-number-mode t
+ delete-selection-mode t
+ ediff-split-window-function 'split-window-horizontally
+ ediff-window-setup-function 'ediff-setup-windows-plain
+ indent-tabs-mode nil
+ make-backup-files nil
+ mouse-yank-at-point t
+ save-interprogram-paste-before-kill t
+ scroll-preserve-screen-position 'always
+ set-mark-command-repeat-pop t
+ tooltip-delay 1.5
+ truncate-lines t
+ truncate-partial-width-windows t
+ ad-redefinition-action 'accept)
 
 (global-auto-revert-mode) ;; 修改外部文件自动载入
 (setq global-auto-revert-non-file-buffers t
@@ -35,52 +38,17 @@
 
 
 
-;;; Newline behaviour
 
-; (global-set-key (kbd "RET") 'newline-and-indent)
-(defun sanityinc/newline-at-end-of-line ()
-  "Move to end of line, enter a newline, and reindent."
-  (interactive)
-  (move-end-of-line 1)
-  (newline-and-indent))
-
-(global-set-key (kbd "S-<return>") 'sanityinc/newline-at-end-of-line)
-
-
-
-(when (eval-when-compile (string< "24.3.1" emacs-version))
-  ;; https://github.com/purcell/emacs.d/issues/138
-  (after-load 'subword
-              (diminish 'subword-mode)))
-
+;; (when (eval-when-compile (string< "24.3.1" emacs-version))
+;;   ;; https://github.com/purcell/emacs.d/issues/138
+;;   (after-load 'subword
+;;     (diminish 'subword-mode)))
 
 
 (when (fboundp 'global-prettify-symbols-mode)
   (global-prettify-symbols-mode))
 
 
-(require-package 'undo-tree)
-(global-undo-tree-mode)
-(setq undo-tree-auto-save-history t
-      undo-tree-history-directory-alist
-      `(("." . ,(concat maple-cache-directory "undo"))))
-; (unless (file-exists-p (concat maple-cache-directory "undo"))
-  ; (make-directory (concat maple-cache-directory "undo")))
-(diminish 'undo-tree-mode)
-
-
-(require-package 'highlight-symbol)
-(dolist (hook '(prog-mode-hook html-mode-hook css-mode-hook))
-  (add-hook hook 'highlight-symbol-mode)
-  (add-hook hook 'highlight-symbol-nav-mode))
-(add-hook 'org-mode-hook 'highlight-symbol-nav-mode)
-(after-load 'highlight-symbol
-            (diminish 'highlight-symbol-mode)
-            (defadvice highlight-symbol-temp-highlight (around sanityinc/maybe-suppress activate)
-                       "Suppress symbol highlighting while isearching."
-                       (unless (or isearch-mode
-                                   (and (boundp 'multiple-cursors-mode) multiple-cursors-mode))
-                         ad-do-it)))
 
 ;;----------------------------------------------------------------------------
 ;; Zap *up* to char is a handy pair for zap-to-char
@@ -166,11 +134,11 @@
       (delete-horizontal-space t))
     (goto-char loc)
     (while (> n 0)
-           (cond ((bolp)
-                  (if do-left-margin (indent-to (current-left-margin)))
-                  (if do-fill-prefix (insert-and-inherit fill-prefix))))
-           (forward-line 1)
-           (setq n (1- n)))
+      (cond ((bolp)
+             (if do-left-margin (indent-to (current-left-margin)))
+             (if do-fill-prefix (insert-and-inherit fill-prefix))))
+      (forward-line 1)
+      (setq n (1- n)))
     (goto-char loc)
     (end-of-line)
     (indent-according-to-mode)))
@@ -178,10 +146,60 @@
 (global-set-key (kbd "C-o") 'sanityinc/open-line-with-reindent)
 
 
-(require-package 'guide-key)
-(setq guide-key/guide-key-sequence '("C-x" "C-c" "C-x 4" "C-x 5" "C-c ;" "C-c ; f" "C-c ' f" "C-x n" "C-x C-r" "C-x r"))
-(guide-key-mode 1)
-(diminish 'guide-key-mode)
+(require-package 'which-key)
+(require-package 'rainbow-delimiters)  ;;括号高亮
+(require-package 'undo-tree)
+(require-package 'highlight-symbol)
+(use-package which-key
+  :defer t
+  :init (add-hook 'after-init-hook #'which-key-mode)
+  :diminish which-key-mode
+  :config
+  (progn
+    (which-key-setup-side-window-bottom)
+    (setq which-key-special-keys nil
+          which-key-use-C-h-for-paging t
+          which-key-prevent-C-h-from-cycling t
+          which-key-echo-keystrokes 0.02
+          which-key-max-description-length 32
+          which-key-sort-order 'which-key-key-order-alpha
+          which-key-idle-delay 0.2
+          which-key-allow-evil-operators t)
+    ))
 
+
+(use-package rainbow-delimiters
+  :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+
+(use-package undo-tree
+  :commands (global-undo-tree-mode)
+  :diminish undo-tree-mode
+  :config
+  (progn
+    (setq undo-tree-auto-save-history t
+          undo-tree-history-directory-alist
+          `(("." . ,(concat maple-cache-directory "undo"))))
+    ))
+
+
+(use-package highlight-symbol
+  :defer t
+  :diminish highlight-symbol-mode
+  :init
+  (progn
+    (dolist (hook '(prog-mode-hook html-mode-hook css-mode-hook))
+      (add-hook hook 'highlight-symbol-mode)
+      (add-hook hook 'highlight-symbol-nav-mode))
+    (add-hook 'org-mode-hook 'highlight-symbol-nav-mode)))
+
+;; 注释
+(defun comment-or-uncomment-region-or-line ()
+  "Comments or uncomments the region or the current line if there's no active region."
+  (interactive)
+  (let (beg end)
+    (if (region-active-p)
+        (setq beg (region-beginning) end (region-end))
+      (setq beg (line-beginning-position) end (line-end-position)))
+    (comment-or-uncomment-region beg end)))
 
 (provide 'init-editing-utils)

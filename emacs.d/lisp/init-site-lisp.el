@@ -1,7 +1,7 @@
-;;; Set load path
+;; Set load path
 
 (eval-when-compile (require 'cl))
-(defun sanityinc/add-subdirs-to-load-path (parent-dir)
+(defun add-subdirs-to-load-path (parent-dir)
   "Adds every non-hidden subdir of PARENT-DIR to `load-path'."
   (let* ((default-directory parent-dir))
     (progn
@@ -12,7 +12,7 @@
               (directory-files (expand-file-name parent-dir) t "^[^\\.]"))
              load-path)))))
 
-(sanityinc/add-subdirs-to-load-path
+(add-subdirs-to-load-path
  (expand-file-name "site-lisp/" user-emacs-directory))
 
 ;;; Utilities for grabbing upstream libs
@@ -42,15 +42,6 @@
 source file under ~/.emacs.d/site-lisp/name/"
   (let ((f (locate-library (symbol-name name))))
     (and f (string-prefix-p (file-name-as-directory (site-lisp-dir-for name)) f))))
-
-
-
-;; Download these upstream libs
-
-(unless (> emacs-major-version 23)
-  (ensure-lib-from-url
-   'package
-   "http://repo.or.cz/w/emacs.git/blob_plain/ba08b24186711eaeb3748f3d1f23e2c2d9ed0d09:/lisp/emacs-lisp/package.el"))
 
 
 (provide 'init-site-lisp)

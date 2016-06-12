@@ -1,20 +1,23 @@
 (require-package 'spaceline)
 (require-package 'window-numbering)
-;; (require-package 'eyebrowse)
-(when (display-graphic-p)
-  (window-numbering-mode) ;;这个要在前
-  (set-face-attribute 'mode-line nil :box nil)
-  (setq ns-use-srgb-colorspace nil)
-  (require 'spaceline-config)
-  (setq powerline-default-separator 'wave)
-  (setq spaceline-toggle-window-number-on-p t)
-  (setq spaceline-toggle-workspace-number-on-p nil)
-  (setq spaceline-workspace-numbers-unicode t)
-  (setq spaceline-window-numbers-unicode t)
-  (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
-  (spaceline-spacemacs-theme)
-  ;; (spaceline-helm-mode +1)
-  ;; (eyebrowse-mode)
-  )
+
+(use-package window-numbering
+  :defer t
+  :init (window-numbering-mode)) ;;这个要在前
+
+(use-package spaceline-config
+  :config
+  (progn
+    (require 'spaceline-config)
+    (set-face-attribute 'mode-line nil :box nil)
+    (setq ns-use-srgb-colorspace nil)
+    (setq powerline-default-separator 'wave)
+    (setq spaceline-toggle-window-number-on-p t)
+    (setq spaceline-toggle-workspace-number-on-p nil)
+    (setq spaceline-workspace-numbers-unicode t)
+    (setq spaceline-window-numbers-unicode t)
+    (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
+    (spaceline-spacemacs-theme)
+    ))
 
 (provide 'init-modeline)

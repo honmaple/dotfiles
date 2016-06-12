@@ -10,8 +10,14 @@
 ;; c 标记拷贝文件
 ;; C 直接拷贝文件
 ;; q 退出
+;; (require-package 'dired+)
 (setq dired-recursive-copies 'always) ;;递归拷贝
 (after-load 'dired  ;; 只有一个buffer
   (put 'dired-find-alternate-file 'disabled nil)
-  (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file))
+  (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
+  (require 'dired-x)
+  (setq-default dired-omit-files-p t) ; this is buffer-local variable
+  (setq dired-omit-files
+        (concat dired-omit-files "\\|^\\..+$\\|\\.pdf$\\|\\.tex$\\|\\.*~$"))
+  )
 (provide 'init-dired)

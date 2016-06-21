@@ -14,6 +14,16 @@
   (progn
     (evil-mode 1)
     (fset 'evil-visual-update-x-selection 'ignore) ;;粘贴板
+    ;; (defun my-save-if-bufferfilename ()
+      ;; (if (buffer-file-name)
+      ;;     (progn
+      ;;       (save-buffer)
+      ;;       )
+      ;;   (message "no file is associated to this buffer: do nothing")
+      ;;   )
+      ;; )
+    ;; (add-hook 'focus-out-hook (lambda () (save-some-buffers t)))
+    ;; (add-hook 'evil-insert-state-exit-hook 'my-save-if-bufferfilename)
     ))
 
 (use-package evil-surround
@@ -33,7 +43,12 @@
   (progn
     (setq-default evil-escape-key-sequence "jj")
     (setq-default evil-escape-delay 0.3)
-    (setq evil-escape-excluded-major-modes '(dired-mode neotree-mode magit-modes))
+    (setq evil-escape-excluded-major-modes '(dired-mode
+                                             neotree-mode
+                                             magit-mode
+                                             newsticker-treeview-mode
+                                             newsticker-treeview-list-mode
+                                             newsticker-treeview-item-mode))
     (setq evil-escape-inhibit-functions '(evil-visual-state-p evil-escape--is-magit-buffer))
     ))
 

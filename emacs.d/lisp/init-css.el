@@ -4,64 +4,31 @@
     (add-hook hook 'rainbow-mode)))
 
 
-;;; Embedding in html
-(require-package 'mmm-mode)
-(after-load 'mmm-vars
-  (mmm-add-group
-   'html-css
-   '((css-cdata
-      :submode css-mode
-      :face mmm-code-submode-face
-      :front "<style[^>]*>[ \t\n]*\\(//\\)?<!\\[CDATA\\[[ \t]*\n?"
-      :back "[ \t]*\\(//\\)?]]>[ \t\n]*</style>"
-      :insert ((?j js-tag nil @ "<style type=\"text/css\">"
-                   @ "\n" _ "\n" @ "</style>" @)))
-     (css
-      :submode css-mode
-      :face mmm-code-submode-face
-      :front "<style[^>]*>[ \t]*\n?"
-      :back "[ \t]*</style>"
-      :insert ((?j js-tag nil @ "<style type=\"text/css\">"
-                   @ "\n" _ "\n" @ "</style>" @)))
-     (css-inline
-      :submode css-mode
-      :face mmm-code-submode-face
-      :front "style=\""
-      :back "\"")))
-  (dolist (mode (list 'html-mode 'nxml-mode))
-    (mmm-add-mode-ext-class mode "\\.r?html\\(\\.erb\\)?\\'" 'html-css)))
-
-
-
-
 ;;; SASS and SCSS
+(require-package 'css-mode)
 (require-package 'sass-mode)
 (require-package 'scss-mode)
-(setq-default scss-compile-at-save nil)
-
-
-
-;;; LESS
 (require-package 'less-css-mode)
-(when (featurep 'js2-mode)
-  (require-package 'skewer-less))
+
+(use-package css-mode
+  :defer t
+  :init
+  (progn
+    (set (make-local-variable 'company-backends) '(company-css))
+    ))
+
+(use-package sass-mode
+  :defer t
+  :mode ("\\.sass\\'" . sass-mode))
+
+(use-package scss-mode
+  :defer t
+  :config (setq-default scss-compile-at-save nil)
+  :mode ("\\.scss\\'" . scss-mode))
 
 
-
-;;; Auto-complete CSS keywords
-(after-load 'auto-complete
-  (dolist (hook '(css-mode-hook sass-mode-hook scss-mode-hook))
-    (add-hook hook 'ac-css-mode-setup)))
-
-
-;;; Use eldoc for syntax hints
-(require-package 'css-eldoc)
-(autoload 'turn-on-css-eldoc "css-eldoc")
-(add-hook 'css-mode-hook 'turn-on-css-eldoc)
-
-
-;; (add-hook 'css-mode-hook
-;;           (lambda ()
-;;             (set (make-local-variable 'company-backends) '(company-css))))
+(use-package less-css-mode
+  :defer t
+  :mode ("\\.less\\'" . less-css-mode))
 
 (provide 'init-css)

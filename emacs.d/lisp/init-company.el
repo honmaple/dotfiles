@@ -43,7 +43,6 @@
             (company-dabbrev :with company-yasnippet)
             ))
     (defvar-local company-fci-mode-on-p nil)
-
     (defun company-turn-off-fci (&rest ignore)
       (when (boundp 'fci-mode)
         (setq company-fci-mode-on-p fci-mode)
@@ -54,13 +53,19 @@
 
     (add-hook 'company-completion-started-hook 'company-turn-off-fci)
     (add-hook 'company-completion-finished-hook 'company-maybe-turn-on-fci)
-    (add-hook 'company-completion-cancelled-hook 'company-maybe-turn-on-fci))
-  :bind (:map company-active-map
-              ("C-j" . company-select-next)
-              ("C-k" . company-select-previous)
-              ("TAB" . company-complete-common-or-cycle)
-              ("<tab>" . company-complete-common-or-cycle)
-              ("<RET>" . company-complete-selection)))
+    (add-hook 'company-completion-cancelled-hook 'company-maybe-turn-on-fci)
+    (let ((map company-active-map))
+      (define-key map (kbd "C-/") 'company-search-candidates)
+      (define-key map (kbd "C-M-/") 'company-filter-candidates)
+      (define-key map (kbd "C-d") 'company-show-doc-buffer)
+      (define-key map (kbd "C-j") 'company-select-next)
+      (define-key map (kbd "C-k") 'company-select-previous)
+      (define-key map (kbd "C-l") 'company-complete-selection)
+      (define-key map (kbd "TAB") 'company-complete-common-or-cycle)
+      (define-key map (kbd "<tab>") 'company-complete-common-or-cycle)
+      (define-key map (kbd "<RET>") 'company-complete-selection)
+      )
+    ))
 
 
 (use-package company-statistics

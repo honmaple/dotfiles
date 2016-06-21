@@ -1,43 +1,8 @@
 ;; (require-package 'unfill)
-
 (when (fboundp 'electric-pair-mode)
   (electric-pair-mode))
 (when (eval-when-compile (version< "24.4" emacs-version))
   (electric-indent-mode 1))
-
-;;----------------------------------------------------------------------------
-;; Some basic preferences
-;;----------------------------------------------------------------------------
-(setq x-select-enable-clipboard t) ;;激活粘贴板
-;; (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
-(setq-default
- blink-cursor-interval 0.4
- bookmark-default-file (expand-file-name ".bookmarks.el" user-emacs-directory)
- buffers-menu-max-size 30
- case-fold-search t
- column-number-mode t
- delete-selection-mode t
- ediff-split-window-function 'split-window-horizontally
- ediff-window-setup-function 'ediff-setup-windows-plain
- indent-tabs-mode nil
- make-backup-files nil
- mouse-yank-at-point t
- save-interprogram-paste-before-kill t
- scroll-preserve-screen-position 'always
- set-mark-command-repeat-pop t
- tooltip-delay 1.5
- truncate-lines t
- truncate-partial-width-windows t
- ad-redefinition-action 'accept)
-
-(global-auto-revert-mode) ;; 修改外部文件自动载入
-(setq global-auto-revert-non-file-buffers t
-      auto-revert-verbose nil)
-
-(transient-mark-mode t)
-
-
-
 
 ;; (when (eval-when-compile (string< "24.3.1" emacs-version))
 ;;   ;; https://github.com/purcell/emacs.d/issues/138
@@ -45,8 +10,6 @@
 ;;     (diminish 'subword-mode)))
 
 
-(when (fboundp 'global-prettify-symbols-mode)
-  (global-prettify-symbols-mode))
 
 
 
@@ -67,6 +30,7 @@
 ;;----------------------------------------------------------------------------
 ;; Show matching parens
 ;;----------------------------------------------------------------------------
+;; 高亮括号配对
 (show-paren-mode 1)
 
 

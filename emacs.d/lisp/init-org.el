@@ -9,6 +9,7 @@
   :defer t
   :config
   (progn
+    ;; (setq org-tags-column -100)
     (setq org-capture-templates
           '(("t" "Todo" entry (file+headline "~/org-mode/gtd.org" "Workspace")
              "* TODO [#B] %?\n  %i\n"
@@ -47,10 +48,7 @@
     (setq org-todo-keyword-faces
           (quote (("NEXT" :inherit warning)
                   ("PROJECT" :inherit font-lock-string-face))))
-    ;; (global-set-key "\C-cl" 'org-store-link)
-    ;; (global-set-key "\C-ca" 'org-agenda)
-    ;; (global-set-key "\C-cb" 'org-iswitchb)
-    ;; (global-set-key (kbd "C-c c") 'org-capture)
+    (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point)
     )
   :bind (("C-c c" . org-capture)
          ("C-c a" . org-agenda)
@@ -141,7 +139,6 @@
     (setq org-crypt-key "21305E7E")
     ;; (add-hook 'org-mode-hook (lambda () (run-hooks 'org-mode-hook)))
     ))
-;; (require 'org-crypt)
 
 ;; 写博客
 (defun org-new-blog (title)
@@ -152,5 +149,21 @@
       (insert (format "[[file://%s][%s]]" blog-path title)))
     ))
 
+(defun maple//insert-org-or-md-img-link (prefix imagename)
+  (if (equal (file-name-extension (buffer-file-name)) "org")
+      (insert (format "[[%s]]" prefix))
+    (insert (format "![%s](%s)" imagename prefix))))
+
+(defun maple/capture-screenshot (basename)
+  (interactive "sScreenshot name: ")
+  (let ((blog-image-path (substitute-in-file-name
+                          (format "~/git/pelican/content/images/%s-%s.png" basename (format-time-string "%Y%m%d_%H%M%S")))))
+        (if (file-exists-p blog-image-path)
+            (message "the path '%s' already exists!" blog-image-path)
+          (progn
+            (call-process-shell-command "scrot" nil nil nil nil "-s" blog-image-path)
+            (maple//insert-org-or-md-img-link blog-image-path basename)))
+        )
+  (insert "\n"))
 
 (provide 'init-org)

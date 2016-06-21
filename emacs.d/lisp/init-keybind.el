@@ -17,7 +17,10 @@
 
   "el" 'maple/toggle-flycheck-error-list
   "ec" 'flycheck-clear
+  )
 
+(evil-leader/set-key
+  "gi" 'magit-init
   "gs" 'magit-status
   "gb" 'magit-branch
   "gd" 'magit-diff
@@ -68,10 +71,12 @@
   "bb" 'helm-mini  ;;显示缓冲区(已经打开的文件)
   "bl" 'org-new-blog  ;;插入博客地址
   "bk" 'sanityinc/toggle-delete-other-windows
-
   "bm" 'bookmark-set
   "bj" 'bookmark-jump
   "bs" 'bookmark-save
+  "bw" 'read-only-mode
+  "bp" 'evil-prev-buffer
+  "bn" 'evil-next-buffer
   )
 ;; (evil-leader/set-key
 ;;   "lp" 'persp-prev

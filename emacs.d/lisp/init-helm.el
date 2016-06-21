@@ -4,6 +4,7 @@
 (require-package 'projectile)
 (require-package 'helm-projectile)
 
+
 ;; 必须的
 (setq tramp-ssh-controlmaster-options
       "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")
@@ -45,10 +46,15 @@
          ("C-k" . helm-previous-line)
          ("C-h" . helm-next-source)
          ([escape] . helm-keyboard-quit)
-         ("<tab>" . helm-execute-persistent-action)))
+         ("<tab>" . helm-execute-persistent-action)
+         ("TAB" . helm-execute-persistent-action)
+          :map helm-find-files-map
+          ("C-h" . helm-find-files-up-one-level)
+          ))
 
 (use-package helm-ag
-  :defer t)
+  :defer t
+  :init (advice-add 'helm-ag--edit :after #'evil-mc-mode)) ;;在helm-ag-edit中激活evil-mc
 
 (use-package projectile
   :defer t
@@ -71,7 +77,8 @@
           helm-swoop-split-direction 'split-window-vertically
           helm-swoop-speed-or-color t
           helm-swoop-split-window-function 'helm-default-display-buffer
-          helm-swoop-pre-input-function (lambda () "")))
+          helm-swoop-pre-input-function (lambda () ""))
+    (advice-add 'helm-swoop--edit :after #'evil-mc-mode)) ;;在helm-swoop-edit中激活evil-mc
   :bind (:map  helm-swoop-edit-map
                ("C-c C-c" . helm-swoop--edit-complete)
                ("C-c C-k" . helm-swoop--edit-cancel))

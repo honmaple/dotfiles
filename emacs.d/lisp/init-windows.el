@@ -21,5 +21,5 @@
 (unless (memq window-system '(nt w32))
   (windmove-default-keybindings 'control))
 
-;; (setq split-width-threshold 1 ) ;;默认分屏
+(setq split-width-threshold 1 ) ;;默认分屏
 (provide 'init-windows)

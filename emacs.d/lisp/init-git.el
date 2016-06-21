@@ -16,10 +16,11 @@
   :defer t
   :config
   (progn
+    (setq magit-completing-read-function 'magit-builtin-completing-read
+          magit-revision-show-gravatars '("^Author:     " . "^Commit:     "))
     (setq-default
      magit-process-popup-time 10
-     magit-diff-refine-hunk t
-     magit-completing-read-function 'magit-ido-completing-read)
+     magit-diff-refine-hunk t)
     (add-hook 'magit-popup-mode-hook 'sanityinc/no-trailing-whitespace))
   :bind
   (("C-x g" . magit-status)
@@ -40,8 +41,5 @@
   :defer t
   :config
   (add-hook 'git-commit-mode-hook 'goto-address-mode))
-
-;; (use-package evil-magit
-;;   :defer t)
 
 (provide 'init-git)

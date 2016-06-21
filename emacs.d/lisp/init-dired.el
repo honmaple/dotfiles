@@ -16,8 +16,9 @@
   (put 'dired-find-alternate-file 'disabled nil)
   (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
   (require 'dired-x)
+  ;; (setq dired-dwim-target t)
   (setq-default dired-omit-files-p t) ; this is buffer-local variable
   (setq dired-omit-files
-        (concat dired-omit-files "\\|^\\..+$\\|\\.pdf$\\|\\.tex$\\|\\.*~$"))
+        (concat dired-omit-files "\\|^\\..+$\\|\\.pdf$\\|\\.tex$\\|\\*~$"))
   )
 (provide 'init-dired)

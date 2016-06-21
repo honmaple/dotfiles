@@ -40,12 +40,14 @@ bindsym $mod+minus scratchpad show
 # menu
 
 #截图
-bindsym Print exec xfce4-screenshooter
+bindsym Print exec xfce4-screenshooter -s ~/Pictures/
+# bindsym Print exec scrot ~/Pictures/%Y%m%d%H%M%S.png -s
+
 # start a terminal
 bindsym $mod+Return exec xfce4-terminal
 
 bindsym $mod+Shift+g exec --no-startup-id google-chrome-stable
-bindsym $mod+Shift+t exec  Thunar
+bindsym $mod+Shift+t exec --no-startup-id Thunar
 bindsym $mod+Shift+p exec --no-startup-id pgadmin3
 bindsym $mod+Shift+m exec --no-startup-id netease-cloud-music
 bindsym $mod+Shift+v exec --no-startup-id VirtualBox

@@ -50,6 +50,8 @@
          ("TAB" . helm-execute-persistent-action)
           :map helm-find-files-map
           ("C-h" . helm-find-files-up-one-level)
+          :map helm-read-file-map
+          ("C-h" . helm-find-files-up-one-level)
           ))
 
 (use-package helm-ag

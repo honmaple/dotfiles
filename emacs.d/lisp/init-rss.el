@@ -50,4 +50,10 @@
                 ))
     ))
 
+(defun my/newsticker-show-news ()
+  (interactive)
+  (require 'newsticker)
+  (cl-letf (((symbol-function 'newsticker-start) #'ignore))
+    (newsticker-show-news)))
+
 (provide 'init-rss)

@@ -102,4 +102,6 @@
 (define-key evil-normal-state-map (kbd "L") (kbd "$"))
 (define-key evil-visual-state-map (kbd "H") (kbd "^"))
 (define-key evil-visual-state-map (kbd "L") (kbd "$"))
+;; (global-set-key (kbd "C-a") 'maple/smart-move-beginning-of-line)
+;; (global-set-key (kbd "C-e") 'maple/backward-kill-word-or-region)
 (provide 'init-keybind)

@@ -105,12 +105,13 @@
          "#Description: \n"
          "#**************************************************************************/\n")
         ((org-mode . "org-mode") nil
-         "Title: " (file-name-nondirectory buffer-file-name) "  \n"
+         "#+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"../css/worg.css\" />" "\n"
+         "Title: " (file-name-nondirectory buffer-file-name) "\n"
          "Author: honmaple   \n"
          "Date: " (format-time-string "%F" (current-time)) "\n"
          "Category:   \n"
          "Tags:   \n"
-         "Slug: " (file-name-nondirectory buffer-file-name) "  \n"
+         "Slug: " (file-name-nondirectory buffer-file-name) "\n"
          "Summary: ")
         ((markdown-mode . "Markdown") nil
          "Title: " (file-name-nondirectory buffer-file-name) "  \n"

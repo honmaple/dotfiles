@@ -60,7 +60,7 @@
       (define-key map (kbd "C-d") 'company-show-doc-buffer)
       (define-key map (kbd "C-j") 'company-select-next)
       (define-key map (kbd "C-k") 'company-select-previous)
-      (define-key map (kbd "C-l") 'company-complete-selection)
+      ;; (define-key map (kbd "C-l") 'company-complete-selection)
       (define-key map (kbd "TAB") 'company-complete-common-or-cycle)
       (define-key map (kbd "<tab>") 'company-complete-common-or-cycle)
       (define-key map (kbd "<RET>") 'company-complete-selection)

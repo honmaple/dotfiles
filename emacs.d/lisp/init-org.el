@@ -1,4 +1,4 @@
-(require-package 'evil-org)
+;; (require-package 'evil-org)
 (require-package 'org-pomodoro)
 (require-package 'org-bullets)
 (require-package 'alert) ;;org-pomodoro依赖
@@ -49,22 +49,29 @@
           (quote (("NEXT" :inherit warning)
                   ("PROJECT" :inherit font-lock-string-face))))
     (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point)
+    (evil-define-key 'normal org-mode-map (kbd "t") 'org-todo)
     )
   :bind (("C-c c" . org-capture)
          ("C-c a" . org-agenda)
          ("C-c b" . org-iswitchb)
          ("C-c l" . org-store-link)))
 
-(use-package evil-org
-  :commands evil-org-mode
-  :diminish evil-org-mode
-  :init
-  (add-hook 'org-mode-hook 'evil-org-mode))
+;; (use-package evil-org
+;;   :commands evil-org-mode
+;;   :diminish evil-org-mode
+;;   :init
+;;   (add-hook 'org-mode-hook 'evil-org-mode)
+;;   :config
+;;   (progn
+;;     (define-key evil-org-mode-map (kbd "H") (kbd "^"))
+;;     (define-key evil-org-mode-map (kbd "L") (kbd "$"))
+;;     ))
 
 
 ;; (setq org-log-done t)
 
 ;; 设置默认浏览器
+
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "google-chrome-stable")
 
@@ -158,12 +165,12 @@
   (interactive "sScreenshot name: ")
   (let ((blog-image-path (substitute-in-file-name
                           (format "~/git/pelican/content/images/%s-%s.png" basename (format-time-string "%Y%m%d_%H%M%S")))))
-        (if (file-exists-p blog-image-path)
-            (message "the path '%s' already exists!" blog-image-path)
-          (progn
-            (call-process-shell-command "scrot" nil nil nil nil "-s" blog-image-path)
-            (maple//insert-org-or-md-img-link blog-image-path basename)))
-        )
+    (if (file-exists-p blog-image-path)
+        (message "the path '%s' already exists!" blog-image-path)
+      (progn
+        (call-process-shell-command "scrot" nil nil nil nil "-s" blog-image-path)
+        (maple//insert-org-or-md-img-link blog-image-path basename)))
+    )
   (insert "\n"))
 
 (provide 'init-org)

@@ -19,12 +19,13 @@
             (" \\(ng-[a-z]*\\)=\"\\([^\"]+\\)" 1 2 "=")))
     (add-hook 'web-mode-hook
               (lambda ()
-                (define-key evil-normal-state-local-map "za" 'web-mode-fold-or-unfold)
-                (define-key evil-normal-state-local-map [f5] 'browse-url-of-file)
-                (add-to-list 'company-backends '(company-web-html
+                (yas-global-mode 1)
+                (add-to-list 'company-backends '(company-web-html :with company-yasnippet
                                                  company-web-slim
                                                  company-css
                                                  company-web-jade))
+                (define-key evil-normal-state-local-map "za" 'web-mode-fold-or-unfold)
+                (define-key evil-normal-state-local-map [f5] 'browse-url-of-file)
                 )))
   :mode
   (("\\.phtml\\'" . web-mode)
@@ -40,6 +41,7 @@
 
 (use-package smartparens
   :defer t
+  :diminish smartparens-mode
   :init
   (progn
     (add-hook 'js-mode-hook #'smartparens-mode)
@@ -59,12 +61,13 @@
       (sp-local-pair 'web-mode "<%: "  " %>")
       (sp-local-pair 'web-mode "{% "  " %}")
       (sp-local-pair 'web-mode "{%- "  " %}")
-      (sp-local-pair 'web-mode "{# "  " #}"))
-    ))
+      (sp-local-pair 'web-mode "{# "  " #}")
+      )))
 
 
 (use-package emmet-mode
   :defer t
+  :diminish emmet-mode
   :init
   (progn
     (add-hook 'html-mode-hook 'emmet-mode)
@@ -77,7 +80,14 @@
     (evil-define-key 'insert emmet-mode-keymap (kbd "<tab>") 'emmet-expand-yas)
     (evil-define-key 'emacs emmet-mode-keymap (kbd "TAB") 'emmet-expand-yas)
     (evil-define-key 'emacs emmet-mode-keymap (kbd "<tab>") 'emmet-expand-yas)
-    (evil-define-key 'hybrid emmet-mode-keymap (kbd "TAB") 'emmet-expand-yas)
-    (evil-define-key 'hybrid emmet-mode-keymap (kbd "<tab>") 'emmet-expand-yas)
     ))
+
+;; (add-hook 'web-mode-hook
+;;           (lambda ()
+;;             (yas-global-mode 1)
+;;             (jinja2-mode)
+;;             ))
+;; (add-hook 'jinja2-mode-hook 'web-mode-hook)
+;; (add-hook 'web-mode-hook 'jinja2-mode-hook)
+
 (provide 'init-web-mode)

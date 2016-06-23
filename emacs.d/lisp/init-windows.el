@@ -22,4 +22,5 @@
   (windmove-default-keybindings 'control))
 
 (setq split-width-threshold 1 ) ;;默认分屏
+(setq display-buffer-alist '(("\\*Warnings\\*" display-buffer-below-selected))) ;;设置分屏
 (provide 'init-windows)

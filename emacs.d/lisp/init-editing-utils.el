@@ -133,7 +133,8 @@
 
 
 (use-package rainbow-delimiters
-  :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+  :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+  :diminish rainbow-delimiters-mode)
 
 (use-package undo-tree
   :commands (global-undo-tree-mode)
@@ -143,6 +144,8 @@
     (setq undo-tree-auto-save-history t
           undo-tree-history-directory-alist
           `(("." . ,(concat maple-cache-directory "undo"))))
+    (unless (file-exists-p (concat maple-cache-directory "undo"))
+      (make-directory (concat maple-cache-directory "undo")))
     ))
 
 

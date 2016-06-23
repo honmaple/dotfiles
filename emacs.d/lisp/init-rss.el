@@ -33,8 +33,9 @@
        ("月光博客" "http://feed.williamlong.info/")
        ("阮一峰的网络日志" "http://www.ruanyifeng.com/blog/atom.xml")
        ("网易新闻" "http://news.163.com/special/00011K6L/rss_newsattitude.xml")
-       ("公告" "https://forums.honmaple.org/t/%E7%A4%BE%E5%8C%BA%E5%85%AC%E5%91%8A/feed")
-       ("学校新闻" "https://forums.honmaple.org/t/%E5%AD%A6%E6%A0%A1%E6%96%B0%E9%97%BB/feed")))
+       ("知乎" "http://www.zhihu.com/rss")
+       ("知乎日报" "https://link.zhihu.com/?target=http%3A//feeds.feedburner.com/zhihu-daily")
+       ))
 
     (add-hook 'newsticker-treeview-mode-hook
               (lambda ()

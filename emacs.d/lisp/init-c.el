@@ -6,6 +6,7 @@
   :config
   (progn
     (setq c-default-style "linux")
+    (setq c-basic-offset 4)
     ;; (add-to-list 'auto-mode-alist `("\\.h$" . ,c-c++-default-mode-for-headers))
     ))
 ;; (with-eval-after-load 'c-mode

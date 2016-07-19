@@ -30,15 +30,15 @@
 
 ;; 中英文表格对齐
 ;; (set-frame-font "DejaVu Sans Mono 11")
-; (set-fontset-font "fontset-default" 'unicode "WenQuanYi Micro Hei Mono 12")
-; (set-default-font "Dejavu Sans Mono 11")
-; (if (and (fboundp 'daemonp) (daemonp))
-  ; (add-hook 'after-make-frame-functions
-            ; (lambda (frame)
-              ; (with-selected-frame frame
-                                   ; (set-fontset-font "fontset-default"
-                                                     ; 'unicode "WenQuanyi Micro Hei Mono 12"))))
-  ; (set-fontset-font "fontset-default" 'unicode "WenQuanYi Micro Hei Mono 12"))
+;; (set-fontset-font "fontset-default" 'unicode "WenQuanYi Micro Hei Mono 12")
+;; (set-default-font "Dejavu Sans Mono 11")
+;; (if (and (fboundp 'daemonp) (daemonp))
+;;   (add-hook 'after-make-frame-functions
+;;             (lambda (frame)
+;;               (with-selected-frame frame
+;;                                    (set-fontset-font "fontset-default"
+;;                                                      'unicode "WenQuanyi Micro Hei Mono 12"))))
+;;   (set-fontset-font "fontset-default" 'unicode "WenQuanYi Micro Hei Mono 12"))
 ;; (default-text-scale-increase)
 ; (setq face-font-rescale-alist '((""Dejavu Sans Mono" . 1.0) ("WenQuanyi Micro Hei Mono"  . 1.23)))
 

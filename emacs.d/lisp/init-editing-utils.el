@@ -143,9 +143,9 @@
   (progn
     (setq undo-tree-auto-save-history t
           undo-tree-history-directory-alist
-          `(("." . ,(concat maple-cache-directory "undo"))))
-    (unless (file-exists-p (concat maple-cache-directory "undo"))
-      (make-directory (concat maple-cache-directory "undo")))
+          `(("." . ,(concat maple-cache-directory "undo-tree"))))
+    (unless (file-exists-p (concat maple-cache-directory "undo-tree"))
+      (make-directory (concat maple-cache-directory "undo-tree")))
     ))
 
 

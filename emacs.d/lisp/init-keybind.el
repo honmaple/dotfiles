@@ -1,12 +1,21 @@
 (evil-leader/set-key
   "cc" 'comment-or-uncomment-region-or-line
-  "fj" 'helm-semantic-or-imenu ;;显示函数
+  ;; "fj" 'helm-semantic-or-imenu ;;显示函数
+  "fj" 'dired-jump
   "ff" 'helm-find-files ;;查找文件名 区别helm-find-files指定文件夹
   "fr" 'helm-recentf
   ;; "fs" 'helm-occur ;;当前文件内容
   "/" 'helm-swoop ;;当前文件内容
-  "fs" 'helm-swoop ;;当前文件内容
+  ;; "fs" 'helm-swoop ;;当前文件内容
   "fw" 'helm-ag
+  "fo" 'maple/open-in-external-app
+  "fE" 'maple/sudo-edit
+  "fy" 'maple/show-and-copy-buffer-filename
+  "fCd" 'maple/unix2dos
+  "fCu" 'maple/dos2unix
+  "fei" 'open-init-file
+  "fS" 'evil-write-all
+  "fs" 'save-buffer
   "u"  'undo-tree-visualize
   "se" 'evil-mc-make-all-cursors
   "ss" 'replace-regexp
@@ -77,6 +86,14 @@
   "bw" 'read-only-mode
   "bp" 'evil-prev-buffer
   "bn" 'evil-next-buffer
+  "bR" 'maple/safe-revert-buffer
+  "bP"  'maple/copy-clipboard-to-whole-buffer
+  "bY"  'maple/copy-whole-buffer-to-clipboard
+  )
+(evil-leader/set-key
+  "oa" 'org-agenda
+  "oc" 'org-capture
+  "ob" 'org-iswitchb
   )
 ;; (evil-leader/set-key
 ;;   "lp" 'persp-prev

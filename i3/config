@@ -109,16 +109,16 @@ bindsym $mod+a focus parent
 
 # focus the child container
 #bindsym $mod+d focus child
-set $w1  1: 
-set $w2  2: 
-set $w3  3: 
-set $w4  4: 
+set $w1  1:
+set $w2  2:
+set $w3  3:
+set $w4  4:
 set $w5  5:
-set $w6  6: 
-set $w7  7: 
-set $w8  8: 
-set $w9  9: 
-set $w10 10: 
+set $w6  6:
+set $w7  7:
+set $w8  8:
+set $w9  9:
+set $w10 10:
 # switch to workspace
 bindsym $mod+1 workspace $w1
 bindsym $mod+2 workspace $w2
@@ -153,12 +153,13 @@ assign [class="(?i)Vlc"] → $w5
 assign [class="(?i)netease-cloud-music"] → $w5
 assign [class="(?i)VirtualBox"] → $w4
 assign [class="(?i)Wireshark-gtk"] → $w9
+assign [class="(?i)Thunar"] → $w6
 # xfce4-notify
 for_window [class="Xfce4-notifyd"] floating enable,border none,focus mode_toggle
-for_window [class="Thunar"] floating enable
+# for_window [class="Thunar"] floating enable
 for_window [class="Xfce4-terminal"] floating enable,border pixel 0
 for_window [class="Xarchiver"] floating enable
-for_window [class="VirtualBox"] floating enable
+for_window [class="VirtualBox"] floating enable,border pixel 0
 for_window [class="^osdlyrics"] floating enable
 
 

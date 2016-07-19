@@ -33,6 +33,9 @@
  truncate-partial-width-windows t
  ad-redefinition-action 'accept)
 
+(setq backup-directory-alist `(("." . ,(concat maple-cache-directory "auto-save"))))
+
+
 (global-auto-revert-mode) ;; 修改外部文件自动载入
 (setq global-auto-revert-non-file-buffers t
       auto-revert-verbose nil)

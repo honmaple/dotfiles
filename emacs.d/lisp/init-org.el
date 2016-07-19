@@ -1,6 +1,7 @@
-;; (require-package 'evil-org)
+(require-package 'evil-org)
 (require-package 'org-pomodoro)
 (require-package 'org-bullets)
+(require-package 'ox-reveal)
 (require-package 'alert) ;;org-pomodoro依赖
 
 (use-package org
@@ -49,23 +50,18 @@
           (quote (("NEXT" :inherit warning)
                   ("PROJECT" :inherit font-lock-string-face))))
     (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point)
-    (evil-define-key 'normal org-mode-map (kbd "t") 'org-todo)
+    ;; (evil-define-key 'normal org-mode-map (kbd "t") 'org-todo)
     )
   :bind (("C-c c" . org-capture)
          ("C-c a" . org-agenda)
          ("C-c b" . org-iswitchb)
          ("C-c l" . org-store-link)))
 
-;; (use-package evil-org
-;;   :commands evil-org-mode
-;;   :diminish evil-org-mode
-;;   :init
-;;   (add-hook 'org-mode-hook 'evil-org-mode)
-;;   :config
-;;   (progn
-;;     (define-key evil-org-mode-map (kbd "H") (kbd "^"))
-;;     (define-key evil-org-mode-map (kbd "L") (kbd "$"))
-;;     ))
+(use-package evil-org
+  :commands evil-org-mode
+  :diminish evil-org-mode
+  :init
+  (add-hook 'org-mode-hook 'evil-org-mode))
 
 
 ;; (setq org-log-done t)
@@ -91,7 +87,7 @@
             ("wc" "不重要且紧急的任务" tags-todo "+PRIORITY=\"C\"")
             ("b" "博客" tags-todo "blog")
             ("p" . "项目安排")
-            ("pw" tags-todo "PROJECT+WORK+CATEGORY=\"cocos2d-x\"")
+            ("pw" tags-todo "PROJECT+WORK+CATEGORY=\"flask\"")
             ("W" "Weekly Review"
              ((stuck "")            ;; review stuck projects as designated by org-stuck-projects
               (tags-todo "PROJECT") ;; review all projects (assuming you use todo keywords to designate projects)
@@ -147,10 +143,13 @@
     ;; (add-hook 'org-mode-hook (lambda () (run-hooks 'org-mode-hook)))
     ))
 
+(use-package ox-reveal
+  :init(setq org-reveal-root "file:///home/jianglin/git/ppt/reveal.js"))
+
 ;; 写博客
 (defun org-new-blog (title)
   (interactive "sInput Title: ")
-  (let ((blog-path (substitute-in-file-name (format "~/git/pelican/content/articles/%s.org" title))))
+  (let ((blog-path (substitute-in-file-name (format "~/git/pelican/content/org/%s.org" title))))
     (if (file-exists-p blog-path)
         (message "the path '%s' already exists!" blog-path)
       (insert (format "[[file://%s][%s]]" blog-path title)))
@@ -173,4 +172,17 @@
     )
   (insert "\n"))
 
+(defun maple/org-md-export-to-markdown ()
+  (interactive)
+  (shell-command
+   (format "mv -v %s %s"
+           (shell-quote-argument (org-md-export-to-markdown))
+           "../markdown/")))
+
+(defun maple/org-html-export-to-html ()
+  (interactive)
+  (shell-command
+   (format "mv -v %s %s"
+           (shell-quote-argument (org-html-export-to-html))
+           "../html/")))
 (provide 'init-org)

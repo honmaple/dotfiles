@@ -1,5 +1,10 @@
 (require-package 'spaceline)
 (require-package 'window-numbering)
+(require-package 'smooth-scrolling)
+
+(use-package smooth-scroll     ;; 光标位于中间
+  :init (smooth-scrolling-mode 1)
+  )
 
 (use-package window-numbering
   :defer t

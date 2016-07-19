@@ -15,13 +15,13 @@
     (evil-mode 1)
     (fset 'evil-visual-update-x-selection 'ignore) ;;粘贴板
     ;; (defun my-save-if-bufferfilename ()
-      ;; (if (buffer-file-name)
-      ;;     (progn
-      ;;       (save-buffer)
-      ;;       )
-      ;;   (message "no file is associated to this buffer: do nothing")
-      ;;   )
-      ;; )
+    ;; (if (buffer-file-name)
+    ;;     (progn
+    ;;       (save-buffer)
+    ;;       )
+    ;;   (message "no file is associated to this buffer: do nothing")
+    ;;   )
+    ;; )
     ;; (add-hook 'focus-out-hook (lambda () (save-some-buffers t)))
     ;; (add-hook 'evil-insert-state-exit-hook 'my-save-if-bufferfilename)
     ))
@@ -46,6 +46,7 @@
     (setq evil-escape-excluded-major-modes '(dired-mode
                                              neotree-mode
                                              magit-mode
+                                             undo-tree-visualizer-mode
                                              newsticker-treeview-mode
                                              newsticker-treeview-list-mode
                                              newsticker-treeview-item-mode))
@@ -56,12 +57,10 @@
   :defer t
   :diminish evil-mc-mode "ⓒ"
   :init (global-evil-mc-mode 1)
-  ;; :config
-  ;; (progn
-  ;;   (dolist (buffer '("*helm-ag-edit*" "*Helm Swoop Edit*"))
-  ;;     (when (get-buffer buffer)
-  ;;       (with-current-buffer buffer
-  ;;         (evil-mc-mode 1)))))
+  :config
+  (progn
+    (evil-define-key 'normal evil-mc-key-map (kbd "<escape>") 'evil-mc-undo-all-cursors)
+    )
   :bind (:map evil-mc-key-map
               ("C-g" . evil-mc-undo-all-cursors)
               ))
@@ -79,8 +78,15 @@
   (progn
     (add-hook 'neotree-mode-hook
               (lambda ()
-                (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
-                (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)))
+                (evil-set-initial-state 'neotree-mode 'emacs)
+                (define-key neotree-mode-map (kbd "j") 'neotree-next-line)
+                (define-key neotree-mode-map (kbd "k") 'neotree-previous-line)
+                (define-key neotree-mode-map (kbd "C") 'neotree-copy-node)
+                (define-key neotree-mode-map (kbd "D") 'neotree-delete-node)
+                (define-key neotree-mode-map (kbd "R") 'neotree-rename-node)
+                (define-key neotree-mode-map (kbd "+") 'neotree-create-node)
+                (define-key neotree-mode-map (kbd "^") 'neotree-select-up-node)
+                ))
     ))
 
 (use-package vimish-fold

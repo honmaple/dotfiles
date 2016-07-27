@@ -49,14 +49,14 @@
 ;;----------------------------------------------------------------------------
 (setq indicate-empty-lines t)
 
-(require-package 'linum-relative)
-(use-package linum-relative ;;相对行号
-  :commands (linum-relative-toggle linum-relative-on)
-  :init
-  (progn
-    (global-linum-mode t)
-    (linum-relative-on))
-  :config (setq linum-relative-current-symbol ""))
+;; (require-package 'linum-relative)
+;; (use-package linum-relative ;;相对行号
+;;   :commands (linum-relative-toggle linum-relative-on)
+;;   :init
+;;   (progn
+;;     (global-linum-mode t)
+;;     (linum-relative-on))
+;;   :config (setq linum-relative-current-symbol ""))
 ;;----------------------------------------------------------------------------
 ;; Window size and features
 ;;----------------------------------------------------------------------------

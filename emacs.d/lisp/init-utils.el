@@ -43,42 +43,6 @@
   (file-name-as-directory (file-name-directory (find-library-name library-name))))
 
 
-(defun open-init-file()
-  (interactive)
-  (find-file "~/.emacs.d/init.el"))
-
-;; (defvar load-user-customized-major-mode-hook t)
-;; (defvar cached-normal-file-full-path nil)
-;; (defun is-buffer-file-temp ()
-;;   (interactive)
-;;   "If (buffer-file-name) is nil or a temp file or HTML file converted from org file"
-;;   (let ((f (buffer-file-name))
-;;         org
-;;         (rlt t))
-;;     (cond
-;;      ((not load-user-customized-major-mode-hook) t)
-;;      ((not f)
-;;       ;; file does not exist at all
-;;       (setq rlt t))
-;;      ((string= f cached-normal-file-full-path)
-;;       (setq rlt nil))
-;;      ((string-match (concat "^" temporary-file-directory) f)
-;;       ;; file is create from temp directory
-;;       (setq rlt t))
-;;      ((and (string-match "\.html$" f)
-;;            (file-exists-p (setq org (replace-regexp-in-string "\.html$" ".org" f))))
-;;       ;; file is a html file exported from org-mode
-;;       (setq rlt t))
-;;      (t
-;;       (setq cached-normal-file-full-path f)
-;;       (setq rlt nil)))
-;;     rlt))
-
-(defun maple/switch-to-previous-buffer ()
-  "Switch to previously open buffer.
-Repeated invocations toggle between the two most recently open buffers."
-  (interactive)
-  (switch-to-buffer (other-buffer (current-buffer) 1)))
 
 (defconst maple-cache-directory
   (expand-file-name (concat user-emacs-directory ".cache/"))

@@ -1,6 +1,18 @@
 (require-package 'spaceline)
 (require-package 'window-numbering)
-(require-package 'smooth-scrolling)
+(require-package 'smooth-scroll)
+;; (require-package 'nlinum)
+;; (require-package 'nlinum-relative)
+
+;; (use-package nlinum
+;;   :init (global-nlinum-mode t)
+;;   :config (setq nlinum-format "%4d"))
+
+;; (use-package nlinum-relative
+;;   :config
+;;   (nlinum-relative-setup-evil)
+;;   (setq nlinum-relative-redisplay-delay 0)
+;;   (add-hook 'prog-mode-hook 'nlinum-relative-mode))
 
 (use-package smooth-scroll     ;; 光标位于中间
   :init (smooth-scrolling-mode 1)

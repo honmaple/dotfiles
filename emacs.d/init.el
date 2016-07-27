@@ -30,7 +30,8 @@
 (require 'init-recentf)
 (require 'init-helm)
 (require 'init-dired)   ;;自带文件管理
-(require 'init-file)   ;;自带文件管理
+(require 'init-file)   ;;文件操作
+(require 'init-buffer)   ;;buffer操作
 (require 'init-hippie-expand)  ;;emacs自带补全 M-/
 (require 'init-windows)  ;;窗口管理C-x 2上下,C-x 3左右
 

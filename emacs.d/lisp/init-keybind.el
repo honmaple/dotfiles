@@ -1,29 +1,27 @@
 (evil-leader/set-key
-  "cc" 'comment-or-uncomment-region-or-line
-  ;; "fj" 'helm-semantic-or-imenu ;;显示函数
   "fj" 'dired-jump
+  "fl" 'find-file-literally
   "ff" 'helm-find-files ;;查找文件名 区别helm-find-files指定文件夹
   "fr" 'helm-recentf
-  ;; "fs" 'helm-occur ;;当前文件内容
-  "/" 'helm-swoop ;;当前文件内容
-  ;; "fs" 'helm-swoop ;;当前文件内容
   "fw" 'helm-ag
+  "fS" 'evil-write-all
+  "fs" 'save-buffer
+  "fei" 'maple/open-init-file
   "fo" 'maple/open-in-external-app
   "fE" 'maple/sudo-edit
   "fy" 'maple/show-and-copy-buffer-filename
   "fCd" 'maple/unix2dos
   "fCu" 'maple/dos2unix
-  "fei" 'open-init-file
-  "fS" 'evil-write-all
-  "fs" 'save-buffer
+  "fD" 'maple/delete-current-buffer-file
+  "fR" 'maple/rename-current-buffer-file
+  )
+(evil-leader/set-key
+  "cc" 'comment-or-uncomment-region-or-line
+  "/" 'helm-swoop ;;当前文件内容
   "u"  'undo-tree-visualize
   "se" 'evil-mc-make-all-cursors
   "ss" 'replace-regexp
   ;; "se" 'mc/mark-all-like-this
-  "<tab>" 'maple/switch-to-previous-buffer
-
-
-
   "el" 'maple/toggle-flycheck-error-list
   "ec" 'flycheck-clear
   )
@@ -77,8 +75,9 @@
   )
 
 (evil-leader/set-key
+  "<tab>" 'maple/switch-to-previous-buffer
   "bb" 'helm-mini  ;;显示缓冲区(已经打开的文件)
-  "bl" 'org-new-blog  ;;插入博客地址
+  ;; "bl" 'org-new-blog  ;;插入博客地址
   "bk" 'sanityinc/toggle-delete-other-windows
   "bm" 'bookmark-set
   "bj" 'bookmark-jump
@@ -94,6 +93,7 @@
   "oa" 'org-agenda
   "oc" 'org-capture
   "ob" 'org-iswitchb
+  "ol" 'org-new-blog  ;;插入博客地址
   )
 ;; (evil-leader/set-key
 ;;   "lp" 'persp-prev

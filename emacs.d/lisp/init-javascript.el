@@ -21,13 +21,13 @@
 
 ;; Javascript nests {} and () a lot, so I find this helpful
 
-(use-package rainbow-delimiters
-  :defer t
-  :init
-  (progn
-    (dolist (hook '(js2-mode-hook js-mode-hook json-mode-hook))
-      (add-hook hook 'rainbow-delimiters-mode))
-    ))
+;; (use-package rainbow-delimiters
+;;   :defer t
+;;   :init
+;;   (progn
+;;     (dolist (hook '(js2-mode-hook js-mode-hook json-mode-hook))
+;;       (add-hook hook 'rainbow-delimiters-mode))
+;;     ))
 
 (use-package json-mode
   :defer t)

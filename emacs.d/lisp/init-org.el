@@ -1,4 +1,4 @@
-(require-package 'evil-org)
+;; (require-package 'evil-org)
 (require-package 'org-pomodoro)
 (require-package 'org-bullets)
 (require-package 'ox-reveal)
@@ -8,9 +8,44 @@
   :mode ("\\.org$" . org-mode)
   :commands (org-clock-out org-occur-in-agenda-files org-agenda-files)
   :defer t
+  :init
+  (progn
+    (setq org-emphasis-regexp-components
+          ;; markup 记号前后允许中文
+          (list (concat " \t('\"{"            "[:nonascii:]")
+                (concat "- \t.,:!?;'\")}\\["  "[:nonascii:]")
+                " \t\r\n,\"'"
+                "."
+                1))
+    )
   :config
   (progn
     ;; (setq org-tags-column -100)
+    (with-eval-after-load 'org
+      (setq org-match-substring-regexp
+            (concat
+             ;; 限制上标和下标的匹配范围，org 中对其的介绍见：(org) Subscripts and superscripts
+             "\\([0-9a-zA-Zα-γΑ-Ω]\\)\\([_^]\\)\\("
+             "\\(?:" (org-create-multibrace-regexp "{" "}" org-match-sexp-depth) "\\)"
+             "\\|"
+             "\\(?:" (org-create-multibrace-regexp "(" ")" org-match-sexp-depth) "\\)"
+             "\\|"
+             "\\(?:\\*\\|[+-]?[[:alnum:].,\\]*[[:alnum:]]\\)\\)")))
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '(
+       (sh . t)
+       (python . t)
+       (R . t)
+       (ruby . t)
+       (ditaa . t)
+       (dot . t)
+       (octave . t)
+       (sqlite . t)
+       (perl . t)
+       (C . t)))
+    (add-to-list 'org-babel-default-header-args:python
+                 '(:results . "output"))
     (setq org-capture-templates
           '(("t" "Todo" entry (file+headline "~/org-mode/gtd.org" "Workspace")
              "* TODO [#B] %?\n  %i\n"
@@ -28,19 +63,6 @@
              entry (file+datetree "~/org-mode/journal.org")
              "* %?"
              :empty-lines 1)))
-    (org-babel-do-load-languages
-     'org-babel-load-languages
-     '(
-       (sh . t)
-       (python . t)
-       (R . t)
-       (ruby . t)
-       (ditaa . t)
-       (dot . t)
-       (octave . t)
-       (sqlite . t)
-       (perl . t)
-       (C . t)))
     (setq org-todo-keywords
           (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
                   (sequence "PROJECT(p)" "|" "DONE(d!/!)" "CANCELLED(c@/!)")
@@ -50,6 +72,7 @@
           (quote (("NEXT" :inherit warning)
                   ("PROJECT" :inherit font-lock-string-face))))
     (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point)
+    (evil-define-key 'normal org-mode-map (kbd "t") 'org-todo)
     ;; (evil-define-key 'normal org-mode-map (kbd "t") 'org-todo)
     )
   :bind (("C-c c" . org-capture)
@@ -57,11 +80,31 @@
          ("C-c b" . org-iswitchb)
          ("C-c l" . org-store-link)))
 
-(use-package evil-org
-  :commands evil-org-mode
-  :diminish evil-org-mode
-  :init
-  (add-hook 'org-mode-hook 'evil-org-mode))
+;; (use-package org-babel
+;;   :init
+;;   (org-babel-do-load-languages
+;;    'org-babel-load-languages
+;;    '(
+;;      (sh . t)
+;;      (python . t)
+;;      (R . t)
+;;      (ruby . t)
+;;      (ditaa . t)
+;;      (dot . t)
+;;      (octave . t)
+;;      (sqlite . t)
+;;      (perl . t)
+;;      (C . t)))
+;;   :config
+;;   (progn
+;;     (add-to-list 'org-babel-default-header-args:python
+;;                  '(:results . "output"))))
+
+;; (use-package evil-org
+;;   :commands evil-org-mode
+;;   :diminish evil-org-mode
+;;   :init
+;;   (add-hook 'org-mode-hook 'evil-org-mode))
 
 
 ;; (setq org-log-done t)
@@ -99,15 +142,6 @@
               ("M-k" . org-agenda-previous-item)
               ("M-h" . org-agenda-earlier)
               ("M-l" . org-agenda-later)))
-
-;; (define-key org-agenda-mode-map (kbd "j") 'org-agenda-next-line)
-;; (define-key org-agenda-mode-map (kbd "k") 'org-agenda-previous-line)
-;; (define-key org-agenda-mode-map (kbd "M-j") 'org-agenda-next-item)
-;; (define-key org-agenda-mode-map (kbd "M-k") 'org-agenda-previous-item)
-;; (define-key org-agenda-mode-map (kbd "M-h") 'org-agenda-earlier)
-;; (define-key org-agenda-mode-map (kbd "M-l") 'org-agenda-later))
-;; (define-key org-agenda-mode-map (kbd "gd") 'org-agenda-toggle-time-grid)
-;; (define-key org-agenda-mode-map (kbd "gr") 'org-agenda-redo))
 
 (use-package org-bullets
   :defer t
@@ -185,4 +219,5 @@
    (format "mv -v %s %s"
            (shell-quote-argument (org-html-export-to-html))
            "../html/")))
+
 (provide 'init-org)

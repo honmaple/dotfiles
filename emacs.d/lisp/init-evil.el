@@ -14,6 +14,12 @@
   (progn
     (evil-mode 1)
     (fset 'evil-visual-update-x-selection 'ignore) ;;粘贴板
+    ;; (defun evil-paste-after-from-0 ()
+    ;;   (interactive)
+    ;;   (let ((evil-this-register ?0))
+    ;;     (call-interactively 'evil-paste-after)))
+
+    ;; (define-key evil-visual-state-map "p" 'evil-paste-after-from-0)
     ;; (defun my-save-if-bufferfilename ()
     ;; (if (buffer-file-name)
     ;;     (progn
@@ -42,10 +48,11 @@
   :config
   (progn
     (setq-default evil-escape-key-sequence "jj")
-    (setq-default evil-escape-delay 0.3)
+    (setq-default evil-escape-delay 0.4)
     (setq evil-escape-excluded-major-modes '(dired-mode
                                              neotree-mode
                                              magit-mode
+                                             org-agenda-mode
                                              undo-tree-visualizer-mode
                                              newsticker-treeview-mode
                                              newsticker-treeview-list-mode

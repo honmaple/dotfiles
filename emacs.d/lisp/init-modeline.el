@@ -1,6 +1,7 @@
 (require-package 'spaceline)
 (require-package 'window-numbering)
-(require-package 'smooth-scroll)
+(require-package 'smooth-scrolling)
+;; (require-package 'centered-cursor-mode)
 ;; (require-package 'nlinum)
 ;; (require-package 'nlinum-relative)
 
@@ -15,8 +16,13 @@
 ;;   (add-hook 'prog-mode-hook 'nlinum-relative-mode))
 
 (use-package smooth-scroll     ;; 光标位于中间
-  :init (smooth-scrolling-mode 1)
+  :config (smooth-scrolling-mode 1)
   )
+
+;; (use-package centered-cursor-mode     ;; 光标位于中间
+;;   :config (global-centered-cursor-mode)
+;;   )
+
 
 (use-package window-numbering
   :defer t

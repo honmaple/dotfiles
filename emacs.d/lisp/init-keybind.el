@@ -1,7 +1,8 @@
 (evil-leader/set-key
   "fj" 'dired-jump
   "fl" 'find-file-literally
-  "ff" 'helm-find-files ;;查找文件名 区别helm-find-files指定文件夹
+  "ff" 'helm-find-files
+  "fF" 'helm-find
   "fr" 'helm-recentf
   "fw" 'helm-ag
   "fS" 'evil-write-all
@@ -21,6 +22,7 @@
   "u"  'undo-tree-visualize
   "se" 'evil-mc-make-all-cursors
   "ss" 'replace-regexp
+  "sj" 'helm-semantic-or-imenu
   ;; "se" 'mc/mark-all-like-this
   "el" 'maple/toggle-flycheck-error-list
   "ec" 'flycheck-clear
@@ -95,16 +97,17 @@
   "ob" 'org-iswitchb
   "ol" 'org-new-blog  ;;插入博客地址
   )
-;; (evil-leader/set-key
-;;   "lp" 'persp-prev
-;;   "ln" 'persp-next
-;;   "ll" 'persp-switch
-;;   "lL" 'persp-load-state-from-file
-;;   "la" 'persp-add-buffer
-;;   "ls" 'persp-save-state-to-file
-;;   "lS" 'persp-save-to-file-by-names
-;;   "l <tab>" 'maple/jump-to-last-layout
-;;   )
+(evil-leader/set-key-for-mode 'org-mode
+  "od" 'org-deadline
+  "oe" 'org-export-dispatch
+  "ot" 'org-set-tags
+  "o." 'org-time-stamp
+  "os" 'org-schedule
+  "op" 'org-priority
+  "oP" 'org-pomodoro
+  )
+
+
 (define-key evil-normal-state-map (kbd "M-J") 'evil-window-move-very-bottom)
 (define-key evil-normal-state-map (kbd "M-K") 'evil-window-move-very-top)
 (define-key evil-normal-state-map (kbd "M-L") 'evil-window-move-far-right)

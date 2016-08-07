@@ -8,6 +8,7 @@
 (require-package 'evil-magit)
 (require-package 'fullframe)
 (require-package 'git-commit)
+(require-package 'git-timemachine)
 
 (with-eval-after-load 'magit
   (require 'evil-magit))
@@ -41,5 +42,17 @@
   :defer t
   :config
   (add-hook 'git-commit-mode-hook 'goto-address-mode))
+
+(use-package git-timemachine
+  :defer t
+  :config
+  (progn
+    (eval-after-load 'git-timemachine
+      '(progn
+         (global-evil-mc-mode -1)
+         (evil-make-overriding-map git-timemachine-mode-map 'normal)
+         ;; force update evil keymaps after git-timemachine-mode loaded
+         (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps)))
+    ))
 
 (provide 'init-git)

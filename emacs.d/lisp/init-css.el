@@ -1,9 +1,3 @@
-;;; Colourise CSS colour literals
-;; (when (maybe-require-package 'rainbow-mode)
-;;   (dolist (hook '(css-mode-hook html-mode-hook web-mode-hook sass-mode-hook))
-;;     (add-hook hook 'rainbow-mode)))
-
-
 ;;; SASS and SCSS
 (require-package 'css-mode)
 (require-package 'sass-mode)

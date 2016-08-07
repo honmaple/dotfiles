@@ -4,14 +4,6 @@
 (when (eval-when-compile (version< "24.4" emacs-version))
   (electric-indent-mode 1))
 
-;; (when (eval-when-compile (string< "24.3.1" emacs-version))
-;;   ;; https://github.com/purcell/emacs.d/issues/138
-;;   (after-load 'subword
-;;     (diminish 'subword-mode)))
-
-
-
-
 
 ;;----------------------------------------------------------------------------
 ;; Zap *up* to char is a handy pair for zap-to-char

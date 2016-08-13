@@ -14,6 +14,8 @@
   (progn
     (evil-mode 1)
     (fset 'evil-visual-update-x-selection 'ignore) ;;粘贴板
+    (evil-set-initial-state 'sql-mode 'emacs)
+
     ;; (defun evil-paste-after-from-0 ()
     ;;   (interactive)
     ;;   (let ((evil-this-register ?0))
@@ -109,6 +111,4 @@
   :bind (:map evil-visual-state-map
               ("v" . er/expand-region)))
 
-;; (define-key evil-visual-state-map (kbd "za") 'vimish-fold)
-;; (define-key evil-normal-state-map (kbd "zc") 'vimish-fold-delete)
 (provide 'init-evil)

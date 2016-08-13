@@ -27,8 +27,8 @@
      company-tooltip-limit 15
      company-minimum-prefix-length 1
      ;; company-dabbrev-other-buffers t
-     company-dabbrev-downcase t  ;;忽略大小写
-     company-dabbrev-ignore-case t
+     company-dabbrev-downcase nil  ;;忽略大小写
+     ;; company-dabbrev-ignore-case t
      company-tooltip-align-annotations t
      company-begin-commands '(self-insert-command)
      company-global-modes '(not comint-mode erc-mode gud-mode rcirc-mode
@@ -37,11 +37,17 @@
   :config
   (progn
     (setq company-backends
-          '((company-capf company-dabbrev-code  company-keywords company-files :with company-yasnippet)
+          '((company-dabbrev-code  company-keywords company-files :with company-yasnippet)
             ;; (company-files)
             ;; (company-semantic)
             (company-dabbrev :with company-yasnippet)
             ))
+    (custom-set-faces
+     '(company-tooltip-common
+       ((t (:inherit company-tooltip :weight bold :underline nil))))
+     '(company-tooltip-common-selection
+       ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
+
     (defvar-local company-fci-mode-on-p nil)
     (defun company-turn-off-fci (&rest ignore)
       (when (boundp 'fci-mode)

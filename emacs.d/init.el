@@ -19,18 +19,17 @@
 (require-package 'use-package)
 
 (require 'init-frame-hooks)
-(require 'init-themes)
+;; (require 'init-themes)
 (require 'init-gui) ;;ui设置 显示行号
+(require 'init-ui)  ;; modeline,which-key
 (require 'init-fonts)
-(require 'init-modeline)   ;;状态栏
 
 (require 'init-editing-utils) ;;自动补全括号等
 (require 'init-whitespace) ;;空白控制
 (require 'init-hs-minor-mode) ;;代码折叠
-(require 'init-fci) ;;这个应该是80列缩进线,代码格式化
+;; (require 'init-fci) ;;这个应该是80列缩进线,代码格式化
 (require 'init-auto-insert) 
 
-(require 'init-recentf)
 (require 'init-helm)
 (require 'init-dired)   ;;自带文件管理
 (require 'init-file)   ;;文件操作

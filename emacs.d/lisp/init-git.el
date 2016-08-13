@@ -22,7 +22,7 @@
     (setq-default
      magit-process-popup-time 10
      magit-diff-refine-hunk t)
-    (add-hook 'magit-popup-mode-hook 'sanityinc/no-trailing-whitespace))
+    (add-hook 'magit-popup-mode-hook 'maple/no-trailing-whitespace))
   :bind
   (("C-x g" . magit-status)
    ("C-x M-g" . magit-dispatch-popup)

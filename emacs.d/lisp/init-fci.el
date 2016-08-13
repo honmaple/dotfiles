@@ -15,13 +15,4 @@
 ;;                         (turn-off-fci-mode) (turn-on-fci-mode))))
 ;;     (add-hook 'prog-mode-hook 'maple/prog-mode-fci-settings))
 ;;   )
-
-;; 格式化代码
-(defun indent-buffer ()
-  (interactive)
-  (save-excursion
-    (indent-region (point-min) (point-max) nil)))
-(global-set-key [f6] 'indent-buffer)
-
-(require-package 'popup)
 (provide 'init-fci)

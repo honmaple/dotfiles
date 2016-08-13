@@ -1,8 +1,8 @@
-(maybe-require-package 'json-mode)
-(maybe-require-package 'js2-mode)
-(maybe-require-package 'coffee-mode)
-(maybe-require-package 'company-tern)
-(require-package 'rainbow-delimiters)
+(require-package 'json-mode)
+(require-package 'js2-mode)
+(require-package 'coffee-mode)
+(require-package 'company-tern)
+(require-package 'tern)
 
 
 (use-package js2-mode
@@ -43,24 +43,41 @@
           coffee-tab-width preferred-javascript-indent-level)
     ))
 
+(use-package tern
+  :defer t
+  :diminish tern-mode
+  :init (add-hook 'js2-mode-hook 'tern-mode)
+  :config (add-to-list 'tern-command "--no-port-file" 'append))
+
 (use-package company-tern
   :defer t
-  :config
+  :init
   (progn
-    (after-load 'company
-      (dolist (hook '(js-mode-hook
-                      js2-mode-hook
-                      js3-mode-hook
-                      inferior-js-mode-hook
-                      ))
-        (add-hook hook
-                  (lambda ()
-                    (tern-mode t)
-                    (make-local-variable 'company-backends)
-                    (setq company-backends (copy-tree company-backends))
-                    (setf (car company-backends)
-                          (append '(company-tern) (car company-backends)))
-                    )))
-      )))
+    (defadvice company-tern (before web-mode-set-up-ac-sources activate)
+      "Set `tern-mode' based on current language before running `company-tern'."
+      (if (equal major-mode 'web-mode)
+          (let ((web-mode-cur-language (web-mode-language-at-pos)))
+            (if (or (string= web-mode-cur-language "javascript")
+                    (string= web-mode-cur-language "jsx"))
+                (unless tern-mode (tern-mode))
+              (if tern-mode (tern-mode -1))
+              ))))
+    (add-hook 'web-mode-hook
+              (lambda()
+                (make-local-variable 'company-backends)
+                (setq company-backends (copy-tree company-backends))
+                (setf (car company-backends)
+                      (append '(company-tern) (car company-backends)))
+                ))
+    (add-hook 'js2-mode-hook
+              (lambda()
+                ;; (add-to-list (make-local-variable 'company-backends)
+                ;;              'company-tern)
+                (make-local-variable 'company-backends)
+                (setq company-backends (copy-tree company-backends))
+                (setf (car company-backends)
+                      (append '(company-tern) (car company-backends)))
+                ))
+    ))
 
 (provide 'init-javascript)

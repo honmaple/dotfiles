@@ -91,12 +91,27 @@
   "bP"  'maple/copy-clipboard-to-whole-buffer
   "bY"  'maple/copy-whole-buffer-to-clipboard
   )
+
+(evil-leader/set-key
+  "nr" 'narrow-to-region
+  "np" 'narrow-to-page
+  "nf" 'narrow-to-defun
+  "nw" 'widen)
+
+(evil-leader/set-key
+  "sql" 'sql-sqlite
+  "sqp" 'sql-postgres
+  "sqm" 'sql-mysql
+  )
+
 (evil-leader/set-key
   "oa" 'org-agenda
   "oc" 'org-capture
   "ob" 'org-iswitchb
   "ol" 'org-new-blog  ;;插入博客地址
   )
+
+
 (evil-leader/set-key-for-mode 'org-mode
   "od" 'org-deadline
   "oe" 'org-export-dispatch
@@ -105,6 +120,7 @@
   "os" 'org-schedule
   "op" 'org-priority
   "oP" 'org-pomodoro
+  "or"  'org-decrypt-entry
   )
 
 

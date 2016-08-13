@@ -1,4 +1,3 @@
-;; (require-package 'evil-org)
 (require-package 'org-pomodoro)
 (require-package 'org-bullets)
 (require-package 'ox-reveal)
@@ -46,6 +45,30 @@
        (C . t)))
     (add-to-list 'org-babel-default-header-args:python
                  '(:results . "output"))
+
+    (setq org-todo-keywords
+          (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
+                  (sequence "PROJECT(p)" "|" "DONE(d!/!)" "CANCELLED(c@/!)")
+                  (sequence "WAITING(w@/!)" "HOLD(h)" "|" "CANCELLED(c@/!)"))))
+
+    (setq org-todo-keyword-faces
+          (quote (("NEXT" :inherit warning)
+                  ("PROJECT" :inherit font-lock-string-face))))
+
+    (defadvice org-open-at-point (after org-open-at-point activate)
+      (while (>  (count-windows) 2)
+        (delete-window (cadr (window-list-1)))))
+
+    (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point)
+    (evil-define-key 'normal org-mode-map (kbd "t") 'org-todo))
+  :bind (("C-c c" . org-capture)
+         ("C-c a" . org-agenda)
+         ("C-c b" . org-iswitchb)
+         ("C-c l" . org-store-link)))
+
+(use-package org-capture
+  :config
+  (progn
     (setq org-capture-templates
           '(("t" "Todo" entry (file+headline "~/org-mode/gtd.org" "Workspace")
              "* TODO [#B] %?\n  %i\n"
@@ -63,54 +86,9 @@
              entry (file+datetree "~/org-mode/journal.org")
              "* %?"
              :empty-lines 1)))
-    (setq org-todo-keywords
-          (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
-                  (sequence "PROJECT(p)" "|" "DONE(d!/!)" "CANCELLED(c@/!)")
-                  (sequence "WAITING(w@/!)" "HOLD(h)" "|" "CANCELLED(c@/!)"))))
-
-    (setq org-todo-keyword-faces
-          (quote (("NEXT" :inherit warning)
-                  ("PROJECT" :inherit font-lock-string-face))))
-    (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point)
-    (evil-define-key 'normal org-mode-map (kbd "t") 'org-todo)
-    ;; (evil-define-key 'normal org-mode-map (kbd "t") 'org-todo)
-    )
-  :bind (("C-c c" . org-capture)
-         ("C-c a" . org-agenda)
-         ("C-c b" . org-iswitchb)
-         ("C-c l" . org-store-link)))
-
-;; (use-package org-babel
-;;   :init
-;;   (org-babel-do-load-languages
-;;    'org-babel-load-languages
-;;    '(
-;;      (sh . t)
-;;      (python . t)
-;;      (R . t)
-;;      (ruby . t)
-;;      (ditaa . t)
-;;      (dot . t)
-;;      (octave . t)
-;;      (sqlite . t)
-;;      (perl . t)
-;;      (C . t)))
-;;   :config
-;;   (progn
-;;     (add-to-list 'org-babel-default-header-args:python
-;;                  '(:results . "output"))))
-
-;; (use-package evil-org
-;;   :commands evil-org-mode
-;;   :diminish evil-org-mode
-;;   :init
-;;   (add-hook 'org-mode-hook 'evil-org-mode))
-
-
-;; (setq org-log-done t)
+    ))
 
 ;; 设置默认浏览器
-
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "google-chrome-stable")
 
@@ -159,9 +137,8 @@
       (define-key org-agenda-mode-map (kbd "P") 'org-pomodoro)
       )))
 
-;; org-mode 設定
 (use-package org-crypt
-  :defer t
+  :after org
   :config
   (progn
     ;; 當被加密的部份要存入硬碟時，自動加密回去
@@ -178,6 +155,7 @@
     ))
 
 (use-package ox-reveal
+  :after org
   :init(setq org-reveal-root "file:///home/jianglin/git/ppt/reveal.js"))
 
 ;; 写博客

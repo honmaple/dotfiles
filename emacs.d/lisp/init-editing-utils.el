@@ -101,56 +101,6 @@
 
 (global-set-key (kbd "C-o") 'sanityinc/open-line-with-reindent)
 
-
-(require-package 'which-key)
-(require-package 'rainbow-delimiters)  ;;括号高亮
-(require-package 'undo-tree)
-(require-package 'highlight-symbol)
-(use-package which-key
-  :defer t
-  :init (add-hook 'after-init-hook #'which-key-mode)
-  :diminish which-key-mode
-  :config
-  (progn
-    (which-key-setup-side-window-bottom)
-    (setq which-key-special-keys nil
-          which-key-use-C-h-for-paging t
-          which-key-prevent-C-h-from-cycling t
-          which-key-echo-keystrokes 0.02
-          which-key-max-description-length 32
-          which-key-sort-order 'which-key-key-order-alpha
-          which-key-idle-delay 0.2
-          which-key-allow-evil-operators t)
-    ))
-
-
-(use-package rainbow-delimiters
-  :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-  :diminish rainbow-delimiters-mode)
-
-(use-package undo-tree
-  :commands (global-undo-tree-mode)
-  :diminish undo-tree-mode
-  :config
-  (progn
-    (setq undo-tree-auto-save-history t
-          undo-tree-history-directory-alist
-          `(("." . ,(concat maple-cache-directory "undo-tree"))))
-    (unless (file-exists-p (concat maple-cache-directory "undo-tree"))
-      (make-directory (concat maple-cache-directory "undo-tree")))
-    ))
-
-
-(use-package highlight-symbol
-  :defer t
-  :diminish highlight-symbol-mode
-  :init
-  (progn
-    (dolist (hook '(prog-mode-hook html-mode-hook css-mode-hook))
-      (add-hook hook 'highlight-symbol-mode)
-      (add-hook hook 'highlight-symbol-nav-mode))
-    (add-hook 'org-mode-hook 'highlight-symbol-nav-mode)))
-
 ;; 注释
 (defun comment-or-uncomment-region-or-line ()
   "Comments or uncomments the region or the current line if there's no active region."
@@ -160,5 +110,12 @@
         (setq beg (region-beginning) end (region-end))
       (setq beg (line-beginning-position) end (line-end-position)))
     (comment-or-uncomment-region beg end)))
+
+(defun indent-buffer ()
+  (interactive)
+  (save-excursion
+    (indent-region (point-min) (point-max) nil)))
+
+(global-set-key [f6] 'indent-buffer)
 
 (provide 'init-editing-utils)

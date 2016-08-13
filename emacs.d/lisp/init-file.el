@@ -1,3 +1,23 @@
+(use-package recentf
+  :defer t
+  :init
+  (progn
+    ;; lazy load recentf
+    (add-hook 'find-file-hook (lambda () (unless recentf-mode
+                                      (recentf-mode)
+                                      (recentf-track-opened-file))))
+    (setq recentf-save-file (concat maple-cache-directory "recentf")
+          recentf-max-saved-items 1000
+          recentf-auto-cleanup 'never
+          recentf-auto-save-timer (run-with-idle-timer 600 t
+                                                       'recentf-save-list)))
+  :config
+  (progn
+    (add-to-list 'recentf-exclude
+                 (expand-file-name maple-cache-directory))
+    (add-to-list 'recentf-exclude (expand-file-name package-user-dir))
+    (add-to-list 'recentf-exclude "COMMIT_EDITMSG\\'")))
+
 (defun maple/system-is-mac ()
   (eq system-type 'darwin))
 (defun maple/system-is-linux ()
@@ -84,8 +104,8 @@
                (set-visited-file-name new-name)
                (set-buffer-modified-p nil)
                (when (fboundp 'recentf-add-file)
-                   (recentf-add-file new-name)
-                   (recentf-remove-if-non-kept filename))
+                 (recentf-add-file new-name)
+                 (recentf-remove-if-non-kept filename))
                (message "File '%s' successfully renamed to '%s'" name (file-name-nondirectory new-name))))))))
 
 (defun maple/show-and-copy-buffer-filename ()

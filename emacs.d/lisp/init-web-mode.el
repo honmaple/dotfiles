@@ -17,16 +17,35 @@
             ("^[ \t]*<\\([@a-z]+\\)[^>]*>? *$" 1 " id=\"\\([a-zA-Z0-9_]+\\)\"" "#" ">")
             ("^[ \t]*<\\(@[a-z.]+\\)[^>]*>? *$" 1 " contentId=\"\\([a-zA-Z0-9_]+\\)\"" "=" ">")
             (" \\(ng-[a-z]*\\)=\"\\([^\"]+\\)" 1 2 "=")))
+
     (add-hook 'web-mode-hook
               (lambda ()
                 (yas-global-mode 1)
                 (add-to-list 'company-backends '(company-web-html :with company-yasnippet
-                                                 company-web-slim
-                                                 company-css
-                                                 company-web-jade))
+                                                                  ;; company-web-slim
+                                                                  company-css
+                                                                  ;; company-web-jade
+                                                                  ))
                 (define-key evil-normal-state-local-map "za" 'web-mode-fold-or-unfold)
                 (define-key evil-normal-state-local-map [f5] 'browse-url-of-file)
-                )))
+                ))
+    ;; (defadvice company-css (before web-mode-set-up-ac-sources activate)
+    ;;   "Set CSS completion based on current language before running `company-css'."
+    ;;   (if (equal major-mode 'web-mode)
+    ;;       (let ((web-mode-cur-language (web-mode-language-at-pos)))
+    ;;         (if (or (string= web-mode-cur-language "css")
+    ;;                 (string= web-mode-cur-language "style"))
+    ;;             (unless css-mode (css-mode))
+    ;;           (if css-mode (css-mode -1))
+    ;;           ))))
+    ;; (add-hook 'web-mode-hook
+    ;;           (lambda()
+    ;;             (make-local-variable 'company-backends)
+    ;;             (setq company-backends (copy-tree company-backends))
+    ;;             (setf (car company-backends)
+    ;;                   (append '(company-css) (car company-backends)))
+    ;;             ))
+    )
   :mode
   (("\\.phtml\\'" . web-mode)
    ("\\.tpl\\.php\\'" . web-mode)
@@ -89,5 +108,6 @@
 ;;             ))
 ;; (add-hook 'jinja2-mode-hook 'web-mode-hook)
 ;; (add-hook 'web-mode-hook 'jinja2-mode-hook)
+
 
 (provide 'init-web-mode)

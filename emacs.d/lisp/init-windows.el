@@ -1,7 +1,6 @@
 ;;----------------------- -----------------------------------------------------
 ;; Navigate window layouts with "C-c <left>" and "C-c <right>"
 ;;----------------------------------------------------------------------------
-(winner-mode 1)
 
 ;; Borrowed from http://postmomentum.ch/blog/201304/blog-on-emacs
 (defun sanityinc/split-window()
@@ -21,7 +20,16 @@
   (windmove-default-keybindings 'control))
 
 (setq split-width-threshold 1 ) ;;默认分屏
-(setq display-buffer-alist '(("\\*Warnings\\*" display-buffer-below-selected))) ;;设置分屏
+
+(setq display-buffer-alist '(("\\*Warnings\\*" display-buffer-below-selected)
+                             ("\\*Help\\*" display-buffer-below-selected))) ;;设置分屏
+
+(use-package winner
+  :init (winner-mode t))
+
+(require-package 'popwin)
+(use-package popwin
+  :config (popwin-mode 1))
 
 (require-package 'golden-ratio)
 (use-package golden-ratio  ;;黄金分割

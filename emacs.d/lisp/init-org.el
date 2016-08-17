@@ -19,7 +19,7 @@
     )
   :config
   (progn
-    ;; (setq org-tags-column -100)
+    (setq org-tags-column -100)
     (with-eval-after-load 'org
       (setq org-match-substring-regexp
             (concat
@@ -30,6 +30,15 @@
              "\\(?:" (org-create-multibrace-regexp "(" ")" org-match-sexp-depth) "\\)"
              "\\|"
              "\\(?:\\*\\|[+-]?[[:alnum:].,\\]*[[:alnum:]]\\)\\)")))
+
+    (if (and (fboundp 'daemonp) (daemonp))
+        (add-hook 'after-make-frame-functions
+                  (lambda (frame)
+                    (with-selected-frame frame
+                      (set-face-font 'org-table "-Misc-Fixed-normal-normal-normal-*-18-*-*-*-c-90-iso10646-1")
+                      )))
+      (set-face-font 'org-table "-Misc-Fixed-normal-normal-normal-*-18-*-*-*-c-90-iso10646-1"))
+
     (org-babel-do-load-languages
      'org-babel-load-languages
      '(
@@ -60,7 +69,9 @@
         (delete-window (cadr (window-list-1)))))
 
     (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point)
-    (evil-define-key 'normal org-mode-map (kbd "t") 'org-todo))
+    (evil-define-key 'normal org-mode-map (kbd "t") 'org-todo)
+    (evil-define-key 'normal org-mode-map (kbd "TAB") 'org-cycle)
+    (evil-define-key 'normal org-mode-map (kbd "<tab>") 'org-cycle))
   :bind (("C-c c" . org-capture)
          ("C-c a" . org-agenda)
          ("C-c b" . org-iswitchb)

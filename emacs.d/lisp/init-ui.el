@@ -36,6 +36,7 @@
     (setq spaceline-window-numbers-unicode t)
     (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
     (spaceline-spacemacs-theme)
+    (spaceline-helm-mode t)
     ))
 
 (use-package which-key

@@ -53,8 +53,6 @@
 
 (require 'init-keybind)
 
-(require 'init-markdown)
-(require 'init-rst)
 (require 'init-matlab)
 (require 'init-sh) ;;shell
 (require 'init-web-mode)
@@ -63,6 +61,7 @@
 (require 'init-python)
 (require 'init-c)
 
+(require 'init-text) ;; markdown rst
 (require 'init-org)
 
 ;; (require 'init-slime)
@@ -96,7 +95,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- ;; '(default ((t (:family "DejaVu Sans Mono" :foundry "PfEd" :slant oblique :weight normal :height 113 :width normal))))
- '(org-table ((t (:family "WenQuanYi Micro Hei Mono"))))
- )
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
 ;; End:

@@ -8,13 +8,21 @@
 (require-package 'neotree)
 (require-package 'vimish-fold)
 
-(use-package evil
+
+;;leader 要在evil-mode前,否则messages无法激活
+(use-package evil-leader
   :defer t
+  :init (global-evil-leader-mode)
+  :config (evil-leader/set-leader ","))
+
+
+(use-package evil
+  :init (evil-mode 1)
   :config
   (progn
-    (evil-mode 1)
     (fset 'evil-visual-update-x-selection 'ignore) ;;粘贴板
     (evil-set-initial-state 'sql-mode 'emacs)
+    (evil-set-initial-state 'image-mode 'emacs)
 
     ;; (defun evil-paste-after-from-0 ()
     ;;   (interactive)
@@ -53,6 +61,7 @@
     (setq-default evil-escape-delay 0.4)
     (setq evil-escape-excluded-major-modes '(dired-mode
                                              neotree-mode
+                                             help-mode
                                              magit-mode
                                              org-agenda-mode
                                              undo-tree-visualizer-mode
@@ -73,11 +82,6 @@
   :bind (:map evil-mc-key-map
               ("C-g" . evil-mc-undo-all-cursors)
               ))
-
-(use-package evil-leader
-  :defer t
-  :init (global-evil-leader-mode)
-  :config (evil-leader/set-leader ","))
 
 
 (use-package neotree

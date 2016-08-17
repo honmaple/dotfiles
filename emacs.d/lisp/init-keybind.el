@@ -79,8 +79,10 @@
 (evil-leader/set-key
   "<tab>" 'maple/switch-to-previous-buffer
   "bb" 'helm-mini  ;;显示缓冲区(已经打开的文件)
-  ;; "bl" 'org-new-blog  ;;插入博客地址
-  "bk" 'sanityinc/toggle-delete-other-windows
+  "bd" 'kill-this-buffer
+  "be" 'maple/safe-erase-buffer
+  "bh" 'maple/switch-to-scratch-buffer
+  "bK" 'maple/kill-other-buffers
   "bm" 'bookmark-set
   "bj" 'bookmark-jump
   "bs" 'bookmark-save

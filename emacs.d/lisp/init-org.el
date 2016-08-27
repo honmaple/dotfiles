@@ -3,6 +3,7 @@
 (require-package 'ox-reveal)
 (require-package 'alert) ;;org-pomodoro依赖
 
+
 (use-package org
   :mode ("\\.org$" . org-mode)
   :commands (org-clock-out org-occur-in-agenda-files org-agenda-files)
@@ -19,7 +20,7 @@
     )
   :config
   (progn
-    (setq org-tags-column -100)
+    (setq org-tags-column 80)
     (with-eval-after-load 'org
       (setq org-match-substring-regexp
             (concat
@@ -31,6 +32,7 @@
              "\\|"
              "\\(?:\\*\\|[+-]?[[:alnum:].,\\]*[[:alnum:]]\\)\\)")))
 
+    ;; 中英文对齐
     (if (and (fboundp 'daemonp) (daemonp))
         (add-hook 'after-make-frame-functions
                   (lambda (frame)
@@ -84,18 +86,26 @@
           '(("t" "Todo" entry (file+headline "~/org-mode/gtd.org" "Workspace")
              "* TODO [#B] %?\n  %i\n"
              :empty-lines 1)
-            ("n" "笔记" entry (file+headline "~/org-mode/notes.org" "我的笔记")
-             "* TODO [#C] %?\n  %i\n %U"
-             :empty-lines 1)
-            ("b" "博客" entry (file+headline "~/org-mode/blog.org" "博客")
-             "** TODO [#B] %?     :blog:\n  %i %U"
-             :empty-lines 1)
-            ("w" "学习" entry (file+headline "~/org-mode/gtd.org" "学习")
+            ("w" "工作" entry (file+headline "~/org-mode/gtd.org" "工作安排")
              "* TODO [#A] %?\n  %i\n %U"
              :empty-lines 1)
+            ("n" "笔记" entry (file+headline "~/org-mode/notes.org" "我的笔记")
+             "*  %?\n  %i\n %U"
+             :empty-lines 1)
+            ("m" "电影" entry (file+headline "~/org-mode/notes.org" "影视歌曲")
+             "*  %?\n Watched on %T\n %i\n"
+             :empty-lines 1)
+            ("r" "阅读" entry (file+headline "~/org-mode/notes.org" "阅读")
+             "*  %?\n  %T\n %i\n"
+             :empty-lines 1)
+            ("b" "博客" entry (file+headline "~/org-mode/blog.org" "我的博客")
+             "** TODO [#B] %?     :blog:\n  %i %U"
+             :empty-lines 1)
+            ("s" "代码片段" entry (file "~/org-mode/snippets.org")
+             "*  %?\t%^g\n#+BEGIN_SRC %^{language}\n\n#+END_SRC")
             ("j" "日程安排"
              entry (file+datetree "~/org-mode/journal.org")
-             "* %?"
+             "*  %?"
              :empty-lines 1)))
     ))
 
@@ -109,6 +119,8 @@
   :config
   (progn
     (setq org-agenda-window-setup 'current-window)
+    (setq org-agenda-inhibit-startup t)   ;; ~50x speedup
+    (setq org-agenda-use-tag-inheritance nil) ;; 3-4x speedup
     (setq org-agenda-files (quote ("~/org-mode" )))
     (setq org-default-notes-file "~/org-mode/gtd.org")
     (setq org-agenda-custom-commands

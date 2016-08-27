@@ -30,6 +30,10 @@
   (interactive)
   (find-file "~/.emacs.d/init.el"))
 
+(defun maple/open-keys-file()
+  (interactive)
+  (find-file "~/.emacs.d/lisp/init-keybind.el"))
+
 (defun maple/dos2unix ()
   "Converts the current buffer to UNIX file format."
   (interactive)
@@ -116,5 +120,23 @@
     (if file-name
         (message (kill-new file-name))
       (error "Buffer not visiting a file"))))
+
+;; insert one or several line below without changing current evil state
+(defun maple/evil-insert-line-below (count)
+  "Insert one of several lines below the current point's line without changing
+the current state and point position."
+  (interactive "p")
+  (save-excursion
+    (evil-save-state (evil-open-below count)))
+  (evil-next-line count))
+
+;; insert one or several line above without changing current evil state
+(defun maple/evil-insert-line-above (count)
+  "Insert one of several lines above the current point's line without changing
+the current state and point position."
+  (interactive "p")
+  (save-excursion
+    (evil-save-state (evil-open-above count)))
+  (evil-previous-line count))
 
 (provide 'init-file)

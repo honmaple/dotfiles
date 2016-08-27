@@ -62,10 +62,12 @@
   :diminish rainbow-delimiters-mode)
 
 (use-package undo-tree
-  :commands (global-undo-tree-mode)
+  :init (global-undo-tree-mode)
   :diminish undo-tree-mode
   :config
   (progn
+    (setq undo-tree-visualizer-timestamps t)
+    (setq undo-tree-visualizer-diff t)
     (setq undo-tree-auto-save-history t
           undo-tree-history-directory-alist
           `(("." . ,(concat maple-cache-directory "undo-tree"))))

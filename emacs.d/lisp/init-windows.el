@@ -41,6 +41,9 @@
     (setq golden-ratio-exclude-modes '("ediff-mode"
                                        "dired-mode"
                                        "restclient-mode"
+                                       "newsticker-treeview-mode"
+                                       "newsticker-treeview-list-mode"
+                                       "newsticker-treeview-item-mode"
                                        ))
 
     (add-to-list 'golden-ratio-exclude-buffer-regexp "^\\*[hH]elm.*")

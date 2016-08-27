@@ -21,7 +21,7 @@
   :config
   (progn
     (fset 'evil-visual-update-x-selection 'ignore) ;;粘贴板
-    (evil-set-initial-state 'sql-mode 'emacs)
+    ;; (evil-set-initial-state 'sql-mode 'emacs)
     (evil-set-initial-state 'image-mode 'emacs)
 
     ;; (defun evil-paste-after-from-0 ()

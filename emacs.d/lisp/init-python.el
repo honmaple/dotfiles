@@ -4,28 +4,30 @@
 (require-package 'pip-requirements)
 
 (use-package elpy
-  :init (with-eval-after-load 'python (elpy-enable))
+  :after python
   :diminish elpy-mode "ⓔ"
   :mode ("\\.py\\'" . python-mode)
   :config
   (progn
+    (elpy-enable)
+    (set-variable 'python-indent-offset 4)
+    (set-variable 'python-indent-guess-indent-offset nil)
     (add-hook 'python-mode-hook
               (lambda ()
                 (setq tab-width 4)
-                (set-variable 'python-indent-offset 4)
-                (set-variable 'python-indent-guess-indent-offset nil)
+                ;; (setq python-indent-offset 4)
                 (setq electric-indent-chars (delq ?: electric-indent-chars))
                 (define-key evil-normal-state-local-map [f6] 'elpy-yapf-fix-code)
                 (define-key evil-normal-state-local-map [f5] 'elpy-shell-send-region-or-buffer)
-                (define-key evil-normal-state-local-map "gd" 'elpy-goto-definition)
-                ;; (make-local-variable 'company-backends)
-                ;; (setq company-backends (copy-tree company-backends))
-                ;; (setf (car company-backends)
-                ;;       (append '(company-jedi :with company-yasnippet) (car company-backends)))
-                ))
+                (define-key evil-normal-state-local-map "gd" 'elpy-goto-definition)))
+    ;; (make-local-variable 'company-backends)
+    ;; (setq company-backends (copy-tree company-backends))
+    ;; (setf (car company-backends)
+    ;;       (append '(company-jedi :with company-yasnippet) (car company-backends)))
+    (push '("*Python*") popwin:special-display-config)
 
     (with-eval-after-load 'elpy
-      (setq python-shell-interpreter "ipython")
+      ;; (setq python-shell-interpreter "ipython")
       (remove-hook 'elpy-modules 'elpy-module-flymake)
       ;; (remove-hook 'elpy-modules 'elpy-module-company)
       )

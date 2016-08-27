@@ -24,6 +24,7 @@
 (require 'init-ui)  ;; modeline,which-key
 (require 'init-fonts)
 
+
 (require 'init-editing-utils) ;;自动补全括号等
 (require 'init-whitespace) ;;空白控制
 (require 'init-hs-minor-mode) ;;代码折叠
@@ -60,6 +61,7 @@
 (require 'init-css)
 (require 'init-python)
 (require 'init-c)
+(require 'init-sql)
 
 (require 'init-text) ;; markdown rst
 (require 'init-org)
@@ -89,7 +91,26 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(compilation-message-face (quote default))
+ '(custom-safe-themes
+   (quote
+    ("70b51a849b665f50a97a028c44cec36b398398357d8f7c19d558fe832b91980f" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" default)))
+ '(highlight-changes-colors (quote ("#FD5FF0" "#AE81FF")))
+ '(highlight-tail-colors
+   (quote
+    (("#49483E" . 0)
+     ("#679A01" . 20)
+     ("#4BBEAE" . 30)
+     ("#1DB4D0" . 50)
+     ("#9A8F21" . 60)
+     ("#A75B00" . 70)
+     ("#F309DF" . 85)
+     ("#49483E" . 100))))
+ '(magit-diff-use-overlays nil)
+ '(pos-tip-background-color "#A6E22E")
+ '(pos-tip-foreground-color "#272822")
+ '(weechat-color-list
+   (unspecified "#272822" "#49483E" "#F70057" "#F92672" "#86C30D" "#A6E22E" "#BEB244" "#E6DB74" "#40CAE4" "#66D9EF" "#FB35EA" "#FD5FF0" "#74DBCD" "#A1EFE4" "#F8F8F2" "#F8F8F0")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

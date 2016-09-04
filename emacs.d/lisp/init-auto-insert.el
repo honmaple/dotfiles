@@ -55,7 +55,7 @@
 (setq auto-insert-alist
       '(((ruby-mode . "Ruby program") nil
          "#!/usr/bin/env ruby\n"
-         "# -*- encoding:UTF-8 -*-\n"
+         "# -*- encoding: utf-8 -*-\n"
          "# **************************************************************************\n"
          "# Copyright © " (substring (current-time-string) -4) " " (user-full-name) "\n"
          "# File Name:" (file-name-nondirectory buffer-file-name) "\n"
@@ -68,7 +68,7 @@
          "# **************************************************************************\n")
         ((python-mode . "Python program") nil
          "#!/usr/bin/env python\n"
-         "# -*- coding=UTF-8 -*-\n"
+         "# -*- coding: utf-8 -*-\n"
          "# **************************************************************************\n"
          "# Copyright © " (substring (current-time-string) -4) " " (user-full-name) "\n"
          "# File Name: " (file-name-nondirectory buffer-file-name) "\n"

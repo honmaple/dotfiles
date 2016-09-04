@@ -16,6 +16,27 @@
 (load-theme 'monokai t)
 
 
+(require-package 'fill-column-indicator)
+
+;;; 80列
+(use-package fill-column-indicator
+  :defer t
+  :init
+  (progn
+    (setq fci-rule-column 80)
+    (setq fci-rule-width 1)
+    (setq fci-rule-color "#D0BF8F")
+    (push '(fci-mode "") minor-mode-alist)))
+
+;; (require-package 'linum-relative)
+;; (use-package linum-relative ;;相对行号
+;;   :commands (linum-relative-toggle linum-relative-on)
+;;   :init
+;;   (progn
+;;     (global-linum-mode t)
+;;     (linum-relative-on))
+;;   :config (setq linum-relative-current-symbol ""))
+
 (use-package smooth-scroll     ;; 光标位于中间
   :config (smooth-scrolling-mode 1))
 
@@ -62,18 +83,18 @@
   :diminish rainbow-delimiters-mode)
 
 (use-package undo-tree
-  :init (global-undo-tree-mode)
-  :diminish undo-tree-mode
-  :config
+  :init
   (progn
-    (setq undo-tree-visualizer-timestamps t)
-    (setq undo-tree-visualizer-diff t)
-    (setq undo-tree-auto-save-history t
-          undo-tree-history-directory-alist
+    (global-undo-tree-mode)
+    (setq undo-tree-auto-save-history t)
+    ;; (setq undo-tree-auto-load-history t)
+    (setq undo-tree-history-directory-alist
           `(("." . ,(concat maple-cache-directory "undo-tree"))))
     (unless (file-exists-p (concat maple-cache-directory "undo-tree"))
       (make-directory (concat maple-cache-directory "undo-tree")))
-    ))
+    (setq undo-tree-visualizer-timestamps t)
+    (setq undo-tree-visualizer-diff t))
+  :diminish undo-tree-mode)
 
 (use-package highlight-symbol
   :defer t
@@ -84,5 +105,8 @@
       (add-hook hook 'highlight-symbol-mode)
       (add-hook hook 'highlight-symbol-nav-mode))
     (add-hook 'org-mode-hook 'highlight-symbol-nav-mode)))
+
+(use-package highlight-indentation
+  :diminish highlight-indentation-mode)
 
 (provide 'init-ui)

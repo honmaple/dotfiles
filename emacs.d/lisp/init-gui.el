@@ -35,11 +35,6 @@
 
 (setq backup-directory-alist `(("." . ,(concat maple-cache-directory "auto-save"))))
 
-
-(global-auto-revert-mode) ;; 修改外部文件自动载入
-(setq global-auto-revert-non-file-buffers t
-      auto-revert-verbose nil)
-
 (transient-mark-mode t)
 
 (when (fboundp 'global-prettify-symbols-mode)
@@ -49,14 +44,6 @@
 ;;----------------------------------------------------------------------------
 (setq indicate-empty-lines t)
 
-;; (require-package 'linum-relative)
-;; (use-package linum-relative ;;相对行号
-;;   :commands (linum-relative-toggle linum-relative-on)
-;;   :init
-;;   (progn
-;;     (global-linum-mode t)
-;;     (linum-relative-on))
-;;   :config (setq linum-relative-current-symbol ""))
 ;;----------------------------------------------------------------------------
 ;; Window size and features
 ;;----------------------------------------------------------------------------

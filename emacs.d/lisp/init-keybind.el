@@ -119,6 +119,11 @@
   )
 
 
+(evil-leader/set-key-for-mode 'python-mode
+  "va" 'pyvenv-workon
+  "vc" 'pyvenv-deactivate
+  )
+
 (evil-leader/set-key-for-mode 'org-mode
   "od" 'org-deadline
   "oe" 'org-export-dispatch
@@ -127,7 +132,7 @@
   "os" 'org-schedule
   "op" 'org-priority
   "oP" 'org-pomodoro
-  "or"  'org-decrypt-entry
+  "or" 'org-decrypt-entry
   )
 
 

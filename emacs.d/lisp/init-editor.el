@@ -72,7 +72,7 @@
 (global-set-key [remap backward-up-list] 'backward-up-sexp) ; C-M-u, C-M-up
 
 
-(defun sanityinc/open-line-with-reindent (n) ;; 跳转到原来的位置
+(defun maple/open-line-with-reindent (n) ;; 跳转到原来的位置
   "A version of `open-line' which reindents the start and end positions.
   If there is a fill prefix and/or a `left-margin', insert them
   on the new line if the line would have been blank.
@@ -99,7 +99,7 @@
     (end-of-line)
     (indent-according-to-mode)))
 
-(global-set-key (kbd "C-o") 'sanityinc/open-line-with-reindent)
+(global-set-key (kbd "C-o") 'maple/open-line-with-reindent)
 
 ;; 注释
 (defun comment-or-uncomment-region-or-line ()
@@ -118,4 +118,14 @@
 
 (global-set-key [f6] 'indent-buffer)
 
-(provide 'init-editing-utils)
+;; 修改外部文件自动载入
+(use-package autorevert
+  :init (global-auto-revert-mode)
+  :diminish auto-revert-mode
+  :config
+  (progn
+    (setq global-auto-revert-non-file-buffers t
+          auto-revert-verbose nil)
+    ))
+
+(provide 'init-editor)

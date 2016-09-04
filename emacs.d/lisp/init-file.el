@@ -128,7 +128,11 @@ the current state and point position."
   (interactive "p")
   (save-excursion
     (evil-save-state (evil-open-below count)))
+  (evil-normal-state)
   (evil-next-line count))
+
+
+
 
 ;; insert one or several line above without changing current evil state
 (defun maple/evil-insert-line-above (count)
@@ -137,6 +141,7 @@ the current state and point position."
   (interactive "p")
   (save-excursion
     (evil-save-state (evil-open-above count)))
+  (evil-normal-state)
   (evil-previous-line count))
 
 (provide 'init-file)

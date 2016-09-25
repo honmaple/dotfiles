@@ -4,9 +4,7 @@
   :defer t
   :init
   (progn
-    (setq-default sql-input-ring-file-name
-                  (expand-file-name ".sqli_history" user-emacs-directory))
-    )
+    (setq-default sql-input-ring-file-name (concat maple-cache-directory "sql_history")))
   :config
   (progn
     (defun sanityinc/pop-to-sqli-buffer ()
@@ -55,8 +53,5 @@
 
 (use-package sql-indent
   :defer t)
-
-
-
 
 (provide 'init-sql)

@@ -1,6 +1,8 @@
 ;; (require-package 'unfill)
 (when (fboundp 'electric-pair-mode)
-  (electric-pair-mode))
+  (electric-pair-mode)
+  ;; 右边有字符不补全
+  (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
 (when (eval-when-compile (version< "24.4" emacs-version))
   (electric-indent-mode 1))
 
@@ -127,5 +129,34 @@
     (setq global-auto-revert-non-file-buffers t
           auto-revert-verbose nil)
     ))
+
+(require-package 'semantic)
+(require-package 'stickyfunc-enhance)
+
+(use-package semantic
+  :defer t
+  :init
+  (progn
+    (setq srecode-map-save-file (concat maple-cache-directory
+                                        "srecode-map.el"))
+    (setq semanticdb-default-save-directory (concat maple-cache-directory
+                                                    "semanticdb/"))
+    (unless (file-exists-p semanticdb-default-save-directory)
+      (make-directory semanticdb-default-save-directory)))
+  :config
+  (progn
+    ;; (add-to-list 'semantic-default-submodes
+    ;;              'global-semantic-stickyfunc-mode)
+    (add-to-list 'semantic-default-submodes
+                 'global-semantic-idle-summary-mode)
+    (semantic-mode 1)))
+
+(use-package stickyfunc-enhance
+  :defer t
+  :config
+  (defun maple/lazy-load-stickyfunc-enhance ()
+    "Lazy load the package."
+    (require 'stickyfunc-enhance)))
+
 
 (provide 'init-editor)

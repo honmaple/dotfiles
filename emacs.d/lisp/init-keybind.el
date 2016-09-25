@@ -9,6 +9,7 @@
   "fs" 'save-buffer
   "fei" 'maple/open-init-file
   "fek" 'maple/open-keys-file
+  "feg" 'maple/open-gtd-file
   "fo" 'maple/open-in-external-app
   "fE" 'maple/sudo-edit
   "fy" 'maple/show-and-copy-buffer-filename
@@ -116,6 +117,7 @@
   "oc" 'org-capture
   "ob" 'org-iswitchb
   "ol" 'org-new-blog  ;;插入博客地址
+  "od" 'youdao-dictionary-search-at-point+
   )
 
 
@@ -125,14 +127,15 @@
   )
 
 (evil-leader/set-key-for-mode 'org-mode
-  "od" 'org-deadline
   "oe" 'org-export-dispatch
   "ot" 'org-set-tags
   "o." 'org-time-stamp
-  "os" 'org-schedule
   "op" 'org-priority
   "oP" 'org-pomodoro
   "or" 'org-decrypt-entry
+  "ow" 'org-refile
+  "td" 'org-deadline
+  "ts" 'org-schedule
   )
 
 
@@ -155,4 +158,5 @@
 (define-key evil-normal-state-map (kbd "S-<return>") 'maple/evil-insert-line-above)
 ;; (global-set-key (kbd "C-a") 'maple/smart-move-beginning-of-line)
 ;; (global-set-key (kbd "C-e") 'maple/backward-kill-word-or-region)
+
 (provide 'init-keybind)

@@ -23,6 +23,7 @@
     (fset 'evil-visual-update-x-selection 'ignore) ;;粘贴板
     ;; (evil-set-initial-state 'sql-mode 'emacs)
     (evil-set-initial-state 'image-mode 'emacs)
+    (add-hook 'view-mode-hook #'evil-emacs-state)
 
     ;; (defun evil-paste-after-from-0 ()
     ;;   (interactive)
@@ -114,5 +115,6 @@
   :defer t
   :bind (:map evil-visual-state-map
               ("v" . er/expand-region)))
+
 
 (provide 'init-evil)

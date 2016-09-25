@@ -14,6 +14,7 @@
     (set-variable 'python-indent-guess-indent-offset nil)
     (setq tab-width 4)
     ;; (setq python-indent-offset 4)
+    (setq imenu-create-index-function 'semantic-create-imenu-index)
     (setq electric-indent-chars (delq ?: electric-indent-chars))))
 
 

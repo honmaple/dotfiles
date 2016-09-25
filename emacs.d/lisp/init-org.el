@@ -21,6 +21,7 @@
   :config
   (progn
     (setq org-tags-column 80)
+    (setq org-html-checkbox-type 'html)
     (with-eval-after-load 'org
       (setq org-match-substring-regexp
             (concat
@@ -83,30 +84,50 @@
   :config
   (progn
     (setq org-capture-templates
-          '(("t" "Todo" entry (file+headline "~/org-mode/gtd.org" "Workspace")
-             "* TODO [#B] %?\n  %i\n"
+          '(("t" "待办"
+             entry (file+headline "~/org-mode/gtd.org" "待办事项")
+             "* TODO [#B] %?      :%^{Where|@Office|@Home|@Lunchtime}:\n  %i\n"
              :empty-lines 1)
-            ("w" "工作" entry (file+headline "~/org-mode/gtd.org" "工作安排")
-             "* TODO [#A] %?\n  %i\n %U"
+            ("w" "工作"
+             entry (file+headline "~/org-mode/project.org" "工作安排")
+             "* TODO [#A] %?      :project:%^{Where|@Office|@Home|@Lunchtime}:\n  %i\n %U"
              :empty-lines 1)
-            ("n" "笔记" entry (file+headline "~/org-mode/notes.org" "我的笔记")
+            ("n" "笔记"
+             entry (file+headline "~/org-mode/notes.org" "笔记")
              "*  %?\n  %i\n %U"
              :empty-lines 1)
-            ("m" "电影" entry (file+headline "~/org-mode/notes.org" "影视歌曲")
-             "*  %?\n Watched on %T\n %i\n"
+            ("m" "电影"
+             entry (file+headline "~/org-mode/notes.org" "影视歌曲")
+             "*  %?               :%^{看了什么|Movie|Song}:\n Watched on %T\n %i\n"
              :empty-lines 1)
-            ("r" "阅读" entry (file+headline "~/org-mode/notes.org" "阅读")
-             "*  %?\n  %T\n %i\n"
+            ("r" "阅读"
+             entry (file+headline "~/org-mode/notes.org" "阅读")
+             "*  %?               :Book:\n  %T\n %i\n"
              :empty-lines 1)
-            ("b" "博客" entry (file+headline "~/org-mode/blog.org" "我的博客")
+            ("b" "博客"
+             entry (file+headline "~/org-mode/blog.org" "博客")
              "** TODO [#B] %?     :blog:\n  %i %U"
              :empty-lines 1)
-            ("s" "代码片段" entry (file "~/org-mode/snippets.org")
-             "*  %?\t%^g\n#+BEGIN_SRC %^{language}\n\n#+END_SRC")
+            ("c" "账单"
+             table-line (file+headline "~/org-mode/mine.org" "账单")
+             "| %^{用途|吃饭|购买衣服|出行} | %U | %? | |")
+            ("s" "代码片段"
+             entry (file "~/org-mode/snippets.org")
+             "*  %?\t%^g\n#+BEGIN_SRC %^{language|python|html|css|javascript}\n\n#+END_SRC")
             ("j" "日程安排"
-             entry (file+datetree "~/org-mode/journal.org")
-             "*  %?"
-             :empty-lines 1)))
+             entry (file+headline "~/org-mode/gtd.org" "日程安排")
+             "* TODO [#B] %?      :%^{去哪儿|上海|南京|常州|昆明}:Journal:\n %^U\n"
+             :empty-lines 1)
+            ("z" "总结"
+             entry (file+datetree  "~/org-mode/summary.org" "总结")
+             "* %?                :%^{周期|Yearly|Monthly|Weekly|Daily}:Summary:"
+             :empty-lines 1)
+            ))
+    (setq org-refile-targets
+          (quote (("~/org-mode/gtd.org" :level . 1)
+                  ("~/org-mode/summary.org" :maxlevel . 3))))
+    (advice-add 'org-refile :after 'org-save-all-org-buffers)
+    (advice-add 'org-todo :after 'org-save-all-org-buffers)
     ))
 
 ;; 设置默认浏览器
@@ -125,12 +146,13 @@
     (setq org-default-notes-file "~/org-mode/gtd.org")
     (setq org-agenda-custom-commands
           '(
-            ("w" . "任务安排")
+            ("w" . "任务")
             ("wa" "重要且紧急的任务" tags-todo "+PRIORITY=\"A\"")
             ("wb" "重要且不紧急的任务" tags-todo "-Weekly-Monthly-Daily+PRIORITY=\"B\"")
             ("wc" "不重要且紧急的任务" tags-todo "+PRIORITY=\"C\"")
-            ("b" "博客" tags-todo "blog")
-            ("p" . "项目安排")
+            ("b"  "博客" tags-todo "blog")
+            ("p" . "项目")
+            ("pi" tags-todo "iot")
             ("pw" tags-todo "PROJECT+WORK+CATEGORY=\"flask\"")
             ("W" "Weekly Review"
              ((stuck "")            ;; review stuck projects as designated by org-stuck-projects

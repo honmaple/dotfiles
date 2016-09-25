@@ -29,7 +29,8 @@
           helm-org-format-outline-path t
           helm-move-to-line-cycle-in-source     t
           helm-grep-save-buffer-name-no-confirm t)
-    (setq helm-M-x-fuzzy-match t  ;;模糊搜索
+    ;;模糊搜索
+    (setq helm-M-x-fuzzy-match t
           helm-apropos-fuzzy-match t
           helm-file-cache-fuzzy-match t
           helm-imenu-fuzzy-match t
@@ -48,11 +49,11 @@
          ([escape] . helm-keyboard-quit)
          ("<tab>" . helm-execute-persistent-action)
          ("TAB" . helm-execute-persistent-action)
-          :map helm-find-files-map
-          ("C-h" . helm-find-files-up-one-level)
-          :map helm-read-file-map
-          ("C-h" . helm-find-files-up-one-level)
-          ))
+         :map helm-find-files-map
+         ("C-h" . helm-find-files-up-one-level)
+         :map helm-read-file-map
+         ("C-h" . helm-find-files-up-one-level)
+         ))
 
 (use-package helm-ag
   :defer t

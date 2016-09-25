@@ -1,6 +1,14 @@
 ;;; This file bootstraps the configuration, which is divided into
 ;;; a number of other files.
 
+
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 ;;----------------------------------------------------------------------------
 ;; Bootstrap config
@@ -66,6 +74,7 @@
 
 (require 'init-text) ;; markdown rst
 (require 'init-org)
+(require 'init-tool)
 
 ;; (require 'init-slime)
 ;; (require 'init-common-lisp) ;; lisp
@@ -108,6 +117,9 @@
      ("#F309DF" . 85)
      ("#49483E" . 100))))
  '(magit-diff-use-overlays nil)
+ '(package-selected-packages
+   (quote
+    (nginx-mode youdao-dictionary window-numbering windata whitespace-cleanup-mode which-key websocket web-mode vimish-fold use-package tree-mode stickyfunc-enhance sql-indent spaceline smooth-scrolling smooth-scroll smartparens scss-mode scratch sass-mode rainbow-delimiters quickrun popwin pip-requirements ox-rst ox-reveal org-pomodoro org-bullets neotree mwe-log-commands monokai-theme matlab-mode markdown-mode less-css-mode json-mode js2-mode highlight-symbol helm-swoop helm-projectile helm-ag golden-ratio git-timemachine fullframe flycheck-pos-tip fill-column-indicator expand-region evil-surround evil-mc evil-matchit evil-magit evil-leader evil-iedit-state evil-escape emmet-mode elpy default-text-scale company-web company-tern company-statistics company-quickhelp color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized coffee-mode centered-cursor-mode)))
  '(pos-tip-background-color "#A6E22E")
  '(pos-tip-foreground-color "#272822")
  '(weechat-color-list

@@ -34,6 +34,10 @@
   (interactive)
   (find-file "~/.emacs.d/lisp/init-keybind.el"))
 
+(defun maple/open-gtd-file()
+  (interactive)
+  (find-file "~/org-mode/gtd.org"))
+
 (defun maple/dos2unix ()
   "Converts the current buffer to UNIX file format."
   (interactive)

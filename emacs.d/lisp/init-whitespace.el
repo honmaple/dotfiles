@@ -1,9 +1,11 @@
+(require-package 'whitespace-cleanup-mode)
+
 (use-package whitespace
   :defer t
   :diminish whitespace-mode "ⓦ"
   :init
   (progn
-    (setq spacemacs-show-trailing-whitespace t))
+    (setq-default show-trailing-whitespace t))
   (defun maple/show-trailing-whitespace ()
     (set-face-attribute 'trailing-whitespace nil
                         :background

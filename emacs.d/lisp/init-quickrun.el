@@ -1,8 +1,8 @@
 (require-package 'quickrun)
 (use-package quickrun
-             :defer t
-             :config (evil-set-initial-state 'quickrun/mode 'emacs)
-             )
+  :defer t
+  :config (evil-set-initial-state 'quickrun/mode 'emacs)
+  )
 ;; (require 'quickrun)
 ;; (evil-set-initial-state 'quickrun/mode 'emacs)
 ;; (add-hook 'quickrun-mode-hook

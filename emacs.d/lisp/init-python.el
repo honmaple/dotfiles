@@ -26,9 +26,13 @@
   (progn
     (elpy-enable)
     (push '("*Python*") popwin:special-display-config)
-    ;; (setq python-shell-interpreter "ipython")
+    ;; (setq python-shell-interpreter "python")
+    (setq python-shell-completion-native-enable nil)
+    (setq python-shell-interpreter "ipython"
+          python-shell-interpreter-args "--simple-prompt -i")
     (remove-hook 'elpy-modules 'elpy-module-flymake)
     ;; (remove-hook 'elpy-modules 'elpy-module-company)
+    (setq shell-file-name "/bin/bash")
     (add-hook 'python-mode-hook
               (lambda ()
                 (define-key evil-normal-state-local-map [f6] 'elpy-yapf-fix-code)

@@ -80,13 +80,14 @@
          ("C-c b" . org-iswitchb)
          ("C-c l" . org-store-link)))
 
+
 (use-package org-capture
   :config
   (progn
     (setq org-capture-templates
           '(("t" "待办"
              entry (file+headline "~/org-mode/gtd.org" "待办事项")
-             "* TODO [#B] %?      :%^{Where|@Office|@Home|@Lunchtime}:\n  %i\n"
+             "* TODO [#B] %?      :%^{Where|@Office|@Home|@Lunchtime|@School}:\n  %i\n"
              :empty-lines 1)
             ("w" "工作"
              entry (file+headline "~/org-mode/project.org" "工作安排")
@@ -125,7 +126,7 @@
             ))
     (setq org-refile-targets
           (quote (("~/org-mode/gtd.org" :level . 1)
-                  ("~/org-mode/summary.org" :maxlevel . 3))))
+                  ("~/org-mode/summary.org" :maxlevel . 4))))
     (advice-add 'org-refile :after 'org-save-all-org-buffers)
     (advice-add 'org-todo :after 'org-save-all-org-buffers)
     ))
@@ -142,8 +143,10 @@
     (setq org-agenda-window-setup 'current-window)
     (setq org-agenda-inhibit-startup t)   ;; ~50x speedup
     (setq org-agenda-use-tag-inheritance nil) ;; 3-4x speedup
+    (setq org-log-done t)
     (setq org-agenda-files (quote ("~/org-mode" )))
     (setq org-default-notes-file "~/org-mode/gtd.org")
+    (advice-add 'org-agenda-todo :after 'org-save-all-org-buffers)
     (setq org-agenda-custom-commands
           '(
             ("w" . "任务")

@@ -25,6 +25,7 @@
   "se" 'evil-mc-make-all-cursors
   "ss" 'replace-regexp
   "sj" 'helm-semantic-or-imenu
+  "sp" 'flyspell-correct-word-generic
   ;; "se" 'mc/mark-all-like-this
   "el" 'maple/toggle-flycheck-error-list
   "ec" 'flycheck-clear
@@ -32,13 +33,23 @@
 
 (evil-leader/set-key
   "tg" 'golden-ratio-mode
+  "ts" 'flyspell-mode
   )
+(evil-leader/set-key
+  "jb" 'avy-pop-mark
+  "jj" 'evil-avy-goto-char
+  "jJ" 'evil-avy-goto-char-2
+  "jl" 'evil-avy-goto-line
+  "ju" 'maple/avy-goto-url
+  "jw" 'evil-avy-goto-word-or-subword-1
+  "xo" 'maple/avy-open-url)
 
 (evil-leader/set-key
   "gi" 'magit-init
   "gs" 'magit-status
   "gb" 'magit-branch
   "gd" 'magit-diff
+  "gc" 'magit-checkout
   )
 
 (evil-leader/set-key
@@ -79,7 +90,6 @@
   "pp"  'helm-projectile-switch-project
   "pr"  'helm-projectile-recentf
   "pv"  'projectile-vc
-  "sgp" 'helm-projectile-grep
   )
 
 (evil-leader/set-key

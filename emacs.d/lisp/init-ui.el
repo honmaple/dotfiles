@@ -13,7 +13,10 @@
 (require-package 'color-theme-sanityinc-tomorrow)
 (require-package 'monokai-theme)
 
-(load-theme 'monokai t)
+(use-package monokai-theme
+  :defer t
+  :init (load-theme 'monokai t)
+  )
 
 
 (require-package 'fill-column-indicator)
@@ -27,6 +30,7 @@
     (setq fci-rule-width 1)
     (setq fci-rule-color "#D0BF8F")
     (push '(fci-mode "") minor-mode-alist)))
+
 
 ;; (require-package 'linum-relative)
 ;; (use-package linum-relative ;;相对行号
@@ -82,19 +86,18 @@
   :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
   :diminish rainbow-delimiters-mode)
 
-(use-package undo-tree
-  :init
-  (progn
-    (global-undo-tree-mode)
-    (setq undo-tree-auto-save-history t)
-    ;; (setq undo-tree-auto-load-history t)
-    (setq undo-tree-history-directory-alist
-          `(("." . ,(concat maple-cache-directory "undo-tree"))))
-    (unless (file-exists-p (concat maple-cache-directory "undo-tree"))
-      (make-directory (concat maple-cache-directory "undo-tree")))
-    (setq undo-tree-visualizer-timestamps t)
-    (setq undo-tree-visualizer-diff t))
-  :diminish undo-tree-mode)
+                                        ; (use-package undo-tree
+                                        ; :init
+                                        ; (progn
+                                        ; (global-undo-tree-mode)
+                                        ; (setq undo-tree-history-directory-alist
+                                        ; `(("." . ,(concat maple-cache-directory "undo-tree"))))
+                                        ; ;; (unless (file-exists-p (concat maple-cache-directory "undo-tree"))
+                                        ; ;;   (make-directory (concat maple-cache-directory "undo-tree")))
+                                        ; (setq undo-tree-visualizer-timestamps t)
+                                        ; (setq undo-tree-visualizer-diff t)
+                                        ; (setq undo-tree-auto-save-history t))
+                                        ; :diminish undo-tree-mode)
 
 (use-package highlight-symbol
   :defer t

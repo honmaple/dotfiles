@@ -8,6 +8,7 @@
 (setq use-dialog-box nil)
 (setq inhibit-startup-screen t)
 (setq inhibit-startup-echo-area-message t)
+(setq large-file-warning-threshold 100000000)
 (global-hl-line-mode t) ;;高亮当前行
 
 

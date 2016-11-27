@@ -38,4 +38,4 @@
 
     ))
 
-(provide 'init-hs-minor-mode)
+(provide 'init-folding)

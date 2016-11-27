@@ -1,9 +1,10 @@
-;; (require-package 'git-commit)
-;; (require-package 'git-blame)
-;; (require-package 'gitignore-mode)
-;; (require-package 'gitconfig-mode)
-;; (require-package 'git-messenger) ;; Though see also vc-annotate's "n" & "p" bindings
-;; (require-package 'git-timemachine)
+;;; init-git.el --- git stuff
+
+;;; Commentary:
+;;
+
+
+;;; Code:
 (require-package 'magit)
 (require-package 'evil-magit)
 (require-package 'fullframe)

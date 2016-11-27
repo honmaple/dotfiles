@@ -161,6 +161,7 @@ for_window [class="Xfce4-terminal"] floating enable,border pixel 0
 for_window [class="Xarchiver"] floating enable
 for_window [class="VirtualBox"] floating enable,border pixel 0
 for_window [class="^osdlyrics"] floating enable
+for_window [class="Lxappearance"] floating enable,border pixel 0
 
 
 # reload the configuration file

@@ -83,21 +83,23 @@
 
 
 (use-package rainbow-delimiters
+  :defer t
   :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
   :diminish rainbow-delimiters-mode)
 
-                                        ; (use-package undo-tree
-                                        ; :init
-                                        ; (progn
-                                        ; (global-undo-tree-mode)
-                                        ; (setq undo-tree-history-directory-alist
-                                        ; `(("." . ,(concat maple-cache-directory "undo-tree"))))
-                                        ; ;; (unless (file-exists-p (concat maple-cache-directory "undo-tree"))
-                                        ; ;;   (make-directory (concat maple-cache-directory "undo-tree")))
-                                        ; (setq undo-tree-visualizer-timestamps t)
-                                        ; (setq undo-tree-visualizer-diff t)
-                                        ; (setq undo-tree-auto-save-history t))
-                                        ; :diminish undo-tree-mode)
+(use-package undo-tree
+  :defer t
+  :init
+  (progn
+    (global-undo-tree-mode)
+    (setq undo-tree-history-directory-alist
+          `(("." . ,(concat maple-cache-directory "undo-tree"))))
+    ;; (unless (file-exists-p (concat maple-cache-directory "undo-tree"))
+    ;;   (make-directory (concat maple-cache-directory "undo-tree")))
+    (setq undo-tree-visualizer-timestamps t)
+    (setq undo-tree-visualizer-diff t)
+    (setq undo-tree-auto-save-history t))
+  :diminish undo-tree-mode)
 
 (use-package highlight-symbol
   :defer t
@@ -110,6 +112,7 @@
     (add-hook 'org-mode-hook 'highlight-symbol-nav-mode)))
 
 (use-package highlight-indentation
+  :defer t
   :diminish highlight-indentation-mode)
 
 (provide 'init-ui)

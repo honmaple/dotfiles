@@ -29,6 +29,7 @@
   )
 
 (use-package whitespace-cleanup-mode
+  :defer t
   :diminish whitespace-cleanup-mode
   :init (global-whitespace-cleanup-mode t)
   :config

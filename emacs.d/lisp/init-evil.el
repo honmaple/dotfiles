@@ -5,7 +5,6 @@
 (require-package 'expand-region)
 (require-package 'evil-mc)
 (require-package 'evil-leader)
-(require-package 'neotree)
 (require-package 'vimish-fold)
 
 
@@ -17,6 +16,7 @@
 
 
 (use-package evil
+  :defer t
   :init (evil-mode 1)
   :config
   (progn
@@ -64,6 +64,7 @@
                                              neotree-mode
                                              help-mode
                                              magit-mode
+                                             shell-mode
                                              org-agenda-mode
                                              undo-tree-visualizer-mode
                                              newsticker-treeview-mode
@@ -84,24 +85,6 @@
               ("C-g" . evil-mc-undo-all-cursors)
               ))
 
-
-(use-package neotree
-  :defer t
-  :bind ([f2] . neotree-toggle)
-  :config
-  (progn
-    (add-hook 'neotree-mode-hook
-              (lambda ()
-                (evil-set-initial-state 'neotree-mode 'emacs)
-                (define-key neotree-mode-map (kbd "j") 'neotree-next-line)
-                (define-key neotree-mode-map (kbd "k") 'neotree-previous-line)
-                (define-key neotree-mode-map (kbd "C") 'neotree-copy-node)
-                (define-key neotree-mode-map (kbd "D") 'neotree-delete-node)
-                (define-key neotree-mode-map (kbd "R") 'neotree-rename-node)
-                (define-key neotree-mode-map (kbd "+") 'neotree-create-node)
-                (define-key neotree-mode-map (kbd "^") 'neotree-select-up-node)
-                ))
-    ))
 
 (use-package vimish-fold
   :defer t

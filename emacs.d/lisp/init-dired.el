@@ -14,6 +14,7 @@
 ;; (require-package 'dired+)
 
 (use-package dired
+  :defer t
   :config
   (progn
     (setq dired-recursive-copies 'always) ;;递归拷贝
@@ -25,6 +26,7 @@
       )))
 
 (use-package dired-x
+  :defer t
   :config
   (progn
     ;; (require 'dired-x)

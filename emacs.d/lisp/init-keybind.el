@@ -26,6 +26,7 @@
   "ss" 'replace-regexp
   "sj" 'helm-semantic-or-imenu
   "sp" 'flyspell-correct-word-generic
+  "sh" 'shell-command
   ;; "se" 'mc/mark-all-like-this
   "el" 'maple/toggle-flycheck-error-list
   "ec" 'flycheck-clear
@@ -94,6 +95,7 @@
 
 (evil-leader/set-key
   "<tab>" 'maple/switch-to-previous-buffer
+  "TAB" 'maple/switch-to-previous-buffer
   "bb" 'helm-mini  ;;显示缓冲区(已经打开的文件)
   "bd" 'kill-this-buffer
   "be" 'maple/safe-erase-buffer

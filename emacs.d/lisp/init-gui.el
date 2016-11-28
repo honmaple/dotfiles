@@ -75,6 +75,7 @@
                      "\n$" ""    ; remove trailing linebreak
                      (shell-command-to-string
                       "fortune -a | fmt -80 -s | cowsay -$(shuf -n 1 -e b d g p s t w y) -f $(shuf -n 1 -e $(cowsay -l | tail -n +2)) -n")))
-                   (concat ";; Happy hacking, " user-login-name " - Emacs ♥ you!\n\n"))))
+                   (concat ";; Happy hacking, " user-login-name " - Emacs ♥ you!\n\n")
+                   )))
 
 (provide 'init-gui)

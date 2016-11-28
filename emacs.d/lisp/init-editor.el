@@ -122,6 +122,7 @@
 
 ;; 修改外部文件自动载入
 (use-package autorevert
+  :defer t
   :init (global-auto-revert-mode)
   :diminish auto-revert-mode
   :config

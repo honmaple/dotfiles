@@ -48,4 +48,8 @@
   (expand-file-name (concat user-emacs-directory ".cache/"))
   "maple storage area for persistent files")
 
+(fset 'yes-or-no-p 'y-or-n-p)
+(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+(setq-default regex-tool-backend 'perl)
+
 (provide 'init-utils)

@@ -18,6 +18,38 @@
     (add-to-list 'recentf-exclude (expand-file-name package-user-dir))
     (add-to-list 'recentf-exclude "COMMIT_EDITMSG\\'")))
 
+(require-package 'neotree)
+(use-package neotree
+  :defer t
+  :commands neo-global--window-exists-p
+  :config
+  (progn
+    (setq
+     neo-create-file-auto-open t
+     neo-banner-message "Press ? for neotree help"
+     neo-show-updir-line nil
+     neo-mode-line-type 'neotree
+     neo-smart-open t
+     neo-dont-be-alone t
+     neo-persist-show nil
+     neo-show-hidden-files nil
+     neo-auto-indent-point t
+     neo-modern-sidebar t
+     neo-vc-integration nil)
+    (evil-set-initial-state 'neotree-mode 'emacs)
+    )
+  :bind (([f2] . neotree-toggle)
+         :map neotree-mode-map
+         ("j" . neotree-next-line)
+         ("k" . neotree-previous-line)
+         ("C" . neotree-copy-node)
+         ("D" . neotree-delete-node)
+         ("R" . neotree-rename-node)
+         ("+" . neotree-create-node)
+         ("^" . neotree-select-up-node)
+         )
+  )
+
 (defun maple/system-is-mac ()
   (eq system-type 'darwin))
 (defun maple/system-is-linux ()

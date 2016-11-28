@@ -1,15 +1,26 @@
-(require-package 'shell-pop)
-(require 'shell-pop)
-(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
-  ; '(shell-pop-default-directory "/Users/kyagi/git")
-  ; '(shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell)))))
-  '(shell-pop-term-shell "/bin/bash")
-  ; '(shell-pop-universal-key "C-t")
-  '(shell-pop-window-size 30)
-  ; '(shell-pop-full-span t)
-  '(shell-pop-window-position "bottom"))
+(use-package sh-script
+  :defer t
+  :config
+  (progn
+    (add-to-list 'auto-mode-alist '("\\.bash_profile\\'" . sh-mode))
+    (add-to-list 'auto-mode-alist '("\\.bash_history\\'" . sh-mode))
+    (add-to-list 'auto-mode-alist '("\\.sh\\'" . sh-mode))
+    (add-to-list 'auto-mode-alist '("\\.bash\\'" . sh-mode))
+    (add-to-list 'auto-mode-alist '("\\.bashrc.local\\'" . sh-mode))
+    (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
+    (add-to-list 'auto-mode-alist '("\\.bashrc\\'" . sh-mode))
+    ))
+
+;; (require-package 'shell-pop)
+
+;; (use-package shell-pop
+;;   :defer t
+;;   :init
+;;   (progn
+;;     (setq shell-pop-term-shell "/bin/bash"
+;;           shell-pop-window-size 30
+;;           shell-pop-window-position "bottom")
+;;     ))
+
+
 (provide 'init-shell)

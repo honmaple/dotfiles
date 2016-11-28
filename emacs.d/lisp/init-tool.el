@@ -5,7 +5,7 @@
   :defer t
   :config
   (progn
-    ;; Enable Cache
+    ;; (evil-set-initial-state 'youdao-dictionary-mode 'emacs)
     (setq url-automatic-caching t
           ;; Set file path for saving search history
           youdao-dictionary-search-history-file (concat maple-cache-directory "youdao")

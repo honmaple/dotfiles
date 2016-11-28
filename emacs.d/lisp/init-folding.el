@@ -1,6 +1,7 @@
 ;;; hideshow
 
 (use-package hideshow
+  :defer t
   :diminish hs-minor-mode
   :init (add-hook 'prog-mode-hook #'hs-minor-mode)
   :config

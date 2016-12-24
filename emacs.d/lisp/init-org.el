@@ -22,6 +22,7 @@
   (progn
     (setq org-tags-column 80)
     (setq org-html-checkbox-type 'html)
+    (setq org-image-actual-width '(600))
     (with-eval-after-load 'org
       (setq org-match-substring-regexp
             (concat
@@ -121,6 +122,10 @@
              :empty-lines 1)
             ("z" "总结"
              entry (file+datetree  "~/org-mode/summary.org" "总结")
+             "* %?                :%^{周期|Yearly|Monthly|Weekly|Daily}:Summary:"
+             :empty-lines 1)
+            ("g" "毕业设计"
+             entry (file+datetree  "~/org-mode/gradution.org" "毕业设计")
              "* %?                :%^{周期|Yearly|Monthly|Weekly|Daily}:Summary:"
              :empty-lines 1)
             ))

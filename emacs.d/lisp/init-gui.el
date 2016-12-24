@@ -1,9 +1,12 @@
 ;;----------------------------------------------------------------------------
 ;; Suppress GUI features
 ;;----------------------------------------------------------------------------
-(tool-bar-mode -1)  ;; 关闭工具栏
-(menu-bar-mode -1)  ;;关闭菜单栏
-(scroll-bar-mode -1) ;; 关闭文件滑动控件
+;; 关闭工具栏
+(when (featurep 'tool-bar) (tool-bar-mode -1))
+;;关闭菜单栏
+(when (featurep 'menu-bar) (menu-bar-mode -1))
+;; 关闭文件滑动控件
+(when (featurep 'scroll-bar) (scroll-bar-mode -1))
 (setq use-file-dialog nil)
 (setq use-dialog-box nil)
 (setq inhibit-startup-screen t)

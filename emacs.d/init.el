@@ -16,6 +16,8 @@
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (setq gc-cons-threshold (* 128 1024 1024))
+(setq user-full-name "jianglin")
+(setq user-mail-address  "xiyang0807@gmail.com")
 
 ;;----------------------------------------------------------------------------
 ;; Bootstrap config
@@ -94,17 +96,18 @@
 ;; (require 'init-misc) ;;yes or no
 
 ;;----------------------------------------------------------------------------
+;; Variables configured via the interactive 'customize' interface
+;;----------------------------------------------------------------------------
+(when (file-exists-p custom-file)
+  (load custom-file))
+
+;;----------------------------------------------------------------------------
 ;; Allow access from emacsclient
 ;;----------------------------------------------------------------------------
 (require 'server)
 (unless (server-running-p)
   (server-start))
 
-;;----------------------------------------------------------------------------
-;; Variables configured via the interactive 'customize' interface
-;;----------------------------------------------------------------------------
-(when (file-exists-p custom-file)
-  (load custom-file))
 
 
 (provide 'init)  

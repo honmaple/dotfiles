@@ -161,6 +161,7 @@ for_window [class="Xfce4-terminal"] floating enable,border pixel 0
 for_window [class="Xarchiver"] floating enable
 for_window [class="VirtualBox"] floating enable,border pixel 0
 for_window [class="^osdlyrics"] floating enable
+for_window [class="^Xfce4-mixer"] floating enable
 for_window [class="Lxappearance"] floating enable,border pixel 0
 
 
@@ -212,7 +213,9 @@ bindsym $mod+Shift+Escape mode "$mode_system"
 bindsym $mod+m bar mode toggle
 
 bar {
-    status_command i3status --config ~/.config/i3/i3status.conf
+    # status_command i3status --config ~/.config/i3/i3status.conf
+    # status_command conky -c $HOME/.config/i3/conkyrc_bar
+    status_command py3status -c $HOME/.config/i3/py3status.conf
     # i3bar_command i3bar -t
     position top
     # mode hide
@@ -221,7 +224,7 @@ bar {
     #tray_output primary
     font pango:DejaVu Sans Mono,FontAwesome 10
         colors {
-                background #222222
+                background #070c44
                 statusline #dddddd
                 separator #666666
                 focused_workspace #0088CC #0088CC #ffffff

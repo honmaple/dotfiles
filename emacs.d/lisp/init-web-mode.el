@@ -9,7 +9,7 @@
   :defer t
   :config
   (progn
-    (setq web-mode-enable-auto-closing t) ; enable auto close tag in text-mode
+    (setq web-mode-enable-auto-closing nil) ; enable auto close tag in text-mode
     (setq web-mode-enable-auto-pairing t)
     (setq web-mode-enable-css-colorization t)
     (setq web-mode-imenu-regexp-list

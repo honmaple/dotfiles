@@ -3,8 +3,9 @@
 
 ;;; Changing font sizes
 
-
+(require-package 'fontawesome)
 (require-package 'default-text-scale)
+
 (use-package default-text-scale
   :config
   (progn

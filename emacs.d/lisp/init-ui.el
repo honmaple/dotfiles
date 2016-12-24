@@ -3,6 +3,7 @@
 (require-package 'smooth-scrolling)
 (require-package 'which-key)
 (require-package 'rainbow-delimiters)  ;;括号高亮
+(require-package 'rainbow-mode)
 (require-package 'undo-tree)
 (require-package 'highlight-symbol)
 
@@ -82,23 +83,30 @@
     ))
 
 
+;; 高亮括号
 (use-package rainbow-delimiters
   :defer t
   :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
   :diminish rainbow-delimiters-mode)
 
+;; 颜色
+(use-package rainbow-mode
+  :defer t
+  :init (add-hook 'prog-mode-hook 'rainbow-mode)
+  :diminish rainbow-mode)
+
 (use-package undo-tree
   :defer t
   :init
   (progn
-    (global-undo-tree-mode)
     (setq undo-tree-history-directory-alist
           `(("." . ,(concat maple-cache-directory "undo-tree"))))
     ;; (unless (file-exists-p (concat maple-cache-directory "undo-tree"))
     ;;   (make-directory (concat maple-cache-directory "undo-tree")))
     (setq undo-tree-visualizer-timestamps t)
     (setq undo-tree-visualizer-diff t)
-    (setq undo-tree-auto-save-history t))
+    (setq undo-tree-auto-save-history t)
+    (global-undo-tree-mode))
   :diminish undo-tree-mode)
 
 (use-package highlight-symbol

@@ -4,7 +4,6 @@
   :config
   (progn
     (setq auto-insert-query nil)
-    (setq user-full-name "jianglin")
     (setq auto-insert-alist
           '(((ruby-mode . "Ruby program") nil
              "#!/usr/bin/env ruby\n"

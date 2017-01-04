@@ -148,6 +148,10 @@
   "ow" 'org-refile
   "td" 'org-deadline
   "ts" 'org-schedule
+  "tm" 'org-toggle-inline-images
+  "im" 'maple/capture-screenshot
+  "em" 'maple/org-md-export-to-markdown
+  "eh" 'maple/org-html-export-to-html
   )
 
 

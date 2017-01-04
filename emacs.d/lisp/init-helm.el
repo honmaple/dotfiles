@@ -38,6 +38,11 @@
           helm-recentf-fuzzy-match t
           helm-semantic-fuzzy-match t
           helm-buffers-fuzzy-matching t)
+    (defun maple/hide-cursor-in-helm-buffer ()
+      "Hide the cursor in helm buffers."
+      (with-helm-buffer
+        (setq cursor-in-non-selected-windows nil)))
+    (add-hook 'helm-after-initialize-hook 'maple/hide-cursor-in-helm-buffer)
     (helm-mode 1))
   :bind (("M-x" . helm-M-x)
          ("C-x C-m" . helm-M-x)

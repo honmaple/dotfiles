@@ -19,6 +19,7 @@
 (setq user-full-name "jianglin")
 (setq user-mail-address  "xiyang0807@gmail.com")
 
+
 ;;----------------------------------------------------------------------------
 ;; Bootstrap config
 ;;----------------------------------------------------------------------------
@@ -58,18 +59,17 @@
   (require 'init-folding) ;;代码折叠
   (require 'init-auto-insert)  ;;自动插入文件头
 
-  (require 'init-helm)
-  (require 'init-dired)   ;;自带文件管理
-  (require 'init-file)   ;;文件操作
-  (require 'init-buffer)   ;;buffer操作
-  (require 'init-windows)  ;;窗口管理C-x 2上下,C-x 3左右
+   (require 'init-helm)
+   (require 'init-dired)   ;;自带文件管理
+   (require 'init-file)   ;;文件操作
+   (require 'init-buffer)   ;;buffer操作
+   (require 'init-windows)  ;;窗口管理C-x 2上下,C-x 3左右
   )
 
 
 (when *develop*
   (require 'init-flycheck)
   ;; (require 'init-spelling)
-  (require 'init-yasnippet)
   (require 'init-company)
   (require 'init-quickrun)
   ;; ;; (require 'init-gnus)

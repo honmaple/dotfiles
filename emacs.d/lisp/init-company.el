@@ -1,6 +1,7 @@
 (require-package 'company)
 (require-package 'company-statistics)
 (require-package 'company-quickhelp)
+(require-package 'yasnippet)
 
 
 ;; (add-hook 'c-mode-hook 'ycmd-mode)
@@ -14,19 +15,46 @@
 ;; (set-variable 'ycmd-global-config "/home/jianglin/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py")
 ;; (require 'company-ycmd)
 ;; (company-ycmd-setup)
+(use-package yasnippet
+  :commands (yas-global-mode yas-minor-mode)
+  :diminish yas-minor-mode "ⓨ"
+  ;; :init
+  ;; (progn
+  ;;   ;; (yas-reload-all)
+  ;;   (add-hook 'prog-mode-hook #'yas-minor-mode))
+  :init
+  (progn
+    (defvar yas-global-mode nil)
+    (setq yas-triggers-in-field t
+          yas-wrap-around-region t
+          helm-yas-display-key-on-candidate t)
+    (setq yas-prompt-functions '(yas-completing-prompt))
+    (setq yas-minor-mode-map (make-sparse-keymap))
+    (setq maple/yasnippets (expand-file-name "~/.emacs.d/yasnippets"))
+    (if (and  (file-exists-p maple/yasnippets) (not (member maple/yasnippets yas-snippet-dirs)))
+        (add-to-list 'yas-snippet-dirs maple/yasnippets))
+    (defun maple/load-yasnippet ()
+      (unless yas-global-mode (yas-global-mode 1))
+      (yas-minor-mode 1))
+    (add-hook 'prog-mode-hook 'maple/load-yasnippet)
+    )
+  :bind (:map yas-minor-mode-map
+              ("M-s-/" . yas-next-field)))
 
 (use-package hippie-exp
   :defer t
   :config
   (progn
-    (global-set-key (kbd "M-/") 'hippie-expand)
+    ;; (global-set-key (kbd "M-/") 'hippie-expand)
     (setq hippie-expand-try-functions-list
           '(try-complete-file-name-partially
             try-complete-file-name
             try-expand-dabbrev
             try-expand-dabbrev-all-buffers
             try-expand-dabbrev-from-kill))
-    ))
+    )
+  :bind (:map evil-insert-state-map
+              ("M-/" . hippie-expand)))
 
 
 (use-package company
@@ -46,22 +74,7 @@
      company-tooltip-align-annotations t
      company-begin-commands '(self-insert-command)
      company-global-modes '(not comint-mode erc-mode gud-mode rcirc-mode
-                                minibuffer-inactive-mode))
-    (add-hook 'after-init-hook 'global-company-mode))
-  :config
-  (progn
-    (setq company-backends
-          '((company-dabbrev-code  company-keywords company-files :with company-yasnippet)
-            ;; (company-files)
-            ;; (company-semantic)
-            (company-dabbrev :with company-yasnippet)
-            ))
-    (custom-set-faces
-     '(company-tooltip-common
-       ((t (:inherit company-tooltip :weight bold :underline nil))))
-     '(company-tooltip-common-selection
-       ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
-
+                                minibuffer-inactive-mode inferior-python-mode))
     (defvar-local company-fci-mode-on-p nil)
     (defun company-turn-off-fci (&rest ignore)
       (when (boundp 'fci-mode)
@@ -74,38 +87,74 @@
     (add-hook 'company-completion-started-hook 'company-turn-off-fci)
     (add-hook 'company-completion-finished-hook 'company-maybe-turn-on-fci)
     (add-hook 'company-completion-cancelled-hook 'company-maybe-turn-on-fci)
-    (let ((map company-active-map))
-      (define-key map (kbd "C-/") 'company-search-candidates)
-      (define-key map (kbd "C-M-/") 'company-filter-candidates)
-      (define-key map (kbd "C-d") 'company-show-doc-buffer)
-      (define-key map (kbd "C-j") 'company-select-next)
-      (define-key map (kbd "C-k") 'company-select-previous)
-      ;; (define-key map (kbd "C-l") 'company-complete-selection)
-      (define-key map (kbd "TAB") 'company-complete-common-or-cycle)
-      (define-key map (kbd "<tab>") 'company-complete-common-or-cycle)
-      (define-key map (kbd "<RET>") 'company-complete-selection)
-      )
-    ))
+    (add-hook 'after-init-hook 'global-company-mode)
+    )
+  :config
+  (progn
+    (setq company-backends
+          '((company-dabbrev-code company-gtags company-etags company-capf company-keywords)
+            ;; (company-semantic)
+            (company-dabbrev company-files)
+            ))
+
+    (defun maple/push-company-backend (backend)
+      "Add BACKEND to a buffer-local version of `company-backends'."
+      (set (make-local-variable 'company-backends)
+           (append (list backend) company-backends)))
+
+    (custom-set-faces
+     '(company-tooltip-common
+       ((t (:inherit company-tooltip :weight bold :underline nil))))
+     '(company-tooltip-common-selection
+       ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
+
+    (defvar company-mode/enable-yas t
+      "Enable yasnippet for all backends.")
+
+    (defun company-mode/backend-with-yas (backend)
+      (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
+          backend
+        (append (if (consp backend) backend (list backend))
+                '(:with company-yasnippet))))
+
+    (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
+    )
+  :bind (:map company-active-map
+              ("C-/" . company-search-candidates)
+              ("C-M-/" . company-filter-candidates)
+              ("C-j" . company-select-next)
+              ("C-k" . company-select-previous)
+              ("TAB" . company-complete-common-or-cycle)
+              ("<tab>" . company-complete-common-or-cycle)
+              ("<RET>" . company-complete-selection)))
+
 
 
 (use-package company-statistics
+  :after company
   :defer t
   :init
   (progn
-    (unless (featurep 'company-statistics)
-      (setq company-statistics-file (concat user-emacs-directory
-                                            "company-statistics-cache.el"))
-      (add-hook 'company-mode-hook 'company-statistics-mode)
-      (company-statistics-mode 1))))
+    (setq company-statistics-file (concat maple-cache-directory
+                                          "company-statistics-cache.el"))
+    (add-hook 'company-mode-hook 'company-statistics-mode)
+    ))
 
 (use-package company-quickhelp
   :if (and t (display-graphic-p))
+  :after company
   :defer t
   :init
   (progn
     (add-hook 'company-mode-hook 'company-quickhelp-mode)
     (with-eval-after-load 'company
-      (setq company-frontends (delq 'company-echo-metadata-frontend company-frontends)))))
+      (setq company-frontends (delq 'company-echo-metadata-frontend company-frontends))))
+  :config
+  (progn
+    (setq pos-tip-foreground-color "#55d9ef"
+          pos-tip-background-color "#20240E")
+    ))
+
 
 (defun check-expansion ()
   (save-excursion
@@ -130,5 +179,7 @@
           (indent-for-tab-command)))))
 
 (global-set-key [tab] 'tab-indent-or-complete)
+
+
 
 (provide 'init-company)

@@ -19,7 +19,6 @@
 ;; (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
 (setq-default
  blink-cursor-interval 0.4
- bookmark-default-file (expand-file-name ".bookmarks.el" user-emacs-directory)
  buffers-menu-max-size 30
  case-fold-search t
  column-number-mode t
@@ -38,6 +37,16 @@
  ad-redefinition-action 'accept)
 
 (setq backup-directory-alist `(("." . ,(concat maple-cache-directory "auto-save"))))
+
+(use-package bookmark
+  :defer t
+  :init
+  (progn
+    (setq bookmark-default-file (concat maple-cache-directory "bookmarks")
+          ;; autosave each change
+          bookmark-save-flag 1))
+  :bind (:map evil-leader--default-map
+              ("fb" . bookmark-jump)))
 
 (transient-mark-mode t)
 

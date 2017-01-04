@@ -6,7 +6,7 @@
 
 (use-package css-mode
   :defer t
-  :init
+  :config
   (progn
     (set (make-local-variable 'company-backends) '(company-css))
     ))

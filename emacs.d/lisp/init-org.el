@@ -23,6 +23,7 @@
     (setq org-tags-column 80)
     (setq org-html-checkbox-type 'html)
     (setq org-image-actual-width '(600))
+    (setq org-export-with-sub-superscripts (quote {}))
     (with-eval-after-load 'org
       (setq org-match-substring-regexp
             (concat
@@ -71,6 +72,10 @@
     (defadvice org-open-at-point (after org-open-at-point activate)
       (while (>  (count-windows) 2)
         (delete-window (cadr (window-list-1)))))
+
+    (defadvice org-toggle-inline-images (after org-open-at-point activate)
+      (if smooth-scrolling-mode (smooth-scrolling-mode -1)
+        (smooth-scrolling-mode 1)))
 
     (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point)
     (evil-define-key 'normal org-mode-map (kbd "t") 'org-todo)
@@ -220,7 +225,7 @@
       (insert (format "[[file://%s][%s]]" blog-path title)))
     ))
 
-(defun maple//insert-org-or-md-img-link (prefix imagename)
+(defun maple/insert-org-or-md-img-link (prefix imagename)
   (if (equal (file-name-extension (buffer-file-name)) "org")
       (insert (format "[[%s]]" prefix))
     (insert (format "![%s](%s)" imagename prefix))))
@@ -233,7 +238,7 @@
         (message "the path '%s' already exists!" blog-image-path)
       (progn
         (call-process-shell-command "scrot" nil nil nil nil "-s" blog-image-path)
-        (maple//insert-org-or-md-img-link blog-image-path basename)))
+        (maple/insert-org-or-md-img-link blog-image-path basename)))
     )
   (insert "\n"))
 

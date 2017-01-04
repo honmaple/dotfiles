@@ -23,6 +23,7 @@
     (fset 'evil-visual-update-x-selection 'ignore) ;;粘贴板
     ;; (evil-set-initial-state 'sql-mode 'emacs)
     (evil-set-initial-state 'image-mode 'emacs)
+    (evil-set-initial-state 'inferior-python-mode 'emacs)
     (add-hook 'view-mode-hook #'evil-emacs-state)
 
     ;; (defun evil-paste-after-from-0 ()
@@ -97,7 +98,14 @@
 (use-package expand-region
   :defer t
   :bind (:map evil-visual-state-map
-              ("v" . er/expand-region)))
+              ("v" . er/expand-region)
+              ("ew" . er/mark-word)
+              ("es" . er/mark-symbol)
+              ("eu" . er/mark-url)
+              ("ee" . er/mark-email)
+              ("ed" . er/mark-defun)
+              ("ec" . er/mark-comment)
+              ("ep" . er/mark-inside-pairs)))
 
 
 (provide 'init-evil)

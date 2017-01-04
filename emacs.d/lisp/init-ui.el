@@ -6,6 +6,9 @@
 (require-package 'rainbow-mode)
 (require-package 'undo-tree)
 (require-package 'highlight-symbol)
+(require-package 'nlinum)
+(require-package 'nlinum-relative)
+(require-package 'fill-column-indicator)
 
 (when (< emacs-major-version 24)
   (require-package 'color-theme))
@@ -20,7 +23,24 @@
   )
 
 
-(require-package 'fill-column-indicator)
+(use-package nlinum
+  :defer t
+  :init
+  (progn
+    (add-hook 'prog-mode-hook 'nlinum-mode)
+    (add-hook 'text-mode-hook 'nlinum-mode)
+    ;; (setq nlinum-format "%3d")
+    ))
+
+(use-package nlinum-relative
+  :commands (nlinum-relative-toggle nlinum-relative-on)
+  :init
+  (progn
+    (setq nlinum-relative-current-symbol ""
+          nlinum-relative-redisplay-delay 0)
+    (nlinum-relative-setup-evil)
+    (add-hook 'nlinum-mode-hook 'nlinum-relative-on)
+    ))
 
 ;;; 80列
 (use-package fill-column-indicator
@@ -33,6 +53,7 @@
     (push '(fci-mode "") minor-mode-alist)))
 
 
+
 ;; (require-package 'linum-relative)
 ;; (use-package linum-relative ;;相对行号
 ;;   :commands (linum-relative-toggle linum-relative-on)
@@ -42,8 +63,14 @@
 ;;     (linum-relative-on))
 ;;   :config (setq linum-relative-current-symbol ""))
 
-(use-package smooth-scroll     ;; 光标位于中间
-  :config (smooth-scrolling-mode 1))
+(use-package smooth-scrolling     ;; 光标位于中间
+  :config
+  (progn
+    (setq scroll-preserve-screen-position t
+          scroll-margin 0
+          scroll-conservatively 101)
+    (smooth-scrolling-mode 1)
+    ))
 
 (use-package window-numbering
   :defer t
@@ -121,6 +148,8 @@
 
 (use-package highlight-indentation
   :defer t
-  :diminish highlight-indentation-mode)
+  :diminish highlight-indentation-mode
+  :init (add-hook 'prog-mode-hook 'highlight-indentation-mode))
+
 
 (provide 'init-ui)

@@ -1,12 +1,13 @@
 ;;----------------------------------------------------------------------------
 ;; Suppress GUI features
 ;;----------------------------------------------------------------------------
+;; 关闭文件滑动控件
+(when (featurep 'scroll-bar) (scroll-bar-mode -1))
 ;; 关闭工具栏
 (when (featurep 'tool-bar) (tool-bar-mode -1))
 ;;关闭菜单栏
 (when (featurep 'menu-bar) (menu-bar-mode -1))
-;; 关闭文件滑动控件
-(when (featurep 'scroll-bar) (scroll-bar-mode -1))
+
 (setq use-file-dialog nil)
 (setq use-dialog-box nil)
 (setq inhibit-startup-screen t)
@@ -34,7 +35,11 @@
  tooltip-delay 1.5
  truncate-lines t
  truncate-partial-width-windows t
- ad-redefinition-action 'accept)
+ ad-redefinition-action 'accept
+ )
+
+(setq indicate-empty-lines t
+      transient-mark-mode t)
 
 (setq backup-directory-alist `(("." . ,(concat maple-cache-directory "auto-save"))))
 
@@ -48,14 +53,14 @@
   :bind (:map evil-leader--default-map
               ("fb" . bookmark-jump)))
 
-(transient-mark-mode t)
-
-(when (fboundp 'global-prettify-symbols-mode)
-  (global-prettify-symbols-mode)) ;;美化显示符号
+;;美化显示符号
+(use-package global-prettify-symbols-mode
+  :defer t
+  :init (global-prettify-symbols-mode)
+  )
 ;;----------------------------------------------------------------------------
 ;; Show a marker in the left fringe for lines not in the buffer
 ;;----------------------------------------------------------------------------
-(setq indicate-empty-lines t)
 
 ;;----------------------------------------------------------------------------
 ;; Window size and features
@@ -89,5 +94,12 @@
                       "fortune -a | fmt -80 -s | cowsay -$(shuf -n 1 -e b d g p s t w y) -f $(shuf -n 1 -e $(cowsay -l | tail -n +2)) -n")))
                    (concat ";; Happy hacking, " user-login-name " - Emacs ♥ you!\n\n")
                    )))
+
+(defun maple/show-init-time ()
+  (message "Emacs load finished in %.2fms"
+           (* 1000.0 (float-time (time-subtract after-init-time before-init-time)))))
+
+(add-hook 'after-init-hook 'maple/show-init-time)
+
 
 (provide 'init-gui)

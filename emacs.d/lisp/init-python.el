@@ -17,6 +17,20 @@
     (setq imenu-create-index-function 'semantic-create-imenu-index)
     (setq electric-indent-chars (delq ?: electric-indent-chars))))
 
+(use-package yapfify
+  :ensure t
+  :defer t
+  ;; 保存时自动格式化
+  ;; :init (add-hook 'python-mode-hook 'yapf-mode)
+  :init
+  (progn
+    (evil-define-key 'normal python-mode-map
+      (kbd "<f6>") 'yapfify-buffer)
+    ))
+
+(use-package pyvenv
+  :defer t)
+
 (use-package anaconda-mode
   :defer t
   :init
@@ -30,15 +44,15 @@
   (progn
     (defadvice anaconda-mode-goto (before python/anaconda-mode-goto activate)
       (evil--jumps-push))
-    (add-hook 'anaconda-mode-hook
-              (lambda ()
-                (define-key evil-normal-state-local-map "gd" 'anaconda-mode-find-assignments)
-                ))
-    (define-key anaconda-mode-view-mode-map "q" 'quit-window)
+    (evil-define-key 'normal anaconda-mode-map
+      (kbd "gd") 'anaconda-mode-find-assignments)
+    (evil-define-key 'normal anaconda-mode-view-mode-map
+      (kbd "q") 'quit-window)
     ))
 
 
 (use-package company-anaconda
+  :after anaconda-mode
   :init
   (progn
     (after-load 'company
@@ -77,7 +91,7 @@
 ;;   :mode ("\\.html\\'" . jinja2-mode)
 ;;   :init
 ;;   (progn
-;;     (with-eval-after-load 'smartparens
+;;     (after-load 'smartparens
 ;;       (sp-local-pair 'jinja2-mode "{% "  " %}"))
 ;;     ))
 (provide 'init-python)

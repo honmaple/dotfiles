@@ -18,11 +18,11 @@
 (use-package yasnippet
   :commands (yas-global-mode yas-minor-mode)
   :diminish yas-minor-mode "ⓨ"
-  ;; :init
-  ;; (progn
-  ;;   ;; (yas-reload-all)
-  ;;   (add-hook 'prog-mode-hook #'yas-minor-mode))
   :init
+  (progn
+  ;;   ;; (yas-reload-all)
+    (add-hook 'prog-mode-hook #'yas-minor-mode))
+  :config
   (progn
     (defvar yas-global-mode nil)
     (setq yas-triggers-in-field t
@@ -54,7 +54,7 @@
             try-expand-dabbrev-from-kill))
     )
   :bind (:map evil-insert-state-map
-              ("M-/" . hippie-expand)))
+              ("<backtab>" . hippie-expand)))
 
 
 (use-package company
@@ -131,7 +131,6 @@
 
 
 (use-package company-statistics
-  :after company
   :defer t
   :init
   (progn
@@ -142,12 +141,11 @@
 
 (use-package company-quickhelp
   :if (and t (display-graphic-p))
-  :after company
-  :defer t
+  :commands company-quickhelp-manual-begin
   :init
   (progn
     (add-hook 'company-mode-hook 'company-quickhelp-mode)
-    (with-eval-after-load 'company
+    (after-load 'company
       (setq company-frontends (delq 'company-echo-metadata-frontend company-frontends))))
   :config
   (progn

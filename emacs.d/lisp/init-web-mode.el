@@ -69,7 +69,7 @@
     )
   :config
   (progn
-    (with-eval-after-load 'smartparens
+    (after-load 'smartparens
       (setq web-mode-enable-auto-pairing nil)
       (sp-local-pair 'web-mode "<% " " %>")
       ;; (sp-local-pair 'web-mode "{ " " }")

@@ -20,10 +20,15 @@
     (setq dired-recursive-copies 'always) ;;递归拷贝
     (after-load 'dired  ;; 只有一个buffer
       (put 'dired-find-alternate-file 'disabled nil)
-      (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
-      (define-key dired-mode-map (kbd "H") 'dired-omit-mode)
-      (define-key dired-mode-map (kbd "C-c C-e") 'wdired-change-to-wdired-mode)
-      )))
+      (dired-async-mode 1)
+      ;; (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
+      ;; (define-key dired-mode-map (kbd "H") 'dired-omit-mode)
+      ;; (define-key dired-mode-map (kbd "C-c C-e") 'wdired-change-to-wdired-mode)
+      ))
+  :bind (:map dired-mode-map
+              ("H" . dired-omit-mode)
+              ("RET" . dired-find-alternate-file)
+              ("C-c C-e" . wdired-change-to-wdired-mode)))
 
 (use-package dired-x
   :defer t

@@ -20,7 +20,7 @@
   )
 (evil-leader/set-key
   "cc" 'comment-or-uncomment-region-or-line
-  "/" 'helm-swoop ;;当前文件内容
+  "/" 'helm-ag-this-file ;;当前文件内容
   "u"  'undo-tree-visualize
   "se" 'evil-mc-make-all-cursors
   "ss" 'replace-regexp
@@ -32,10 +32,21 @@
   "ec" 'flycheck-clear
   )
 
+;; 字体大小写
+(evil-leader/set-key
+  "vU" 'upcase-dwim
+  "vu" 'downcase-dwim
+  )
+
 (evil-leader/set-key
   "tg" 'golden-ratio-mode
   "ts" 'flyspell-mode
+  "tf" 'fci-mode
+  "tn" 'nlinum-mode
+  "tr" 'nlinum-relative-toggle
+  "tv" 'smooth-scrolling-mode
   )
+
 (evil-leader/set-key
   "jb" 'avy-pop-mark
   "jj" 'evil-avy-goto-char
@@ -51,6 +62,7 @@
   "gb" 'magit-branch
   "gd" 'magit-diff
   "gc" 'magit-checkout
+  "gt" 'git-timemachine
   )
 
 (evil-leader/set-key
@@ -91,6 +103,7 @@
   "pp"  'helm-projectile-switch-project
   "pr"  'helm-projectile-recentf
   "pv"  'projectile-vc
+  "pi"  'projectile-invalidate-cache
   )
 
 (evil-leader/set-key
@@ -130,6 +143,12 @@
   "ob" 'org-iswitchb
   "ol" 'org-new-blog  ;;插入博客地址
   "od" 'youdao-dictionary-search-at-point+
+  )
+
+(evil-leader/set-key
+  "qr" 'restart-emacs
+  "qk" 'kill-emacs
+  "qc" 'maple/reload-user-init-file
   )
 
 
@@ -172,6 +191,7 @@
 (define-key evil-visual-state-map (kbd "L") (kbd "$"))
 (define-key evil-normal-state-map (kbd "RET") 'maple/evil-insert-line-below)
 (define-key evil-normal-state-map (kbd "S-<return>") 'maple/evil-insert-line-above)
+
 ;; (global-set-key (kbd "C-a") 'maple/smart-move-beginning-of-line)
 ;; (global-set-key (kbd "C-e") 'maple/backward-kill-word-or-region)
 

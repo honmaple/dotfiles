@@ -9,7 +9,7 @@
     (setq c-basic-offset 4)
     ;; (add-to-list 'auto-mode-alist `("\\.h$" . ,c-c++-default-mode-for-headers))
     ))
-;; (with-eval-after-load 'c-mode
+;; (after-load 'c-mode
 ;;   (add-to-list 'auto-mode-alist `("\\.h$" . ,c-c++-default-mode-for-headers))
 ;;   (require 'compile)
 ;;   (c-toggle-auto-newline 1)

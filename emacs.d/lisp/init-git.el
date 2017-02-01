@@ -7,11 +7,10 @@
 ;;; Code:
 (require-package 'magit)
 (require-package 'evil-magit)
-(require-package 'fullframe)
 (require-package 'git-commit)
 (require-package 'git-timemachine)
 
-(with-eval-after-load 'magit
+(after-load 'magit
   (require 'evil-magit))
 
 (use-package magit

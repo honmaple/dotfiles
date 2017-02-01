@@ -45,4 +45,4 @@ Selectively runs either `after-make-console-frame-hooks' or
               (mwheel-install))
             ))
 
-(provide 'init-frame-hooks)
+(provide 'init-console)

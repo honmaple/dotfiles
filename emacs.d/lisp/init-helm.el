@@ -1,6 +1,5 @@
 (require-package 'helm)
 (require-package 'helm-ag)
-(require-package 'helm-swoop)
 (require-package 'projectile)
 (require-package 'helm-projectile)
 
@@ -65,7 +64,29 @@
   :init (advice-add 'helm-ag--edit :after #'evil-mc-mode)) ;;在helm-ag-edit中激活evil-mc
 
 (use-package projectile
-  :defer t
+  :commands (projectile-ack
+             projectile-ag
+             projectile-compile-project
+             projectile-dired
+             projectile-find-dir
+             projectile-find-file
+             projectile-find-tag
+             projectile-test-project
+             projectile-grep
+             projectile-invalidate-cache
+             projectile-kill-buffers
+             projectile-multi-occur
+             projectile-project-p
+             projectile-project-root
+             projectile-recentf
+             projectile-regenerate-tags
+             projectile-replace
+             projectile-replace-regexp
+             projectile-run-async-shell-command-in-root
+             projectile-run-shell-command-in-root
+             projectile-switch-project
+             projectile-switch-to-buffer
+             projectile-vc)
   :diminish projectile-mode "ⓟ"
   :config
   (progn
@@ -73,22 +94,31 @@
     (setq projectile-enable-caching t)))
 
 (use-package helm-projectile
+  :commands (helm-projectile-switch-to-buffer
+             helm-projectile-find-dir
+             helm-projectile-dired-find-dir
+             helm-projectile-recentf
+             helm-projectile-find-file
+             helm-projectile-grep
+             helm-projectile
+             helm-projectile-switch-project)
   :init
   (progn
     (setq projectile-switch-project-action 'helm-projectile)))
 
-(use-package helm-swoop
-  :defer t
-  :init
-  (progn
-    (setq helm-swoop-split-with-multiple-windows t
-          helm-swoop-split-direction 'split-window-vertically
-          helm-swoop-speed-or-color t
-          helm-swoop-split-window-function 'helm-default-display-buffer
-          helm-swoop-pre-input-function (lambda () ""))
-    (advice-add 'helm-swoop--edit :after #'evil-mc-mode)) ;;在helm-swoop-edit中激活evil-mc
-  :bind (:map  helm-swoop-edit-map
-               ("C-c C-c" . helm-swoop--edit-complete)
-               ("C-c C-k" . helm-swoop--edit-cancel))
-  )
+;; (require-package 'helm-swoop)
+;; (use-package helm-swoop
+;;   :defer t
+;;   :init
+;;   (progn
+;;     (setq helm-swoop-split-with-multiple-windows t
+;;           helm-swoop-split-direction 'split-window-vertically
+;;           helm-swoop-speed-or-color t
+;;           helm-swoop-split-window-function 'helm-default-display-buffer
+;;           helm-swoop-pre-input-function (lambda () ""))
+;;     (advice-add 'helm-swoop--edit :after #'evil-mc-mode)) ;;在helm-swoop-edit中激活evil-mc
+;;   :bind (:map  helm-swoop-edit-map
+;;                ("C-c C-c" . helm-swoop--edit-complete)
+;;                ("C-c C-k" . helm-swoop--edit-cancel))
+;;   )
 (provide 'init-helm)

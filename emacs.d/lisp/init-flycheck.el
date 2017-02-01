@@ -54,10 +54,11 @@
     ))
 
 (use-package flycheck-pos-tip
+  :after flycheck
   :defer t
   :init
   (progn
-    (with-eval-after-load 'flycheck
+    (after-load 'flycheck
       (flycheck-pos-tip-mode)
       (evil-define-key 'normal flycheck-error-list-mode-map
         "q" 'quit-window

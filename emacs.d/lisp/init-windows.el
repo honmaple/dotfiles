@@ -19,19 +19,21 @@
 (unless (memq window-system '(nt w32))
   (windmove-default-keybindings 'control))
 
-(setq split-width-threshold 1 ) ;;默认分屏
-
+;;默认分屏
+(setq split-width-threshold 1)
 (setq display-buffer-alist '(("\\*Warnings\\*" display-buffer-below-selected)
                              ("\\*Help\\*" display-buffer-below-selected))) ;;设置分屏
 
+(require-package 'popwin)
+(require-package 'golden-ratio)
+
 (use-package winner
+  :defer t
   :init (winner-mode t))
 
-(require-package 'popwin)
 (use-package popwin
   :config (popwin-mode 1))
 
-(require-package 'golden-ratio)
 (use-package golden-ratio  ;;黄金分割
   :defer t
   :init (golden-ratio-mode 1)

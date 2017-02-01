@@ -3,9 +3,6 @@
 (require-package 'flyspell-correct)
 (require-package 'flyspell-correct-helm)
 
-(defvar spell-checking-enable-by-default t
-  "Enable spell checking by default.")
-
 (defvar spell-checking-enable-auto-dictionary nil
   "Specify if auto-dictionary should be enabled or not.")
 
@@ -15,6 +12,7 @@
 (use-package auto-dictionary
   :defer t
   :if spell-checking-enable-auto-dictionary
+  :diminish auto-dictionary-mode
   :init
   (progn
     (add-hook 'flyspell-mode-hook 'auto-dictionary-mode)
@@ -30,7 +28,6 @@
               'maple/adict-set-local-dictionary 'append)))
 
 (use-package flyspell
-  :defer t
   :diminish flyspell-mode "⒮"
   :init
   (progn
@@ -40,11 +37,11 @@
     (ispell-change-dictionary "american" t)
     (defun spell-checking/add-flyspell-hook (hook)
       "Add `flyspell-mode' to the given HOOK, if
-        `spell-checking-enable-by-default' is true."
-      (when spell-checking-enable-by-default
+        `*spell-check*' is true."
+      (when *spell-check*
         (add-hook hook 'flyspell-mode)))
     (spell-checking/add-flyspell-hook 'text-mode-hook)
-    (when spell-checking-enable-by-default
+    (when *spell-check*
       (add-hook 'prog-mode-hook 'flyspell-prog-mode))))
 
 (use-package flyspell-correct
@@ -53,6 +50,8 @@
   )
 
 (use-package flyspell-correct-helm)
+
+(use-package flyspell-correct-popup)
 
 
 (provide 'init-spelling)

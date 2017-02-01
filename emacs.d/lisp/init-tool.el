@@ -1,6 +1,42 @@
 (require-package 'youdao-dictionary)
 (require-package 'avy)
 (require-package 'restclient)
+(require-package 'quickrun)
+
+(use-package esup)
+
+(use-package quickrun
+  :defer t
+  :config (evil-set-initial-state 'quickrun/mode 'emacs)
+  )
+
+(use-package epa
+  :config
+  (progn
+    (auto-encryption-mode -1)
+    ))
+
+(use-package imenu-list
+  :defer t
+  :init
+  (progn
+    (defun maple/imenu-mode ()
+      (define-key evil-normal-state-map (kbd "tb") 'imenu-list-minor-mode))
+    (add-hook 'prog-mode-hook 'maple/imenu-mode)
+    (setq imenu-list-focus-after-activation t
+          imenu-list-auto-resize nil))
+  :config
+  (progn
+    (add-to-list 'golden-ratio-exclude-buffer-regexp "^\\*Ilist\\*")
+    (after-load "imenu-list"
+      (define-key imenu-list-major-mode-map (kbd "j") 'next-line)
+      (define-key imenu-list-major-mode-map (kbd "k") 'previous-line))
+    )
+  :bind (:map evil-leader--default-map
+              ("bi" . imenu-list-minor-mode)
+              :map imenu-list-major-mode-map
+              ("d" . imenu-list-display-entry)
+              ("q" . imenu-list-minor-mode)))
 
 (use-package youdao-dictionary
   :defer t
@@ -42,11 +78,18 @@
         (browse-url-at-point)))))
 
 (use-package restclient
-  :defer e
+  :defer t
   :bind (:map evil-leader--default-map
               ("rs" . restclient-http-send-current)
               ("rr" . restclient-http-send-current-raw)
               ("rn" . restclient-narrow-to-current)
               ("ry" . restclient-copy-curl-command)))
+
+(use-package 2048-game
+  :ensure t
+  :config
+  (progn
+    (evil-set-initial-state '2048-mode 'emacs)
+    ))
 
 (provide 'init-tool)

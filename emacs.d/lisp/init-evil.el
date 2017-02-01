@@ -42,7 +42,10 @@
     ;; )
     ;; (add-hook 'focus-out-hook (lambda () (save-some-buffers t)))
     ;; (add-hook 'evil-insert-state-exit-hook 'my-save-if-bufferfilename)
-    ))
+    )
+  :bind (:map evil-normal-state-map
+              ("C-k" . evil-scroll-up)
+              ("C-j" . evil-scroll-down)))
 
 (use-package evil-surround
   :defer t
@@ -50,7 +53,7 @@
 
 (use-package evil-matchit
   :defer t
-  :config (global-evil-matchit-mode 1))
+  :init (global-evil-matchit-mode 1))
 
 
 (use-package evil-escape
@@ -89,11 +92,12 @@
 
 (use-package vimish-fold
   :defer t
-  :init
-  (progn
-    (define-key evil-visual-state-map (kbd "za") 'vimish-fold)
-    (define-key evil-normal-state-map (kbd "zc") 'vimish-fold-delete)
-    ))
+  :bind (:map evil-visual-state-map
+              ("za" . vimish-fold)
+              :map evil-normal-state-map
+              ("zc" . vimish-fold-delete))
+  )
+
 
 (use-package expand-region
   :defer t

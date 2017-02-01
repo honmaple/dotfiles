@@ -6,8 +6,8 @@
 
 (use-package org
   :mode ("\\.org$" . org-mode)
-  :commands (org-clock-out org-occur-in-agenda-files org-agenda-files)
   :defer t
+  :commands (orgtbl-mode)
   :init
   (progn
     (setq org-emphasis-regexp-components
@@ -24,7 +24,7 @@
     (setq org-html-checkbox-type 'html)
     (setq org-image-actual-width '(600))
     (setq org-export-with-sub-superscripts (quote {}))
-    (with-eval-after-load 'org
+    (after-load 'org
       (setq org-match-substring-regexp
             (concat
              ;; 限制上标和下标的匹配范围，org 中对其的介绍见：(org) Subscripts and superscripts
@@ -73,7 +73,7 @@
       (while (>  (count-windows) 2)
         (delete-window (cadr (window-list-1)))))
 
-    (defadvice org-toggle-inline-images (after org-open-at-point activate)
+    (defadvice org-toggle-inline-images (after org-toggle-inline-images activate)
       (if smooth-scrolling-mode (smooth-scrolling-mode -1)
         (smooth-scrolling-mode 1)))
 
@@ -88,6 +88,7 @@
 
 
 (use-package org-capture
+  :defer t
   :config
   (progn
     (setq org-capture-templates
@@ -255,5 +256,6 @@
    (format "mv -v %s %s"
            (shell-quote-argument (org-html-export-to-html))
            "../html/")))
+
 
 (provide 'init-org)

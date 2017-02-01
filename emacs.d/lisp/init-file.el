@@ -6,6 +6,7 @@
     (add-hook 'find-file-hook (lambda () (unless recentf-mode
                                       (recentf-mode)
                                       (recentf-track-opened-file))))
+
     (setq recentf-save-file (concat maple-cache-directory "recentf")
           recentf-max-saved-items 1000
           recentf-auto-cleanup 'never
@@ -17,6 +18,7 @@
                  (expand-file-name maple-cache-directory))
     (add-to-list 'recentf-exclude (expand-file-name package-user-dir))
     (add-to-list 'recentf-exclude "COMMIT_EDITMSG\\'")))
+
 
 (require-package 'neotree)
 (use-package neotree
@@ -49,6 +51,23 @@
          ("^" . neotree-select-up-node)
          )
   )
+
+(use-package undo-tree
+  :defer t
+  :init
+  (progn
+    (global-undo-tree-mode)
+    (setq undo-tree-history-directory-alist
+          `(("." . ,(concat maple-cache-directory "undo-tree"))))
+    ;; (unless (file-exists-p (concat maple-cache-directory "undo-tree"))
+    ;;   (make-directory (concat maple-cache-directory "undo-tree")))
+    (setq undo-tree-visualizer-timestamps t)
+    (setq undo-tree-visualizer-diff t)
+    (setq undo-tree-auto-save-history t)
+    )
+  :diminish undo-tree-mode
+  :bind (:map evil-normal-state-map
+              ("U" . undo-tree-redo)))
 
 (defun maple/system-is-mac ()
   (eq system-type 'darwin))
@@ -173,12 +192,14 @@ the current state and point position."
 ;; insert one or several line above without changing current evil state
 (defun maple/evil-insert-line-above (count)
   "Insert one of several lines above the current point's line without changing
-the current state and point position."
+ the current state and point position."
   (interactive "p")
   (save-excursion
     (evil-save-state (evil-open-above count)))
-  (evil-normal-state)
-  (evil-previous-line count))
+  (evil-previous-line count)
+  (evil-escape))
+
+
 
 ;; (defun maple/check-large-file ()
 ;;     (when (> (buffer-size) 500000)

@@ -1,64 +1,3 @@
-;; (require-package 'unfill)
-(when (fboundp 'electric-pair-mode)
-  (electric-pair-mode)
-  ;; 右边有字符不补全
-  (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
-(when (eval-when-compile (version< "24.4" emacs-version))
-  (electric-indent-mode 1))
-
-
-;;----------------------------------------------------------------------------
-;; Zap *up* to char is a handy pair for zap-to-char
-;;----------------------------------------------------------------------------
-(autoload 'zap-up-to-char "misc" "Kill up to, but not including ARGth occurrence of CHAR.")
-(global-set-key (kbd "M-Z") 'zap-up-to-char)
-
-
-;;----------------------------------------------------------------------------
-;; Don't disable narrowing commands
-;;----------------------------------------------------------------------------
-(put 'narrow-to-region 'disabled nil)
-(put 'narrow-to-page 'disabled nil)
-(put 'narrow-to-defun 'disabled nil)
-
-;;----------------------------------------------------------------------------
-;; Show matching parens
-;;----------------------------------------------------------------------------
-;; 高亮括号配对
-(show-paren-mode 1)
-
-
-;;----------------------------------------------------------------------------
-;; Don't disable case-change functions
-;;----------------------------------------------------------------------------
-(put 'upcase-region 'disabled nil)
-(put 'downcase-region 'disabled nil)
-
-
-;;----------------------------------------------------------------------------
-;; Rectangle selections, and overwrite text when the selection is active
-;;----------------------------------------------------------------------------
-(cua-selection-mode t)                  ; for rectangles, CUA is nice
-
-
-;;----------------------------------------------------------------------------
-;; Handy key bindings
-;;----------------------------------------------------------------------------
-;; To be able to M-x without meta
-(global-set-key (kbd "C-x C-m") 'execute-extended-command)
-
-;; Vimmy alternatives to M-^ and C-u M-^
-(global-set-key (kbd "C-c j") 'join-line)
-(global-set-key (kbd "C-c J") (lambda () (interactive) (join-line 1)))
-
-(global-set-key (kbd "C-.") 'set-mark-command)
-(global-set-key (kbd "C-x C-.") 'pop-global-mark)
-
-
-;; Train myself to use M-f and M-b instead
-(global-unset-key [M-left])
-(global-unset-key [M-right])
-
 ;;----------------------------------------------------------------------------
 ;; Fix backward-up-list to understand quotes, see http://bit.ly/h7mdIL
 ;;----------------------------------------------------------------------------
@@ -113,12 +52,17 @@
       (setq beg (line-beginning-position) end (line-end-position)))
     (comment-or-uncomment-region beg end)))
 
-(defun indent-buffer ()
+(defun maple/indent-buffer ()
   (interactive)
   (save-excursion
     (indent-region (point-min) (point-max) nil)))
 
-(global-set-key [f6] 'indent-buffer)
+(defun maple/reload-user-init-file()
+  (interactive)
+  (load-file user-init-file))
+
+(global-set-key [f6] 'maple/indent-buffer)
+
 
 ;; 修改外部文件自动载入
 (use-package autorevert
@@ -158,6 +102,22 @@
   (defun maple/lazy-load-stickyfunc-enhance ()
     "Lazy load the package."
     (require 'stickyfunc-enhance)))
+
+(use-package electric
+  :init (electric-pair-mode)
+  :config
+  (progn
+    (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
+    ))
+
+(use-package page
+  :init
+  (progn
+    ;; Don't disable narrowing commands
+    (put 'narrow-to-region 'disabled nil)
+    (put 'narrow-to-page 'disabled nil)
+    (put 'narrow-to-defun 'disabled nil)
+    ))
 
 
 (provide 'init-editor)

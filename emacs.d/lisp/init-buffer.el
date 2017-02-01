@@ -1,3 +1,10 @@
+;;; init-buffer.el --- buffer
+
+;;; Commentary:
+;;
+
+
+;;; Code:
 (defun maple/switch-to-previous-buffer ()
   "Switch to previously open buffer.
 Repeated invocations toggle between the two most recently open buffers."
@@ -5,12 +12,12 @@ Repeated invocations toggle between the two most recently open buffers."
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 
 (defun maple/copy-whole-buffer-to-clipboard ()
-  "Copy entire buffer to clipboard"
+  "Copy entire buffer to clipboard."
   (interactive)
   (clipboard-kill-ring-save (point-min) (point-max)))
 
 (defun maple/copy-clipboard-to-whole-buffer ()
-  "Copy clipboard and replace buffer"
+  "Copy clipboard and replace buffer."
   (interactive)
   (delete-region (point-min) (point-max))
   (clipboard-yank)

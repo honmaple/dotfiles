@@ -17,26 +17,27 @@
     ))
 
 (use-package imenu-list
+  :load-path "site-lisp/"
   :defer t
   :init
   (progn
     (defun maple/imenu-mode ()
       (define-key evil-normal-state-map (kbd "tb") 'imenu-list-minor-mode))
     (add-hook 'prog-mode-hook 'maple/imenu-mode)
-    (setq imenu-list-focus-after-activation t
-          imenu-list-auto-resize nil))
-  :config
-  (progn
-    (add-to-list 'golden-ratio-exclude-buffer-regexp "^\\*Ilist\\*")
-    (after-load "imenu-list"
-      (define-key imenu-list-major-mode-map (kbd "j") 'next-line)
-      (define-key imenu-list-major-mode-map (kbd "k") 'previous-line))
-    )
+    (evil-set-initial-state 'imenu-list-major-mode 'emacs)
+    (setq imenu-list-size 0.2
+          imenu-list-auto-resize t
+          imenu-list-focus-after-activation t
+          imenu-list-mode-line-format ""
+          imenu-create-index-function 'semantic-create-imenu-index))
   :bind (:map evil-leader--default-map
               ("bi" . imenu-list-minor-mode)
               :map imenu-list-major-mode-map
               ("d" . imenu-list-display-entry)
-              ("q" . imenu-list-minor-mode)))
+              ("q" . imenu-list-minor-mode)
+              ("tb" . imenu-list-minor-mode)
+              ("j" . next-line)
+              ("k" . previous-line)))
 
 (use-package youdao-dictionary
   :defer t

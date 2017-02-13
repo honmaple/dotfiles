@@ -40,7 +40,9 @@
 
 (evil-leader/set-key
   "tg" 'golden-ratio-mode
-  "ts" 'flyspell-mode
+  "tS" 'flyspell-mode
+  "ts" 'flycheck-mode
+  "tc" 'company-mode
   "tf" 'fci-mode
   "tn" 'nlinum-mode
   "tr" 'nlinum-relative-toggle

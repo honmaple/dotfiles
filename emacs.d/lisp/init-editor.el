@@ -119,5 +119,8 @@
     (put 'narrow-to-defun 'disabled nil)
     ))
 
+(use-package which-function
+  :init (add-hook 'after-init-hook 'which-function-mode))
+
 
 (provide 'init-editor)

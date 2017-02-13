@@ -73,14 +73,15 @@
                                              undo-tree-visualizer-mode
                                              newsticker-treeview-mode
                                              newsticker-treeview-list-mode
-                                             newsticker-treeview-item-mode))
+                                             newsticker-treeview-item-mode
+                                             imenu-list-major-mode))
     (setq evil-escape-inhibit-functions '(evil-visual-state-p evil-escape--is-magit-buffer))
     ))
 
 (use-package evil-mc
   :defer t
   :diminish evil-mc-mode "ⓒ"
-  :init (global-evil-mc-mode 1)
+  :init (global-evil-mc-mode t)
   :config
   (progn
     (evil-define-key 'normal evil-mc-key-map (kbd "<escape>") 'evil-mc-undo-all-cursors)

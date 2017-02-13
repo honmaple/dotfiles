@@ -1,6 +1,6 @@
+*.elc
 emacs.d/auto-save-list/
 emacs.d/elpa/
-emacs.d/site-lisp/
 emacs.d/company-statistics-cache.el
 emacs.d/.cache/
 emacs.d/projectile*

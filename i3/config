@@ -145,7 +145,7 @@ bindsym $mod+Shift+8 move container to workspace $w8
 bindsym $mod+Shift+9 move container to workspace $w9
 bindsym $mod+Shift+0 move container to workspace $w10
 
-assign [class="^google-chrome"] → $w2
+assign [class="(?i)google-chrome-stable"] → $w2
 assign [class="(?i)firefox"] → $w2
 assign [class="(?i)pgadmin3"] → $w3
 assign [class="(?i)matlab"] → $w3
@@ -155,7 +155,8 @@ assign [class="(?i)VirtualBox"] → $w4
 assign [class="(?i)Wireshark-gtk"] → $w9
 assign [class="(?i)Thunar"] → $w6
 # xfce4-notify
-for_window [class="Xfce4-notifyd"] floating enable,border none,focus mode_toggle
+# for_window [class="Xfce4-notifyd"] floating enable,border none,focus mode_toggle
+for_window [class="^Dunst"] floating enable,border none,focus mode_toggle
 # for_window [class="Thunar"] floating enable
 for_window [class="Xfce4-terminal"] floating enable,border pixel 0
 for_window [class="Xarchiver"] floating enable
@@ -163,6 +164,7 @@ for_window [class="VirtualBox"] floating enable,border pixel 0
 for_window [class="^osdlyrics"] floating enable
 for_window [class="^Xfce4-mixer"] floating enable
 for_window [class="Lxappearance"] floating enable,border pixel 0
+for_window [class="^Emacs"] border pixel 0
 
 
 # reload the configuration file
@@ -240,14 +242,15 @@ client.unfocused        #333333 #333333 #888888 #292d2e
 client.urgent           #2f343a #900000 #ffffff #900000
 
 exec --no-startup-id xset dpms 600
-exec --no-startup-id nm-applet
 #exec --no-startup-id xfce4-notifyd
 exec --no-startup-id fcitx
-# exec --no-startup-id oneko -tomoyo &
-#exec --no-startup-id conky
+exec --no-startup-id oneko -tomoyo &
+exec --no-startup-id conky
 #exec --no-startup-id xcompmgr -c -C -t-5 -l-5 -r4.2 -o.55 &
 
 # exec --no-startup-id xfce4-power-manager
 exec --no-startup-id feh --bg-scale ~/Pictures/308556.jpg
+exec --no-startup-id dunst -config ~/.config/i3/dunstrc
+exec --no-startup-id nm-applet
 #exec pulseaudio --start
 #exec --no-startup-id xfce4-panel

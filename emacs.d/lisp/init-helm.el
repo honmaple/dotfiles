@@ -64,34 +64,13 @@
   :init (advice-add 'helm-ag--edit :after #'evil-mc-mode)) ;;在helm-ag-edit中激活evil-mc
 
 (use-package projectile
-  :commands (projectile-ack
-             projectile-ag
-             projectile-compile-project
-             projectile-dired
-             projectile-find-dir
-             projectile-find-file
-             projectile-find-tag
-             projectile-test-project
-             projectile-grep
-             projectile-invalidate-cache
-             projectile-kill-buffers
-             projectile-multi-occur
-             projectile-project-p
-             projectile-project-root
-             projectile-recentf
-             projectile-regenerate-tags
-             projectile-replace
-             projectile-replace-regexp
-             projectile-run-async-shell-command-in-root
-             projectile-run-shell-command-in-root
-             projectile-switch-project
-             projectile-switch-to-buffer
-             projectile-vc)
+  :defer t
   :diminish projectile-mode "ⓟ"
-  :config
+  :init
   (progn
-    (add-hook 'after-init-hook #'projectile-global-mode)
-    (setq projectile-enable-caching t)))
+    (setq projectile-enable-caching t)
+    (add-hook 'after-init-hook #'projectile-global-mode))
+  )
 
 (use-package helm-projectile
   :commands (helm-projectile-switch-to-buffer

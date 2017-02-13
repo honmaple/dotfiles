@@ -49,6 +49,7 @@
                                        ))
 
     (add-to-list 'golden-ratio-exclude-buffer-regexp "^\\*[hH]elm.*")
+    (add-to-list 'golden-ratio-exclude-buffer-regexp "^\\*Ilist\\*")
 
     ;; Disable auto-resizing for some buffers
     ;; (defun maple/no-golden-ratio-for-buffers (bufname)

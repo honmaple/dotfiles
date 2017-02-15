@@ -119,7 +119,7 @@
     (put 'narrow-to-defun 'disabled nil)
     ))
 
-(use-package which-function
+(use-package which-func
   :init (add-hook 'after-init-hook 'which-function-mode))
 
 

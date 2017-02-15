@@ -85,7 +85,7 @@
 ;; ;;; 80列
 (use-package fill-column-indicator
   :defer t
-  :init
+  :config
   (progn
     ;; (setq fci-rule-column 80)
     (setq fci-rule-width 1)
@@ -117,7 +117,10 @@
 ;; 颜色
 (use-package rainbow-mode
   :defer t
-  :init (add-hook 'prog-mode-hook 'rainbow-mode)
+  :init
+  (progn
+    (add-hook 'prog-mode-hook 'rainbow-mode)
+    (add-hook 'conf-unix-mode-hook 'rainbow-mode))
   :diminish rainbow-mode)
 
 

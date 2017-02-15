@@ -7,6 +7,8 @@
 
 (use-package js2-mode
   :defer t
+  :mode
+  ("\\.js\\'" . js2-mode)
   :config
   (progn
     (setq-default js2-basic-offset 2
@@ -14,7 +16,6 @@
     (setq-default js2-mode-show-parse-errors nil
                   js2-mode-show-strict-warnings nil)
     (setq-default js-indent-level 2)
-    (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
     ))
 
 ;; Javascript nests {} and () a lot, so I find this helpful
@@ -33,8 +34,7 @@
 ;;; Coffeescript
 (use-package coffee-mode
   :defer t
-  :init
-  (add-to-list 'auto-mode-alist '("\\.coffee\\.erb\\'" . coffee-mode))
+  :mode ("\\.coffee\\.erb\\'" . coffee-mode)
   :config
   (progn
     (setq coffee-js-mode preferred-javascript-mode
@@ -62,19 +62,13 @@
               ))))
     (add-hook 'web-mode-hook
               (lambda()
-                (make-local-variable 'company-backends)
-                (setq company-backends (copy-tree company-backends))
-                (setf (car company-backends)
-                      (append '(company-tern) (car company-backends)))
+                (maple/add-to-company-backend
+                 '(company-tern))
                 ))
     (add-hook 'js2-mode-hook
               (lambda()
-                ;; (add-to-list (make-local-variable 'company-backends)
-                ;;              'company-tern)
-                (make-local-variable 'company-backends)
-                (setq company-backends (copy-tree company-backends))
-                (setf (car company-backends)
-                      (append '(company-tern) (car company-backends)))
+                (maple/add-to-company-backend
+                 '(company-tern))
                 ))
     ))
 

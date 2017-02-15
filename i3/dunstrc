@@ -153,8 +153,3 @@ timeout = 0
 appname = netease-cloud-music
 summary = "Now playing"
 urgency = low
-
-# [test]
-# summary = "*test*"
-# background="#ffffff"
-# iconname = weather-storm

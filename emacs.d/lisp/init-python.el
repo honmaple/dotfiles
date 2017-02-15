@@ -61,11 +61,8 @@
   :after anaconda-mode
   :init
   (progn
-    (after-load 'company
-      (add-hook 'python-mode-hook
-                (lambda () (maple/push-company-backend 'company-anaconda)))
-      (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
-      )
+    (add-hook 'python-mode-hook
+              (lambda () (maple/add-to-company-backend '(company-anaconda))))
     ))
 
 

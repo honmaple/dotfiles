@@ -8,7 +8,10 @@
   :defer t
   :config
   (progn
-    (set (make-local-variable 'company-backends) '(company-css))
+    (add-hook 'css-mode-hook
+              (lambda ()
+                (maple/add-to-company-backend
+                 '(company-css))))
     ))
 
 (use-package sass-mode

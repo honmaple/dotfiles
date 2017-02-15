@@ -20,7 +20,7 @@
   :diminish yas-minor-mode "ⓨ"
   :init
   (progn
-  ;;   ;; (yas-reload-all)
+    ;;   ;; (yas-reload-all)
     (add-hook 'prog-mode-hook #'yas-minor-mode))
   :config
   (progn
@@ -97,11 +97,6 @@
             (company-dabbrev company-files)
             ))
 
-    (defun maple/push-company-backend (backend)
-      "Add BACKEND to a buffer-local version of `company-backends'."
-      (set (make-local-variable 'company-backends)
-           (append (list backend) company-backends)))
-
     (custom-set-faces
      '(company-tooltip-common
        ((t (:inherit company-tooltip :weight bold :underline nil))))
@@ -149,10 +144,13 @@
       (setq company-frontends (delq 'company-echo-metadata-frontend company-frontends))))
   :config
   (progn
-    (setq pos-tip-foreground-color "#55d9ef"
-          pos-tip-background-color "#20240E")
-    ))
-
+    (setq company-quickhelp-delay 1)
+    (defun maple/modify-help-pos-tip ()
+      "Modify company-quickhelp."
+      (setq pos-tip-foreground-color "#00ffff"
+            pos-tip-background-color "#272822"
+            pos-tip-border-width 0))
+    (add-hook 'company-quickhelp-mode-hook 'maple/modify-help-pos-tip)))
 
 (defun check-expansion ()
   (save-excursion
@@ -178,6 +176,27 @@
 
 (global-set-key [tab] 'tab-indent-or-complete)
 
+;; (defun maple/add-company-backend (backend)
+;;   "Add BACKEND to `company-backends'."
+;;   (after-load 'company
+;;     (set (make-local-variable 'company-backends)
+;;          (append (list backend) company-backends))
+;;     (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))))
+
+;; (defun maple/add-to-company-backend (backend &optional hook)
+;;   "Add BACKEND to `company-backends'."
+;;   (if hook
+;;       (add-hook hook (lambda () (maple/add-company-backend backend)))
+;;     (maple/add-company-backend backend)))
+
+;; (maple/add-to-company-backend '(company-web) 'web-mode-hook)
+
+(defun maple/add-to-company-backend (backend)
+  "Add BACKEND to a buffer-local version of `company-backends'."
+  (after-load 'company
+    (set (make-local-variable 'company-backends)
+         (append (list backend) company-backends))
+    (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))))
 
 
 (provide 'init-company)

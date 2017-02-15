@@ -7,45 +7,6 @@
 
 (use-package web-mode
   :defer t
-  :config
-  (progn
-    (setq web-mode-enable-auto-closing nil) ; enable auto close tag in text-mode
-    (setq web-mode-enable-auto-pairing t)
-    (setq web-mode-enable-css-colorization t)
-    (setq web-mode-imenu-regexp-list
-          '(("<\\(h[1-9]\\)\\([^>]*\\)>\\([^<]*\\)" 1 3 ">" nil)
-            ("^[ \t]*<\\([@a-z]+\\)[^>]*>? *$" 1 " id=\"\\([a-zA-Z0-9_]+\\)\"" "#" ">")
-            ("^[ \t]*<\\(@[a-z.]+\\)[^>]*>? *$" 1 " contentId=\"\\([a-zA-Z0-9_]+\\)\"" "=" ">")
-            (" \\(ng-[a-z]*\\)=\"\\([^\"]+\\)" 1 2 "=")))
-
-    (add-hook 'web-mode-hook
-              (lambda ()
-                (yas-global-mode 1)
-                (add-to-list 'company-backends '(company-web-html :with company-yasnippet
-                                                                  ;; company-web-slim
-                                                                  company-css
-                                                                  ;; company-web-jade
-                                                                  ))
-                (define-key evil-normal-state-local-map "za" 'web-mode-fold-or-unfold)
-                (define-key evil-normal-state-local-map [f5] 'browse-url-of-file)
-                ))
-    ;; (defadvice company-css (before web-mode-set-up-ac-sources activate)
-    ;;   "Set CSS completion based on current language before running `company-css'."
-    ;;   (if (equal major-mode 'web-mode)
-    ;;       (let ((web-mode-cur-language (web-mode-language-at-pos)))
-    ;;         (if (or (string= web-mode-cur-language "css")
-    ;;                 (string= web-mode-cur-language "style"))
-    ;;             (unless css-mode (css-mode))
-    ;;           (if css-mode (css-mode -1))
-    ;;           ))))
-    ;; (add-hook 'web-mode-hook
-    ;;           (lambda()
-    ;;             (make-local-variable 'company-backends)
-    ;;             (setq company-backends (copy-tree company-backends))
-    ;;             (setf (car company-backends)
-    ;;                   (append '(company-css) (car company-backends)))
-    ;;             ))
-    )
   :mode
   (("\\.phtml\\'" . web-mode)
    ("\\.tpl\\.php\\'" . web-mode)
@@ -56,10 +17,30 @@
    ("\\.erb\\'" . web-mode)
    ("\\.html?\\'" . web-mode)
    ("/\\(views\\|html\\|theme\\|templates\\)/.*\\.php\\'" . web-mode))
-  )
+  :config
+  (progn
+    (setq web-mode-enable-auto-closing t) ; enable auto close tag in text-mode
+    ;; (setq web-mode-enable-auto-pairing t)
+    ;; (setq web-mode-enable-css-colorization t)
+    (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
+    (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
+    (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
+    (add-to-list 'web-mode-indentation-params '("lineup-ternary" . nil))
+    (add-hook 'web-mode-hook
+              (lambda ()
+                (maple/add-to-company-backend
+                 '(company-web-html
+                   ;; company-web-slim
+                   ;; company-web-jade
+                   company-css))))
+    (evil-define-key 'normal web-mode-map
+      (kbd "<f5>") 'browse-url-of-file
+      (kbd "<f6>") 'web-beautify-html
+      (kbd "za") 'web-mode-fold-or-unfold)))
 
 (use-package smartparens
   :defer t
+  :after web-mode
   :diminish smartparens-mode
   :init
   (progn
@@ -69,19 +50,16 @@
     )
   :config
   (progn
-    (after-load 'smartparens
-      (setq web-mode-enable-auto-pairing nil)
-      (sp-local-pair 'web-mode "<% " " %>")
-      ;; (sp-local-pair 'web-mode "{ " " }")
-      (sp-local-pair 'web-mode "<%= "  " %>")
-      (sp-local-pair 'web-mode "<%# "  " %>")
-      (sp-local-pair 'web-mode "<%$ "  " %>")
-      (sp-local-pair 'web-mode "<%@ "  " %>")
-      (sp-local-pair 'web-mode "<%: "  " %>")
-      (sp-local-pair 'web-mode "{% "  " %}")
-      (sp-local-pair 'web-mode "{%- "  " %}")
-      (sp-local-pair 'web-mode "{# "  " #}")
-      )))
+    (sp-local-pair 'web-mode "<% " " %>")
+    (sp-local-pair 'web-mode "<%= "  " %>")
+    (sp-local-pair 'web-mode "<%# "  " %>")
+    (sp-local-pair 'web-mode "<%$ "  " %>")
+    (sp-local-pair 'web-mode "<%@ "  " %>")
+    (sp-local-pair 'web-mode "<%: "  " %>")
+    (sp-local-pair 'web-mode "{% "  " %}")
+    (sp-local-pair 'web-mode "{%- "  " %}")
+    (sp-local-pair 'web-mode "{# "  " #}")
+    ))
 
 
 (use-package emmet-mode

@@ -1,18 +1,18 @@
- (if (fboundp 'with-eval-after-load)
-     (defalias 'after-load 'with-eval-after-load)
-   (defmacro after-load (feature &rest body)
-     "After FEATURE is loaded, evaluate BODY."
-     (declare (indent defun))
-     `(eval-after-load ,feature
-        '(progn ,@body))))
+(if (fboundp 'with-eval-after-load)
+    (defalias 'after-load 'with-eval-after-load)
+  (defmacro after-load (feature &rest body)
+    "After FEATURE is loaded, evaluate BODY."
+    (declare (indent defun))
+    `(eval-after-load ,feature
+       '(progn ,@body))))
 
- ;;----------------------------------------------------------------------------
- ;; Find the directory containing a given library
- ;;----------------------------------------------------------------------------
- (autoload 'find-library-name "find-func")
- (defun directory-of-library (library-name)
-   "Return the directory in which the `LIBRARY-NAME' load file is found."
-   (file-name-as-directory (file-name-directory (find-library-name library-name))))
+;;----------------------------------------------------------------------------
+;; Find the directory containing a given library
+;;----------------------------------------------------------------------------
+(autoload 'find-library-name "find-func")
+(defun directory-of-library (library-name)
+  "Return the directory in which the `LIBRARY-NAME' load file is found."
+  (file-name-as-directory (file-name-directory (find-library-name library-name))))
 
 
 (defconst maple-cache-directory
@@ -26,6 +26,7 @@
 
 
 (eval-when-compile (require 'cl))
+
 (defun add-subdirs-to-load-path (parent-dir)
   "Adds every non-hidden subdir of PARENT-DIR to `load-path'."
   (let* ((default-directory parent-dir))
@@ -37,7 +38,16 @@
               (directory-files (expand-file-name parent-dir) t "^[^\\.]"))
              load-path)))))
 
+;; (defun add-subdirs-to-load-path (parent-dir)
+;;   "Adds every non-hidden subdir of PARENT-DIR to `load-path'."
+;;   (let ((default-directory  parent-dir))
+;;     (setq load-path
+;;           (append
+;;            (let ((load-path  (copy-sequence load-path))) ;; Shadow
+;;              (normal-top-level-add-subdirs-to-load-path))
+;;            load-path))))
+
 (add-subdirs-to-load-path
- (expand-file-name "site-lisp/" user-emacs-directory))
+ (expand-file-name (concat user-emacs-directory "site-lisp/")))
 
 (provide 'init-utils)

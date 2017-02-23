@@ -18,6 +18,7 @@
                                               "https://melpa.org/packages/")))
 
 (setq package-enable-at-startup nil)
+(package-initialize)
 
 (defun require-package (package &optional min-version no-refresh)
   "Install given PACKAGE, optionally requiring MIN-VERSION.

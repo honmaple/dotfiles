@@ -3,13 +3,12 @@
 (require-package 'company-web)
 (require-package 'emmet-mode)
 
-
-
 (use-package web-mode
   :defer t
   :mode
   (("\\.phtml\\'" . web-mode)
    ("\\.tpl\\.php\\'" . web-mode)
+   ("\\.vue\\'" . web-mode)
    ("\\.tpl\\'" . web-mode)
    ("\\.blade\\.php\\'" . web-mode)
    ("\\.jsp\\'" . web-mode)
@@ -22,20 +21,14 @@
     (setq web-mode-enable-auto-closing t) ; enable auto close tag in text-mode
     ;; (setq web-mode-enable-auto-pairing t)
     ;; (setq web-mode-enable-css-colorization t)
-    (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
-    (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
-    (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
-    (add-to-list 'web-mode-indentation-params '("lineup-ternary" . nil))
-    (add-hook 'web-mode-hook
-              (lambda ()
-                (maple/add-to-company-backend
-                 '(company-web-html
-                   ;; company-web-slim
-                   ;; company-web-jade
-                   company-css))))
+    ;; (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
+    ;; (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
+    ;; (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
+    ;; (add-to-list 'web-mode-indentation-params '("lineup-ternary" . nil))
+    (maple/add-to-company-backend '(company-web-html company-css) 'web-mode-hook)
     (evil-define-key 'normal web-mode-map
       (kbd "<f5>") 'browse-url-of-file
-      (kbd "<f6>") 'web-beautify-html
+      ;; (kbd "<f6>") 'web-beautify-html
       (kbd "za") 'web-mode-fold-or-unfold)))
 
 (use-package smartparens
@@ -73,10 +66,9 @@
     (add-hook 'css-mode-hook  'emmet-mode))
   :config
   (progn
-    (evil-define-key 'insert emmet-mode-keymap (kbd "TAB") 'emmet-expand-yas)
-    (evil-define-key 'insert emmet-mode-keymap (kbd "<tab>") 'emmet-expand-yas)
-    (evil-define-key 'emacs emmet-mode-keymap (kbd "TAB") 'emmet-expand-yas)
-    (evil-define-key 'emacs emmet-mode-keymap (kbd "<tab>") 'emmet-expand-yas)
+    (evil-define-key 'insert emmet-mode-keymap
+      (kbd "TAB") 'emmet-expand-yas
+      (kbd "<tab>") 'emmet-expand-yas)
     ))
 
 ;; (add-hook 'web-mode-hook

@@ -129,17 +129,19 @@
   :defer t
   :init
   (progn
-    (setq company-statistics-file (concat maple-cache-directory
-                                          "company-statistics-cache.el"))
-    (add-hook 'company-mode-hook 'company-statistics-mode)
-    ))
+    (defun maple/set-company-statistics()
+      "company-statistics config"
+      (setq company-statistics-file (concat maple-cache-directory
+                                            "company-statistics-cache.el"))
+      (add-hook 'company-mode-hook 'company-statistics-mode)))
+  (add-hook 'after-init-hook 'maple/set-company-statistics))
 
 (use-package company-quickhelp
   :if (and t (display-graphic-p))
   :commands company-quickhelp-manual-begin
   :init
   (progn
-    (add-hook 'company-mode-hook 'company-quickhelp-mode)
+    ;; (add-hook 'company-mode-hook 'company-quickhelp-mode)
     (after-load 'company
       (setq company-frontends (delq 'company-echo-metadata-frontend company-frontends))))
   :config
@@ -176,27 +178,20 @@
 
 (global-set-key [tab] 'tab-indent-or-complete)
 
-;; (defun maple/add-company-backend (backend)
-;;   "Add BACKEND to `company-backends'."
-;;   (after-load 'company
-;;     (set (make-local-variable 'company-backends)
-;;          (append (list backend) company-backends))
-;;     (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))))
-
-;; (defun maple/add-to-company-backend (backend &optional hook)
-;;   "Add BACKEND to `company-backends'."
-;;   (if hook
-;;       (add-hook hook (lambda () (maple/add-company-backend backend)))
-;;     (maple/add-company-backend backend)))
-
-;; (maple/add-to-company-backend '(company-web) 'web-mode-hook)
-
-(defun maple/add-to-company-backend (backend)
-  "Add BACKEND to a buffer-local version of `company-backends'."
+(defun maple/add-company-backend (backend)
+  "Add BACKEND to `company-backends'."
   (after-load 'company
-    (set (make-local-variable 'company-backends)
-         (append (list backend) company-backends))
+    (setq-local company-backends (append (list backend) company-backends))
     (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))))
 
+(defun maple/add-to-company-backend (backend &optional hook)
+  "Add BACKEND to `company-backends'."
+  (lexical-let ((backend backend)
+                (hook hook))
+    (if hook
+        (add-hook hook (lambda () (maple/add-company-backend backend)))
+      (lambda () (maple/add-company-backend backend)))))
+
+;; (maple/add-to-company-backend '(company-web) 'web-mode-hook)
 
 (provide 'init-company)

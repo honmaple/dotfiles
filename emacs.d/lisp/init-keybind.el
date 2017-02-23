@@ -85,9 +85,7 @@
   "wL"  'evil-window-move-far-right
   "wl"  'evil-window-right
   "w <right>"  'evil-window-right
-
   "wo"  'other-frame
-
   "ws"  'split-window-below
   "wU"  'winner-redo
   "wu"  'winner-undo
@@ -153,6 +151,13 @@
   "qc" 'maple/reload-user-init-file
   )
 
+(evil-leader/set-key-for-mode 'web-mode
+  "rc" 'web-mode-element-clone
+  "rd" 'web-mode-element-vanish
+  "rk" 'web-mode-element-kill
+  "rr" 'web-mode-element-rename
+  "rw" 'web-mode-element-wrap
+  )
 
 (evil-leader/set-key-for-mode 'python-mode
   "va" 'pyvenv-workon

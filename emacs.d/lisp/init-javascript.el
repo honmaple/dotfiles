@@ -60,16 +60,8 @@
                 (unless tern-mode (tern-mode))
               (if tern-mode (tern-mode -1))
               ))))
-    (add-hook 'web-mode-hook
-              (lambda()
-                (maple/add-to-company-backend
-                 '(company-tern))
-                ))
-    (add-hook 'js2-mode-hook
-              (lambda()
-                (maple/add-to-company-backend
-                 '(company-tern))
-                ))
+    (maple/add-to-company-backend '(company-tern) 'web-mode-hook)
+    (maple/add-to-company-backend '(company-tern) 'js2-mode-hook)
     ))
 
 (provide 'init-javascript)

@@ -1,3 +1,4 @@
+(require-package 'org-plus-contrib)
 (require-package 'org-pomodoro)
 (require-package 'org-bullets)
 (require-package 'ox-reveal)
@@ -41,6 +42,8 @@
                   (lambda (frame)
                     (with-selected-frame frame
                       (set-face-font 'org-table "-Misc-Fixed-normal-normal-normal-*-18-*-*-*-c-90-iso10646-1")
+                      ;; (set-face-font 'org-table "WenQuanYi Micro Hei Mono"
+                      ;;                (:size 18) t)
                       )))
       (set-face-font 'org-table "-Misc-Fixed-normal-normal-normal-*-18-*-*-*-c-90-iso10646-1"))
 

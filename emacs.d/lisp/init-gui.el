@@ -38,6 +38,7 @@
  ad-redefinition-action 'accept
  )
 
+
 (setq indicate-empty-lines t
       transient-mark-mode t)
 

@@ -5,21 +5,42 @@
 
 (use-package esup)
 
-(use-package quickrun
-  :defer t
-  :config (evil-set-initial-state 'quickrun/mode 'emacs)
-  )
-
 (use-package epa
   :config
   (progn
     (auto-encryption-mode -1)
     ))
 
+(use-package quickrun
+  :defer t
+  :config (evil-set-initial-state 'quickrun/mode 'emacs))
+
+(use-package blog-admin
+  :load-path "site-lisp/blog-admin/"
+  :commands blog-admin-start
+  :config
+  (progn
+    (setq blog-admin-backend-type 'pelican)
+    (setq blog-admin-backend-new-post-in-drafts t) ;; create new post in drafts by default
+    (setq blog-admin-backend-new-post-with-same-name-dir nil) ;; create same-name directory with new post
+    (setq blog-admin-backend-path "~/git/pelican")
+    (setq blog-admin-backend-pelican-config-file "pelicanconf.py") ;; default assumes _config.ym
+    (setq blog-admin-backend-pelican-posts-dir "content/markdown") ;; default assumes _config.ym
+    (setq blog-admin-backend-pelican-drafts-dir "content/html") ;; default assumes _config.ym
+    (add-hook 'blog-admin-backend-after-new-post-hook 'find-file)
+    (defun blog-set-face()
+      "set face"
+      (interactive)
+      (dolist (charset '(kana han symbol cjk-misc bopomofo))
+        (set-fontset-font (frame-parameter nil 'font) charset
+                          (font-spec :family "WenQuanYi Micro Hei Mono" :size 18))))
+    (add-hook 'blog-admin-mode-hook 'blog-set-face)
+    ))
+
 (use-package imenu-list
   :load-path "site-lisp/"
-  :defer t
-  :init
+  :commands imenu-list-minor-mode
+  :config
   (progn
     (defun maple/imenu-mode ()
       (define-key evil-normal-state-map (kbd "tb") 'imenu-list-minor-mode))

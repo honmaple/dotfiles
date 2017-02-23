@@ -1,5 +1,5 @@
-(require-package 'spaceline)
 (require-package 'window-numbering)
+(require-package 'spaceline)
 (require-package 'smooth-scrolling)
 (require-package 'which-key)
 (require-package 'rainbow-delimiters)  ;;括号高亮
@@ -15,7 +15,7 @@
 
 (use-package monokai-theme
   :defer t
-  :init (add-hook 'after-init-hook '(lambda () (load-theme 'monokai t)))
+  :init (add-hook 'after-init-hook (lambda () (load-theme 'monokai t)))
   )
 
 ;; (use-package color-theme-approximate
@@ -24,27 +24,31 @@
 
 (use-package window-numbering
   :defer t
-  :init (add-hook 'after-init-hook #'window-numbering-mode));;这个要在前
+  ;; :init (add-hook 'after-init-hook #'window-numbering-mode));;这个要在前
+  :init (window-numbering-mode));;这个要在前
 
 
 (use-package spaceline-config
   :config
   (progn
-    (add-hook 'after-init-hook
-              '(lambda ()
-                 (set-face-attribute 'mode-line nil :box nil)
-                 (setq ns-use-srgb-colorspace nil)
-                 (setq powerline-default-separator 'wave)
-                 (setq spaceline-toggle-window-number-on-p t)
-                 (setq spaceline-toggle-workspace-number-on-p nil)
-                 (setq spaceline-workspace-numbers-unicode t)
-                 (setq spaceline-window-numbers-unicode t)
-                 (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
-                 (spaceline-spacemacs-theme)
-                 (when (package-installed-p 'helm)
-                   (spaceline-helm-mode t))
-                 ))
+    (defun maple/set-spaceline()
+      "spaceline config"
+      (set-face-attribute 'mode-line nil :box nil)
+      (setq ns-use-srgb-colorspace nil)
+      (setq powerline-default-separator 'wave)
+      (setq spaceline-toggle-window-number-on-p t)
+      (setq spaceline-toggle-workspace-number-on-p nil)
+      (setq spaceline-workspace-numbers-unicode t)
+      (setq spaceline-window-numbers-unicode t)
+      (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
+      (spaceline-spacemacs-theme)
+      (when (package-installed-p 'helm)
+        (spaceline-helm-mode t)))
+    (add-hook 'after-init-hook 'maple/set-spaceline)
     ))
+
+
+
 
 (use-package which-key
   :defer t
@@ -94,6 +98,7 @@
 
 ;; 光标位于中间
 (use-package smooth-scrolling
+  :defer t
   :init (add-hook 'after-init-hook #'smooth-scrolling-mode)
   :config
   (progn

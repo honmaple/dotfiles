@@ -1,8 +1,10 @@
 ;;; This file bootstraps the configuration, which is divided into
 ;;; a number of other files.
 
+;;; Without this comment emacs25 adds (package-initialize) here
+;; (package-initialize); You may delete these explanatory comments.
+
 (let ((file-name-handler-alist nil))
-  (package-initialize)
   (setq gc-cons-threshold (* 128 1024 1024))
   (setq user-full-name "jianglin")
   (setq user-mail-address  "xiyang0807@gmail.com")
@@ -24,6 +26,7 @@
   (require-package 'use-package)
 
 
+
   (defconst *system-is-mac* (eq system-type 'darwin))
   (defconst *system-is-linux* (eq system-type 'gnu/linux))
   (defconst *system-is-mswindows* (eq system-type 'windows-nt))
@@ -32,19 +35,13 @@
   (defconst *auto-complete* t)
   (defconst *spell-check* nil)
 
-
-
-
-
-  ;; (add-hook 'after-init-hook
-  ;;           '(lambda ()
-  ;;              ))
   (when *common*
     (require 'init-fonts)
     (require 'init-gui) ;;ui设置 显示行号
-    ;; (require 'init-console)
-    (require 'init-evil)
     (require 'init-ui)  ;; modeline,which-key
+    ;; (require 'init-console)
+
+    (require 'init-evil)
 
     (when *system-is-mac*
       (require 'init-mac))
@@ -61,7 +58,6 @@
     (require 'init-buffer)   ;;buffer操作
     (require 'init-windows)  ;;窗口管理C-x 2上下,C-x 3左右
     )
-
 
   (when *develop*
     (require 'init-flycheck)
@@ -85,7 +81,6 @@
     (require 'init-org)
     (require 'init-tool)
     )
-
 
   (require 'init-keybind)
 

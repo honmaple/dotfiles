@@ -75,10 +75,8 @@
           auto-revert-verbose nil)
     ))
 
-(require-package 'semantic)
-(require-package 'stickyfunc-enhance)
-
 (use-package semantic
+  :ensure t
   :defer t
   :init
   (progn
@@ -97,6 +95,7 @@
     (semantic-mode 1)))
 
 (use-package stickyfunc-enhance
+  :ensure t
   :defer t
   :config
   (defun maple/lazy-load-stickyfunc-enhance ()
@@ -119,8 +118,15 @@
     (put 'narrow-to-defun 'disabled nil)
     ))
 
-(use-package which-func
-  :init (add-hook 'after-init-hook 'which-function-mode))
+;; (use-package which-func
+;;   :init (add-hook 'after-init-hook 'which-function-mode))
+
+(use-package dumb-jump
+  :ensure t
+  :defer t
+  :config (setq dumb-jump-selector 'helm)
+  :bind (:map evil-normal-state-map
+              ("gd" . dumb-jump-go-other-window)))
 
 
 (provide 'init-editor)

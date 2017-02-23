@@ -35,9 +35,11 @@
     ))
 
 (use-package pyvenv
+  :ensure t
   :defer t)
 
 (use-package anaconda-mode
+  :ensure t
   :defer t
   :init
   (progn
@@ -58,12 +60,11 @@
 
 
 (use-package company-anaconda
+  :ensure t
   :after anaconda-mode
   :init
   (progn
-    (add-hook 'python-mode-hook
-              (lambda () (maple/add-to-company-backend '(company-anaconda))))
-    ))
+    (maple/add-to-company-backend 'company-anaconda 'python-mode-hook)))
 
 
 ;; (use-package elpy

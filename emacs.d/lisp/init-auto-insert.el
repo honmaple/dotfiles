@@ -65,14 +65,14 @@
              "Tags:   \n"
              "Slug: " (file-name-base buffer-file-name) "\n"
              "Summary: ")
-            ((markdown-mode . "Markdown") nil
-             "Title: " (file-name-base buffer-file-name) "  \n"
-             "Author: honmaple   \n"
-             "Date: " (format-time-string "%F" (current-time)) "\n"
-             "Category:   \n"
-             "Tags:   \n"
-             "Slug: " (file-name-base buffer-file-name) "  \n"
-             "Summary: ")
+            ;; ((markdown-mode . "Markdown") nil
+            ;;  "Title: " (file-name-base buffer-file-name) "  \n"
+            ;;  "Author: honmaple   \n"
+            ;;  "Date: " (format-time-string "%F" (current-time)) "\n"
+            ;;  "Category:   \n"
+            ;;  "Tags:   \n"
+            ;;  "Slug: " (file-name-base buffer-file-name) "  \n"
+            ;;  "Summary: ")
             ((rst-mode . "reStructuredText") nil
              (file-name-nondirectory buffer-file-name) "  \n"
              "##############\n"

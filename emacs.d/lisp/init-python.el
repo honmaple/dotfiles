@@ -18,6 +18,7 @@
     (set-variable 'python-indent-offset 4)
     (set-variable 'python-indent-guess-indent-offset nil)
     (setq tab-width 4)
+    (setenv "PYTHONPATH" "$PYTHONPATH:/usr/lib/python3.5/site-packages")
     (setq python-shell-completion-native-enable nil)
     (setq python-shell-interpreter "ipython"
           python-shell-interpreter-args "--simple-prompt -i")
@@ -46,6 +47,7 @@
     (setq anaconda-mode-installation-directory
           (concat maple-cache-directory "anaconda-mode"))
     (add-hook 'python-mode-hook 'anaconda-mode)
+    (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
     )
   :diminish anaconda-mode
   :config

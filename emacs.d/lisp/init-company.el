@@ -192,6 +192,4 @@
         (add-hook hook (lambda () (maple/add-company-backend backend)))
       (lambda () (maple/add-company-backend backend)))))
 
-;; (maple/add-to-company-backend '(company-web) 'web-mode-hook)
-
 (provide 'init-company)

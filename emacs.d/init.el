@@ -32,8 +32,6 @@
   (defconst *system-is-mswindows* (eq system-type 'windows-nt))
   (defconst *common* t)
   (defconst *develop* t)
-  (defconst *auto-complete* t)
-  (defconst *spell-check* nil)
 
   (when *common*
     (require 'init-fonts)
@@ -61,8 +59,7 @@
 
   (when *develop*
     (require 'init-flycheck)
-    (when *spell-check*
-      (require 'init-spelling))
+    (require 'init-spelling)
     (require 'init-company)
     ;; (require 'init-gnus)
 

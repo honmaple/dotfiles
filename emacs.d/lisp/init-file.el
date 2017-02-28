@@ -56,6 +56,7 @@
   :defer t
   :init
   (progn
+    (global-undo-tree-mode)
     (setq undo-tree-auto-save-history t)
     (setq undo-tree-history-directory-alist
           `(("." . ,(concat maple-cache-directory "undo-tree"))))
@@ -63,7 +64,6 @@
     ;;   (make-directory (concat maple-cache-directory "undo-tree")))
     ;; (setq undo-tree-visualizer-timestamps t)
     (setq undo-tree-visualizer-diff t)
-    (global-undo-tree-mode)
     )
   :diminish undo-tree-mode
   :bind (:map evil-normal-state-map

@@ -3,15 +3,9 @@
 (require-package 'flyspell-correct)
 (require-package 'flyspell-correct-helm)
 
-(defvar spell-checking-enable-auto-dictionary nil
-  "Specify if auto-dictionary should be enabled or not.")
-
-(defvar enable-flyspell-auto-completion nil
-  "If not nil, show speeling suggestions in popups.")
 
 (use-package auto-dictionary
   :defer t
-  :if spell-checking-enable-auto-dictionary
   :diminish auto-dictionary-mode
   :init
   (progn
@@ -28,30 +22,26 @@
               'maple/adict-set-local-dictionary 'append)))
 
 (use-package flyspell
+  :defer t
   :diminish flyspell-mode "⒮"
-  :init
+  :config
   (progn
     ;; use apsell as ispell backend
     (setq-default ispell-program-name "aspell")
     ;; use American English as ispell default dictionary
     (ispell-change-dictionary "american" t)
-    (defun spell-checking/add-flyspell-hook (hook)
-      "Add `flyspell-mode' to the given HOOK, if
-        `*spell-check*' is true."
-      (when *spell-check*
-        (add-hook hook 'flyspell-mode)))
-    (spell-checking/add-flyspell-hook 'text-mode-hook)
-    (when *spell-check*
-      (add-hook 'prog-mode-hook 'flyspell-prog-mode))))
+    ;; (add-hook 'text-mode-hook 'flyspell-mode)
+    ;; (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+    ;; (add-hook 'flyspell-mode-hook 'maple/set-spell)
+    ))
 
 (use-package flyspell-correct
   :commands (flyspell-correct-word-generic
              flyspell-correct-previous-word-generic)
   )
 
-(use-package flyspell-correct-helm)
-
-(use-package flyspell-correct-popup)
+(use-package flyspell-correct-helm
+  :defer t)
 
 
 (provide 'init-spelling)

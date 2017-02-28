@@ -76,15 +76,15 @@
     ;; (setq nlinum-format "%3d")
     ))
 
-(use-package nlinum-relative
-  :commands (nlinum-relative-toggle nlinum-relative-on)
-  :init
-  (progn
-    (setq nlinum-relative-current-symbol ""
-          nlinum-relative-redisplay-delay 0)
-    (nlinum-relative-setup-evil)
-    (add-hook 'nlinum-mode-hook 'nlinum-relative-on)
-    ))
+;; (use-package nlinum-relative
+;;   :commands (nlinum-relative-toggle nlinum-relative-on)
+;;   :init
+;;   (progn
+;;     (setq nlinum-relative-current-symbol ""
+;;           nlinum-relative-redisplay-delay 0)
+;;     (nlinum-relative-setup-evil)
+;;     (add-hook 'nlinum-mode-hook 'nlinum-relative-on)
+;;     ))
 
 ;; ;;; 80列
 (use-package fill-column-indicator
@@ -141,10 +141,10 @@
     (add-hook 'org-mode-hook 'highlight-symbol-nav-mode)))
 
 ;; 显示缩进
-(use-package highlight-indentation
-  :defer t
-  :diminish highlight-indentation-mode
-  :init (add-hook 'prog-mode-hook 'highlight-indentation-mode))
+;; (use-package highlight-indentation
+;;   :defer t
+;;   :diminish highlight-indentation-mode
+;;   :init (add-hook 'prog-mode-hook 'highlight-indentation-mode))
 
 
 (provide 'init-ui)

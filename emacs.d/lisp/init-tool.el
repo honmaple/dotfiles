@@ -34,7 +34,8 @@
       (dolist (charset '(kana han symbol cjk-misc bopomofo))
         (set-fontset-font (frame-parameter nil 'font) charset
                           (font-spec :family "WenQuanYi Micro Hei Mono" :size 18))))
-    (add-hook 'blog-admin-mode-hook 'blog-set-face)
+    (when (display-graphic-p)
+      (add-hook 'blog-admin-mode-hook 'blog-set-face))
     ))
 
 (use-package imenu-list

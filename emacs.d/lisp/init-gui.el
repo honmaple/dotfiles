@@ -40,7 +40,7 @@
 
 
 (setq indicate-empty-lines t
-      transient-mark-mode t)
+      transient-mark-mode nil)
 
 (setq backup-directory-alist `(("." . ,(concat maple-cache-directory "auto-save"))))
 

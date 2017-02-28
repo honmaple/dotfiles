@@ -24,7 +24,16 @@
     ;; (evil-set-initial-state 'sql-mode 'emacs)
     (evil-set-initial-state 'image-mode 'emacs)
     (evil-set-initial-state 'inferior-python-mode 'emacs)
+
     (add-hook 'view-mode-hook #'evil-emacs-state)
+
+    (setq evil-insert-state-cursor '((bar . 2) "chartreuse3")
+          evil-normal-state-cursor '(box "DarkGoldenrod2")
+          evil-visual-state-cursor '((hbox . 2) "gray")
+          evil-emacs-state-cursor '(box "SkyBlue2")
+          evil-replace-state-cursor '((hbox . 2) "chocolate"))
+    (custom-set-faces
+     '(region ((t (:background "#66d9ef" :foreground "#272822")))))
 
     ;; (defun evil-paste-after-from-0 ()
     ;;   (interactive)
@@ -49,12 +58,21 @@
 
 (use-package evil-surround
   :defer t
-  :init (global-evil-surround-mode 1))
+  :init
+  (progn
+    (global-evil-surround-mode 1)
+    (evil-define-key 'visual evil-surround-mode-map "s" 'evil-surround-region)
+    (evil-define-key 'visual evil-surround-mode-map "S" 'evil-substitute)
+    ))
 
 (use-package evil-matchit
   :defer t
   :init (global-evil-matchit-mode 1))
 
+(use-package evil-ediff
+  :ensure t
+  :after (ediff)
+  )
 
 (use-package evil-escape
   :defer t

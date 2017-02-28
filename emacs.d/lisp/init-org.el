@@ -241,7 +241,8 @@
     (if (file-exists-p blog-image-path)
         (message "the path '%s' already exists!" blog-image-path)
       (progn
-        (call-process-shell-command "scrot" nil nil nil nil "-s" blog-image-path)
+        (shell-command
+         (format "scrot -s %s" blog-image-path))
         (maple/insert-org-or-md-img-link blog-image-path basename)))
     )
   (insert "\n"))

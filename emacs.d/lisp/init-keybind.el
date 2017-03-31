@@ -149,6 +149,7 @@
   "ob" 'org-iswitchb
   "ol" 'org-new-blog  ;;插入博客地址
   "od" 'youdao-dictionary-search-at-point+
+  "oD" 'youdao-dictionary-search-at-point
   )
 
 (evil-leader/set-key
@@ -163,11 +164,16 @@
   "rk" 'web-mode-element-kill
   "rr" 'web-mode-element-rename
   "rw" 'web-mode-element-wrap
+  "gb" 'web-mode-element-beginning
+  "gc" 'web-mode-element-child
+  "gp" 'web-mode-element-parent
+  ;; "gs" 'web-mode-element-sibling-next
   )
 
 (evil-leader/set-key-for-mode 'python-mode
   "va" 'pyvenv-workon
   "vc" 'pyvenv-deactivate
+  "rI" 'py-isort-buffer
   )
 
 (evil-leader/set-key-for-mode 'org-mode

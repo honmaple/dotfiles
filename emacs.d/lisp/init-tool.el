@@ -13,7 +13,12 @@
 
 (use-package quickrun
   :defer t
-  :config (evil-set-initial-state 'quickrun/mode 'emacs))
+  :init
+  (progn
+    (evil-set-initial-state 'quickrun--mode 'emacs)
+    (add-hook 'quickrun--mode-hook
+              (lambda () (toggle-truncate-lines t)))
+    ))
 
 (use-package blog-admin
   :load-path "site-lisp/blog-admin/"
@@ -28,13 +33,20 @@
     (setq blog-admin-backend-pelican-posts-dir "content/markdown") ;; default assumes _config.ym
     (setq blog-admin-backend-pelican-drafts-dir "content/html") ;; default assumes _config.ym
     (add-hook 'blog-admin-backend-after-new-post-hook 'find-file)
+
     (defun blog-set-face()
       "set face"
       (interactive)
       (dolist (charset '(kana han symbol cjk-misc bopomofo))
         (set-fontset-font (frame-parameter nil 'font) charset
-                          (font-spec :family "WenQuanYi Micro Hei Mono" :size 18))))
+                          (font-spec :family "WenQuanYi Micro Hei Mono" :size 18)))
+      (defadvice switch-to-buffer (after switch-to-buffer activate)
+        (dolist (charset '(kana han symbol cjk-misc bopomofo))
+          (set-fontset-font (frame-parameter nil 'font) charset
+                            (font-spec :family "DejaVu Sans Mono" :size 14)))))
+
     (when (display-graphic-p)
+      (add-hook 'blog-admin-mode-hook 'font-lock-mode)
       (add-hook 'blog-admin-mode-hook 'blog-set-face))
     ))
 
@@ -65,7 +77,7 @@
   :defer t
   :config
   (progn
-    ;; (evil-set-initial-state 'youdao-dictionary-mode 'emacs)
+    (evil-set-initial-state 'youdao-dictionary-mode 'emacs)
     (setq url-automatic-caching t
           ;; Set file path for saving search history
           youdao-dictionary-search-history-file (concat maple-cache-directory "youdao")

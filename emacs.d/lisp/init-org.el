@@ -37,15 +37,9 @@
              "\\(?:\\*\\|[+-]?[[:alnum:].,\\]*[[:alnum:]]\\)\\)")))
 
     ;; 中英文对齐
-    (if (and (fboundp 'daemonp) (daemonp))
-        (add-hook 'after-make-frame-functions
-                  (lambda (frame)
-                    (with-selected-frame frame
-                      (set-face-font 'org-table "-Misc-Fixed-normal-normal-normal-*-18-*-*-*-c-90-iso10646-1")
-                      ;; (set-face-font 'org-table "WenQuanYi Micro Hei Mono"
-                      ;;                (:size 18) t)
-                      )))
-      (set-face-font 'org-table "-Misc-Fixed-normal-normal-normal-*-18-*-*-*-c-90-iso10646-1"))
+    (when (display-graphic-p)
+      (set-face-attribute 'org-table nil :font "-Misc-Fixed-normal-normal-normal-*-18-*-*-*-c-90-iso10646-1"))
+
 
     (org-babel-do-load-languages
      'org-babel-load-languages
@@ -97,7 +91,7 @@
     (setq org-capture-templates
           '(("t" "待办"
              entry (file+headline "~/org-mode/gtd.org" "待办事项")
-             "* TODO [#B] %?      :%^{Where|@Office|@Home|@Lunchtime|@School}:\n  %i\n"
+             "* TODO [#B] %?      :%^{Where|@Office|@Home|@Lunchtime|@School}:\n  %^T\n%i"
              :empty-lines 1)
             ("w" "工作"
              entry (file+headline "~/org-mode/project.org" "工作安排")
@@ -134,8 +128,8 @@
              "* %?                :%^{周期|Yearly|Monthly|Weekly|Daily}:Summary:"
              :empty-lines 1)
             ("g" "毕业设计"
-             entry (file+datetree  "~/org-mode/gradution.org" "毕业设计")
-             "* %?                :%^{周期|Yearly|Monthly|Weekly|Daily}:Summary:"
+             entry (file+datetree+prompt  "~/org-mode/gradution.org" "毕业设计")
+             "* %?                :%^{周期|Yearly|Monthly|Weekly|Daily}:Summary:\n"
              :empty-lines 1)
             ))
     (setq org-refile-targets

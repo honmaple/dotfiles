@@ -9,6 +9,7 @@
   :config
   (progn
     (maple/add-to-company-backend '(company-css) 'css-mode-hook)
+    (put 'css-indent-offset 'safe-local-variable #'integerp)
     ))
 
 (use-package sass-mode

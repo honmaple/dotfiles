@@ -32,11 +32,16 @@
   (defconst *system-is-mswindows* (eq system-type 'windows-nt))
   (defconst *common* t)
   (defconst *develop* t)
+  ;; (defun maple/show-init-time ()
+  ;;   (message "Emacs load finished in %.2fms"
+  ;;            (* 1000.0 (float-time (time-subtract after-init-time before-init-time)))))
+
+  ;; (add-hook 'after-init-hook 'maple/show-init-time)
 
   (when *common*
     (require 'init-fonts)
-    (require 'init-gui) ;;ui设置 显示行号
     (require 'init-ui)  ;; modeline,which-key
+    (require 'init-gui) ;;ui设置 显示行号
     ;; (require 'init-console)
 
     (require 'init-evil)
@@ -68,9 +73,9 @@
 
     (require 'init-matlab)
     (require 'init-shell) ;;shell
-    (require 'init-web-mode)
-    (require 'init-javascript)
+    (require 'init-html)
     (require 'init-css)
+    (require 'init-javascript)
     (require 'init-python)
     (require 'init-c)
     (require 'init-sql)

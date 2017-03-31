@@ -18,13 +18,10 @@
    ("/\\(views\\|html\\|theme\\|templates\\)/.*\\.php\\'" . web-mode))
   :config
   (progn
+    (setq web-mode-engines-alist '(("django" . "\\.html\\'")))
+    (setq web-mode-markup-indent-offset 2)
     (setq web-mode-enable-auto-closing t) ; enable auto close tag in text-mode
-    ;; (setq web-mode-enable-auto-pairing t)
-    ;; (setq web-mode-enable-css-colorization t)
-    ;; (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
-    ;; (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
-    ;; (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
-    ;; (add-to-list 'web-mode-indentation-params '("lineup-ternary" . nil))
+    (setq web-mode-enable-current-element-highlight t)
     (maple/add-to-company-backend '(company-web-html company-css) 'web-mode-hook)
     (evil-define-key 'normal web-mode-map
       (kbd "<f5>") 'browse-url-of-file
@@ -66,10 +63,16 @@
     (add-hook 'css-mode-hook  'emmet-mode))
   :config
   (progn
+    (defun maple/emmet-expand ()
+      (interactive)
+      (if (bound-and-true-p yas-minor-mode)
+          (call-interactively 'emmet-expand-yas)
+        (call-interactively 'emmet-expand-line)))
     (evil-define-key 'insert emmet-mode-keymap
-      (kbd "TAB") 'emmet-expand-yas
-      (kbd "<tab>") 'emmet-expand-yas)
+      (kbd "TAB") 'maple/emmet-expand
+      (kbd "<tab>") 'maple/emmet-expand)
     ))
+
 
 ;; (add-hook 'web-mode-hook
 ;;           (lambda ()
@@ -80,4 +83,4 @@
 ;; (add-hook 'web-mode-hook 'jinja2-mode-hook)
 
 
-(provide 'init-web-mode)
+(provide 'init-html)

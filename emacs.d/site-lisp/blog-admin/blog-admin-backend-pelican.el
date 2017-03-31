@@ -153,7 +153,7 @@ Summary:
   "Build the site."
   (interactive)
   (let ((command (format
-                  "cd %s && pelican generate &"
+                  "cd %s && make html &"
                   blog-admin-backend-path)))
     (shell-command command)))
 
@@ -161,7 +161,7 @@ Summary:
   "Deploy the site."
   (interactive)
   (let ((command (format
-                  "cd %s && pelican deploy --generate &"
+                  "cd %s && make publish &"
                   blog-admin-backend-path)))
     (shell-command command)))
 

@@ -105,7 +105,6 @@
     (setq scroll-preserve-screen-position t
           scroll-margin 0
           scroll-conservatively 101)
-    ;; (smooth-scrolling-mode 1)
     ))
 
 

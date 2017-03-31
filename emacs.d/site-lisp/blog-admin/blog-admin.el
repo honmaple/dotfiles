@@ -53,18 +53,18 @@
 (defconst -table-help
   "Blog
 
-s   ... Switch between publish and drafts
-d   ... Delete current post
-c   ... Duplicate current post
-w   ... Write new post
-RET ... Open current post
-r   ... Refresh blog-admin
-B   ... Build site
-C   ... Jump to the config
-D   ... Deploy site
-F   ... Filter and show only rows with keyword
+    s   ... Switch between publish and drafts
+    d   ... Delete current post
+    c   ... Duplicate current post
+    w   ... Write new post
+    RET ... Open current post
+    r   ... Refresh blog-admin
+    B   ... Build site
+    C   ... Jump to the config
+    D   ... Deploy site
+    F   ... Filter and show only rows with keyword
 
-"
+  "
   "Help of table")
 
 (defvar show-help t)
@@ -108,17 +108,21 @@ F   ... Filter and show only rows with keyword
   "Click event for table"
   (find-file (-table-current-file)))
 
+(defun set-my-font (*begin *end)
+  (overlay-put (make-overlay *begin *end nil nil t)
+               'face 'ctbl:faces))
 
 (defun -table-build ()
   (when show-help (insert -table-help))
   (let ((param (copy-ctbl:param ctbl:default-rendering-param)))
     (setf (ctbl:param-fixed-header param) t)
-    (save-excursion (setq table (ctbl:create-table-component-region
-                                 :param param
-                                 :width  nil
-                                 :height nil
-                                 :keymap mode-map
-                                 :model (-get-model))))
+    (save-excursion
+      (setq table (ctbl:create-table-component-region
+                   :param param
+                   :width  nil
+                   :height nil
+                   :keymap mode-map
+                   :model (-get-model))))
     (ctbl:cp-add-click-hook table #'-table-click)
     (ctbl:navi-goto-cell (ctbl:cell-id 0 0))
     ))

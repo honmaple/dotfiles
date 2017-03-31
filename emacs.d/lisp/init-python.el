@@ -24,6 +24,10 @@
           python-shell-interpreter-args "--simple-prompt -i")
     ))
 
+(use-package py-isort
+  :ensure t
+  :defer t)
+
 (use-package yapfify
   :ensure t
   :defer t

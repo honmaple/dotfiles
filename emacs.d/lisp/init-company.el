@@ -4,17 +4,6 @@
 (require-package 'yasnippet)
 
 
-;; (add-hook 'c-mode-hook 'ycmd-mode)
-;; (add-hook 'python-mode-hook 'ycmd-mode)
-;; (add-hook 'web-mode-hook 'ycmd-mode)
-;; (add-hook 'after-init-hook #'global-ycmd-mode)
-;; ;; (company-ycmd-setup)
-;; ;; (flycheck-ycmd-setup)
-;; (set-variable 'ycmd-server-command '("python2" "/home/jianglin/.vim/bundle/YouCompleteMe/third_party/ycmd/ycmd"))
-;; ;; (set-variable 'ycmd-global-config "/home/jianglin/.emacs.d/layer/+tool/ycmd/global_config.py")
-;; (set-variable 'ycmd-global-config "/home/jianglin/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py")
-;; (require 'company-ycmd)
-;; (company-ycmd-setup)
 (use-package yasnippet
   :commands (yas-global-mode yas-minor-mode)
   :diminish yas-minor-mode "ⓨ"
@@ -41,6 +30,7 @@
   :bind (:map yas-minor-mode-map
               ("M-s-/" . yas-next-field)))
 
+
 (use-package hippie-exp
   :defer t
   :config
@@ -64,14 +54,12 @@
   (progn
     (setq ;; company-echo-delay 0
      company-idle-delay 0.1
-     ;; company-auto-complete nil
      company-show-numbers t
      company-tooltip-limit 15
      company-minimum-prefix-length 1
+     company-dabbrev-downcase t  ;;忽略大小写
+     company-dabbrev-ignore-case t
      ;; company-dabbrev-other-buffers t
-     company-dabbrev-downcase nil  ;;忽略大小写
-     ;; company-dabbrev-ignore-case t
-     company-tooltip-align-annotations t
      company-begin-commands '(self-insert-command)
      company-global-modes '(not comint-mode erc-mode gud-mode rcirc-mode
                                 minibuffer-inactive-mode inferior-python-mode))

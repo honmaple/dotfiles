@@ -9,6 +9,11 @@
     (defvar hs-headline-max-len 30 "*Maximum length of `hs-headline' to display.")
     (defvar hs-overlay-map (make-sparse-keymap) "Keymap for hs minor mode overlay.")
 
+    (defface hs-block-flag-face
+      '((t (:foreground "#75715E" :underline t)))
+      "Face used to highlight the fringe on folded regions"
+      :group 'hideshow)
+
     (defun hs-display-headline ()
       (let* ((len (length hs-headline))
              (headline hs-headline)
@@ -21,7 +26,7 @@
     (defun hs-abstract-overlay (ov)
       (let* ((start (overlay-start ov))
              (end (overlay-end ov))
-             (str (format "<%d lines>" (count-lines start end))) text)
+             (str (format "...<%d lines>" (count-lines start end))) text)
         (setq text (propertize str 'face 'hs-block-flag-face 'help-echo (buffer-substring (1+ start) end)))
         (overlay-put ov 'display text)
         (overlay-put ov 'pointer 'hand)

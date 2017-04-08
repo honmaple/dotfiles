@@ -20,8 +20,8 @@
     (add-to-list 'recentf-exclude "COMMIT_EDITMSG\\'")))
 
 
-(require-package 'neotree)
 (use-package neotree
+  :ensure t
   :defer t
   :commands neo-global--window-exists-p
   :config
@@ -199,7 +199,23 @@ the current state and point position."
   (evil-previous-line count)
   (evil-escape))
 
+(setq maple/large-file-modes-list
+      '(archive-mode tar-mode jka-compr git-commit-mode image-mode
+                     doc-view-mode doc-view-mode-maybe ebrowse-tree-mode
+                     pdf-view-mode))
 
+(defun maple/check-large-file ()
+  (let* ((filename (buffer-file-name))
+         (size (nth 7 (file-attributes filename))))
+    (when (and
+           (not (memq major-mode maple/large-file-modes-list))
+           size (> size (* 1024 1024 1))
+           (y-or-n-p (format (concat "%s is a large file, open literally to "
+                                     "avoid performance issues?")
+                             filename)))
+      (setq buffer-read-only t)
+      (buffer-disable-undo)
+      (fundamental-mode))))
 
 ;; (defun maple/check-large-file ()
 ;;     (when (> (buffer-size) 500000)
@@ -210,6 +226,6 @@ the current state and point position."
 ;;                 5000))
 ;;         (linum-mode -1)
 ;;     (linum-mode 1)))
-;; (add-hook 'find-file-hook 'maple/check-large-file)
+(add-hook 'find-file-hook 'maple/check-large-file)
 
 (provide 'init-file)

@@ -3,7 +3,9 @@
 (require-package 'restclient)
 (require-package 'quickrun)
 
-(use-package esup)
+(use-package esup
+  :ensure t
+  :defer t)
 
 (use-package epa
   :config
@@ -51,19 +53,14 @@
     ))
 
 (use-package imenu-list
-  :load-path "site-lisp/"
   :commands imenu-list-minor-mode
   :config
   (progn
-    (defun maple/imenu-mode ()
-      (define-key evil-normal-state-map (kbd "tb") 'imenu-list-minor-mode))
-    (add-hook 'prog-mode-hook 'maple/imenu-mode)
     (evil-set-initial-state 'imenu-list-major-mode 'emacs)
-    (setq imenu-list-size 0.2
+    (setq imenu-list-focus-after-activation t
           imenu-list-auto-resize t
-          imenu-list-focus-after-activation t
-          imenu-list-mode-line-format ""
-          imenu-create-index-function 'semantic-create-imenu-index))
+          imenu-list-mode-line-format "")
+    (setq imenu-create-index-function 'semantic-create-imenu-index))
   :bind (:map evil-leader--default-map
               ("bi" . imenu-list-minor-mode)
               :map imenu-list-major-mode-map

@@ -1,9 +1,7 @@
-(require-package 'web-mode)
-(require-package 'smartparens)
 (require-package 'company-web)
-(require-package 'emmet-mode)
 
 (use-package web-mode
+  :ensure t
   :defer t
   :mode
   (("\\.phtml\\'" . web-mode)
@@ -72,6 +70,7 @@
 
 
 (use-package emmet-mode
+  :ensure t
   :defer t
   :diminish emmet-mode
   :init

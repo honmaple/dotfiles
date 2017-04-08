@@ -17,7 +17,8 @@
 ;;                                                 "http://melpa.org/packages/"
 ;;                                               "https://melpa.org/packages/")))
 (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
-                         ("melpa" . "http://elpa.emacs-china.org/melpa/")))
+                         ("melpa" . "http://elpa.emacs-china.org/melpa/")
+                         ))
 
 (setq package-enable-at-startup nil)
 (package-initialize)
@@ -83,16 +84,19 @@ locate PACKAGE."
 (require-package 'use-package)
 
 (use-package package-utils
+  :ensure t
   :defer t)
 
 (use-package fullframe
+  :ensure t
   :defer t
   :config (fullframe list-packages quit-window))
 
 (use-package cl-lib
-  :defer t)
+  :ensure t)
 
 (use-package restart-emacs
+  :ensure t
   :defer t)
 
 ;;; Fire up package.el

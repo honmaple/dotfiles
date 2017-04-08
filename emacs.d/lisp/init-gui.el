@@ -18,6 +18,8 @@
 
 (setq x-select-enable-clipboard t) ;;激活粘贴板
 ;; (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
+;; important for golden-ratio to better work
+(setq window-combination-resize t)
 (setq-default
     blink-cursor-interval 0.4
     buffers-menu-max-size 30
@@ -39,6 +41,7 @@
     scroll-preserve-screen-position t
     scroll-margin 15
     scroll-conservatively 101
+    xterm-mouse-mode 1
  )
 
 

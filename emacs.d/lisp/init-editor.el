@@ -80,6 +80,7 @@
   :defer t
   :init
   (progn
+    (semantic-mode 1)
     (setq srecode-map-save-file (concat maple-cache-directory
                                         "srecode-map.el"))
     (setq semanticdb-default-save-directory (concat maple-cache-directory
@@ -88,11 +89,10 @@
       (make-directory semanticdb-default-save-directory)))
   :config
   (progn
-    ;; (add-to-list 'semantic-default-submodes
-    ;;              'global-semantic-stickyfunc-mode)
     (add-to-list 'semantic-default-submodes
-                 'global-semantic-idle-summary-mode)
-    (semantic-mode 1)))
+                 'global-semantic-stickyfunc-mode)
+    (add-to-list 'semantic-default-submodes
+                 'global-semantic-idle-summary-mode)))
 
 (use-package stickyfunc-enhance
   :ensure t

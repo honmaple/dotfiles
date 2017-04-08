@@ -31,12 +31,11 @@
   (defconst *system-is-mswindows* (eq system-type 'windows-nt))
   (defconst *common* t)
   (defconst *develop* t)
-  ;; (defun maple/show-init-time ()
-  ;;   (message "Emacs load finished in %.2fms"
-  ;;            (* 1000.0 (float-time (time-subtract after-init-time before-init-time)))))
+   (defun maple/show-init-time ()
+     (message "Emacs load finished in %.2fms"
+              (* 1000.0 (float-time (time-subtract after-init-time before-init-time)))))
 
-  ;; (add-hook 'after-init-hook 'maple/show-init-time)
-
+   (add-hook 'after-init-hook 'maple/show-init-time)
   (when *common*
     (require 'init-fonts)
     (require 'init-ui)  ;; modeline,which-key

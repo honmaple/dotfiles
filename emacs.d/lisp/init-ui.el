@@ -1,18 +1,5 @@
-(require-package 'window-numbering)
-(require-package 'spaceline)
-(require-package 'which-key)
-(require-package 'rainbow-delimiters)  ;;括号高亮
-(require-package 'rainbow-mode)
-(require-package 'undo-tree)
-(require-package 'highlight-symbol)
-(require-package 'nlinum)
-(require-package 'nlinum-relative)
-(require-package 'fill-column-indicator)
-(require-package 'color-theme-sanityinc-solarized)
-(require-package 'color-theme-sanityinc-tomorrow)
-(require-package 'monokai-theme)
-
 (use-package monokai-theme
+  :ensure t
   :defer t
   :init (add-hook 'after-init-hook (lambda () (load-theme 'monokai t)))
   )
@@ -22,12 +9,14 @@
 ;;   :init (color-theme-approximate-on))
 
 (use-package window-numbering
+  :ensure t
   :defer t
   ;; :init (add-hook 'after-init-hook #'window-numbering-mode));;这个要在前
   :init (window-numbering-mode));;这个要在前
 
 
 (use-package spaceline-config
+  :ensure spaceline
   :config
   (progn
     (defun maple/set-spaceline()
@@ -50,6 +39,7 @@
 
 
 (use-package which-key
+  :ensure t
   :defer t
   :init (add-hook 'after-init-hook #'which-key-mode)
   :diminish which-key-mode
@@ -67,6 +57,7 @@
     ))
 
 (use-package nlinum
+  :ensure t
   :defer t
   :init
   (progn
@@ -87,6 +78,7 @@
 
 ;; ;;; 80列
 (use-package fill-column-indicator
+  :ensure t
   :defer t
   :config
   (progn
@@ -97,6 +89,7 @@
 
 ;; 高亮括号
 (use-package rainbow-delimiters
+  :ensure t
   :defer t
   :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
   :config
@@ -107,6 +100,7 @@
 
 ;; 颜色
 (use-package rainbow-mode
+  :ensure t
   :defer t
   :init
   (progn
@@ -117,6 +111,7 @@
 
 ;; 相同字符
 (use-package highlight-symbol
+  :ensure t
   :defer t
   :diminish highlight-symbol-mode
   :init

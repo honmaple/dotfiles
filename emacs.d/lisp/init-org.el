@@ -70,9 +70,9 @@
       (while (>  (count-windows) 2)
         (delete-window (cadr (window-list-1)))))
 
-    (defadvice org-toggle-inline-images (after org-toggle-inline-images activate)
-      (if smooth-scrolling-mode (smooth-scrolling-mode -1)
-        (smooth-scrolling-mode 1)))
+    ;; (defadvice org-toggle-inline-images (after org-toggle-inline-images activate)
+    ;;   (if smooth-scrolling-mode (smooth-scrolling-mode -1)
+    ;;     (smooth-scrolling-mode 1)))
 
     (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point)
     (evil-define-key 'normal org-mode-map (kbd "t") 'org-todo)

@@ -23,7 +23,6 @@
   (require-package 'diminish) ;;显示状态mode
   (require-package 'scratch) ;;缓冲区
   (require-package 'mwe-log-commands) ;; 命令行历史
-  (require-package 'use-package)
 
 
 

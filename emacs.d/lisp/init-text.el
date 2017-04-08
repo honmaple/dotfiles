@@ -21,6 +21,8 @@
     (push 'markdown-mode whitespace-cleanup-mode-ignore-modes)
     ))
 
+;; (use-package markdown-preview-mode
+;;   :load-path "site-lisp/markdown-preview/")
 
 (use-package markdown-toc
   :ensure t

@@ -1,6 +1,5 @@
 (require-package 'window-numbering)
 (require-package 'spaceline)
-(require-package 'smooth-scrolling)
 (require-package 'which-key)
 (require-package 'rainbow-delimiters)  ;;括号高亮
 (require-package 'rainbow-mode)
@@ -96,18 +95,6 @@
     (setq fci-rule-color "#D0BF8F")
     (push '(fci-mode "") minor-mode-alist)))
 
-;; 光标位于中间
-(use-package smooth-scrolling
-  :defer t
-  :init (add-hook 'after-init-hook #'smooth-scrolling-mode)
-  :config
-  (progn
-    (setq scroll-preserve-screen-position t
-          scroll-margin 0
-          scroll-conservatively 101)
-    ))
-
-
 ;; 高亮括号
 (use-package rainbow-delimiters
   :defer t
@@ -144,6 +131,19 @@
 ;;   :defer t
 ;;   :diminish highlight-indentation-mode
 ;;   :init (add-hook 'prog-mode-hook 'highlight-indentation-mode))
+
+;; 光标位于中间 ;; emacs已内置
+;; (use-package smooth-scrolling
+;;   :defer t
+;;   :init (add-hook 'after-init-hook #'smooth-scrolling-mode)
+;;   :config
+;;   (progn
+;;     (setq scroll-preserve-screen-position t
+;;           scroll-margin 0
+;;           scroll-conservatively 101)
+;;     ))
+
+
 
 
 (provide 'init-ui)

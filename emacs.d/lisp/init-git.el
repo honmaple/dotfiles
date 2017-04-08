@@ -58,6 +58,7 @@
 (use-package git-gutter-fringe
   :ensure t
   :commands git-gutter-mode
+  :diminish git-gutter-mode
   :init
   (progn
     (with-eval-after-load 'git-gutter

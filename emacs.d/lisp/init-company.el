@@ -3,7 +3,6 @@
 (require-package 'company-quickhelp)
 (require-package 'yasnippet)
 
-
 (use-package yasnippet
   :commands (yas-global-mode yas-minor-mode)
   :diminish yas-minor-mode "ⓨ"
@@ -62,7 +61,7 @@
      ;; company-dabbrev-other-buffers t
      company-begin-commands '(self-insert-command)
      company-global-modes '(not comint-mode erc-mode gud-mode rcirc-mode
-                                minibuffer-inactive-mode inferior-python-mode))
+                                minibuffer-inactive-mode inferior-python-mode shell-mode))
     (defvar-local company-fci-mode-on-p nil)
     (defun company-turn-off-fci (&rest ignore)
       (when (boundp 'fci-mode)
@@ -80,9 +79,9 @@
   :config
   (progn
     (setq company-backends
-          '((company-dabbrev-code company-gtags company-etags company-capf company-keywords)
+          '((company-dabbrev-code company-gtags company-etags company-capf company-keywords company-files)
             ;; (company-semantic)
-            (company-dabbrev company-files)
+            (company-dabbrev)
             ))
 
     (custom-set-faces
@@ -101,6 +100,7 @@
                 '(:with company-yasnippet))))
 
     (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
+
     )
   :bind (:map company-active-map
               ("C-/" . company-search-candidates)

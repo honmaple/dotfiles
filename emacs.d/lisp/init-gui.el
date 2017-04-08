@@ -19,23 +19,26 @@
 (setq x-select-enable-clipboard t) ;;激活粘贴板
 ;; (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
 (setq-default
- blink-cursor-interval 0.4
- buffers-menu-max-size 30
- case-fold-search t
- column-number-mode t
- delete-selection-mode t ;;粘贴删除选中区域
- ediff-split-window-function 'split-window-horizontally
- ediff-window-setup-function 'ediff-setup-windows-plain
- indent-tabs-mode nil
- make-backup-files nil ;;禁止生成类似init.el~文件
- mouse-yank-at-point t
- save-interprogram-paste-before-kill t
- scroll-preserve-screen-position 'always
- set-mark-command-repeat-pop t
- tooltip-delay 1.5
- truncate-lines t
- truncate-partial-width-windows t
- ad-redefinition-action 'accept
+    blink-cursor-interval 0.4
+    buffers-menu-max-size 30
+    case-fold-search t
+    column-number-mode t
+    delete-selection-mode t ;;粘贴删除选中区域
+    ediff-split-window-function 'split-window-horizontally
+    ediff-window-setup-function 'ediff-setup-windows-plain
+    indent-tabs-mode nil
+    make-backup-files nil ;;禁止生成类似init.el~文件
+    mouse-yank-at-point t
+    save-interprogram-paste-before-kill t
+    set-mark-command-repeat-pop t
+    tooltip-delay 1.5
+    truncate-lines t
+    truncate-partial-width-windows t
+    ad-redefinition-action 'accept
+    ;; 光标位于中间
+    scroll-preserve-screen-position t
+    scroll-margin 15
+    scroll-conservatively 101
  )
 
 

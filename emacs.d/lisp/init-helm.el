@@ -11,7 +11,6 @@
 ;; helm里C-s搜索
 ;; C-c C-o分屏操作
 ;; 多文件C-x C-s
-
 ;; helm-color 比较有用的
 (use-package helm
   :defer t
@@ -42,7 +41,8 @@
       (with-helm-buffer
         (setq cursor-in-non-selected-windows nil)))
     (add-hook 'helm-after-initialize-hook 'maple/hide-cursor-in-helm-buffer)
-    (helm-mode 1))
+    (helm-mode 1)
+    )
   :bind (("M-x" . helm-M-x)
          ("C-x C-m" . helm-M-x)
          ("M-y" . helm-show-kill-ring)
@@ -69,6 +69,8 @@
   :init
   (progn
     (setq projectile-enable-caching t)
+    ;; (add-to-list 'projectile-globally-ignored-files "*.png")
+    ;; (add-to-list 'projectile-globally-ignored-directories "node_modules")
     (add-hook 'after-init-hook #'projectile-global-mode))
   )
 

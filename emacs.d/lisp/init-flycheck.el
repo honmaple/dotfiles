@@ -66,8 +66,7 @@
         "k" #'flycheck-error-list-previous-error
         "K" #'evil-previous-line
         "J" #'evil-next-line
-        (kbd "RET") #'flycheck-error-list-goto-error)
-      )
+        (kbd "RET") #'flycheck-error-list-goto-error))
     (push '("^\\*Flycheck.+\\*$"
             :regexp t
             :dedicated t

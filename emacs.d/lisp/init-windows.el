@@ -24,6 +24,18 @@
 (setq display-buffer-alist '(("\\*Warnings\\*" display-buffer-below-selected)
                              ("\\*Help\\*" display-buffer-below-selected))) ;;设置分屏
 
+(defun maple/close-process ()
+  "Close current term buffer when `exit' from term buffer."
+  (when (ignore-errors (get-buffer-process (current-buffer)))
+    (set-process-sentinel (get-buffer-process (current-buffer))
+                          (lambda (proc change)
+                            (when (string-match "\\(finished\\|exited\\)"
+                                                change)
+                              (kill-buffer (process-buffer proc))
+                              (when (> (count-windows) 1)
+                                (delete-window)))))))
+
+
 (require-package 'popwin)
 (require-package 'golden-ratio)
 
@@ -42,6 +54,7 @@
   (progn
     (setq golden-ratio-exclude-modes '("ediff-mode"
                                        "dired-mode"
+                                       "term-mode"
                                        "restclient-mode"
                                        "newsticker-treeview-mode"
                                        "newsticker-treeview-list-mode"

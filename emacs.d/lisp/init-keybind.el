@@ -22,6 +22,7 @@
   "cc" 'comment-or-uncomment-region-or-line
   "/" 'helm-ag-this-file ;;当前文件内容
   "u"  'undo-tree-visualize
+  "'" 'maple/default-pop-shell
   "se" 'evil-mc-make-all-cursors
   "ss" 'replace-regexp
   "sj" 'helm-semantic-or-imenu

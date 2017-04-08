@@ -7,15 +7,17 @@
 
 ;; We include the org repository for completeness, but don't normally
 ;; use it.
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+;; (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 
-;; (when (< emacs-major-version 24)
-(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+;; ;; (when (< emacs-major-version 24)
+;; (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 
-;;; Also use Melpa for most packages
-(add-to-list 'package-archives `("melpa" . ,(if (< emacs-major-version 24)
-                                                "http://melpa.org/packages/"
-                                              "https://melpa.org/packages/")))
+;; ;;; Also use Melpa for most packages
+;; (add-to-list 'package-archives `("melpa" . ,(if (< emacs-major-version 24)
+;;                                                 "http://melpa.org/packages/"
+;;                                               "https://melpa.org/packages/")))
+(setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
+                         ("melpa" . "http://elpa.emacs-china.org/melpa/")))
 
 (setq package-enable-at-startup nil)
 (package-initialize)
@@ -48,13 +50,50 @@ locate PACKAGE."
      (message "Couldn't install package `%s': %S" package err)
      nil)))
 
-(require-package 'fullframe)
-(fullframe list-packages quit-window)
+(defun package-upgrade ()
+  "Upgrade all packages automatically without showing *Packages* buffer."
+  (interactive)
+  (package-refresh-contents)
+  (let (upgrades)
+    (cl-flet ((get-version (name where)
+                           (let ((pkg (cadr (assq name where))))
+                             (when pkg
+                               (package-desc-version pkg)))))
+      (dolist (package (mapcar #'car package-alist))
+        (let ((in-archive (get-version package package-archive-contents)))
+          (when (and in-archive
+                     (version-list-< (get-version package package-alist)
+                                     in-archive))
+            (push (cadr (assq package package-archive-contents))
+                  upgrades)))))
+    (if upgrades
+        (when (yes-or-no-p
+               (message "Upgrade %d package%s (%s)? "
+                        (length upgrades)
+                        (if (= (length upgrades) 1) "" "s")
+                        (mapconcat #'package-desc-full-name upgrades ", ")))
+          (save-window-excursion
+            (dolist (package-desc upgrades)
+              (let ((old-package (cadr (assq (package-desc-name package-desc)
+                                             package-alist))))
+                (package-install package-desc)
+                (package-delete  old-package)))))
+      (message "All packages are up to date"))))
 
-(require-package 'cl-lib)
-(require 'cl-lib)
+(require-package 'use-package)
 
-(require-package 'restart-emacs)
+(use-package package-utils
+  :defer t)
+
+(use-package fullframe
+  :defer t
+  :config (fullframe list-packages quit-window))
+
+(use-package cl-lib
+  :defer t)
+
+(use-package restart-emacs
+  :defer t)
 
 ;;; Fire up package.el
 

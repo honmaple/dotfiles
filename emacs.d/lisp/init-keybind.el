@@ -20,9 +20,11 @@
   )
 (evil-leader/set-key
   "cc" 'comment-or-uncomment-region-or-line
+  "ch" 'hide/show-comments-toggle ;;显示隐藏注释
   "/" 'helm-ag-this-file ;;当前文件内容
   "u"  'undo-tree-visualize
   "'" 'maple/default-pop-shell
+  "=" 'maple/indent-buffer
   "se" 'evil-mc-make-all-cursors
   "ss" 'replace-regexp
   "sj" 'helm-semantic-or-imenu
@@ -130,6 +132,7 @@
   "bP"  'maple/copy-clipboard-to-whole-buffer
   "bY"  'maple/copy-whole-buffer-to-clipboard
   "bl"  'blog-admin-start
+  "bi"  'imenu-list-minor-mode
   )
 
 (evil-leader/set-key

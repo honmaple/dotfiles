@@ -36,17 +36,16 @@
                                 (delete-window)))))))
 
 
-(require-package 'popwin)
-(require-package 'golden-ratio)
-
 (use-package winner
   :defer t
   :init (winner-mode t))
 
 (use-package popwin
+  :ensure t
   :config (popwin-mode 1))
 
 (use-package golden-ratio  ;;黄金分割
+  :ensure t
   :defer t
   :init (golden-ratio-mode 1)
   :diminish golden-ratio-mode "ⓖ"

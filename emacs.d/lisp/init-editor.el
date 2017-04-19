@@ -1,18 +1,6 @@
 ;;----------------------------------------------------------------------------
 ;; Fix backward-up-list to understand quotes, see http://bit.ly/h7mdIL
 ;;----------------------------------------------------------------------------
-(defun backward-up-sexp (arg)
-  "Jump up to the start of the ARG'th enclosing sexp."
-  (interactive "p")
-  (let ((ppss (syntax-ppss)))
-    (cond ((elt ppss 3)
-           (goto-char (elt ppss 8))
-           (backward-up-sexp (1- arg)))
-          ((backward-up-list arg)))))
-
-(global-set-key [remap backward-up-list] 'backward-up-sexp) ; C-M-u, C-M-up
-
-
 (defun maple/open-line-with-reindent (n) ;; 跳转到原来的位置
   "A version of `open-line' which reindents the start and end positions.
   If there is a fill prefix and/or a `left-margin', insert them
@@ -63,11 +51,16 @@
 
 (global-set-key [f6] 'maple/indent-buffer)
 
+(use-package adaptive-wrap
+  :config
+  (progn
+    (add-hook 'visual-line-mode-hook 'adaptive-wrap-prefix-mode)))
 
 ;; 修改外部文件自动载入
 (use-package autorevert
   :defer t
-  :init (global-auto-revert-mode)
+  ;; :init (global-auto-revert-mode)
+  :init (add-hook 'after-init-hook #'global-auto-revert-mode)
   :diminish auto-revert-mode
   :config
   (progn
@@ -75,12 +68,15 @@
           auto-revert-verbose nil)
     ))
 
+(use-package hide-comnt
+  :ensure t
+  :commands hide/show-comments-toggle)
+
 (use-package semantic
   :ensure t
   :defer t
   :init
   (progn
-    (semantic-mode 1)
     (setq srecode-map-save-file (concat maple-cache-directory
                                         "srecode-map.el"))
     (setq semanticdb-default-save-directory (concat maple-cache-directory
@@ -92,7 +88,9 @@
     (add-to-list 'semantic-default-submodes
                  'global-semantic-stickyfunc-mode)
     (add-to-list 'semantic-default-submodes
-                 'global-semantic-idle-summary-mode)))
+                 'global-semantic-idle-summary-mode)
+    (semantic-mode 1)
+    ))
 
 (use-package stickyfunc-enhance
   :ensure t
@@ -127,6 +125,19 @@
   :config (setq dumb-jump-selector 'helm)
   :bind (:map evil-normal-state-map
               ("gd" . dumb-jump-go-other-window)))
+
+
+(use-package eldoc
+  :defer t
+  :diminish eldoc-mode
+  :config
+  (progn
+    ;; enable eldoc in `eval-expression'
+    (add-hook 'eval-expression-minibuffer-setup-hook #'eldoc-mode)
+    ;; enable eldoc in IELM
+    (add-hook 'ielm-mode-hook #'eldoc-mode)
+    ;; don't display eldoc on modeline
+    ))
 
 
 (provide 'init-editor)

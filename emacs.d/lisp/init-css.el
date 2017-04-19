@@ -1,10 +1,5 @@
-;;; SASS and SCSS
-(require-package 'css-mode)
-(require-package 'sass-mode)
-(require-package 'scss-mode)
-(require-package 'less-css-mode)
-
 (use-package css-mode
+  :ensure t
   :defer t
   :config
   (progn
@@ -13,16 +8,19 @@
     ))
 
 (use-package sass-mode
+  :ensure t
   :defer t
   :mode ("\\.sass\\'" . sass-mode))
 
 (use-package scss-mode
+  :ensure t
   :defer t
   :config (setq-default scss-compile-at-save nil)
   :mode ("\\.scss\\'" . scss-mode))
 
 
 (use-package less-css-mode
+  :ensure t
   :defer t
   :mode ("\\.less\\'" . less-css-mode))
 

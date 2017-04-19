@@ -68,7 +68,9 @@ SHELL is the SHELL function to use (i.e. when FUNC represents a terminal)."
     (defun term-send-tab ()
       "Send tab in term mode."
       (interactive)
-      (term-send-raw-string "\t"))
+      (term-send-raw-string "\t")))
+  :config
+  (progn
     (evil-define-key 'normal term-raw-map "p" 'term-paste)
     (evil-define-key 'insert term-raw-map
       (kbd "C-c C-d") 'term-send-eof

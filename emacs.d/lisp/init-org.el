@@ -1,7 +1,4 @@
 (require-package 'org-plus-contrib)
-(require-package 'org-pomodoro)
-(require-package 'org-bullets)
-(require-package 'ox-reveal)
 (require-package 'alert) ;;org-pomodoro依赖
 
 
@@ -178,6 +175,7 @@
               ("M-l" . org-agenda-later)))
 
 (use-package org-bullets
+  :ensure t
   :defer t
   :init (add-hook 'org-mode-hook 'org-bullets-mode)
   :config (setq org-bullets-bullet-list '("①" "②" "③" "④" "⑤"))
@@ -185,6 +183,7 @@
 
 
 (use-package org-pomodoro
+  :ensure t
   :defer t
   :config
   (progn
@@ -211,6 +210,7 @@
     ))
 
 (use-package ox-reveal
+  :ensure t
   :after org
   :init(setq org-reveal-root "file:///home/jianglin/git/ppt/reveal.js"))
 

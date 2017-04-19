@@ -1,5 +1,3 @@
-(require-package 'whitespace-cleanup-mode)
-
 (use-package whitespace
   :defer t
   :diminish whitespace-mode "ⓦ"
@@ -29,12 +27,10 @@
   )
 
 (use-package whitespace-cleanup-mode
+  :ensure t
   :defer t
   :diminish whitespace-cleanup-mode
-  :init (global-whitespace-cleanup-mode t)
-  :config
-  (progn
-    (global-set-key [remap just-one-space] 'cycle-spacing)
-    ))
+  ;; :init (global-whitespace-cleanup-mode t)
+  :init (add-hook 'after-init-hook #'global-whitespace-cleanup-mode))
 
 (provide 'init-whitespace)

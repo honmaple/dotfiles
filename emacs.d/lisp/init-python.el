@@ -1,7 +1,7 @@
 (require-package 'elpy)
-(require-package 'pip-requirements)
 
 (use-package pip-requirements
+  :ensure t
   :defer t
   :diminish pip-requirements-mode)
 
@@ -35,8 +35,10 @@
   ;; :init (add-hook 'python-mode-hook 'yapf-mode)
   :init
   (progn
-    (evil-define-key 'normal python-mode-map
-      (kbd "<f6>") 'yapfify-buffer)
+    (after-load 'evil
+      (evil-define-key 'normal python-mode-map
+        (kbd "<f6>") 'yapfify-buffer)
+      )
     ))
 
 (use-package pyvenv

@@ -1,23 +1,17 @@
-(require-package 'evil)
-(require-package 'evil-surround)
-(require-package 'evil-matchit)
-(require-package 'evil-escape)
-(require-package 'expand-region)
-(require-package 'evil-mc)
-(require-package 'evil-leader)
-(require-package 'vimish-fold)
-
-
 ;;leader 要在evil-mode前,否则messages无法激活
 (use-package evil-leader
+  :ensure t
   :defer t
   :init (global-evil-leader-mode)
+  ;; :init (add-hook 'after-init-hook #'global-evil-leader-mode)
   :config (evil-leader/set-leader ","))
 
 
 (use-package evil
+  :ensure t
   :defer t
   :init (evil-mode 1)
+  ;; :init (add-hook 'after-init-hook #'evil-mode)
   :config
   (progn
     (fset 'evil-visual-update-x-selection 'ignore) ;;粘贴板
@@ -57,17 +51,21 @@
               ("C-j" . evil-scroll-down)))
 
 (use-package evil-surround
+  :ensure t
   :defer t
-  :init
+  ;; (global-evil-surround-mode 1)
+  :init (add-hook 'after-init-hook #'global-evil-surround-mode)
+  :config
   (progn
-    (global-evil-surround-mode 1)
     (evil-define-key 'visual evil-surround-mode-map "s" 'evil-surround-region)
     (evil-define-key 'visual evil-surround-mode-map "S" 'evil-substitute)
     ))
 
 (use-package evil-matchit
+  :ensure t
   :defer t
-  :init (global-evil-matchit-mode 1))
+  :init (add-hook 'after-init-hook #'global-evil-matchit-mode))
+;; :init (global-evil-matchit-mode 1))
 
 (use-package evil-ediff
   :ensure t
@@ -75,8 +73,10 @@
   )
 
 (use-package evil-escape
+  :ensure t
   :defer t
-  :init (evil-escape-mode 1)
+  :init (add-hook 'after-init-hook #'evil-escape-mode)
+  ;; :init (evil-escape-mode 1)
   :diminish 'evil-escape-mode
   :config
   (progn
@@ -87,6 +87,7 @@
                                              help-mode
                                              magit-mode
                                              shell-mode
+                                             term-mode
                                              org-agenda-mode
                                              undo-tree-visualizer-mode
                                              newsticker-treeview-mode
@@ -97,19 +98,22 @@
     ))
 
 (use-package evil-mc
+  :ensure t
   :defer t
   :diminish evil-mc-mode "ⓒ"
-  :init (global-evil-mc-mode t)
+  ;; :init (global-evil-mc-mode t)
+  :init (add-hook 'after-init-hook #'global-evil-mc-mode)
   :config
   (progn
-    (evil-define-key 'normal evil-mc-key-map (kbd "<escape>") 'evil-mc-undo-all-cursors)
-    )
+    (setq evil-mc-enable-bar-cursor nil)
+    (evil-define-key 'normal evil-mc-key-map (kbd "<escape>") 'evil-mc-undo-all-cursors))
   :bind (:map evil-mc-key-map
               ("C-g" . evil-mc-undo-all-cursors)
               ))
 
 
 (use-package vimish-fold
+  :ensure t
   :defer t
   :bind (:map evil-visual-state-map
               ("za" . vimish-fold)
@@ -119,7 +123,9 @@
 
 
 (use-package expand-region
-  :defer t
+  :ensure t
+  ;; :defer t
+  :after evil
   :bind (:map evil-visual-state-map
               ("v" . er/expand-region)
               ("ew" . er/mark-word)

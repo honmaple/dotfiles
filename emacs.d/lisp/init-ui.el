@@ -2,6 +2,7 @@
   :ensure t
   :defer t
   :init (add-hook 'after-init-hook (lambda () (load-theme 'monokai t)))
+  ;; :init (load-theme 'monokai t)
   )
 
 ;; (use-package color-theme-approximate
@@ -13,7 +14,6 @@
   :defer t
   ;; :init (add-hook 'after-init-hook #'window-numbering-mode));;这个要在前
   :init (window-numbering-mode));;这个要在前
-
 
 (use-package spaceline-config
   :ensure spaceline
@@ -34,9 +34,6 @@
         (spaceline-helm-mode t)))
     (add-hook 'after-init-hook 'maple/set-spaceline)
     ))
-
-
-
 
 (use-package which-key
   :ensure t
@@ -66,15 +63,16 @@
     ;; (setq nlinum-format "%3d")
     ))
 
-;; (use-package nlinum-relative
-;;   :commands (nlinum-relative-toggle nlinum-relative-on)
-;;   :init
-;;   (progn
-;;     (setq nlinum-relative-current-symbol ""
-;;           nlinum-relative-redisplay-delay 0)
-;;     (nlinum-relative-setup-evil)
-;;     (add-hook 'nlinum-mode-hook 'nlinum-relative-on)
-;;     ))
+(use-package nlinum-relative
+  :ensure t
+  :commands (nlinum-relative-toggle nlinum-relative-on)
+  :init
+  (progn
+    (setq nlinum-relative-current-symbol ""
+          nlinum-relative-redisplay-delay 0)
+    (nlinum-relative-setup-evil)
+    (add-hook 'nlinum-mode-hook 'nlinum-relative-on)
+    ))
 
 ;; ;;; 80列
 (use-package fill-column-indicator

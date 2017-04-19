@@ -8,47 +8,43 @@
 ;;关闭菜单栏
 (when (featurep 'menu-bar) (menu-bar-mode -1))
 
-(setq use-file-dialog nil)
-(setq use-dialog-box nil)
-(setq inhibit-startup-screen t)
-(setq inhibit-startup-echo-area-message t)
-(setq large-file-warning-threshold 100000000)
+(setq use-file-dialog nil
+      use-dialog-box nil
+      inhibit-startup-screen t
+      inhibit-startup-echo-area-message t
+      large-file-warning-threshold 100000000
+      window-combination-resize t
+      indicate-empty-lines t
+      transient-mark-mode nil
+      backup-directory-alist `(("." . ,(concat maple-cache-directory "auto-save")))
+      x-select-enable-clipboard t) ;;激活粘贴板
+
 (global-hl-line-mode t) ;;高亮当前行
 
-
-(setq x-select-enable-clipboard t) ;;激活粘贴板
 ;; (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
 ;; important for golden-ratio to better work
-(setq window-combination-resize t)
-(setq-default
-    blink-cursor-interval 0.4
-    buffers-menu-max-size 30
-    case-fold-search t
-    column-number-mode t
-    delete-selection-mode t ;;粘贴删除选中区域
-    ediff-split-window-function 'split-window-horizontally
-    ediff-window-setup-function 'ediff-setup-windows-plain
-    indent-tabs-mode nil
-    make-backup-files nil ;;禁止生成类似init.el~文件
-    mouse-yank-at-point t
-    save-interprogram-paste-before-kill t
-    set-mark-command-repeat-pop t
-    tooltip-delay 1.5
-    truncate-lines t
-    truncate-partial-width-windows t
-    ad-redefinition-action 'accept
-    ;; 光标位于中间
-    scroll-preserve-screen-position t
-    scroll-margin 15
-    scroll-conservatively 101
-    xterm-mouse-mode 1
- )
+(setq-default blink-cursor-interval 0.4
+              buffers-menu-max-size 30
+              case-fold-search t
+              column-number-mode t
+              ;; delete-selection-mode t ;;粘贴删除选中区域
+              ediff-split-window-function 'split-window-horizontally
+              ediff-window-setup-function 'ediff-setup-windows-plain
+              indent-tabs-mode nil
+              make-backup-files nil ;;禁止生成类似init.el~文件
+              mouse-yank-at-point t
+              save-interprogram-paste-before-kill t
+              set-mark-command-repeat-pop t
+              tooltip-delay 1.5
+              truncate-lines t
+              truncate-partial-width-windows t
+              ad-redefinition-action 'accept
+              ;; 光标位于中间
+              scroll-preserve-screen-position t
+              scroll-margin 15
+              scroll-conservatively 101
+              xterm-mouse-mode 1)
 
-
-(setq indicate-empty-lines t
-      transient-mark-mode nil)
-
-(setq backup-directory-alist `(("." . ,(concat maple-cache-directory "auto-save"))))
 
 (use-package bookmark
   :defer t
@@ -103,7 +99,7 @@
                    )))
 
 (defun maple/show-init-time ()
-  (message "Emacs load finished in %.2fms"
+  (message "Emacs startup finished in %.2fms"
            (* 1000.0 (float-time (time-subtract after-init-time before-init-time)))))
 
 (add-hook 'after-init-hook 'maple/show-init-time)

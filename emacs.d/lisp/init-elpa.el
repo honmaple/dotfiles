@@ -7,7 +7,6 @@
 
 ;; We include the org repository for completeness, but don't normally
 ;; use it.
-;; (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 
 ;; ;; (when (< emacs-major-version 24)
 ;; (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
@@ -19,7 +18,7 @@
 (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
                          ("melpa" . "http://elpa.emacs-china.org/melpa/")
                          ))
-
+;; (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 (setq package-enable-at-startup nil)
 (package-initialize)
 
@@ -98,6 +97,10 @@ locate PACKAGE."
 (use-package restart-emacs
   :ensure t
   :defer t)
+;; :init
+;; (progn
+;;   (setq restart-emacs-restore-frames t)
+;;   ))
 
 ;;; Fire up package.el
 

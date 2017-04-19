@@ -1,10 +1,10 @@
-(require-package 'ox-rst)
-(require-package 'markdown-mode)
-
 (use-package ox-rst
-  :after org)
+  :ensure t
+  :mode ("\\.org" . org-mode)
+  :defer t)
 
 (use-package markdown-mode
+  :ensure t
   :mode ("\\.m[k]d" . markdown-mode)
   :defer t
   :config

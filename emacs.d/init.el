@@ -24,18 +24,16 @@
   (require-package 'scratch) ;;缓冲区
   (require-package 'mwe-log-commands) ;; 命令行历史
 
-
-
   (defconst *system-is-mac* (eq system-type 'darwin))
   (defconst *system-is-linux* (eq system-type 'gnu/linux))
   (defconst *system-is-mswindows* (eq system-type 'windows-nt))
   (defconst *common* t)
   (defconst *develop* t)
-   (defun maple/show-init-time ()
-     (message "Emacs load finished in %.2fms"
-              (* 1000.0 (float-time (time-subtract after-init-time before-init-time)))))
+  ;; (defun maple/show-init-time ()
+  ;;   (message "Emacs load finished in %.2fms"
+  ;;            (* 1000.0 (float-time (time-subtract after-init-time before-init-time)))))
 
-   (add-hook 'after-init-hook 'maple/show-init-time)
+  ;; (add-hook 'after-init-hook 'maple/show-init-time)
   (when *common*
     (require 'init-fonts)
     (require 'init-ui)  ;; modeline,which-key
@@ -44,8 +42,8 @@
 
     (require 'init-evil)
 
-    (when *system-is-mac*
-      (require 'init-mac))
+    ;; (when *system-is-mac*
+    ;;   (require 'init-mac))
 
 
     (require 'init-editor) ;;自动补全括号等
@@ -65,9 +63,9 @@
     (require 'init-spelling)
     (require 'init-company)
     ;; (require 'init-gnus)
+    ;; (require 'init-rss)
 
     (require 'init-git)
-    (require 'init-rss)
 
     (require 'init-matlab)
     (require 'init-shell) ;;shell
@@ -98,7 +96,6 @@
 (require 'server)
 (unless (server-running-p)
   (server-start))
-
 
 
 (provide 'init)  

@@ -61,7 +61,7 @@
      ;; company-dabbrev-other-buffers t
      company-begin-commands '(self-insert-command)
      company-global-modes '(not comint-mode erc-mode gud-mode rcirc-mode
-                                minibuffer-inactive-mode inferior-python-mode shell-mode))
+                                minibuffer-inactive-mode inferior-python-mode shell-mode evil-command-window-mode))
     (defvar-local company-fci-mode-on-p nil)
     (defun company-turn-off-fci (&rest ignore)
       (when (boundp 'fci-mode)

@@ -1,8 +1,3 @@
-(require-package 'youdao-dictionary)
-(require-package 'avy)
-(require-package 'restclient)
-(require-package 'quickrun)
-
 (use-package esup
   :ensure t
   :defer t)
@@ -14,10 +9,12 @@
     ))
 
 (use-package quickrun
+  :ensure t
   :defer t
   :init
   (progn
-    (evil-set-initial-state 'quickrun--mode 'emacs)
+    (after-load 'evil
+      (evil-set-initial-state 'quickrun--mode 'emacs))
     (add-hook 'quickrun--mode-hook
               (lambda () (toggle-truncate-lines t)))
     ))
@@ -53,6 +50,7 @@
     ))
 
 (use-package imenu-list
+  :ensure t
   :commands imenu-list-minor-mode
   :config
   (progn
@@ -60,7 +58,8 @@
     (setq imenu-list-focus-after-activation t
           imenu-list-auto-resize t
           imenu-list-mode-line-format "")
-    (setq imenu-create-index-function 'semantic-create-imenu-index))
+    ;; (setq imenu-create-index-function 'semantic-create-imenu-index)
+    )
   :bind (:map evil-leader--default-map
               ("bi" . imenu-list-minor-mode)
               :map imenu-list-major-mode-map
@@ -71,6 +70,7 @@
               ("k" . previous-line)))
 
 (use-package youdao-dictionary
+  :ensure t
   :defer t
   :config
   (progn
@@ -90,6 +90,7 @@
 ;;     ))
 
 (use-package avy
+  :ensure t
   :defer t
   :commands (maple/avy-open-url maple/avy-goto-url avy-pop-mark)
   :init
@@ -109,7 +110,12 @@
         (maple/avy-goto-url)
         (browse-url-at-point)))))
 
+(use-package figlet
+  :ensure t
+  :defer t)
+
 (use-package restclient
+  :ensure t
   :defer t
   :bind (:map evil-leader--default-map
               ("rs" . restclient-http-send-current)
@@ -121,7 +127,8 @@
   :ensure t
   :config
   (progn
-    (evil-set-initial-state '2048-mode 'emacs)
+    (after-load 'evil
+      (evil-set-initial-state '2048-mode 'emacs))
     ))
 
 (provide 'init-tool)

@@ -22,7 +22,8 @@
     (setq-default
      magit-process-popup-time 10
      magit-diff-refine-hunk t)
-    (add-hook 'magit-popup-mode-hook 'maple/no-trailing-whitespace))
+    (add-hook 'magit-popup-mode-hook 'maple/no-trailing-whitespace)
+    (fullframe magit-status magit-mode-quit-window))
   :bind
   (("C-x g" . magit-status)
    ("C-x M-g" . magit-dispatch-popup)
@@ -30,13 +31,6 @@
    ("C-M-<up>" . magit-section-up)
    ("<tab>" . magit-section-cycle)
    ("C-<tab>" . magit-section-toggle)))
-
-(use-package fullframe
-  :config
-  (progn
-    (after-load 'magit
-      (fullframe magit-status magit-mode-quit-window)
-      )))
 
 (use-package git-commit
   :defer t
@@ -64,7 +58,9 @@
     (with-eval-after-load 'git-gutter
       (require 'git-gutter-fringe))
     (setq git-gutter-fr:side 'right-fringe)
-    (global-git-gutter-mode t))
+    (add-hook 'after-init-hook #'global-git-gutter-mode)
+    ;; (global-git-gutter-mode t)
+    )
   :config
   (progn
     ;; custom graphics that works nice with half-width fringes

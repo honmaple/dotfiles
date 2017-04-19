@@ -1,4 +1,5 @@
-(require-package 'company-web)
+(use-package company-web
+  :defer t)
 
 (use-package web-mode
   :ensure t
@@ -27,7 +28,8 @@
     ;;     (setq-local electric-pair-inhibit-predicate
     ;;                 (lambda (c)
     ;;                   (if (char-equal c ?{) t (electric-pair-default-inhibit c))))))
-    (setq web-mode-engines-alist '(("django" . "\\.html\\'")))
+    (setq web-mode-engines-alist '(("django" . "\\.html\\'")
+                                   ("django" . "\\.vue\\'")))
     (setq web-mode-engines-auto-pairs '(("django" . (("{{ " . " }")
                                                      ("{% " . " %")
                                                      ("{%-" . " | %")
@@ -37,7 +39,10 @@
                                                      ("{# " . " #")
                                                      ("<% " . " %>")
                                                      ))))
-    (maple/add-to-company-backend '(company-web-html company-css) 'web-mode-hook)
+    (maple/add-to-company-backend '(company-web-html
+                                    company-css
+                                    company-tern
+                                    ) 'web-mode-hook)
     (evil-define-key 'normal web-mode-map
       (kbd "<f5>") 'browse-url-of-file
       ;; (kbd "<f6>") 'web-beautify-html
@@ -90,14 +95,5 @@
       (kbd "TAB") 'maple/emmet-expand
       (kbd "<tab>") 'maple/emmet-expand)
     ))
-
-;; (add-hook 'web-mode-hook
-;;           (lambda ()
-;;             (yas-global-mode 1)
-;;             (jinja2-mode)
-;;             ))
-;; (add-hook 'jinja2-mode-hook 'web-mode-hook)
-;; (add-hook 'web-mode-hook 'jinja2-mode-hook)
-
 
 (provide 'init-html)

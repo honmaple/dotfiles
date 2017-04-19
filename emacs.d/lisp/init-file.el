@@ -52,17 +52,25 @@
          )
   )
 
+(use-package desktop
+  :defer t
+  :init
+  (setq desktop-dirname maple-cache-directory)
+  :config
+  (push maple-cache-directory desktop-path))
+
 (use-package undo-tree
   :defer t
   :init
   (progn
-    (global-undo-tree-mode)
+    (add-hook 'after-init-hook #'global-undo-tree-mode)
+    ;; (global-undo-tree-mode)
     (setq undo-tree-auto-save-history t)
     (setq undo-tree-history-directory-alist
           `(("." . ,(concat maple-cache-directory "undo-tree"))))
-    ;; (unless (file-exists-p (concat maple-cache-directory "undo-tree"))
-    ;;   (make-directory (concat maple-cache-directory "undo-tree")))
-    ;; (setq undo-tree-visualizer-timestamps t)
+    (unless (file-exists-p (concat maple-cache-directory "undo-tree"))
+      (make-directory (concat maple-cache-directory "undo-tree")))
+    (setq undo-tree-visualizer-timestamps t)
     (setq undo-tree-visualizer-diff t)
     )
   :diminish undo-tree-mode
@@ -187,8 +195,6 @@ the current state and point position."
   (evil-next-line count))
 
 
-
-
 ;; insert one or several line above without changing current evil state
 (defun maple/evil-insert-line-above (count)
   "Insert one of several lines above the current point's line without changing
@@ -199,32 +205,41 @@ the current state and point position."
   (evil-previous-line count)
   (evil-escape))
 
-(setq maple/large-file-modes-list
-      '(archive-mode tar-mode jka-compr git-commit-mode image-mode
-                     doc-view-mode doc-view-mode-maybe ebrowse-tree-mode
-                     pdf-view-mode))
-
-(defun maple/check-large-file ()
-  (let* ((filename (buffer-file-name))
-         (size (nth 7 (file-attributes filename))))
-    (when (and
-           (not (memq major-mode maple/large-file-modes-list))
-           size (> size (* 1024 1024 1))
-           (y-or-n-p (format (concat "%s is a large file, open literally to "
-                                     "avoid performance issues?")
-                             filename)))
-      (setq buffer-read-only t)
-      (buffer-disable-undo)
-      (fundamental-mode))))
+;; (setq maple/large-file-modes-list
+;;       '(archive-mode tar-mode jka-compr git-commit-mode image-mode
+;;                      doc-view-mode doc-view-mode-maybe ebrowse-tree-mode
+;;                      pdf-view-mode))
 
 ;; (defun maple/check-large-file ()
-;;     (when (> (buffer-size) 500000)
+;;   (let* ((filename (buffer-file-name))
+;;          (size (nth 7 (file-attributes filename))))
+;;     (when (and
+;;            ;; (not (memq major-mode maple/large-file-modes-list))
+;;            size (> size (* 1024 1024 1))
+;;            (y-or-n-p (format (concat "%s is a large file, open literally to "
+;;                                      "avoid performance issues?")
+;;                              filename)))
+;;       (setq buffer-read-only t)
+;;       (buffer-disable-undo)
+;;       (fundamental-mode))))
+
+(defun maple/check-large-file ()
+  (when (and (> (buffer-size) (* 1024 1024 3))
+             (y-or-n-p (format (concat "%s is a large file, open literally to "
+                                       "avoid performance issues?")
+                               buffer-file-name)))
+    (setq buffer-read-only t)
+    (buffer-disable-undo)
+    (fundamental-mode)))
+
+;; (defun maple/check-large-file ()
+;;   (when (> (buffer-size) 500000)
 ;;     (progn (fundamental-mode)
-;;             (hl-line-mode -1)))
-;;     (if (and (executable-find "wc")
-;;             (> (string-to-number (shell-command-to-string (format "wc -l %s" (buffer-file-name))))
-;;                 5000))
-;;         (linum-mode -1)
+;;            (hl-line-mode -1)))
+;;   (if (and (executable-find "wc")
+;;            (> (string-to-number (shell-command-to-string (format "wc -l %s" (buffer-file-name))))
+;;               5000))
+;;       (linum-mode -1)
 ;;     (linum-mode 1)))
 (add-hook 'find-file-hook 'maple/check-large-file)
 

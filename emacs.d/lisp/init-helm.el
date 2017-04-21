@@ -1,9 +1,3 @@
-(require-package 'helm)
-(require-package 'helm-ag)
-(require-package 'projectile)
-(require-package 'helm-projectile)
-
-
 ;; 必须的
 (setq tramp-ssh-controlmaster-options
       "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")
@@ -13,6 +7,7 @@
 ;; 多文件C-x C-s
 ;; helm-color 比较有用的
 (use-package helm
+  :ensure t
   :defer t
   :diminish helm-mode
   :config
@@ -60,10 +55,12 @@
          ))
 
 (use-package helm-ag
+  :ensure t
   :defer t
   :init (advice-add 'helm-ag--edit :after #'evil-mc-mode)) ;;在helm-ag-edit中激活evil-mc
 
 (use-package projectile
+  :ensure t
   :defer t
   :diminish projectile-mode "ⓟ"
   :init
@@ -75,6 +72,7 @@
   )
 
 (use-package helm-projectile
+  :ensure t
   :commands (helm-projectile-switch-to-buffer
              helm-projectile-find-dir
              helm-projectile-dired-find-dir
@@ -87,19 +85,4 @@
   (progn
     (setq projectile-switch-project-action 'helm-projectile)))
 
-;; (require-package 'helm-swoop)
-;; (use-package helm-swoop
-;;   :defer t
-;;   :init
-;;   (progn
-;;     (setq helm-swoop-split-with-multiple-windows t
-;;           helm-swoop-split-direction 'split-window-vertically
-;;           helm-swoop-speed-or-color t
-;;           helm-swoop-split-window-function 'helm-default-display-buffer
-;;           helm-swoop-pre-input-function (lambda () ""))
-;;     (advice-add 'helm-swoop--edit :after #'evil-mc-mode)) ;;在helm-swoop-edit中激活evil-mc
-;;   :bind (:map  helm-swoop-edit-map
-;;                ("C-c C-c" . helm-swoop--edit-complete)
-;;                ("C-c C-k" . helm-swoop--edit-cancel))
-;;   )
 (provide 'init-helm)

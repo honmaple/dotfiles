@@ -63,16 +63,16 @@
     ;; (setq nlinum-format "%3d")
     ))
 
-(use-package nlinum-relative
-  :ensure t
-  :commands (nlinum-relative-toggle nlinum-relative-on)
-  :init
-  (progn
-    (setq nlinum-relative-current-symbol ""
-          nlinum-relative-redisplay-delay 0)
-    (nlinum-relative-setup-evil)
-    (add-hook 'nlinum-mode-hook 'nlinum-relative-on)
-    ))
+;; (use-package nlinum-relative
+;;   :ensure t
+;;   :commands (nlinum-relative-toggle nlinum-relative-on)
+;;   :init
+;;   (progn
+;;     (setq nlinum-relative-current-symbol ""
+;;           nlinum-relative-redisplay-delay 0)
+;;     ;; (nlinum-relative-setup-evil)
+;;     (add-hook 'nlinum-mode-hook 'nlinum-relative-on)
+;;     ))
 
 ;; ;;; 80列
 (use-package fill-column-indicator

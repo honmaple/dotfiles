@@ -20,9 +20,12 @@
   ;;----------------------------------------------------------------------------
   ;; Load configs for specific features and modes
   ;;----------------------------------------------------------------------------
-  (require-package 'diminish) ;;显示状态mode
-  (require-package 'scratch) ;;缓冲区
-  (require-package 'mwe-log-commands) ;; 命令行历史
+  (use-package diminish
+    :ensure t) ;;显示状态mode
+  (use-package scratch
+    :ensure t) ;;缓冲区
+  (use-package mwe-log-commands
+    :ensure t) ;; 命令行历史
 
   (defconst *system-is-mac* (eq system-type 'darwin))
   (defconst *system-is-linux* (eq system-type 'gnu/linux))
@@ -38,7 +41,6 @@
     (require 'init-fonts)
     (require 'init-ui)  ;; modeline,which-key
     (require 'init-gui) ;;ui设置 显示行号
-    ;; (require 'init-console)
 
     (require 'init-evil)
 
@@ -67,7 +69,6 @@
 
     (require 'init-git)
 
-    (require 'init-matlab)
     (require 'init-shell) ;;shell
     (require 'init-html)
     (require 'init-css)

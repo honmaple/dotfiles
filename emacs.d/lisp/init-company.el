@@ -1,9 +1,5 @@
-(require-package 'company)
-(require-package 'company-statistics)
-(require-package 'company-quickhelp)
-(require-package 'yasnippet)
-
 (use-package yasnippet
+  :ensure t
   :commands (yas-global-mode yas-minor-mode)
   :diminish yas-minor-mode "ⓨ"
   :init
@@ -47,6 +43,7 @@
 
 
 (use-package company
+  :ensure t
   :defer t
   :diminish company-mode " ⓐ"
   :init
@@ -114,6 +111,7 @@
 
 
 (use-package company-statistics
+  :ensure t
   :defer t
   :init
   (progn
@@ -125,6 +123,7 @@
   (add-hook 'after-init-hook 'maple/set-company-statistics))
 
 (use-package company-quickhelp
+  :ensure t
   :if (and t (display-graphic-p))
   :commands company-quickhelp-manual-begin
   :init

@@ -105,7 +105,7 @@
   :init (add-hook 'after-init-hook #'global-evil-mc-mode)
   :config
   (progn
-    (setq evil-mc-enable-bar-cursor nil)
+    ;; (setq evil-mc-enable-bar-cursor nil)
     (evil-define-key 'normal evil-mc-key-map (kbd "<escape>") 'evil-mc-undo-all-cursors))
   :bind (:map evil-mc-key-map
               ("C-g" . evil-mc-undo-all-cursors)

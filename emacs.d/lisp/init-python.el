@@ -1,4 +1,6 @@
-(require-package 'elpy)
+(use-package elpy
+  :ensure t
+  :disabled)
 
 (use-package pip-requirements
   :ensure t

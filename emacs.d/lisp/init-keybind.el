@@ -33,6 +33,8 @@
   ;; "se" 'mc/mark-all-like-this
   "el" 'maple/toggle-flycheck-error-list
   "ec" 'flycheck-clear
+  "Sg" 'maple/search-google
+  "Sh" 'maple/search-github
   )
 
 ;; 字体大小写

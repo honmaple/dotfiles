@@ -3,6 +3,7 @@
   :defer t)
 
 (use-package epa
+  :defer t
   :config
   (progn
     (auto-encryption-mode -1)
@@ -129,6 +130,14 @@
   (progn
     (after-load 'evil
       (evil-set-initial-state '2048-mode 'emacs))
+    ))
+
+(use-package maple-macro
+  :load-path "site-lisp/"
+  :config
+  (progn
+    (maple/search-engine "google"     "http://www.google.com/search?q="              "Google: ")
+    (maple/search-engine "github"     "https://github.com/search?q="                 "Search GitHub: ")
     ))
 
 (provide 'init-tool)

@@ -1,7 +1,5 @@
-(require-package 'flycheck)
-(require-package 'flycheck-pos-tip)  ;; 显示tooltip
-
 (use-package flycheck
+  :ensure t
   :defer t
   :diminish flycheck-mode "ⓢ"
   :init (add-hook 'after-init-hook 'global-flycheck-mode)
@@ -53,7 +51,10 @@
         :fringe-face 'flycheck-fringe-info))
     ))
 
+
+;; 显示tooltip
 (use-package flycheck-pos-tip
+  :ensure t
   :after flycheck
   :defer t
   :init

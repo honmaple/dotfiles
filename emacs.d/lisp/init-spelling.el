@@ -1,10 +1,5 @@
-(require-package 'flyspell)
-(require-package 'auto-dictionary)
-(require-package 'flyspell-correct)
-(require-package 'flyspell-correct-helm)
-
-
 (use-package auto-dictionary
+  :ensure t
   :defer t
   :diminish auto-dictionary-mode
   :init
@@ -22,25 +17,29 @@
               'maple/adict-set-local-dictionary 'append)))
 
 (use-package flyspell
+  :ensure t
   :defer t
   :diminish flyspell-mode "⒮"
   :config
   (progn
     ;; use apsell as ispell backend
-    (setq-default ispell-program-name "aspell")
-    ;; use American English as ispell default dictionary
-    (ispell-change-dictionary "american" t)
+    (defun maple/set-spell ()
+      ;; use American English as ispell default dictionary
+      (setq-default ispell-program-name "aspell")
+      (ispell-change-dictionary "american" t))
+    (add-hook 'flyspell-mode-hook 'maple/set-spell)
     ;; (add-hook 'text-mode-hook 'flyspell-mode)
     ;; (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-    ;; (add-hook 'flyspell-mode-hook 'maple/set-spell)
     ))
 
 (use-package flyspell-correct
+  :ensure t
   :commands (flyspell-correct-word-generic
              flyspell-correct-previous-word-generic)
   )
 
 (use-package flyspell-correct-helm
+  :ensure t
   :defer t)
 
 

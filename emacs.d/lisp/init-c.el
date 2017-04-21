@@ -1,6 +1,5 @@
-(require-package 'cc-mode)
-
 (use-package cc-mode
+  :ensure t
   :defer t
   ;; :mode ("\\.c\\'" . cc-mode)
   :config

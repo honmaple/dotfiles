@@ -1,4 +1,5 @@
 (use-package company-web
+  :ensure t
   :defer t)
 
 (use-package web-mode

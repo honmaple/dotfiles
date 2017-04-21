@@ -1,12 +1,12 @@
 ;;; Character sets
 
 
-;;; Changing font sizes
+(use-package fontawesome
+  :ensure t)
 
-(require-package 'fontawesome)
-(require-package 'default-text-scale)
-
+;; Changing font sizes
 (use-package default-text-scale
+  :ensure t
   :bind (("C-M-=" . default-text-scale-increase)
          ("C-M--" . default-text-scale-decrease)
          ("<C-wheel-up>" . default-text-scale-increase)

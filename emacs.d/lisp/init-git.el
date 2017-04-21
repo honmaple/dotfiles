@@ -5,15 +5,14 @@
 
 
 ;;; Code:
-(require-package 'magit)
-(require-package 'evil-magit)
-(require-package 'git-commit)
-(require-package 'git-timemachine)
-
-(after-load 'magit
-  (require 'evil-magit))
+(use-package evil-magit
+  :ensure t
+  :after magit)
+;; (after-load 'magit
+;;   (require 'evil-magit))
 
 (use-package magit
+  :ensure t
   :defer t
   :config
   (progn
@@ -33,11 +32,13 @@
    ("C-<tab>" . magit-section-toggle)))
 
 (use-package git-commit
+  :ensure t
   :defer t
   :config
   (add-hook 'git-commit-mode-hook 'goto-address-mode))
 
 (use-package git-timemachine
+  :ensure t
   :defer t
   :config
   (progn

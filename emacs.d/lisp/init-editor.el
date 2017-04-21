@@ -34,11 +34,16 @@
 (defun comment-or-uncomment-region-or-line ()
   "Comments or uncomments the region or the current line if there's no active region."
   (interactive)
-  (let (beg end)
-    (if (region-active-p)
-        (setq beg (region-beginning) end (region-end))
-      (setq beg (line-beginning-position) end (line-end-position)))
-    (comment-or-uncomment-region beg end)))
+  (save-excursion
+    (when (hs-already-hidden-p)
+      (end-of-visual-line)
+      (evil-visual-state)
+      (beginning-of-visual-line))
+    (let (beg end)
+      (if (region-active-p)
+          (setq beg (region-beginning) end (region-end))
+        (setq beg (line-beginning-position) end (line-end-position)))
+      (comment-or-uncomment-region beg end))))
 
 (defun maple/indent-buffer ()
   (interactive)
@@ -52,6 +57,7 @@
 (global-set-key [f6] 'maple/indent-buffer)
 
 (use-package adaptive-wrap
+  :ensure t
   :config
   (progn
     (add-hook 'visual-line-mode-hook 'adaptive-wrap-prefix-mode)))
@@ -101,11 +107,12 @@
     (require 'stickyfunc-enhance)))
 
 (use-package electric
-  :init (electric-pair-mode)
+  :defer t
+  :init (electric-pair-mode 1)
   :config
   (progn
-    (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
-    ))
+    (setq electric-pair-pairs '((?\' . ?\')))
+    (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)))
 
 (use-package page
   :init

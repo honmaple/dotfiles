@@ -1,6 +1,17 @@
-(require-package 'org-plus-contrib)
-(require-package 'alert) ;;org-pomodoro依赖
+(use-package org-plus-contrib
+  :ensure t
+  :defer t)
 
+;; org-pomodoro依赖
+(use-package alert
+  :ensure t
+  :defer 5)
+
+;; (use-package evil-org
+;;   :ensure t
+;;   :commands (evil-org-mode evil-org-recompute-clocks)
+;;   :init (add-hook 'org-mode-hook 'evil-org-mode)
+;;   :diminish evil-org-mode)
 
 (use-package org
   :mode ("\\.org$" . org-mode)
@@ -40,10 +51,8 @@
 
     (org-babel-do-load-languages
      'org-babel-load-languages
-     '(
-       (sh . t)
+     '((sh . t)
        (python . t)
-       (R . t)
        (ruby . t)
        (ditaa . t)
        (dot . t)
@@ -73,6 +82,7 @@
 
     (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point)
     (evil-define-key 'normal org-mode-map (kbd "t") 'org-todo)
+    ;; (evil-define-key 'normal org-mode-map (kbd "V") 'evil-visual-state)
     (evil-define-key 'normal org-mode-map (kbd "TAB") 'org-cycle)
     (evil-define-key 'normal org-mode-map (kbd "<tab>") 'org-cycle))
   :bind (("C-c c" . org-capture)

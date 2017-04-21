@@ -10,6 +10,7 @@
 
 ;; ;; (when (< emacs-major-version 24)
 ;; (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+;; (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 
 ;; ;;; Also use Melpa for most packages
 ;; (add-to-list 'package-archives `("melpa" . ,(if (< emacs-major-version 24)
@@ -17,8 +18,9 @@
 ;;                                               "https://melpa.org/packages/")))
 (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
                          ("melpa" . "http://elpa.emacs-china.org/melpa/")
+                         ("org"   . "http://orgmode.org/elpa/")
                          ))
-;; (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+
 (setq package-enable-at-startup nil)
 (package-initialize)
 

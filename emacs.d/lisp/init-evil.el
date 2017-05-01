@@ -10,8 +10,8 @@
 (use-package evil
   :ensure t
   :defer t
-  :init (evil-mode 1)
-  ;; :init (add-hook 'after-init-hook #'evil-mode)
+  ;; :init (evil-mode 1)
+  :init (add-hook 'after-init-hook #'evil-mode)
   :config
   (progn
     (fset 'evil-visual-update-x-selection 'ignore) ;;粘贴板
@@ -124,7 +124,7 @@
 
 (use-package expand-region
   :ensure t
-  ;; :defer t
+  :defer t
   :after evil
   :bind (:map evil-visual-state-map
               ("v" . er/expand-region)

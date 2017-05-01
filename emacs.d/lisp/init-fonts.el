@@ -2,11 +2,13 @@
 
 
 (use-package fontawesome
-  :ensure t)
+  :ensure t
+  :defer t)
 
 ;; Changing font sizes
 (use-package default-text-scale
   :ensure t
+  :defer t
   :bind (("C-M-=" . default-text-scale-increase)
          ("C-M--" . default-text-scale-decrease)
          ("<C-wheel-up>" . default-text-scale-increase)

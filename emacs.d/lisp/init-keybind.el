@@ -18,6 +18,7 @@
   "fD" 'maple/delete-current-buffer-file
   "fR" 'maple/rename-current-buffer-file
   )
+
 (evil-leader/set-key
   "cc" 'comment-or-uncomment-region-or-line
   "ch" 'hide/show-comments-toggle ;;显示隐藏注释
@@ -57,6 +58,7 @@
   "tn" 'nlinum-mode
   "tr" 'nlinum-relative-toggle
   "tv" 'smooth-scrolling-mode
+  "tV" 'visual-line-mode
   )
 
 (evil-leader/set-key
@@ -114,6 +116,8 @@
   "pr"  'helm-projectile-recentf
   "pv"  'projectile-vc
   "pi"  'projectile-invalidate-cache
+  "pc"  'projectile-cleanup-known-projects
+  "pt"  'neotree-find-project-root
   )
 
 (evil-leader/set-key

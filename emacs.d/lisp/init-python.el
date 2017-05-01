@@ -24,7 +24,15 @@
     (setq python-shell-completion-native-enable nil)
     (setq python-shell-interpreter "ipython"
           python-shell-interpreter-args "--simple-prompt -i")
-    ))
+    (defun maple/run-python ()
+      (interactive)
+      (python-shell-get-or-create-process)
+      (if (region-active-p)
+          (python-shell-send-region (region-beginning) (region-end) t)
+        (python-shell-send-buffer t)))
+    (add-hook 'inferior-python-mode-hook 'maple/close-process))
+  :bind (:map python-mode-map
+              ([f5] . maple/run-python)))
 
 (use-package py-isort
   :ensure t

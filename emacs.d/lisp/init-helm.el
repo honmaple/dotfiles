@@ -65,10 +65,24 @@
   :diminish projectile-mode "ⓟ"
   :init
   (progn
-    (setq projectile-enable-caching t)
+    (setq projectile-sort-order 'recentf
+          projectile-cache-file (concat maple-cache-directory
+                                        "projectile.cache")
+          projectile-known-projects-file (concat maple-cache-directory
+                                                 "projectile-bookmarks.eld"))
+    ;; (setq projectile-enable-caching t)
     ;; (add-to-list 'projectile-globally-ignored-files "*.png")
     ;; (add-to-list 'projectile-globally-ignored-directories "node_modules")
     (add-hook 'after-init-hook #'projectile-global-mode))
+  :config
+  (progn
+    (defun neotree-find-project-root ()
+      (interactive)
+      (if (neo-global--window-exists-p)
+          (neotree-hide)
+        (let ((origin-buffer-file-name (buffer-file-name)))
+          (neotree-find (projectile-project-root))
+          (neotree-find origin-buffer-file-name)))))
   )
 
 (use-package helm-projectile

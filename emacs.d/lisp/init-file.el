@@ -19,6 +19,33 @@
     (add-to-list 'recentf-exclude (expand-file-name package-user-dir))
     (add-to-list 'recentf-exclude "COMMIT_EDITMSG\\'")))
 
+(use-package savehist
+  :defer t
+  :init
+  (progn
+    ;; Minibuffer history
+    (setq savehist-file (concat maple-cache-directory "savehist")
+          enable-recursive-minibuffers t ; Allow commands in minibuffers
+          history-length 1000
+          savehist-additional-variables '(mark-ring
+                                          global-mark-ring
+                                          search-ring
+                                          regexp-search-ring
+                                          extended-command-history)
+          savehist-autosave-interval 60)
+    (savehist-mode t)))
+
+(use-package saveplace
+  :defer t
+  :init
+  (progn
+    (if (fboundp 'save-place-mode)
+        ;; Emacs 25 has a proper mode for `save-place'
+        (save-place-mode)
+      (setq save-place t))
+    ;; Save point position between sessions
+    (setq save-place-file (concat maple-cache-directory "places"))))
+
 
 (use-package neotree
   :ensure t

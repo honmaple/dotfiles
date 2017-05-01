@@ -101,6 +101,7 @@
     )
   :bind (:map company-active-map
               ("C-/" . company-search-candidates)
+              ("C-d" . company-show-doc-buffer)
               ("C-M-/" . company-filter-candidates)
               ("C-j" . company-select-next)
               ("C-k" . company-select-previous)

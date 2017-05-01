@@ -55,11 +55,12 @@
   :commands imenu-list-minor-mode
   :config
   (progn
-    (evil-set-initial-state 'imenu-list-major-mode 'emacs)
+    (after-load 'evil
+      (evil-set-initial-state 'imenu-list-major-mode 'emacs))
     (setq imenu-list-focus-after-activation t
           imenu-list-auto-resize t
           imenu-list-mode-line-format "")
-    ;; (setq imenu-create-index-function 'semantic-create-imenu-index)
+    (setq imenu-create-index-function 'semantic-create-imenu-index)
     )
   :bind (:map evil-leader--default-map
               ("bi" . imenu-list-minor-mode)

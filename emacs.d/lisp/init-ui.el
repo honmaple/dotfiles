@@ -1,9 +1,13 @@
 (use-package monokai-theme
   :ensure t
   :defer t
-  :init (add-hook 'after-init-hook (lambda () (load-theme 'monokai t)))
-  ;; :init (load-theme 'monokai t)
-  )
+  :init (add-hook 'after-init-hook (lambda () (load-theme 'monokai t))))
+
+;; (use-package spacemacs-theme
+;;   :ensure t
+;;   :disabled
+;;   :defer t
+;;   :init (add-hook 'after-init-hook (lambda () (load-theme 'spacemacs-dark t))))
 
 ;; (use-package color-theme-approximate
 ;;   :ensure t
@@ -26,12 +30,22 @@
       (setq powerline-default-separator 'wave)
       (setq spaceline-toggle-window-number-on-p t)
       (setq spaceline-toggle-workspace-number-on-p nil)
-      (setq spaceline-workspace-numbers-unicode t)
+      (setq spaceline-workspace-numbers-unicode nil)
       (setq spaceline-window-numbers-unicode t)
       (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
       (spaceline-spacemacs-theme)
+      ;; (spaceline-compile)
       (when (package-installed-p 'helm)
-        (spaceline-helm-mode t)))
+        (spaceline-helm-mode t))
+      (maple/set-powerline-for-startup-buffers))
+    (defun maple/set-powerline-for-startup-buffers ()
+      "Set the powerline for buffers created when Emacs starts."
+      (dolist (buffer '("*Messages*" "*Compile-Log*"))
+        (when (and (get-buffer buffer)
+                   (with-current-buffer buffer
+                     (setq-local mode-line-format (default-value 'mode-line-format))
+                     (powerline-set-selected-window)
+                     (powerline-reset))))))
     (add-hook 'after-init-hook 'maple/set-spaceline)
     ))
 
@@ -51,6 +65,17 @@
           which-key-sort-order 'which-key-key-order-alpha
           which-key-idle-delay 0.2
           which-key-allow-evil-operators t)
+    (which-key-add-key-based-replacements
+      ",f" "file"
+      ",b" "buffer"
+      ",o" "orgmode"
+      ",e" "flycheck error"
+      ",j" "avy"
+      ",g" "git"
+      ",w" "window"
+      ",p" "project"
+      ",sq" "sql"
+      ",t" "toggle mode")
     ))
 
 (use-package nlinum

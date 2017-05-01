@@ -58,6 +58,7 @@
 
 (use-package adaptive-wrap
   :ensure t
+  :defer t
   :config
   (progn
     (add-hook 'visual-line-mode-hook 'adaptive-wrap-prefix-mode)))
@@ -88,15 +89,14 @@
     (setq semanticdb-default-save-directory (concat maple-cache-directory
                                                     "semanticdb/"))
     (unless (file-exists-p semanticdb-default-save-directory)
-      (make-directory semanticdb-default-save-directory)))
+      (make-directory semanticdb-default-save-directory))
+    (add-hook 'after-init-hook 'semantic-mode))
   :config
   (progn
     (add-to-list 'semantic-default-submodes
                  'global-semantic-stickyfunc-mode)
     (add-to-list 'semantic-default-submodes
-                 'global-semantic-idle-summary-mode)
-    (semantic-mode 1)
-    ))
+                 'global-semantic-idle-summary-mode)))
 
 (use-package stickyfunc-enhance
   :ensure t
@@ -106,12 +106,13 @@
     "Lazy load the package."
     (require 'stickyfunc-enhance)))
 
+
 (use-package electric
   :defer t
   :init (electric-pair-mode 1)
   :config
   (progn
-    (setq electric-pair-pairs '((?\' . ?\')))
+    ;; (setq electric-pair-pairs '((?\' . ?\')))
     (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)))
 
 (use-package page

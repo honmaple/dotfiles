@@ -19,8 +19,6 @@
       backup-directory-alist `(("." . ,(concat maple-cache-directory "auto-save")))
       x-select-enable-clipboard t) ;;激活粘贴板
 
-(global-hl-line-mode t) ;;高亮当前行
-
 ;; (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
 ;; important for golden-ratio to better work
 (setq-default blink-cursor-interval 0.4
@@ -39,6 +37,8 @@
               truncate-lines t
               truncate-partial-width-windows t
               ad-redefinition-action 'accept
+              ;;高亮当前行
+              global-hl-line-mode t
               ;; 光标位于中间
               scroll-preserve-screen-position t
               scroll-margin 15
@@ -84,21 +84,21 @@
                    (abbreviate-file-name (buffer-file-name))
                  "%b"))))
 
-;; 启动显示信息
-(setq-default initial-scratch-message
-              (if (executable-find "fortune")
-                  (format
-                   ";; %s\n\n%s"
-                   (replace-regexp-in-string
-                    "\n" "\n;; " ; comment each line
-                    (replace-regexp-in-string
-                     "\n$" ""    ; remove trailing linebreak
-                     (shell-command-to-string
-                      "fortune -a | fmt -80 -s | cowsay -$(shuf -n 1 -e b d g p s t w y) -f $(shuf -n 1 -e $(cowsay -l | tail -n +2)) -n")))
-                   (concat ";; Happy hacking, " user-login-name " - Emacs ♥ you!\n\n")
-                   )))
 
 (defun maple/show-init-time ()
+  ;; 启动显示信息
+  (setq-default initial-scratch-message
+                (if (executable-find "fortune")
+                    (format
+                     ";; %s\n\n%s"
+                     (replace-regexp-in-string
+                      "\n" "\n;; " ; comment each line
+                      (replace-regexp-in-string
+                       "\n$" ""    ; remove trailing linebreak
+                       (shell-command-to-string
+                        "fortune -a | fmt -80 -s | cowsay -$(shuf -n 1 -e b d g p s t w y) -f $(shuf -n 1 -e $(cowsay -l | tail -n +2)) -n")))
+                     (concat ";; Happy hacking, " user-login-name " - Emacs ♥ you!\n\n")
+                     )))
   (message "Emacs startup finished in %.2fms"
            (* 1000.0 (float-time (time-subtract after-init-time before-init-time)))))
 

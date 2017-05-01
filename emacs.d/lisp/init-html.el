@@ -40,6 +40,9 @@
                                                      ("{# " . " #")
                                                      ("<% " . " %>")
                                                      ))))
+    (add-hook 'web-mode-hook
+              (lambda ()
+                (setq electric-pair-pairs '((?\' . ?\')))))
     (maple/add-to-company-backend '(company-web-html
                                     company-css
                                     company-tern

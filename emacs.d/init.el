@@ -7,10 +7,19 @@
 (let ((file-name-handler-alist nil))
   (setq gc-cons-threshold (* 128 1024 1024))
   (setq user-full-name "jianglin")
-  (setq user-mail-address  "xiyang0807@gmail.com")
+  (setq user-mail-address "xiyang0807@gmail.com")
   (setq inhibit-startup-echo-area-message "jianglin")
 
   (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+
+  ;; (defadvice require (around require activate)
+  ;;   (let ((start (current-time))
+  ;;         res delta)
+  ;;     (setq res ad-do-it)
+  ;;     (setq delta (float-time (time-since start)))
+  ;;     (when (> delta 0.01)
+  ;;       (message "Required %s: %s sec" (ad-get-arg 0) delta))
+  ;;     res))
 
   ;;----------------------------------------------------------------------------
   ;; Bootstrap config
@@ -20,12 +29,16 @@
   ;;----------------------------------------------------------------------------
   ;; Load configs for specific features and modes
   ;;----------------------------------------------------------------------------
+  ;; (setq force-load-messages t)
   (use-package diminish
-    :ensure t) ;;显示状态mode
+    :ensure t
+    :defer t) ;;显示状态mode
   (use-package scratch
-    :ensure t) ;;缓冲区
+    :ensure t
+    :defer t) ;;缓冲区
   (use-package mwe-log-commands
-    :ensure t) ;; 命令行历史
+    :ensure t
+    :defer t) ;; 命令行历史
 
   (defconst *system-is-mac* (eq system-type 'darwin))
   (defconst *system-is-linux* (eq system-type 'gnu/linux))

@@ -120,7 +120,7 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # focus the child container
 #bindsym $mod+d focus child
-set $w1  1:
+set $w1  1:
 set $w2  2:
 set $w3  3:
 set $w4  4:
@@ -129,7 +129,7 @@ set $w6  6:
 set $w7  7:
 set $w8  8:
 set $w9  9:
-set $w10 10:
+set $w10 10:
 # switch to workspace
 bindsym $mod+1 workspace $w1
 bindsym $mod+2 workspace $w2
@@ -165,12 +165,14 @@ assign [class="(?i)netease-cloud-music"] → $w5
 assign [class="(?i)VirtualBox"] → $w4
 assign [class="(?i)Wireshark-gtk"] → $w9
 assign [class="(?i)Thunar"] → $w6
+assign [class="(?i)steam"] → $w7
 # xfce4-notify
 # for_window [class="Xfce4-notifyd"] floating enable,border none,focus mode_toggle
 for_window [class="^Dunst"] floating enable,border none,focus mode_toggle
 # for_window [class="Thunar"] floating enable
 for_window [class="Xfce4-terminal"] floating enable,border pixel 0
 for_window [class="Xarchiver"] floating enable
+for_window [class="VirtualBox"] border pixel 0
 # for_window [class="VirtualBox"] floating enable,border pixel 0
 for_window [class="^osdlyrics"] floating enable
 for_window [class="^Xfce4-mixer"] floating enable
@@ -228,15 +230,15 @@ bar {
     # binding_mode_indicator yes
     # tray_output primary
     font pango:DejaVu Sans Mono,FontAwesome 10
-        colors {
-                background #070c44
-                statusline #dddddd
-                separator #666666
-                focused_workspace #0088CC #0088CC #ffffff
-                active_workspace #333333 #333333 #888888
-                inactive_workspace #333333 #333333 #888888
-                urgent_workspace   #2f343a #900000 #ffffff
-        }
+    colors {
+        background #070c44
+        statusline #dddddd
+        separator #666666
+        focused_workspace #0088CC #0088CC #ffffff
+        active_workspace #333333 #333333 #888888
+        inactive_workspace #333333 #333333 #888888
+        urgent_workspace   #2f343a #900000 #ffffff
+    }
 }
 #                       border  background text  indicator
 client.focused          #0088CC #0088CC #ffffff #dddddd
@@ -244,6 +246,11 @@ client.focused_inactive #333333 #333333 #888888 #292d2e
 client.unfocused        #333333 #333333 #888888 #292d2e
 client.urgent           #2f343a #900000 #ffffff #900000
 
+
+exec --no-startup-id feh --bg-scale ~/Pictures/308556.jpg
+exec --no-startup-id xcompmgr &
+# exec --no-startup-id feh --bg-scale /tmp/earth.png
+# exec --no-startup-id feh --bg-scale ~/Pictures/bg1.jpg
 exec --no-startup-id xset dpms 600
 exec --no-startup-id xautolock -time 20 -locker 'i3lock -i ~/Pictures/308556.png' -notify 30 -notifier "notify-send -t 29000 -- 'LOCKING screen in 30 seconds'"
 #exec --no-startup-id xfce4-notifyd
@@ -253,9 +260,6 @@ exec --no-startup-id conky
 #exec --no-startup-id xcompmgr -c -C -t-5 -l-5 -r4.2 -o.55 &
 
 # exec --no-startup-id xfce4-power-manager
-exec --no-startup-id feh --bg-scale ~/Pictures/308556.jpg
-# exec --no-startup-id feh --bg-scale /tmp/earth.png
-# exec --no-startup-id feh --bg-scale ~/Pictures/bg1.jpg
 exec --no-startup-id dunst -config ~/.config/i3/dunstrc
 exec --no-startup-id nm-applet
 #exec pulseaudio --start

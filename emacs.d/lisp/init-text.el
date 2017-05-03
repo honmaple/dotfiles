@@ -23,6 +23,9 @@
 
 ;; (use-package markdown-preview-mode
 ;;   :load-path "site-lisp/markdown-preview/")
+(use-package olivetti
+  :defer t
+  :init (add-hook 'org-mode-hook 'olivetti-mode))
 
 (use-package markdown-toc
   :ensure t

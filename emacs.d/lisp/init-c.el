@@ -1,7 +1,7 @@
 (use-package cc-mode
   :ensure t
   :defer t
-  :mode ("\\.c\\'" . cc-mode)
+  ;; :mode ("\\.c\\'" . cc-mode)
   :config
   (progn
     (setq c-default-style "linux")

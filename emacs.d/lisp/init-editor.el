@@ -84,13 +84,12 @@
   :defer t
   :init
   (progn
-    (setq srecode-map-save-file (concat maple-cache-directory
-                                        "srecode-map.el"))
-    (setq semanticdb-default-save-directory (concat maple-cache-directory
-                                                    "semanticdb/"))
-    (unless (file-exists-p semanticdb-default-save-directory)
-      (make-directory semanticdb-default-save-directory))
-    (add-hook 'after-init-hook 'semantic-mode))
+    (setq srecode-map-save-file
+          (concat maple-cache-directory "srecode-map.el"))
+    (setq semanticdb-default-save-directory
+          (concat maple-cache-directory "semanticdb/"))
+    ;; (add-hook 'after-init-hook 'semantic-mode)
+    )
   :config
   (progn
     (add-to-list 'semantic-default-submodes

@@ -8,7 +8,7 @@
                                       (recentf-track-opened-file))))
 
     (setq recentf-save-file (concat maple-cache-directory "recentf")
-          recentf-max-saved-items 1000
+          recentf-max-saved-items 100
           recentf-auto-cleanup 'never
           recentf-auto-save-timer (run-with-idle-timer 600 t
                                                        'recentf-save-list)))

@@ -12,14 +12,14 @@
 
   (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
-  ;; (defadvice require (around require activate)
-  ;;   (let ((start (current-time))
-  ;;         res delta)
-  ;;     (setq res ad-do-it)
-  ;;     (setq delta (float-time (time-since start)))
-  ;;     (when (> delta 0.01)
-  ;;       (message "Required %s: %s sec" (ad-get-arg 0) delta))
-  ;;     res))
+  (defadvice require (around require activate)
+    (let ((start (current-time))
+          res delta)
+      (setq res ad-do-it)
+      (setq delta (float-time (time-since start)))
+      (when (> delta 0.1)
+        (message "Required %s: %s sec" (ad-get-arg 0) delta))
+      res))
 
   ;;----------------------------------------------------------------------------
   ;; Bootstrap config
@@ -57,8 +57,10 @@
 
     (require 'init-evil)
 
-    ;; (when *system-is-mac*
-    ;;   (require 'init-mac))
+    (use-package exec-path-from-shell
+      :if *system-is-mac*
+      :ensure t
+      :init (exec-path-from-shell-initialize))
 
 
     (require 'init-editor) ;;自动补全括号等
@@ -77,15 +79,13 @@
     (require 'init-flycheck)
     (require 'init-spelling)
     (require 'init-company)
-    ;; (require 'init-gnus)
     ;; (require 'init-rss)
 
     (require 'init-git)
 
     (require 'init-shell) ;;shell
     (require 'init-html)
-    (require 'init-css)
-    (require 'init-javascript)
+    (require 'init-js)
     (require 'init-python)
     (require 'init-c)
     (require 'init-sql)

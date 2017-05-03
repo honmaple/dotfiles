@@ -3,11 +3,15 @@
   :defer t
   :init (add-hook 'after-init-hook (lambda () (load-theme 'monokai t))))
 
-;; (use-package spacemacs-theme
-;;   :ensure t
-;;   :disabled
-;;   :defer t
-;;   :init (add-hook 'after-init-hook (lambda () (load-theme 'spacemacs-dark t))))
+(use-package spacemacs-theme
+  :ensure t
+  :defer t)
+;; :init (add-hook 'after-init-hook (lambda () (load-theme 'spacemacs-dark t))))
+
+(use-package doom-themes
+  :ensure t
+  :defer t)
+;; :init (add-hook 'after-init-hook (lambda () (load-theme 'doom-monokai t))))
 
 ;; (use-package color-theme-approximate
 ;;   :ensure t
@@ -48,6 +52,41 @@
                      (powerline-reset))))))
     (add-hook 'after-init-hook 'maple/set-spaceline)
     ))
+
+(use-package hydra
+  :defer t
+  :ensure t
+  :config
+  (progn
+    ;; (setq maple-cycle-themes (mapcar 'symbol-name (custom-available-themes)))
+    (setq maple-cycle-themes (delete "doom-one-light"
+                                     (mapcar 'symbol-name (custom-available-themes))))
+    (defun maple/cycle-theme (num)
+      (interactive)
+      (setq maple-current-theme-index
+            (+ num
+               (cl-position
+                (car (mapcar 'symbol-name custom-enabled-themes)) maple-cycle-themes :test 'equal)))
+      (when (>= maple-current-theme-index (length maple-cycle-themes))
+        (setq maple-current-theme-index 0))
+      (setq maple-current-theme (nth maple-current-theme-index maple-cycle-themes))
+      (mapc 'disable-theme custom-enabled-themes)
+      (let ((progress-reporter
+             (make-progress-reporter
+              (format "Loading theme %s..." maple-current-theme))))
+        (load-theme (intern maple-current-theme) t)
+        (progress-reporter-done progress-reporter)))
+    (defun maple/next-theme()
+      (interactive)
+      (maple/cycle-theme 1))
+    (defun maple/previous-theme()
+      (interactive)
+      (maple/cycle-theme -1))
+    (defhydra maple/cycle-themes ()
+      ("n" maple/next-theme "next theme")
+      ("p" maple/previous-theme "prev theme"))
+    ))
+
 
 (use-package which-key
   :ensure t

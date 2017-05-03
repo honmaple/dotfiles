@@ -105,7 +105,16 @@
   :init (add-hook 'after-init-hook #'global-evil-mc-mode)
   :config
   (progn
+    (defhydra maple/evil-mc ()
+      ("n" evil-mc-make-and-goto-next-match "next")
+      ("t" evil-mc-skip-and-goto-next-match "skip")
+      ("p" evil-mc-make-and-goto-prev-match "prev")
+      ("N" evil-mc-make-and-goto-prev-match "prev"))
+    (define-key evil-visual-state-map (kbd "n") 'maple/evil-mc/body)
     ;; (setq evil-mc-enable-bar-cursor nil)
+    (custom-set-faces
+     '(evil-mc-cursor-default-face ((t (:inherit cursor :background "firebrick1" :inverse-video nil))))
+     '(hydra-face-red ((t (:foreground "chocolate" :weight bold)))))
     (evil-define-key 'normal evil-mc-key-map (kbd "<escape>") 'evil-mc-undo-all-cursors))
   :bind (:map evil-mc-key-map
               ("C-g" . evil-mc-undo-all-cursors)
@@ -128,6 +137,7 @@
   :after evil
   :bind (:map evil-visual-state-map
               ("v" . er/expand-region)
+              ("V" . er/contract-region)
               ("ew" . er/mark-word)
               ("es" . er/mark-symbol)
               ("eu" . er/mark-url)

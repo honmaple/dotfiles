@@ -21,6 +21,7 @@
     (setq web-mode-markup-indent-offset 2)
     (setq web-mode-enable-auto-closing t) ; enable auto close tag in text-mode
     (setq web-mode-enable-current-element-highlight t)
+    (setq web-mode-enable-auto-indentation nil)
     ;; see https://github.com/fxbois/web-mode/issues/275
     ;; (setq web-mode-enable-auto-pairing nil)
     ;; (add-hook
@@ -45,8 +46,7 @@
                 (setq electric-pair-pairs '((?\' . ?\')))))
     (maple/add-to-company-backend '(company-web-html
                                     company-css
-                                    company-tern
-                                    ) 'web-mode-hook)
+                                    company-tern) 'web-mode-hook)
     (evil-define-key 'normal web-mode-map
       (kbd "<f5>") 'browse-url-of-file
       ;; (kbd "<f6>") 'web-beautify-html
@@ -99,5 +99,32 @@
       (kbd "TAB") 'maple/emmet-expand
       (kbd "<tab>") 'maple/emmet-expand)
     ))
+
+(use-package css-mode
+  :ensure t
+  :defer t
+  :config
+  (progn
+    (maple/add-to-company-backend '(company-css) 'css-mode-hook)
+    (put 'css-indent-offset 'safe-local-variable #'integerp)
+    ))
+
+(use-package sass-mode
+  :ensure t
+  :defer t
+  :mode ("\\.sass\\'" . sass-mode))
+
+(use-package scss-mode
+  :ensure t
+  :defer t
+  :config (setq-default scss-compile-at-save nil)
+  :mode ("\\.scss\\'" . scss-mode))
+
+
+(use-package less-css-mode
+  :ensure t
+  :defer t
+  :mode ("\\.less\\'" . less-css-mode))
+
 
 (provide 'init-html)

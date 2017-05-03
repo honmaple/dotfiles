@@ -9,6 +9,12 @@
 ;;   :defer t
 ;;   :init (add-hook 'after-init-hook (lambda () (load-theme 'spacemacs-dark t))))
 
+;; (use-package doom-theme
+;;   :ensure t
+;;   :disabled
+;;   :defer t
+;;   :init (add-hook 'after-init-hook (lambda () (load-theme 'doom-monokai t))))
+
 ;; (use-package color-theme-approximate
 ;;   :ensure t
 ;;   :init (color-theme-approximate-on))

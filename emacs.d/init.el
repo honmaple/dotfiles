@@ -12,14 +12,14 @@
 
   (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
-  ;; (defadvice require (around require activate)
-  ;;   (let ((start (current-time))
-  ;;         res delta)
-  ;;     (setq res ad-do-it)
-  ;;     (setq delta (float-time (time-since start)))
-  ;;     (when (> delta 0.01)
-  ;;       (message "Required %s: %s sec" (ad-get-arg 0) delta))
-  ;;     res))
+  (defadvice require (around require activate)
+    (let ((start (current-time))
+          res delta)
+      (setq res ad-do-it)
+      (setq delta (float-time (time-since start)))
+      (when (> delta 0.1)
+        (message "Required %s: %s sec" (ad-get-arg 0) delta))
+      res))
 
   ;;----------------------------------------------------------------------------
   ;; Bootstrap config

@@ -4,17 +4,13 @@
   :diminish yas-minor-mode "ⓨ"
   :init
   (progn
-    ;;   ;; (yas-reload-all)
-    (add-hook 'prog-mode-hook #'yas-minor-mode))
-  :config
-  (progn
     (defvar yas-global-mode nil)
     (setq yas-triggers-in-field t
           yas-wrap-around-region t
           helm-yas-display-key-on-candidate t)
     (setq yas-prompt-functions '(yas-completing-prompt))
     (setq yas-minor-mode-map (make-sparse-keymap))
-    (setq maple/yasnippets (expand-file-name "~/.emacs.d/yasnippets"))
+    (setq maple/yasnippets (expand-file-name (concat user-emacs-directory "yasnippets")))
     (if (and  (file-exists-p maple/yasnippets) (not (member maple/yasnippets yas-snippet-dirs)))
         (add-to-list 'yas-snippet-dirs maple/yasnippets))
     (defun maple/load-yasnippet ()
@@ -179,5 +175,19 @@
     (if hook
         (add-hook hook (lambda () (maple/add-company-backend backend)))
       (lambda () (maple/add-company-backend backend)))))
+
+;; (use-package ycmd
+;;   :defer t
+;;   :init
+;;   (progn
+;;     (add-hook 'prog-mode-hook 'ycmd-mode)
+;;     (set-variable 'ycmd-server-command '("python2" "/home/jianglin/.vim/bundle/YouCompleteMe/third_party/ycmd/ycmd"))
+;;     ;; (set-variable 'ycmd-global-config "/home/jianglin/.emacs.d/layer/+tool/ycmd/global_config.py")
+;;     (set-variable 'ycmd-global-config "/home/jianglin/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py")
+;;     ))
+
+;; (use-package company-ycmd
+;;   :defer t
+;;   :commands company-ycmd)
 
 (provide 'init-company)

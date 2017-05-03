@@ -1,0 +1,43 @@
+set nocompatible
+filetype off
+let g:is_mac = has('macunix')
+let g:is_linux = has('unix') && !has('macunix') && !has('win32unix')
+let g:is_windows = has('win32') || has('win64')
+if has("gui_running")
+    let g:is_gui = 1
+else
+    let g:is_gui = 0
+endif
+set rtp+=~/.vim/bundle/Vundle.vim
+
+function s:require(file)
+    let l:file = '~/.vim/plugins/' . a:file . '.vim'
+    if filereadable(expand(l:file))
+        execute 'source ' . fnameescape(l:file)
+    else
+        echom l:file . ' does not exist.'
+    endif
+endfunction
+
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+let require_list = [
+  \ 'init-gui',
+  \ 'init-ui',
+  \ 'init-editor',
+  \ 'init-buffer',
+  \ 'init-file',
+  \ 'init-auto-insert',
+  \ 'init-git',
+  \ 'init-develop',
+  \ 'init-python',
+  \ 'init-html',
+  \ 'init-text',
+  \ 'init-keybind']
+
+for file in require_list
+    call s:require(file)
+endfor

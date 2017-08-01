@@ -56,15 +56,26 @@
              "#          By: \n"
              "#Description: \n"
              "#**************************************************************************/\n")
+            ;; ((org-mode . "org-mode") nil
+            ;;  "#+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"../css/worg.css\" />" "\n"
+            ;;  "Title: " (file-name-base buffer-file-name) "\n"
+            ;;  "Author: honmaple   \n"
+            ;;  "Date: " (format-time-string "%F" (current-time)) "\n"
+            ;;  "Category:   \n"
+            ;;  "Tags:   \n"
+            ;;  "Slug: " (file-name-base buffer-file-name) "\n"
+            ;;  "Summary: ")
             ((org-mode . "org-mode") nil
-             "#+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"../css/worg.css\" />" "\n"
-             "Title: " (file-name-base buffer-file-name) "\n"
-             "Author: honmaple   \n"
-             "Date: " (format-time-string "%F" (current-time)) "\n"
-             "Category:   \n"
-             "Tags:   \n"
-             "Slug: " (file-name-base buffer-file-name) "\n"
-             "Summary: ")
+             "#+TITLE: " (file-name-base buffer-file-name)"\n"
+             "#+DATE: " (format-time-string "%F" (current-time)) "\n"
+             "#+CATEGORY: \n"
+             "#+AUTHOR: " (user-full-name)"\n"
+             "#+PROPERTY: TAGS \n"
+             "#+PROPERTY: LANGUAGE en\n"
+             "#+PROPERTY: SUMMARY \n"
+             "#+PROPERTY: SLUG \n"
+             "#+PROPERTY: MODIFIED \n"
+             "#+PROPERTY: SAVE_AS \n")
             ;; ((markdown-mode . "Markdown") nil
             ;;  "Title: " (file-name-base buffer-file-name) "  \n"
             ;;  "Author: honmaple   \n"

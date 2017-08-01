@@ -23,6 +23,13 @@
 (setq split-width-threshold 1)
 (setq display-buffer-alist '(("\\*Warnings\\*" display-buffer-below-selected)
                              ("\\*Help\\*" display-buffer-below-selected))) ;;设置分屏
+;; (add-to-list 'display-buffer-alist (cons "\\*Async Shell Command\\*.*"
+;;                                           (cons #'display-buffer-no-window nil)))
+(defun maybe-set-quit-key ()
+  (when (string= (buffer-name) "*Async Shell Command*")
+    (local-set-key (kbd "q") #'quit-window)))
+
+(add-hook 'shell-mode-hook #'maybe-set-quit-key)
 
 (defun maple/close-process ()
   "Close current term buffer when `exit' from term buffer."

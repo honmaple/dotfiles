@@ -219,7 +219,7 @@
 (define-key evil-normal-state-map (kbd "L") (kbd "$"))
 (define-key evil-visual-state-map (kbd "H") (kbd "^"))
 (define-key evil-visual-state-map (kbd "L") (kbd "$"))
-(define-key evil-normal-state-map (kbd "RET") 'maple/evil-insert-line-below)
+;; (define-key evil-normal-state-map (kbd "RET") 'maple/evil-insert-line-below)
 (define-key evil-normal-state-map (kbd "S-<return>") 'maple/evil-insert-line-above)
 (define-key evil-visual-state-map (kbd "<")
   (lambda ()

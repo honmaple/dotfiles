@@ -87,6 +87,7 @@
     (require 'init-html)
     (require 'init-js)
     (require 'init-python)
+    (require 'init-go)
     (require 'init-c)
     (require 'init-sql)
     (require 'init-text) ;; markdown rst

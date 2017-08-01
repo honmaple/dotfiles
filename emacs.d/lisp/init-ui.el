@@ -149,6 +149,14 @@
     (setq fci-rule-color "#D0BF8F")
     (push '(fci-mode "") minor-mode-alist)))
 
+;; (use-package vline
+;;   :ensure t
+;;   :defer t
+;;   :init (add-hook 'after-init-hook 'vline-global-mode)
+;;   :config
+;;   ;; 与默认的行高亮的颜色相同
+;;   (set-face-background vline-face "#3c3d37"))
+
 ;; 高亮括号
 (use-package rainbow-delimiters
   :ensure t
@@ -157,7 +165,8 @@
   :config
   (progn
     ;; 高亮括号配对
-    (show-paren-mode 1))
+    (show-paren-mode 1)
+    )
   :diminish rainbow-delimiters-mode)
 
 ;; 颜色

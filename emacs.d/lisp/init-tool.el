@@ -31,7 +31,7 @@
     (setq blog-admin-backend-path "~/git/pelican")
     (setq blog-admin-backend-pelican-config-file "pelicanconf.py") ;; default assumes _config.ym
     (setq blog-admin-backend-pelican-posts-dir "content/markdown") ;; default assumes _config.ym
-    (setq blog-admin-backend-pelican-drafts-dir "content/html") ;; default assumes _config.ym
+    (setq blog-admin-backend-pelican-drafts-dir "content/draft") ;; default assumes _config.ym
     (add-hook 'blog-admin-backend-after-new-post-hook 'find-file)
 
     (defun blog-set-face()

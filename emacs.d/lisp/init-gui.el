@@ -37,14 +37,15 @@
               truncate-lines t
               truncate-partial-width-windows t
               ad-redefinition-action 'accept
-              ;;高亮当前行
-              global-hl-line-mode t
               ;; 光标位于中间
               scroll-preserve-screen-position t
               scroll-margin 15
               scroll-conservatively 101
               xterm-mouse-mode 1)
 
+
+;;高亮当前行
+(add-hook 'after-init-hook #'global-hl-line-mode)
 
 (use-package bookmark
   :defer t

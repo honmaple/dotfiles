@@ -1,9 +1,9 @@
-;; blog-admin.el --- Blog admin for emacs with hexo/org-page supported  -*- lexical-binding: t; -*-
+;;; blog-admin.el --- Blog admin for emacs with hexo/org-page supported  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2016
 
 ;; Author:  code.falling@gmail.com
-;; Keywords: tools, blog, org, hexo, org-page, pelican
+;; Keywords: tools, blog, org, hexo, org-page
 
 ;; Version: 0.1
 ;; Package-Requires: ((ctable "0.1.1") (s "1.10.0") (f "0.17.3") (names "20151201.0") (cl-lib "0.5"))
@@ -28,6 +28,7 @@
 ;;
 
 ;;; Code:
+(require 'org)
 (require 'ctable)
 (require 'names)
 (require 'cl-lib)
@@ -53,18 +54,18 @@
 (defconst -table-help
   "Blog
 
-    s   ... Switch between publish and drafts
-    d   ... Delete current post
-    c   ... Duplicate current post
-    w   ... Write new post
-    RET ... Open current post
-    r   ... Refresh blog-admin
-    B   ... Build site
-    C   ... Jump to the config
-    D   ... Deploy site
-    F   ... Filter and show only rows with keyword
+s   ... Switch between publish and drafts
+d   ... Delete current post
+c   ... Duplicate current post
+w   ... Write new post
+RET ... Open current post
+r   ... Refresh blog-admin
+B   ... Build site
+C   ... Jump to the config
+D   ... Deploy site
+F   ... Filter and show only rows with keyword
 
-  "
+"
   "Help of table")
 
 (defvar show-help t)
@@ -108,21 +109,19 @@
   "Click event for table"
   (find-file (-table-current-file)))
 
-(defun set-my-font (*begin *end)
-  (overlay-put (make-overlay *begin *end nil nil t)
-               'face 'ctbl:faces))
+
 
 (defun -table-build ()
   (when show-help (insert -table-help))
   (let ((param (copy-ctbl:param ctbl:default-rendering-param)))
     (setf (ctbl:param-fixed-header param) t)
-    (save-excursion
-      (setq table (ctbl:create-table-component-region
-                   :param param
-                   :width  nil
-                   :height nil
-                   :keymap mode-map
-                   :model (-get-model))))
+    (save-excursion (setq table (ctbl:create-table-component-region
+                                 :param param
+                                 :width  nil
+                                 :height nil
+                                 :keymap mode-map
+                                 :model (-get-model))))
+
     (ctbl:cp-add-click-hook table #'-table-click)
     (ctbl:navi-goto-cell (ctbl:cell-id 0 0))
     ))
@@ -175,10 +174,12 @@
           ;; remove asset directory if exist
           (let ((dir-path (file-name-sans-extension file-path)))
             (if (file-exists-p dir-path)
-                (delete-directory dir-path t))
-            )
+                (delete-directory dir-path t)))
           (refresh)
-          ))))
+          ;; Move up and down to keep the cursor inside the table
+          (unless (ignore-errors (ctbl:cursor-to-nearest-cell))
+            (forward-line -1)
+            (ctbl:navi-goto-cell (ctbl:cursor-to-nearest-cell)))))))
 
 (defun refresh ()
   "Refresh *Blog*"
@@ -195,7 +196,6 @@
 ;; main
 
 :autoload
-
 (defun start ()
   "Blog admin"
   (interactive)
@@ -214,7 +214,6 @@
   (set (make-local-variable 'buffer-read-only) t))
 
 ) ;; namespace blog-admin end here
-
 
 (provide 'blog-admin)
 ;;; blog-admin.el ends here

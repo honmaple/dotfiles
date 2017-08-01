@@ -3,7 +3,11 @@
 (use-package hideshow
   :defer t
   :diminish hs-minor-mode
-  :init (add-hook 'prog-mode-hook #'hs-minor-mode)
+  :init
+  (progn
+    (add-hook 'yaml-mode-hook #'hs-minor-mode)
+    (add-hook 'conf-mode-hook #'hs-minor-mode)
+    (add-hook 'prog-mode-hook #'hs-minor-mode))
   :config
   (progn
     (defvar hs-headline-max-len 30 "*Maximum length of `hs-headline' to display.")

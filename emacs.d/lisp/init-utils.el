@@ -38,15 +38,6 @@
               (directory-files (expand-file-name parent-dir) t "^[^\\.]"))
              load-path)))))
 
-;; (defun add-subdirs-to-load-path (parent-dir)
-;;   "Adds every non-hidden subdir of PARENT-DIR to `load-path'."
-;;   (let ((default-directory  parent-dir))
-;;     (setq load-path
-;;           (append
-;;            (let ((load-path  (copy-sequence load-path))) ;; Shadow
-;;              (normal-top-level-add-subdirs-to-load-path))
-;;            load-path))))
-
 (add-subdirs-to-load-path
  (expand-file-name (concat user-emacs-directory "site-lisp/")))
 

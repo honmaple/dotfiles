@@ -31,7 +31,6 @@
   "sj" 'helm-semantic-or-imenu
   "sp" 'flyspell-correct-word-generic
   "sh" 'shell-command
-  ;; "se" 'mc/mark-all-like-this
   "el" 'maple/toggle-flycheck-error-list
   "ec" 'flycheck-clear
   "Sg" 'maple/search-google

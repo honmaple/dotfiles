@@ -99,10 +99,7 @@ locate PACKAGE."
 (use-package restart-emacs
   :ensure t
   :defer t)
-;; :init
-;; (progn
-;;   (setq restart-emacs-restore-frames t)
-;;   ))
+  ;; :config (setq restart-emacs-restore-frames t))
 
 ;;; Fire up package.el
 

@@ -54,21 +54,20 @@
 (defconst -table-help
   "Blog
 
-s   ... Switch between publish and drafts
-d   ... Delete current post
-c   ... Duplicate current post
-w   ... Write new post
-RET ... Open current post
-r   ... Refresh blog-admin
-B   ... Build site
-C   ... Jump to the config
-D   ... Deploy site
-F   ... Filter and show only rows with keyword
+w   ... Write new post              s   ... Switch between publish and drafts
+d   ... Delete current post         c   ... Duplicate current post
+o   ... Sort                        O   ... Desc sort
+r   ... Refresh                     RET ... Open current post
+B   ... Build site                  D   ... Deploy site
+C   ... Jump to the config          F   ... Filter and show only rows with keyword
 
 "
   "Help of table")
 
 (defvar show-help t)
+
+(defvar -filter-keyword nil)
+(defvar -sort-state '(-4 1))
 
 (defun -merge-keymap (keymap1 keymap2)
   (append keymap1
@@ -96,6 +95,8 @@ F   ... Filter and show only rows with keyword
   (define-key mode-map "C" (plist-get (blog-admin-backend-get-backend) :open-site-config-func))
   (define-key mode-map "D" (plist-get (blog-admin-backend-get-backend) :deploy-site-func))
   (define-key mode-map "F" #'filter)
+  (define-key mode-map "o" #'sort)
+  (define-key mode-map "O" #'desc)
   (setq mode-map
         (-merge-keymap mode-map ctbl:table-mode-map)))
 
@@ -112,9 +113,15 @@ F   ... Filter and show only rows with keyword
 
 
 (defun -table-build ()
-  (when show-help (insert -table-help))
+  ;; (when show-help (insert -table-help))
+  (when show-help (insert (propertize -table-help 'font-lock-face '(:foreground "#f92672"))))
   (let ((param (copy-ctbl:param ctbl:default-rendering-param)))
     (setf (ctbl:param-fixed-header param) t)
+    (setf (ctbl:param-bg-colors param)
+          (lambda (model row-id col-id str)
+            (cond ((= 0 (% (1- row-index) 2)) "#1e90ff")
+                  ((= 1 (% (1- row-index) 2)) "#20b2aa")
+                  (t nil))))
     (save-excursion (setq table (ctbl:create-table-component-region
                                  :param param
                                  :width  nil
@@ -126,22 +133,21 @@ F   ... Filter and show only rows with keyword
     (ctbl:navi-goto-cell (ctbl:cell-id 0 0))
     ))
 
-(defun -get-model (&optional filter-keyword)
+(defun -get-model ()
   "Get table model (optionally only rows with FILTER-KEYWORD)."
   (let ((contents
          (blog-admin-backend-build-datasource blog-admin-backend-type)))
     ;; Filter the rows to drop all rows not containing the keyword.
-    (when filter-keyword
+    (when -filter-keyword
       (setq contents
             (cl-remove-if-not (lambda (x)
                                 ;; concatenate the row with | (dropping filename)
                                 (let ((row (mapconcat #'identity (butlast x) "|")))
-                                  (s-contains? filter-keyword row t)))
+                                  (s-contains? -filter-keyword row t)))
                               contents)))
-
     (make-ctbl:model
      :data contents
-     :sort-state '(-4 1)
+     :sort-state -sort-state
      :column-model
      (list (make-ctbl:cmodel
             :title "Title"
@@ -186,12 +192,30 @@ F   ... Filter and show only rows with keyword
   (interactive)
   (ctbl:cp-set-model blog-admin-table (-get-model)))
 
+(defun sort ()
+  "Sort by coloum"
+  (interactive)
+  (setq choices '("Title" "Publish" "Category" "Date"))
+  (let* ((keyword (completing-read "Order by: " choices)))
+    (setq -sort-state
+          (cond ((string= keyword "Title") '(-1 1))
+                ((string= keyword "Publish")  '(-2 -1))
+                ((string= keyword "Category") '(-3 1))
+                ((string= keyword "Date") '(-4 1))))
+    (ctbl:cp-set-model blog-admin-table (-get-model))))
+
+(defun desc ()
+  "Desc sort by coloum"
+  (interactive)
+  (setcar -sort-state (- (car -sort-state)))
+  (ctbl:cp-set-model blog-admin-table (-get-model)))
 
 (defun filter ()
   "Filter table based on user input"
   (interactive)
   (let* ((keyword (read-from-minibuffer "Search filter: ")))
-    (ctbl:cp-set-model blog-admin-table (-get-model keyword))))
+    (setq -filter-keyword keyword)
+    (ctbl:cp-set-model blog-admin-table (-get-model))))
 
 ;; main
 

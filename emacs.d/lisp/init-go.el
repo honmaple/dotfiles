@@ -1,4 +1,5 @@
 (use-package lua-mode
+  :ensure t
   :defer t
   :mode ("\\.lua\\'" . lua-mode)
   :interpreter ("lua" . lua-mode)
@@ -10,12 +11,13 @@
 (use-package go-mode
   :ensure t
   :defer t
+  :mode ("\\.go\\'" . go-mode)
   :init
   (progn
-    (defun maple//go-set-tab-width ()
-      "Set the tab width."
-      (setq-local tab-width go-tab-width))
-    (add-hook 'go-mode-hook 'maple//go-set-tab-width))
+    (add-hook 'go-mode-hook
+              (lambda ()
+                (setq tab-width 4))
+              ))
   :config
   (progn
     (add-hook 'before-save-hook 'gofmt-before-save)))

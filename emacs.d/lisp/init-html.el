@@ -20,8 +20,9 @@
   (progn
     (setq web-mode-markup-indent-offset 2)
     (setq web-mode-enable-auto-closing t) ; enable auto close tag in text-mode
-    (setq web-mode-enable-current-element-highlight t)
+    (setq web-mode-enable-current-element-highlight nil)
     (setq web-mode-enable-auto-indentation nil)
+    (setq web-mode-enable-css-colorization nil)
     ;; see https://github.com/fxbois/web-mode/issues/275
     ;; (setq web-mode-enable-auto-pairing nil)
     ;; (add-hook
@@ -52,31 +53,10 @@
       ;; (kbd "<f6>") 'web-beautify-html
       (kbd "za") 'web-mode-fold-or-unfold)))
 
-;; (use-package smartparens
-;;   :defer t
-;;   :after web-mode
-;;   :diminish smartparens-mode
-;;   :init
-;;   (progn
-;;     (add-hook 'js-mode-hook #'smartparens-mode)
-;;     (add-hook 'web-mode-hook #'smartparens-mode)
-;;     (add-hook 'css-mode-hook #'smartparens-mode)
-;;     )
-;;   :config
-;;   (progn
-;;     (sp-local-pair 'web-mode "{{ " " }")
-;;     (sp-local-pair 'web-mode "{{{ " " }}")
-;;     (sp-local-pair 'web-mode "<% " " %>")
-;;     (sp-local-pair 'web-mode "<%= "  " %>")
-;;     (sp-local-pair 'web-mode "<%# "  " %>")
-;;     (sp-local-pair 'web-mode "<%$ "  " %>")
-;;     (sp-local-pair 'web-mode "<%@ "  " %>")
-;;     (sp-local-pair 'web-mode "<%: "  " %>")
-;;     (sp-local-pair 'web-mode "{% "  " %}")
-;;     (sp-local-pair 'web-mode "{%- "  " %}")
-;;     (sp-local-pair 'web-mode "{# "  " #}")
-;;     ))
-
+(use-package web-beautify
+  :ensure t
+  :commands (web-beautify-html web-beautify-css web-beautify-js)
+  )
 
 (use-package emmet-mode
   :ensure t
@@ -87,7 +67,8 @@
     (add-hook 'html-mode-hook 'emmet-mode)
     (add-hook 'sgml-mode-hook 'emmet-mode)
     (add-hook 'web-mode-hook 'emmet-mode)
-    (add-hook 'css-mode-hook  'emmet-mode))
+    ;; (add-hook 'css-mode-hook  'emmet-mode)
+    )
   :config
   (progn
     (defun maple/emmet-expand ()

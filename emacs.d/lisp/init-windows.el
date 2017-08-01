@@ -29,6 +29,11 @@
   (when (string= (buffer-name) "*Async Shell Command*")
     (local-set-key (kbd "q") #'quit-window)))
 
+(defun maple/set-quit-key (map)
+  (after-load 'evil
+    (evil-define-key 'normal map
+      (kbd "q") 'quit-window)))
+
 (add-hook 'shell-mode-hook #'maybe-set-quit-key)
 
 (defun maple/close-process ()

@@ -58,10 +58,10 @@
               ("fb" . bookmark-jump)))
 
 ;;美化显示符号
-(use-package global-prettify-symbols-mode
-  :defer t
-  :init (global-prettify-symbols-mode)
-  )
+;; (use-package global-prettify-symbols-mode
+;;   :defer t
+;;   :init (global-prettify-symbols-mode)
+;;   )
 ;;----------------------------------------------------------------------------
 ;; Show a marker in the left fringe for lines not in the buffer
 ;;----------------------------------------------------------------------------

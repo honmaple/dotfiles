@@ -4,10 +4,14 @@
 ;;; Without this comment emacs25 adds (package-initialize) here
 ;; (package-initialize); You may delete these explanatory comments.
 
+(defconst *at_home* nil)
+
 (let ((file-name-handler-alist nil))
   (setq gc-cons-threshold (* 128 1024 1024))
   (setq user-full-name "jianglin")
-  (setq user-mail-address "xiyang0807@gmail.com")
+  (setq user-mail-address "lin.jiang@upai.com")
+  (when *at_home*
+    (setq user-mail-address "xiyang0807@gmail.com"))
   (setq inhibit-startup-echo-area-message "jianglin")
 
   (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))

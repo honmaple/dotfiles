@@ -1,0 +1,8 @@
+*** My vim config
+
+    if you want to use,just
+    #+BEGIN_EXAMPLE
+    ln -s vim ~/.vim
+    #+END_EXAMPLE
+
+[[截图][https://raw.githubusercontent.com/honmaple/vim/master/screenshot.png]]

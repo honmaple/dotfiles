@@ -15,7 +15,6 @@
   :config
   (progn
     (fset 'evil-visual-update-x-selection 'ignore) ;;粘贴板
-    ;; (evil-set-initial-state 'sql-mode 'emacs)
     (evil-set-initial-state 'image-mode 'emacs)
     (evil-set-initial-state 'inferior-python-mode 'emacs)
 
@@ -97,6 +96,7 @@
     (setq evil-escape-inhibit-functions '(evil-visual-state-p evil-escape--is-magit-buffer))
     ))
 
+
 (use-package evil-mc
   :ensure t
   :defer t
@@ -107,7 +107,8 @@
   (progn
     (defhydra maple/evil-mc ()
       ("n" evil-mc-make-and-goto-next-match "next")
-      ("t" evil-mc-skip-and-goto-next-match "skip")
+      ("t" evil-mc-skip-and-goto-next-match "skip and next")
+      ("T" evil-mc-skip-and-goto-prev-match "skip and prev")
       ("p" evil-mc-make-and-goto-prev-match "prev")
       ("N" evil-mc-make-and-goto-prev-match "prev"))
     (define-key evil-visual-state-map (kbd "n") 'maple/evil-mc/body)
@@ -119,17 +120,6 @@
   :bind (:map evil-mc-key-map
               ("C-g" . evil-mc-undo-all-cursors)
               ))
-
-
-(use-package vimish-fold
-  :ensure t
-  :defer t
-  :bind (:map evil-visual-state-map
-              ("za" . vimish-fold)
-              :map evil-normal-state-map
-              ("zc" . vimish-fold-delete))
-  )
-
 
 (use-package expand-region
   :ensure t

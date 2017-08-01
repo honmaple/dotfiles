@@ -30,7 +30,7 @@
     (setq blog-admin-backend-new-post-with-same-name-dir nil) ;; create same-name directory with new post
     (setq blog-admin-backend-path "~/git/pelican")
     (setq blog-admin-backend-pelican-config-file "pelicanconf.py") ;; default assumes _config.ym
-    (setq blog-admin-backend-pelican-posts-dir "content/markdown") ;; default assumes _config.ym
+    (setq blog-admin-backend-pelican-posts-dir "content/org") ;; default assumes _config.ym
     (setq blog-admin-backend-pelican-drafts-dir "content/draft") ;; default assumes _config.ym
     (add-hook 'blog-admin-backend-after-new-post-hook 'find-file)
 
@@ -76,7 +76,10 @@
   :defer t
   :config
   (progn
-    (evil-set-initial-state 'youdao-dictionary-mode 'emacs)
+    ;; (evil-set-initial-state 'youdao-dictionary-mode 'emacs)
+    (maple/set-quit-key youdao-dictionary-mode-map)
+    ;; (evil-define-key 'normal youdao-dictionary-mode-map
+    ;;   (kbd "q") 'quit-window)
     (setq url-automatic-caching t
           ;; Set file path for saving search history
           youdao-dictionary-search-history-file (concat maple-cache-directory "youdao")

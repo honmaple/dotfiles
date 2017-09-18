@@ -31,6 +31,7 @@
 #+AUTHOR: honmaple
 #+DATE: %s
 #+CATEGORY:
+#+PROPERTY: MODIFIED
 #+PROPERTY: TAGS
 #+PROPERTY: SLUG %s
 #+PROPERTY: SUMMARY
@@ -40,6 +41,7 @@
 (defvar template-md-post "Title: %s
 Author: honmaple
 Date: %s
+Modified:
 Category:
 Tags:
 Slug: %s
@@ -47,10 +49,12 @@ Summary:
 "
   "template for pelican's markdown post")
 
+(defvar org-mode-dir nil)
+(defvar markdown-dir nil)
 (defvar posts-dir "source/posts")
 (defvar drafts-dir "source/drafts")
 (defvar config-file "pelicanconf.py"
-  "filename for nikola configuration file")
+  "filename for pelican configuration file")
 
 ;; pelican define
 
@@ -61,7 +65,7 @@ Summary:
           (lambda (append-path)
             "scan files with append-path"
             (directory-files (blog-admin-backend--full-path append-path) t "^[^.]*\\.\\(org\\|md\\|markdown\\)$"))
-          (list posts-dir drafts-dir)
+          (list org-mode-dir markdown-dir drafts-dir)
           )))
 
 (defun -is-in-drafts? (post)
@@ -87,10 +91,22 @@ Summary:
     (plist-put info :date (blog-admin-backend--format-datetime (plist-get info :date)))
     ))
 
+;; (defun -file-path (name in-drafts?)
+;;   (f-join (blog-admin-backend--full-path
+;;            (if in-drafts? drafts-dir
+;;              posts-dir))
+;;           name))
+
 (defun -file-path (name in-drafts?)
   (f-join (blog-admin-backend--full-path
            (if in-drafts? drafts-dir
-             posts-dir))
+             (cond ((s-ends-with? ".md" name) markdown-dir)
+                   ((s-ends-with? ".org" name) org-mode-dir)
+                   (posts-dir))
+             ;; (if (s-ends-with? ".md" name)
+             ;;     markdown-dir
+             ;;   org-mode-dir)
+             ))
           name))
 
 (defun -exchange-place (path)
@@ -136,7 +152,7 @@ Summary:
          (format
           (if (s-ends-with? ".org" filename) template-org-post template-md-post)
           (f-no-ext filename)
-          (format-time-string "%F" (current-time))
+          (format-time-string "%F %T" (current-time))
           (f-no-ext filename)
           ))
         (save-buffer)

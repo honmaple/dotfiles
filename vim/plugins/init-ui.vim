@@ -23,8 +23,8 @@ else
     set background=dark
     let g:solarized_termcolors=256
     let g:solarized_termtrans = 0
-    colorscheme molokai
-    " colorscheme solarized
+    " colorscheme molokai
+    colorscheme solarized
 endif
 " indentLine {
     " 用于显示对齐线

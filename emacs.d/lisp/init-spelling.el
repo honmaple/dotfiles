@@ -38,9 +38,4 @@
              flyspell-correct-previous-word-generic)
   )
 
-(use-package flyspell-correct-helm
-  :ensure t
-  :defer t)
-
-
 (provide 'init-spelling)

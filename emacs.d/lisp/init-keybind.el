@@ -20,7 +20,7 @@
   )
 
 (evil-leader/set-key
-  "cc" 'comment-or-uncomment-region-or-line
+  "cc" 'maple/comment-or-uncomment-region-or-line
   "ch" 'hide/show-comments-toggle ;;显示隐藏注释
   "/" 'helm-do-ag-this-file ;;当前文件内容
   "u"  'undo-tree-visualize
@@ -28,6 +28,8 @@
   "=" 'maple/indent-buffer
   "se" 'evil-mc-make-all-cursors
   "ss" 'replace-regexp
+  "sd" 'delete-matching-lines
+  "sD" 'delete-non-matching-lines
   "sj" 'helm-semantic-or-imenu
   "sp" 'flyspell-correct-word-generic
   "sh" 'shell-command
@@ -46,6 +48,7 @@
 (evil-leader/set-key
   "h" 'help
   "," 'helm-M-x
+  "rc" 'recentf-cleanup
   )
 
 (evil-leader/set-key
@@ -75,7 +78,8 @@
   "gs" 'magit-status
   "gb" 'magit-branch
   "gd" 'magit-diff
-  "gc" 'magit-checkout
+  "gD" 'magit-branch-delete
+  "gc" 'magit-branch-checkout
   "gt" 'git-timemachine
   )
 
@@ -123,7 +127,8 @@
 (evil-leader/set-key
   "<tab>" 'maple/switch-to-previous-buffer
   "TAB" 'maple/switch-to-previous-buffer
-  "bb" 'helm-mini  ;;显示缓冲区(已经打开的文件)
+  ;; "bb" 'helm-mini  ;;显示缓冲区(已经打开的文件)
+  "bb" 'helm-buffers-list  ;;显示缓冲区(已经打开的文件)
   "bd" 'kill-this-buffer
   "be" 'maple/safe-erase-buffer
   "bh" 'maple/switch-to-scratch-buffer
@@ -217,7 +222,11 @@
 (define-key evil-normal-state-map (kbd "H") (kbd "^"))
 (define-key evil-normal-state-map (kbd "L") (kbd "$"))
 (define-key evil-visual-state-map (kbd "H") (kbd "^"))
-(define-key evil-visual-state-map (kbd "L") (kbd "$"))
+;; (define-key evil-visual-state-map (kbd "L") (kbd "$"))
+(define-key evil-visual-state-map (kbd "L")
+  (lambda ()
+    (interactive)
+    (evil-end-of-line)))
 ;; (define-key evil-normal-state-map (kbd "RET") 'maple/evil-insert-line-below)
 (define-key evil-normal-state-map (kbd "S-<return>") 'maple/evil-insert-line-above)
 (define-key evil-visual-state-map (kbd "<")
@@ -233,6 +242,7 @@
     (evil-normal-state)
     (evil-visual-restore)))
 
+(global-set-key [f6] 'maple/indent-buffer)
 ;; (global-set-key (kbd "C-a") 'maple/smart-move-beginning-of-line)
 ;; (global-set-key (kbd "C-e") 'maple/backward-kill-word-or-region)
 (provide 'init-keybind)

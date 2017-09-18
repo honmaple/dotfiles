@@ -4,24 +4,20 @@
 
 (use-package epa
   :defer t
-  :config
-  (progn
-    (auto-encryption-mode -1)
-    ))
+  :config (auto-encryption-mode -1))
 
 (use-package quickrun
   :ensure t
   :defer t
-  :init
+  :config
   (progn
-    (after-load 'evil
-      (evil-set-initial-state 'quickrun--mode 'emacs))
+    (maple/set-quit-key quickrun--mode-map)
     (add-hook 'quickrun--mode-hook
               (lambda () (toggle-truncate-lines t)))
     ))
 
 (use-package blog-admin
-  :load-path "site-lisp/blog-admin/"
+  :load-path "site-lisp/blog-admin"
   :commands blog-admin-start
   :config
   (progn
@@ -29,9 +25,11 @@
     (setq blog-admin-backend-new-post-in-drafts t) ;; create new post in drafts by default
     (setq blog-admin-backend-new-post-with-same-name-dir nil) ;; create same-name directory with new post
     (setq blog-admin-backend-path "~/git/pelican")
-    (setq blog-admin-backend-pelican-config-file "pelicanconf.py") ;; default assumes _config.ym
-    (setq blog-admin-backend-pelican-posts-dir "content/org") ;; default assumes _config.ym
-    (setq blog-admin-backend-pelican-drafts-dir "content/draft") ;; default assumes _config.ym
+    (setq blog-admin-backend-pelican-config-file "pelicanconf.py")
+    (setq blog-admin-backend-pelican-posts-dir "content/org")
+    (setq blog-admin-backend-pelican-org-mode-dir "content/org")
+    (setq blog-admin-backend-pelican-markdown-dir "content/markdown")
+    (setq blog-admin-backend-pelican-drafts-dir "content/draft")
     (add-hook 'blog-admin-backend-after-new-post-hook 'find-file)
 
     (defun blog-set-face()
@@ -53,15 +51,17 @@
 (use-package imenu-list
   :ensure t
   :commands imenu-list-minor-mode
+  :evil-emacs imenu-list-major-mode
   :config
   (progn
-    (after-load 'evil
-      (evil-set-initial-state 'imenu-list-major-mode 'emacs))
     (setq imenu-list-focus-after-activation t
           imenu-list-auto-resize t
           imenu-list-mode-line-format "")
-    (setq imenu-create-index-function 'semantic-create-imenu-index)
+    (if (bound-and-true-p semantic-mode)
+        (setq imenu-create-index-function 'semantic-create-imenu-index))
     )
+  :custom-face
+  (imenu-list-entry-face-0 ((t (:foreground "#f92672"))))
   :bind (:map evil-leader--default-map
               ("bi" . imenu-list-minor-mode)
               :map imenu-list-major-mode-map
@@ -76,14 +76,9 @@
   :defer t
   :config
   (progn
-    ;; (evil-set-initial-state 'youdao-dictionary-mode 'emacs)
     (maple/set-quit-key youdao-dictionary-mode-map)
-    ;; (evil-define-key 'normal youdao-dictionary-mode-map
-    ;;   (kbd "q") 'quit-window)
     (setq url-automatic-caching t
-          ;; Set file path for saving search history
           youdao-dictionary-search-history-file (concat maple-cache-directory "youdao")
-          ;; Enable Chinese word segmentation support
           youdao-dictionary-use-chinese-word-segmentation t))
   )
 ;; (use-package cal-china-x
@@ -130,11 +125,7 @@
 
 (use-package 2048-game
   :ensure t
-  :config
-  (progn
-    (after-load 'evil
-      (evil-set-initial-state '2048-mode 'emacs))
-    ))
+  :evil-emacs 2048-mode)
 
 (use-package maple-macro
   :load-path "site-lisp/"
@@ -143,5 +134,9 @@
     (maple/search-engine "google"     "http://www.google.com/search?q="              "Google: ")
     (maple/search-engine "github"     "https://github.com/search?q="                 "Search GitHub: ")
     ))
+
+(use-package startify
+  :load-path "site-lisp/startify"
+  :init (add-hook 'emacs-startup-hook 'startify-mode))
 
 (provide 'init-tool)

@@ -1,37 +1,5 @@
-;;----------------------------------------------------------------------------
-;; Fix backward-up-list to understand quotes, see http://bit.ly/h7mdIL
-;;----------------------------------------------------------------------------
-(defun maple/open-line-with-reindent (n) ;; 跳转到原来的位置
-  "A version of `open-line' which reindents the start and end positions.
-  If there is a fill prefix and/or a `left-margin', insert them
-  on the new line if the line would have been blank.
-  With arg N, insert N newlines."
-  (interactive "*p")
-  (let* ((do-fill-prefix (and fill-prefix (bolp)))
-         (do-left-margin (and (bolp) (> (current-left-margin) 0)))
-         (loc (point-marker))
-         ;; Don't expand an abbrev before point.
-         (abbrev-mode nil))
-    (delete-horizontal-space t)
-    (newline n)
-    (indent-according-to-mode)
-    (when (eolp)
-      (delete-horizontal-space t))
-    (goto-char loc)
-    (while (> n 0)
-      (cond ((bolp)
-             (if do-left-margin (indent-to (current-left-margin)))
-             (if do-fill-prefix (insert-and-inherit fill-prefix))))
-      (forward-line 1)
-      (setq n (1- n)))
-    (goto-char loc)
-    (end-of-line)
-    (indent-according-to-mode)))
-
-(global-set-key (kbd "C-o") 'maple/open-line-with-reindent)
-
 ;; 注释
-(defun comment-or-uncomment-region-or-line ()
+(defun maple/comment-or-uncomment-region-or-line ()
   "Comments or uncomments the region or the current line if there's no active region."
   (interactive)
   (save-excursion
@@ -54,7 +22,6 @@
   (interactive)
   (load-file user-init-file))
 
-(global-set-key [f6] 'maple/indent-buffer)
 
 (use-package adaptive-wrap
   :ensure t
@@ -125,14 +92,6 @@
 
 ;; (use-package which-func
 ;;   :init (add-hook 'after-init-hook 'which-function-mode))
-
-(use-package dumb-jump
-  :ensure t
-  :defer t
-  :config (setq dumb-jump-selector 'helm)
-  :bind (:map evil-normal-state-map
-              ("gd" . dumb-jump-go-other-window)))
-
 
 (use-package eldoc
   :defer t

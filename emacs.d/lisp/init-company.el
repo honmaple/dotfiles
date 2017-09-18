@@ -5,8 +5,8 @@
   :init
   (progn
     (setq yas-triggers-in-field t
-          yas-wrap-around-region t
-          helm-yas-display-key-on-candidate t)
+          yas-wrap-around-region t)
+          ;; helm-yas-display-key-on-candidate t)
     (setq yas-prompt-functions '(yas-completing-prompt))
     (setq yas-minor-mode-map (make-sparse-keymap))
     (defun maple/load-yasnippet ()
@@ -73,12 +73,6 @@
             (company-dabbrev)
             ))
 
-    (custom-set-faces
-     '(company-tooltip-common
-       ((t (:inherit company-tooltip :weight bold :underline nil))))
-     '(company-tooltip-common-selection
-       ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
-
     (defvar company-mode/enable-yas t
       "Enable yasnippet for all backends.")
 
@@ -91,6 +85,11 @@
     (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
 
     )
+  :custom-face
+  (company-tooltip-common
+   ((t (:inherit company-tooltip :weight bold :underline nil))))
+  (company-tooltip-common-selection
+   ((t (:inherit company-tooltip-selection :weight bold :underline nil))))
   :bind (:map company-active-map
               ("C-/" . company-search-candidates)
               ("C-d" . company-show-doc-buffer)

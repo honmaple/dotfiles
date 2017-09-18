@@ -18,10 +18,12 @@
 ;;                                               "https://melpa.org/packages/")))
 (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
                          ("melpa" . "http://elpa.emacs-china.org/melpa/")
+                         ;; ("melpa-stable" . "http://stable.melpa.org/packages/")
                          ("org"   . "http://orgmode.org/elpa/")
                          ))
 
 (setq package-enable-at-startup nil)
+
 (package-initialize)
 
 (defun require-package (package &optional min-version no-refresh)
@@ -82,7 +84,11 @@ locate PACKAGE."
                 (package-delete  old-package)))))
       (message "All packages are up to date"))))
 
+
 (require-package 'use-package)
+
+(use-package evil-use-package
+  :load-path "site-lisp/use-package")
 
 (use-package package-utils
   :ensure t
@@ -99,7 +105,15 @@ locate PACKAGE."
 (use-package restart-emacs
   :ensure t
   :defer t)
-  ;; :config (setq restart-emacs-restore-frames t))
+;; :config (setq restart-emacs-restore-frames t))
+
+
+(use-package server
+  :defer t
+  :config
+  (unless (server-running-p)
+    (server-start)))
+
 
 ;;; Fire up package.el
 

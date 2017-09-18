@@ -33,7 +33,7 @@
               mouse-yank-at-point t
               save-interprogram-paste-before-kill t
               set-mark-command-repeat-pop t
-              tooltip-delay 1.5
+              tooltip-delay 1
               truncate-lines t
               truncate-partial-width-windows t
               ad-redefinition-action 'accept
@@ -54,8 +54,7 @@
     (setq bookmark-default-file (concat maple-cache-directory "bookmarks")
           ;; autosave each change
           bookmark-save-flag 1))
-  :bind (:map evil-leader--default-map
-              ("fb" . bookmark-jump)))
+  :evil-leader ("fb" 'bookmark-jump))
 
 ;;美化显示符号
 ;; (use-package global-prettify-symbols-mode
@@ -88,20 +87,24 @@
 
 (defun maple/show-init-time ()
   ;; 启动显示信息
-  (setq-default initial-scratch-message
-                (if (executable-find "fortune")
-                    (format
-                     ";; %s\n\n%s"
-                     (replace-regexp-in-string
-                      "\n" "\n;; " ; comment each line
-                      (replace-regexp-in-string
-                       "\n$" ""    ; remove trailing linebreak
-                       (shell-command-to-string
-                        "fortune -a | fmt -80 -s | cowsay -$(shuf -n 1 -e b d g p s t w y) -f $(shuf -n 1 -e $(cowsay -l | tail -n +2)) -n")))
-                     (concat ";; Happy hacking, " user-login-name " - Emacs ♥ you!\n\n")
-                     )))
-  (message "Emacs startup finished in %.2fms"
-           (* 1000.0 (float-time (time-subtract after-init-time before-init-time)))))
+  (setq initial-scratch-message
+        (if (executable-find "fortune")
+            (format
+             ";; %s\n\n%s"
+             (replace-regexp-in-string
+              "\n" "\n;; " ; comment each line
+              (replace-regexp-in-string
+               "\n$" ""    ; remove trailing linebreak
+               (shell-command-to-string
+                "fortune -a | fmt -80 -s | cowsay -$(shuf -n 1 -e b d g p s t w y) -f $(shuf -n 1 -e $(cowsay -l | tail -n +2)) -n")))
+             (concat ";; Happy hacking, " user-login-name " - Emacs ♥ you!\n\n")
+             )))
+  (message "Emacs startup finished in %.2fms with %s packages"
+           (* 1000.0 (float-time (time-subtract after-init-time before-init-time)))
+           (length load-path)
+           ;; (length package-selected-packages)
+           ))
+
 
 (add-hook 'after-init-hook 'maple/show-init-time)
 

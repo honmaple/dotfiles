@@ -79,6 +79,15 @@ SHELL is the SHELL function to use (i.e. when FUNC represents a terminal)."
       (kbd "C-k") 'term-send-up
       (kbd "C-j") 'term-send-down)
     ))
+  ;; :evil-bind
+  ;; (normal term-raw-map
+  ;;         "p" 'term-paste)
+  ;; (insert term-raw-map
+  ;;     (kbd "C-c C-d") 'term-send-eof
+  ;;     (kbd "C-c C-z") 'term-stop-subjob
+  ;;     (kbd "<tab>") 'term-send-tab
+  ;;     (kbd "C-k") 'term-send-up
+  ;;     (kbd "C-j") 'term-send-down))
 
 (use-package xterm-color
   :ensure t

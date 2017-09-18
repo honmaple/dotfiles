@@ -12,15 +12,15 @@
   :ensure t
   :defer t
   :mode ("\\.go\\'" . go-mode)
-  :init
-  (progn
-    (add-hook 'go-mode-hook
-              (lambda ()
-                (setq tab-width 4))
-              ))
+  :mode-setq
+  (go-mode
+   tab-width 4
+   indent-tabs-mode nil)
   :config
   (progn
-    (add-hook 'before-save-hook 'gofmt-before-save)))
+    (setq gofmt-show-errors nil)
+    (add-hook 'before-save-hook 'gofmt-before-save)
+    ))
 
 
 (use-package company-go

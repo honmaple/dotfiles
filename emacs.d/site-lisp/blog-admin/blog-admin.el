@@ -190,6 +190,7 @@ C   ... Jump to the config          F   ... Filter and show only rows with keywo
 (defun refresh ()
   "Refresh *Blog*"
   (interactive)
+  (setq -filter-keyword nil)
   (ctbl:cp-set-model blog-admin-table (-get-model)))
 
 (defun sort ()

@@ -2,12 +2,12 @@
   :ensure t
   :defer t
   :diminish flycheck-mode "ⓢ"
-  :init (add-hook 'after-init-hook 'global-flycheck-mode)
+  :init (add-hook 'after-init-hook #'global-flycheck-mode)
   :config
   (progn
     (setq flycheck-check-syntax-automatically '(save idle-change mode-enabled)
           flycheck-idle-change-delay 0.8)
-    (setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages)
+    (setq flycheck-display-errors-function #'flycheck-popup-tip-error-messages)
     (defvar syntax-checking-use-original-bitmaps nil
       "If non-nil, use the original bitmaps from flycheck.")
     (when (and (fboundp 'define-fringe-bitmap)
@@ -49,39 +49,34 @@
         :overlay-category 'flycheck-info-overlay
         :fringe-bitmap bitmap
         :fringe-face 'flycheck-fringe-info))
-    ))
+    (defun maple/toggle-flycheck-error-list ()
+      "Toggle flycheck's error list window.
+    If the error list is visible, hide it.  Otherwise, show it."
+      (interactive)
+      (-if-let (window (flycheck-get-error-list-window))
+          (quit-window nil window)
+        (flycheck-list-errors))))
+  :evil-bind
+  (normal flycheck-error-list-mode-map
+          "q" 'quit-window
+          "j" #'flycheck-error-list-next-error
+          "k" #'flycheck-error-list-previous-error
+          "K" #'evil-previous-line
+          "J" #'evil-next-line
+          (kbd "RET") #'flycheck-error-list-goto-error))
 
 
 ;; 显示tooltip
-(use-package flycheck-pos-tip
+(use-package flycheck-popup-tip
   :ensure t
   :after flycheck
   :defer t
-  :init
-  (progn
-    (after-load 'flycheck
-      (flycheck-pos-tip-mode)
-      (evil-define-key 'normal flycheck-error-list-mode-map
-        "q" 'quit-window
-        "j" #'flycheck-error-list-next-error
-        "k" #'flycheck-error-list-previous-error
-        "K" #'evil-previous-line
-        "J" #'evil-next-line
-        (kbd "RET") #'flycheck-error-list-goto-error))
-    (push '("^\\*Flycheck.+\\*$"
-            :regexp t
-            :dedicated t
-            :position bottom
-            :stick t
-            :noselect t)
-          popwin:special-display-config)
-    ))
+  :init (flycheck-popup-tip-mode))
 
-(defun maple/toggle-flycheck-error-list ()
-  "Toggle flycheck's error list window.
-    If the error list is visible, hide it.  Otherwise, show it."
-  (interactive)
-  (-if-let (window (flycheck-get-error-list-window))
-      (quit-window nil window)
-    (flycheck-list-errors)))
+;; (use-package flycheck-pos-tip
+;;   :ensure t
+;;   :after flycheck
+;;   :defer t )
+
+
 (provide 'init-flycheck)

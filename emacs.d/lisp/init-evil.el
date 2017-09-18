@@ -2,8 +2,9 @@
 (use-package evil-leader
   :ensure t
   :defer t
-  :init (global-evil-leader-mode)
-  ;; :init (add-hook 'after-init-hook #'global-evil-leader-mode)
+  ;; :init (global-evil-leader-mode)
+  ;; :hook (after-init . global-evil-leader-mode)
+  :init (add-hook 'after-init-hook #'global-evil-leader-mode)
   :config (evil-leader/set-leader ","))
 
 
@@ -16,18 +17,7 @@
   (progn
     (fset 'evil-visual-update-x-selection 'ignore) ;;粘贴板
     (evil-set-initial-state 'image-mode 'emacs)
-    (evil-set-initial-state 'inferior-python-mode 'emacs)
-
     (add-hook 'view-mode-hook #'evil-emacs-state)
-
-    (setq evil-insert-state-cursor '((bar . 2) "chartreuse3")
-          evil-normal-state-cursor '(box "DarkGoldenrod2")
-          evil-visual-state-cursor '((hbox . 2) "gray")
-          evil-emacs-state-cursor '(box "SkyBlue2")
-          evil-replace-state-cursor '((hbox . 2) "chocolate"))
-    (custom-set-faces
-     '(region ((t (:background "#66d9ef" :foreground "#272822")))))
-
     ;; (defun evil-paste-after-from-0 ()
     ;;   (interactive)
     ;;   (let ((evil-this-register ?0))
@@ -45,6 +35,13 @@
     ;; (add-hook 'focus-out-hook (lambda () (save-some-buffers t)))
     ;; (add-hook 'evil-insert-state-exit-hook 'my-save-if-bufferfilename)
     )
+  :custom
+  (evil-insert-state-cursor '((bar . 2) "chartreuse3"))
+  (evil-normal-state-cursor '(box "DarkGoldenrod2"))
+  (evil-visual-state-cursor '((hbox . 2) "gray"))
+  (evil-emacs-state-cursor '(box "SkyBlue2"))
+  (evil-replace-state-cursor '((hbox . 2) "chocolate"))
+  :custom-face (region ((t (:background "#66d9ef" :foreground "#272822"))))
   :bind (:map evil-normal-state-map
               ("C-k" . evil-scroll-up)
               ("C-j" . evil-scroll-down)))
@@ -52,13 +49,11 @@
 (use-package evil-surround
   :ensure t
   :defer t
-  ;; (global-evil-surround-mode 1)
   :init (add-hook 'after-init-hook #'global-evil-surround-mode)
-  :config
-  (progn
-    (evil-define-key 'visual evil-surround-mode-map "s" 'evil-surround-region)
-    (evil-define-key 'visual evil-surround-mode-map "S" 'evil-substitute)
-    ))
+  :evil-bind
+  (visual evil-surround-mode-map
+          "s" 'evil-surround-region
+          "S" 'evil-substitute))
 
 (use-package evil-matchit
   :ensure t
@@ -101,7 +96,6 @@
   :ensure t
   :defer t
   :diminish evil-mc-mode "ⓒ"
-  ;; :init (global-evil-mc-mode t)
   :init (add-hook 'after-init-hook #'global-evil-mc-mode)
   :config
   (progn
@@ -111,15 +105,16 @@
       ("T" evil-mc-skip-and-goto-prev-match "skip and prev")
       ("p" evil-mc-make-and-goto-prev-match "prev")
       ("N" evil-mc-make-and-goto-prev-match "prev"))
-    (define-key evil-visual-state-map (kbd "n") 'maple/evil-mc/body)
     ;; (setq evil-mc-enable-bar-cursor nil)
-    (custom-set-faces
-     '(evil-mc-cursor-default-face ((t (:inherit cursor :background "firebrick1" :inverse-video nil))))
-     '(hydra-face-red ((t (:foreground "chocolate" :weight bold)))))
-    (evil-define-key 'normal evil-mc-key-map (kbd "<escape>") 'evil-mc-undo-all-cursors))
+    (define-key evil-visual-state-map (kbd "n") 'maple/evil-mc/body))
+  :custom-face
+  (evil-mc-cursor-default-face ((t (:inherit cursor :background "firebrick1" :inverse-video nil))))
+  (hydra-face-red ((t (:foreground "chocolate" :weight bold))))
   :bind (:map evil-mc-key-map
-              ("C-g" . evil-mc-undo-all-cursors)
-              ))
+              ("C-g" . evil-mc-undo-all-cursors))
+  :evil-bind
+  (normal evil-mc-key-map
+          (kbd "<escape>") 'evil-mc-undo-all-cursors))
 
 (use-package expand-region
   :ensure t

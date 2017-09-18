@@ -38,4 +38,17 @@
             (concat dired-omit-files "\\|^\\..+$\\|\\.pdf$\\|\\.tex$\\|\\*~$")))
     (add-hook 'dired-mode-hook 'maple/set-dired)
     ))
+
+(use-package image-dired
+  :commands image-dired
+  :config (setq image-dired-thumbnail-storage 'standard)
+  :evil-bind
+  (normal image-dired-thumbnail-mode-map
+          "j"  'image-dired-next-line
+          "k"  'image-dired-previous-line
+          "l"  'image-dired-forward-image
+          "h"  'image-dired-backward-image
+          "q"  'image-dired-kill-buffer-and-window
+          (kbd "RET") 'image-dired-display-thumbnail-original-image))
+
 (provide 'init-dired)

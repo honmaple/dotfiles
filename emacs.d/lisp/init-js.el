@@ -5,11 +5,11 @@
   ("\\.js\\'" . js2-mode)
   :config
   (progn
-    (setq-default js2-basic-offset 2
+    (setq-default js2-basic-offset 4
                   js2-bounce-indent-p nil)
     (setq-default js2-mode-show-parse-errors nil
                   js2-mode-show-strict-warnings nil)
-    (setq-default js-indent-level 2)
+    (setq-default js-indent-level 4)
     (add-hook 'js2-mode-hook 'js2-imenu-extras-mode)
     ))
 

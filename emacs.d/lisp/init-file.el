@@ -4,8 +4,8 @@
   (progn
     ;; lazy load recentf
     (add-hook 'find-file-hook (lambda () (unless recentf-mode
-                                      (recentf-mode)
-                                      (recentf-track-opened-file))))
+                                           (recentf-mode)
+                                           (recentf-track-opened-file))))
 
     (setq recentf-save-file (concat maple-cache-directory "recentf")
           recentf-max-saved-items 100
@@ -41,7 +41,7 @@
   (progn
     (if (fboundp 'save-place-mode)
         ;; Emacs 25 has a proper mode for `save-place'
-        (save-place-mode)
+        (add-hook 'after-init-hook #'save-place-mode)
       (setq save-place t))
     ;; Save point position between sessions
     (setq save-place-file (concat maple-cache-directory "places"))))
@@ -51,12 +51,13 @@
   :ensure t
   :defer t
   :commands neo-global--window-exists-p
+  :evil-emacs neotree-mode
   :config
   (progn
     (setq
      neo-create-file-auto-open t
      neo-banner-message "Press ? for neotree help"
-     neo-show-updir-line nil
+     neo-show-updir-line t
      neo-mode-line-type 'neotree
      neo-smart-open t
      neo-dont-be-alone t
@@ -65,7 +66,11 @@
      neo-auto-indent-point t
      neo-modern-sidebar t
      neo-vc-integration nil)
-    (evil-set-initial-state 'neotree-mode 'emacs)
+    (when neo-persist-show
+      (add-hook 'popwin:before-popup-hook
+                (lambda () (setq neo-persist-show nil)))
+      (add-hook 'popwin:after-popup-hook
+                (lambda () (setq neo-persist-show t))))
     )
   :bind (([f2] . neotree-toggle)
          :map neotree-mode-map
@@ -88,6 +93,7 @@
 
 (use-package undo-tree
   :defer t
+  :after evil
   :init
   (progn
     (add-hook 'after-init-hook #'global-undo-tree-mode)

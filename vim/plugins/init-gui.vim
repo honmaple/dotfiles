@@ -85,7 +85,7 @@ function! NumberToggle()
     else
         set relativenumber
     endif
-endfunc
+endfunction
 set scrolloff=10                "在上下移动光标时，光标的上方或下方至少会保留显示的行数
 set showmatch                   "高亮显示匹配的括号
 set incsearch                   "在输入要搜索的文字时，实时匹配

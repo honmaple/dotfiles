@@ -10,6 +10,7 @@
   (setq gc-cons-threshold (* 128 1024 1024))
   (setq user-full-name "jianglin")
   (setq user-mail-address "lin.jiang@upai.com")
+  (setq user-default-theme 'monokai)
   (when *at_home*
     (setq user-mail-address "xiyang0807@gmail.com"))
   (setq inhibit-startup-echo-area-message "jianglin")
@@ -49,11 +50,7 @@
   (defconst *system-is-mswindows* (eq system-type 'windows-nt))
   (defconst *common* t)
   (defconst *develop* t)
-  ;; (defun maple/show-init-time ()
-  ;;   (message "Emacs load finished in %.2fms"
-  ;;            (* 1000.0 (float-time (time-subtract after-init-time before-init-time)))))
 
-  ;; (add-hook 'after-init-hook 'maple/show-init-time)
   (when *common*
     (require 'init-fonts)
     (require 'init-ui)  ;; modeline,which-key
@@ -73,6 +70,7 @@
     (require 'init-auto-insert)  ;;自动插入文件头
 
     (require 'init-helm)
+    ;; (require 'init-ivy)
     (require 'init-dired)   ;;自带文件管理
     (require 'init-file)   ;;文件操作
     (require 'init-buffer)   ;;buffer操作
@@ -99,7 +97,8 @@
     (require 'init-tool)
     )
 
-  (require 'init-keybind)
+  (after-load 'evil-leader
+    (require 'init-keybind))
 
   ;;----------------------------------------------------------------------------
   ;; Variables configured via the interactive 'customize' interface
@@ -112,10 +111,6 @@
 ;;----------------------------------------------------------------------------
 ;; Allow access from emacsclient
 ;;----------------------------------------------------------------------------
-(require 'server)
-(unless (server-running-p)
-  (server-start))
-
 
 (provide 'init)  
 

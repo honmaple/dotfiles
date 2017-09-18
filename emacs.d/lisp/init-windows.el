@@ -54,7 +54,39 @@
 
 (use-package popwin
   :ensure t
-  :config (popwin-mode 1))
+  :config
+  (progn
+    (popwin-mode 1)
+    (mapc (lambda (buffer)
+            (push '(buffer
+                    :dedicated t
+                    :position bottom
+                    :stick t
+                    :noselect t
+                    :height 0.4)
+                  popwin:special-display-config)
+            )
+          '("*compilation*"
+            " *undo-tree*"
+            "*Compile-Log*"))
+    (mapc (lambda (buffer)
+            (push '(buffer
+                    :dedicated t
+                    :position bottom
+                    :stick t
+                    :noselect t)
+                  popwin:special-display-config)
+            )
+          '("*Shell Command Output*"
+            "*Async Shell Command*"
+            ))
+    (push '("^\\*Flycheck.+\\*$"
+            :regexp t
+            :dedicated t
+            :position bottom
+            :stick t)
+          popwin:special-display-config)
+    ))
 
 (use-package golden-ratio  ;;黄金分割
   :ensure t

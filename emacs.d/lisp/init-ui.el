@@ -1,7 +1,11 @@
 (use-package monokai-theme
   :ensure t
-  :defer t
-  :init (add-hook 'after-init-hook (lambda () (load-theme 'monokai t))))
+  :defer t)
+;; :init (add-hook 'after-init-hook (lambda () (load-theme 'monokai t))))
+
+(use-package solarized-theme
+  :ensure t
+  :defer t)
 
 (use-package spacemacs-theme
   :ensure t
@@ -13,11 +17,7 @@
   :defer t)
 ;; :init (add-hook 'after-init-hook (lambda () (load-theme 'doom-monokai t))))
 
-;; (use-package doom-theme
-;;   :ensure t
-;;   :disabled
-;;   :defer t
-;;   :init (add-hook 'after-init-hook (lambda () (load-theme 'doom-monokai t))))
+(add-hook 'after-init-hook (lambda () (load-theme user-default-theme t)))
 
 ;; (use-package color-theme-approximate
 ;;   :ensure t
@@ -65,8 +65,9 @@
   :config
   (progn
     ;; (setq maple-cycle-themes (mapcar 'symbol-name (custom-available-themes)))
-    (setq maple-cycle-themes (delete "doom-one-light"
-                                     (mapcar 'symbol-name (custom-available-themes))))
+    ;; (setq maple-cycle-themes (delete "doom-one-light"
+    ;;                                  (mapcar 'symbol-name (custom-available-themes))))
+    (setq maple-cycle-themes '("monokai" "spacemacs-dark" "solarized-light" "solarized-dark" "doom-molokai" "doom-one"))
     (defun maple/cycle-theme (num)
       (interactive)
       (setq maple-current-theme-index
@@ -96,20 +97,22 @@
 
 (use-package which-key
   :ensure t
-  :defer t
-  :init (add-hook 'after-init-hook #'which-key-mode)
   :diminish which-key-mode
+  :defer t
+  ;; :init (add-hook 'after-init-hook #'which-key-mode)
+  :hook (after-init . which-key-mode)
+  :custom
+  (which-key-special-keys nil)
+  (which-key-use-C-h-for-paging t)
+  (which-key-prevent-C-h-from-cycling t)
+  (which-key-echo-keystrokes 0.02)
+  (which-key-max-description-length 32)
+  (which-key-sort-order 'which-key-key-order-alpha)
+  (which-key-idle-delay 0.2)
+  (which-key-allow-evil-operators t)
   :config
   (progn
     (which-key-setup-side-window-bottom)
-    (setq which-key-special-keys nil
-          which-key-use-C-h-for-paging t
-          which-key-prevent-C-h-from-cycling t
-          which-key-echo-keystrokes 0.02
-          which-key-max-description-length 32
-          which-key-sort-order 'which-key-key-order-alpha
-          which-key-idle-delay 0.2
-          which-key-allow-evil-operators t)
     (which-key-add-key-based-replacements
       ",f" "file"
       ",b" "buffer"
@@ -171,8 +174,7 @@
   :config
   (progn
     ;; 高亮括号配对
-    (show-paren-mode 1)
-    )
+    (show-paren-mode 1))
   :diminish rainbow-delimiters-mode)
 
 ;; 颜色
@@ -197,6 +199,48 @@
       (add-hook hook 'highlight-symbol-mode)
       (add-hook hook 'highlight-symbol-nav-mode))
     (add-hook 'org-mode-hook 'highlight-symbol-nav-mode)))
+
+(use-package volatile-highlights
+  :ensure t
+  :diminish volatile-highlights-mode
+  :config
+  (progn
+    ;; additional extensions
+    ;; evil
+    (after-load 'evil
+      (vhl/define-extension 'evil
+                            'evil-move
+                            'evil-paste-after
+                            'evil-paste-before
+                            'evil-paste-pop)
+      (vhl/install-extension 'evil))
+    ;; undo-tree
+    (after-load 'undo-tree
+      (vhl/define-extension 'undo-tree
+                            'undo-tree-move
+                            'undo-tree-yank)
+      (vhl/install-extension 'undo-tree))
+    (volatile-highlights-mode))
+  :custom-face (vhl/default-face ((t (:background "Springgreen3" :foreground "#272822")))))
+
+;; 高亮当前括号
+(use-package highlight-parentheses
+  :ensure t
+  :diminish highlight-parentheses-mode
+  :init (add-hook 'prog-mode-hook #'highlight-parentheses-mode)
+  :config
+  (progn
+    (setq hl-paren-delay 0.2)
+    (setq hl-paren-colors '("Springgreen3"
+                            "IndianRed1"
+                            "IndianRed3"))
+    (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold)
+    ))
+
+;; (use-package col-highlight
+;;   :defer t
+;;   :init (add-hook 'after-init-hook #'column-highlight-mode)
+;;   :config (set-face-background col-highlight-face "#3c3d37"))
 
 ;; 显示缩进
 ;; (use-package highlight-indentation

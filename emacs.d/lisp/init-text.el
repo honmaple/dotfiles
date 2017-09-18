@@ -5,6 +5,7 @@
 
 (use-package markdown-mode
   :ensure t
+  :diminish orgtbl-mode
   :mode ("\\.m[k]d" . markdown-mode)
   :defer t
   :config
@@ -23,6 +24,7 @@
 
 ;; (use-package markdown-preview-mode
 ;;   :load-path "site-lisp/markdown-preview/")
+
 ;; (use-package olivetti
 ;;   :defer t
 ;;   :init (add-hook 'org-mode-hook 'olivetti-mode))

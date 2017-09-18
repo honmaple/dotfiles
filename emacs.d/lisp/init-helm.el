@@ -13,6 +13,7 @@
   :config
   (progn
     (setq helm-prevent-escaping-from-minibuffer t
+          helm-allow-mouse t
           helm-bookmark-show-location t
           helm-display-header-line nil
           helm-split-window-in-side-p t
@@ -20,6 +21,7 @@
           helm-echo-input-in-header-line t
           helm-imenu-execute-action-at-once-if-one nil
           helm-org-format-outline-path t
+          helm-display-buffer-height 12
           helm-move-to-line-cycle-in-source     t
           helm-grep-save-buffer-name-no-confirm t)
     ;;模糊搜索
@@ -31,11 +33,46 @@
           helm-recentf-fuzzy-match t
           helm-semantic-fuzzy-match t
           helm-buffers-fuzzy-matching t)
-    (defun maple/hide-cursor-in-helm-buffer ()
+
+    (defun maple/helm-hide-mode-line ()
+      "Hide mode line in `helm-buffer'."
+      (fset 'helm-display-mode-line #'ignore)
+      (with-helm-buffer
+        (setq-local mode-line-format nil)))
+
+    (defun maple/helm-hide-cursor ()
       "Hide the cursor in helm buffers."
       (with-helm-buffer
         (setq cursor-in-non-selected-windows nil)))
-    (add-hook 'helm-after-initialize-hook 'maple/hide-cursor-in-helm-buffer)
+
+    (defun maple/helm-hide-header-line ()
+      "Hide the `helm' header if there is only one source."
+      (if (> (length helm-sources) 1)
+          (set-face-attribute
+           'helm-source-header
+           nil
+           :foreground (face-attribute 'helm-source-header :foreground)
+           :background (face-attribute 'helm-source-header :background)
+           :box  (face-attribute 'helm-source-header :box)
+           :height (face-attribute 'helm-source-header :height))
+        (set-face-attribute
+         'helm-source-header
+         nil
+         :foreground (face-attribute 'default :background)
+         :background (face-attribute 'default :background)
+         :box nil
+         :height 0.1)))
+    (add-hook 'helm-minibuffer-set-up-hook
+              #'helm-hide-minibuffer-maybe)
+    (add-hook 'helm-before-initialize-hook 'maple/helm-hide-header-line)
+    (add-hook 'helm-after-initialize-hook 'maple/helm-hide-cursor)
+    ;; (add-hook 'helm-after-initialize-hook 'maple/helm-hide-mode-line)
+
+    ;; (defun helm-toggle-header-line ()
+    ;;   (if (= (length helm-sources) 1)
+    ;;       (set-face-attribute 'helm-source-header nil :height 0.1)
+    ;;     (set-face-attribute 'helm-source-header nil :height 1.0)))
+    ;; (add-hook 'helm-before-initialize-hook 'helm-toggle-header-line)
     (helm-mode 1)
     )
   :bind (("M-x" . helm-M-x)

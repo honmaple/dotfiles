@@ -141,6 +141,6 @@ ${else}${voffset 8}${color0}${font ConkyColors:size=15}q${font}${color}${goto 32
 ##################
 # http://www.weather.com.cn/
 ${voffset -8}${font WenQuanYi Micro Hei:style=Bold:size=8}天气 $stippled_hr${font}
-${if_gw}${execpi 300 ~/.conkycolors/bin/weather 101191101 realtime}
+${if_gw}${execpi 300 ~/.conkycolors/bin/weather 101210101 realtime}
 ${execpi 1800 ~/.conkycolors/bin/weather 101191101 sixdays}
 ${else}${voffset 8}${color0}${font ConkyColors:size=15}q${font}${color}${voffset -8}${goto 32}天气信息不可用${voffset 14}${endif}

@@ -43,13 +43,9 @@
   :defer t
   ;; 保存时自动格式化
   ;; :init (add-hook 'python-mode-hook 'yapf-mode)
-  :init
-  (progn
-    (after-load 'evil
-      (evil-define-key 'normal python-mode-map
-        (kbd "<f6>") 'yapfify-buffer)
-      )
-    ))
+  :evil-bind
+  (normal python-mode-map
+          (kbd "<f6>") 'yapfify-buffer))
 
 (use-package pyvenv
   :ensure t
@@ -57,7 +53,8 @@
 
 (use-package anaconda-mode
   :ensure t
-  :defer t
+  :diminish anaconda-mode
+  :evil-emacs (inferior-python-mode anaconda-mode-view-mode)
   :init
   (progn
     (setq anaconda-mode-installation-directory
@@ -65,24 +62,21 @@
     (add-hook 'python-mode-hook 'anaconda-mode)
     (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
     )
-  :diminish anaconda-mode
   :config
   (progn
     (defadvice anaconda-mode-goto (before python/anaconda-mode-goto activate)
       (evil--jumps-push))
-    (evil-define-key 'normal anaconda-mode-map
-      (kbd "gd") 'anaconda-mode-find-assignments)
-    (evil-define-key 'normal anaconda-mode-view-mode-map
-      (kbd "q") 'quit-window)
-    ))
+    ;; (maple/set-quit-key anaconda-mode-view-mode-map)
+    )
+  :evil-bind
+  (normal anaconda-mode-map
+          (kbd "gd") 'anaconda-mode-find-assignments))
 
 
 (use-package company-anaconda
   :ensure t
   :after anaconda-mode
-  :init
-  (progn
-    (maple/add-to-company-backend 'company-anaconda 'python-mode-hook)))
+  :init (maple/add-to-company-backend 'company-anaconda 'python-mode-hook))
 
 
 ;; (use-package elpy

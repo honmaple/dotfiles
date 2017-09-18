@@ -3,87 +3,47 @@
   :init (auto-insert-mode)
   :config
   (progn
+    (defun maple//insert-string()
+      (concat
+       (make-string 80 ?*)
+       "\n"
+       "Copyright © " (substring (current-time-string) -4) " " (user-full-name) "\n"
+       "File Name: " (file-name-nondirectory buffer-file-name) "\n"
+       "Author: " (user-full-name)"\n"
+       "Email: " user-mail-address "\n"
+       "Created: " (format-time-string "%Y-%m-%d %T (%Z)" (current-time)) "\n"
+       "Last Update: \n"
+       "         By: \n"
+       "Description: \n"
+       (make-string 80 ?*)))
+
+    (defun maple/insert-string(&optional prefix)
+      (or prefix (setq prefix comment-start))
+      (mapconcat
+       (lambda (x) (concat prefix x))
+       (split-string (maple//insert-string) "\n") "\n"))
+
     (setq auto-insert-query nil)
     (setq auto-insert-alist
           '(((ruby-mode . "Ruby program") nil
              "#!/usr/bin/env ruby\n"
              "# -*- encoding: utf-8 -*-\n"
-             "# **************************************************************************\n"
-             "# Copyright © " (substring (current-time-string) -4) " " (user-full-name) "\n"
-             "# File Name:" (file-name-nondirectory buffer-file-name) "\n"
-             "# Author: " (user-full-name)"\n"
-             "# Email: " user-mail-address "\n"
-             "# Created: " (format-time-string "%Y-%m-%d %T (%Z)" (current-time)) "\n"
-             "# Last Update: \n"
-             "#          By: \n"
-             "# Description: \n"
-             "# **************************************************************************\n")
+             (maple/insert-string) "\n")
             ((python-mode . "Python program") nil
              "#!/usr/bin/env python\n"
              "# -*- coding: utf-8 -*-\n"
-             "# **************************************************************************\n"
-             "# Copyright © " (substring (current-time-string) -4) " " (user-full-name) "\n"
-             "# File Name: " (file-name-nondirectory buffer-file-name) "\n"
-             "# Author: " (user-full-name)"\n"
-             "# Email: " user-mail-address "\n"
-             "# Created: " (format-time-string "%Y-%m-%d %T (%Z)" (current-time)) "\n"
-             "# Last Update: " (format-time-string "%Y-%m-%d %T (%Z)" (current-time)) "\n"
-             "#          By: \n"
-             "# Description: \n"
-             "# **************************************************************************\n")
+             (maple/insert-string) "\n")
             ((c-mode . "C program") nil
-             "/**************************************************************************\n"
-             " Copyright © " (substring (current-time-string) -4) " " (user-full-name) "\n"
-             " File Name: " (file-name-nondirectory buffer-file-name) "\n"
-             " Author: " (user-full-name)"\n"
-             " Email: " user-mail-address "\n"
-             " Created: " (format-time-string "%Y-%m-%d %T (%Z)" (current-time)) "\n"
-             " Last Update: \n"
-             "           By: \n"
-             " Description: \n"
-             " **************************************************************************/\n"
+             "/*"
+             (string-trim-left (maple/insert-string " ")) "*/\n"
              "#include<stdio.h>\n"
              "#include<string.h>\n")
             ((sh-mode . "Shell script") nil
              "#!/bin/bash\n"
-             "#**************************************************************************\n"
-             "#Copyright © " (substring (current-time-string) -4) " " (user-full-name) "\n"
-             "#File Name: " (file-name-nondirectory buffer-file-name) "\n"
-             "#Author: " (user-full-name)"\n"
-             "#Email: " user-mail-address "\n"
-             "#Created: " (format-time-string "%Y-%m-%d %T (%Z)" (current-time)) "\n"
-             "#Last Update: \n"
-             "#          By: \n"
-             "#Description: \n"
-             "#**************************************************************************/\n")
-            ;; ((org-mode . "org-mode") nil
-            ;;  "#+TITLE: " (file-name-base buffer-file-name)"\n"
-            ;;  "#+DATE: " (format-time-string "%F" (current-time)) "\n"
-            ;;  "#+CATEGORY: \n"
-            ;;  "#+AUTHOR: " (user-full-name)"\n"
-            ;;  "#+PROPERTY: TAGS \n"
-            ;;  "#+PROPERTY: LANGUAGE en\n"
-            ;;  "#+PROPERTY: SUMMARY \n"
-            ;;  "#+PROPERTY: SLUG \n"
-            ;;  "#+PROPERTY: MODIFIED \n"
-            ;;  "#+PROPERTY: SAVE_AS \n")
-            ;; ((markdown-mode . "Markdown") nil
-            ;;  "Title: " (file-name-base buffer-file-name) "  \n"
-            ;;  "Author: honmaple   \n"
-            ;;  "Date: " (format-time-string "%F" (current-time)) "\n"
-            ;;  "Category:   \n"
-            ;;  "Tags:   \n"
-            ;;  "Slug: " (file-name-base buffer-file-name) "  \n"
-            ;;  "Summary: ")
-            ((rst-mode . "reStructuredText") nil
-             (file-name-nondirectory buffer-file-name) "  \n"
-             "##############\n"
-             ":author: honmaple   \n"
-             ":date: " (format-time-string "%F" (current-time)) "\n"
-             ":category:   \n"
-             ":tags:   \n"
-             ":slug: " (file-name-nondirectory buffer-file-name) "  \n"
-             ":summary: ")))
+             (maple/insert-string) "\n")
+            ((go-mode . "Go program") nil
+             "/*"
+             (string-trim-left (maple/insert-string " ")) "*/\n")))
     )
   )
 
@@ -91,14 +51,28 @@
 (use-package time-stamp
   :defer t
   :init (add-hook 'before-save-hook 'time-stamp)
+  :mode-setq
+  (org-mode
+   time-stamp-start "MODIFIED[ \t]*?"
+   time-stamp-format " %Y-%02m-%02d %02H:%02M:%02S")
+  (markdown-mode
+   time-stamp-start "Modified[ \t]*:?")
   :config
   (progn
     (setq time-stamp-active t)
     (setq time-stamp-line-limit 11)
     (setq time-stamp-start "[lL]ast[ -][uU]pdate[ \t]*:?")
     (setq time-stamp-end "\n")
-    (setq time-stamp-format "%#A %Y-%:m-%:d %:H:%:M:%:S (%Z)")
+    (setq time-stamp-format " %#A %Y-%02m-%02d %02H:%02M:%02S (%Z)")
     ))
+
+(use-package header
+  :load-path "site-lisp/header"
+  :config
+  (progn
+    (setq maple//header-update-filename t
+          maple//header-update-email nil)
+    (add-hook 'before-save-hook 'maple/header-auto-update)))
 
 (provide 'init-auto-insert)
 

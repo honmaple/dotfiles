@@ -33,6 +33,7 @@
     (setq org-html-checkbox-type 'html)
     (setq org-image-actual-width '(600))
     (setq org-export-with-sub-superscripts (quote {}))
+    (setq org-descriptive-links nil) ;; 不要锁定连接，保持原样
     (after-load 'org
       (setq org-match-substring-regexp
             (concat
@@ -75,20 +76,20 @@
     (defadvice org-open-at-point (after org-open-at-point activate)
       (while (>  (count-windows) 2)
         (delete-window (cadr (window-list-1)))))
-
     ;; (defadvice org-toggle-inline-images (after org-toggle-inline-images activate)
     ;;   (if smooth-scrolling-mode (smooth-scrolling-mode -1)
     ;;     (smooth-scrolling-mode 1)))
-
-    (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point)
-    (evil-define-key 'normal org-mode-map (kbd "t") 'org-todo)
-    ;; (evil-define-key 'normal org-mode-map (kbd "V") 'evil-visual-state)
-    (evil-define-key 'normal org-mode-map (kbd "TAB") 'org-cycle)
-    (evil-define-key 'normal org-mode-map (kbd "<tab>") 'org-cycle))
+    )
   :bind (("C-c c" . org-capture)
          ("C-c a" . org-agenda)
          ("C-c b" . org-iswitchb)
-         ("C-c l" . org-store-link)))
+         ("C-c l" . org-store-link))
+  :evil-bind
+  (normal org-mode-map
+          "RET" 'org-open-at-point
+          "t" 'org-todo
+          "TAB" 'org-cycle
+          "<tab>" 'org-cycle))
 
 
 (use-package org-capture

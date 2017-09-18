@@ -11,10 +11,11 @@
     (defun sanityinc/font-lock-everything-in-sql-interactive-mode ()
       (unless (eq 'oracle sql-product)
         (sql-product-font-lock nil nil)))
-    (when (featurep 'evil) (evil-set-initial-state 'sql-interactive-mode 'insert))
+    ;; (when (featurep 'evil) (evil-set-initial-state 'sql-interactive-mode 'insert))
     (add-hook 'sql-interactive-mode-hook 'sanityinc/font-lock-everything-in-sql-interactive-mode)
     (add-hook 'sql-interactive-mode-hook 'maple/close-process)
-    ))
+    )
+  :evil-emacs sql-interactive-mode)
 
 
 (use-package sql-indent

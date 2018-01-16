@@ -4,7 +4,16 @@
   :defer t
   ;; :init (global-evil-leader-mode)
   ;; :hook (after-init . global-evil-leader-mode)
-  :init (add-hook 'after-init-hook #'global-evil-leader-mode)
+  :init
+  (progn
+    (add-hook 'after-init-hook #'global-evil-leader-mode)
+    (defun maple/set-leader-for-startup-buffers ()
+      "Set the leader mode for buffers created when Emacs starts."
+      (dolist (buffer '("*Messages*" "*Compile-Log*"))
+        (when (and (get-buffer buffer)
+                   (with-current-buffer buffer
+                     (evil-leader-mode 1))))))
+    (add-hook 'after-init-hook 'maple/set-leader-for-startup-buffers))
   :config (evil-leader/set-leader ","))
 
 

@@ -38,6 +38,7 @@
   :ensure t
   :defer t)
 
+
 (use-package yapfify
   :ensure t
   :defer t
@@ -45,7 +46,7 @@
   ;; :init (add-hook 'python-mode-hook 'yapf-mode)
   :evil-bind
   (normal python-mode-map
-          (kbd "<f6>") 'yapfify-buffer))
+          [f6] 'yapfify-buffer))
 
 (use-package pyvenv
   :ensure t
@@ -53,6 +54,7 @@
 
 (use-package anaconda-mode
   :ensure t
+  :defer t
   :diminish anaconda-mode
   :evil-emacs (inferior-python-mode anaconda-mode-view-mode)
   :init

@@ -46,8 +46,8 @@ SEQ, START and END are the same arguments as for `cl-subseq'"
              (cl-position el list :test 'equal)
              el
              (lambda() (funcall list-action el))))
-            list))
-    (insert "\n"))
+          list))
+  (insert "\n"))
 
 (defun startify--create-widget (text func)
   (widget-create 'push-button
@@ -61,6 +61,13 @@ SEQ, START and END are the same arguments as for `cl-subseq'"
   (startify--create-widget num func)
   (insert "\t")
   (insert (propertize text 'font-lock-face '(:inherit font-lock-comment-face))))
+
+(defun startify--insert-startup ()
+  (insert "\n\n")
+  (insert (propertize
+           (format "Emacs startup finished in %.2fms with %s packages\n"
+                   (* 1000.0 (float-time (time-subtract after-init-time before-init-time)))
+                   (length load-path)) 'font-lock-face '(:inherit font-lock-comment-face))))
 
 
 (defvar startify--width 80)
@@ -88,7 +95,8 @@ SEQ, START and END are the same arguments as for `cl-subseq'"
    'helm-bookmarks
    (startify-subseq (bookmark-all-names) 0 10)
    'bookmark-jump)
-  (startify--insert-text "q" "quit" 'save-buffers-kill-terminal))
+  (startify--insert-text "q" "quit" 'save-buffers-kill-terminal)
+  (startify--insert-startup))
 
 (defun startify-next-button ()
   (interactive)

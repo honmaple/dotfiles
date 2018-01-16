@@ -69,25 +69,15 @@ SHELL is the SHELL function to use (i.e. when FUNC represents a terminal)."
       "Send tab in term mode."
       (interactive)
       (term-send-raw-string "\t")))
-  :config
-  (progn
-    (evil-define-key 'normal term-raw-map "p" 'term-paste)
-    (evil-define-key 'insert term-raw-map
-      (kbd "C-c C-d") 'term-send-eof
-      (kbd "C-c C-z") 'term-stop-subjob
-      (kbd "<tab>") 'term-send-tab
-      (kbd "C-k") 'term-send-up
-      (kbd "C-j") 'term-send-down)
-    ))
-  ;; :evil-bind
-  ;; (normal term-raw-map
-  ;;         "p" 'term-paste)
-  ;; (insert term-raw-map
-  ;;     (kbd "C-c C-d") 'term-send-eof
-  ;;     (kbd "C-c C-z") 'term-stop-subjob
-  ;;     (kbd "<tab>") 'term-send-tab
-  ;;     (kbd "C-k") 'term-send-up
-  ;;     (kbd "C-j") 'term-send-down))
+  :evil-bind
+  ((normal term-raw-map
+          "p" 'term-paste)
+  (insert term-raw-map
+          (kbd "C-c C-d") 'term-send-eof
+          (kbd "C-c C-z") 'term-stop-subjob
+          (kbd "<tab>") 'term-send-tab
+          (kbd "C-k") 'term-send-up
+          (kbd "C-j") 'term-send-down)))
 
 (use-package xterm-color
   :ensure t

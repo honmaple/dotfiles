@@ -5,10 +5,10 @@
   :init
   (progn
     (setq yas-triggers-in-field t
-          yas-wrap-around-region t)
-          ;; helm-yas-display-key-on-candidate t)
-    (setq yas-prompt-functions '(yas-completing-prompt))
-    (setq yas-minor-mode-map (make-sparse-keymap))
+          yas-wrap-around-region t
+          yas-prompt-functions '(yas-completing-prompt)
+          yas-minor-mode-map (make-sparse-keymap))
+    ;; helm-yas-display-key-on-candidate t)
     (defun maple/load-yasnippet ()
       (unless yas-global-mode (yas-global-mode 1))
       (yas-minor-mode 1))
@@ -16,6 +16,10 @@
     )
   :bind (:map yas-minor-mode-map
               ("M-s-/" . yas-next-field)))
+
+(use-package yasnippet-snippets
+  :ensure t
+  :defer t)
 
 
 (use-package hippie-exp
@@ -104,15 +108,12 @@
 
 (use-package company-statistics
   :ensure t
-  :defer t
-  :init
+  :after company
+  :config
   (progn
-    (defun maple/set-company-statistics()
-      "company-statistics config"
-      (setq company-statistics-file (concat maple-cache-directory
-                                            "company-statistics-cache.el"))
-      (add-hook 'company-mode-hook 'company-statistics-mode)))
-  (add-hook 'after-init-hook 'maple/set-company-statistics))
+    (setq company-statistics-file (concat maple-cache-directory
+                                          "company-statistics-cache.el"))
+    (add-hook 'company-mode-hook 'company-statistics-mode)))
 
 (use-package company-quickhelp
   :ensure t

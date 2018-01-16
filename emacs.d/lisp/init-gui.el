@@ -54,7 +54,7 @@
     (setq bookmark-default-file (concat maple-cache-directory "bookmarks")
           ;; autosave each change
           bookmark-save-flag 1))
-  :evil-leader ("fb" 'bookmark-jump))
+  :evil-leader ("fb" . bookmark-jump))
 
 ;;美化显示符号
 ;; (use-package global-prettify-symbols-mode

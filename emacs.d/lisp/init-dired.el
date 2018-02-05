@@ -18,9 +18,8 @@
   (progn
     (setq dired-recursive-copies 'always) ;;递归拷贝
     (add-hook 'dired-mode-hook #'dired-async-mode)
-    (after-load 'dired  ;; 只有一个buffer
-      (put 'dired-find-alternate-file 'disabled nil)
-      ))
+    (put 'dired-find-alternate-file 'disabled nil)  ;; 只有一个buffer
+    )
   :bind (:map dired-mode-map
               ("H" . dired-omit-mode)
               ("RET" . dired-find-alternate-file)

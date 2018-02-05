@@ -96,6 +96,24 @@
   :defer t
   :config
   (progn
+    (defun maple/snip-target ()
+      "Set point for capturing at what capture target file+headline with headline set to %l would do."
+      (org-capture-put :target (list
+                                'file+headline
+                                (nth 1 (org-capture-get :target))
+                                (completing-read "Followed by: " '("Tool" "Flask" "Tornado"))))
+      (org-capture-put-target-region-and-position)
+      (widen)
+      (let ((hd (nth 2 (org-capture-get :target))))
+        (goto-char (point-min))
+        (if (re-search-forward
+             (format org-complex-heading-regexp-format (regexp-quote hd))
+             nil t)
+            (goto-char (point-at-bol))
+          (goto-char (point-max))
+          (or (bolp) (insert "\n"))
+          (insert "* " hd "\n")
+          (beginning-of-line 0))))
     (setq org-capture-templates
           '(("t" "待办"
              entry (file+headline "~/org-mode/gtd.org" "待办事项")
@@ -105,15 +123,16 @@
              entry (file+headline "~/org-mode/project.org" "工作安排")
              "* TODO [#A] %?      :project:%^{Where|@Office|@Home|@Lunchtime}:\n  %i\n %U"
              :empty-lines 1)
-            ("n" "笔记"
+            ("n" "笔记")
+            ("na" "笔记"
              entry (file+headline "~/org-mode/notes.org" "笔记")
              "*  %?\n  %i\n %U"
              :empty-lines 1)
-            ("m" "电影"
+            ("nm" "电影"
              entry (file+headline "~/org-mode/notes.org" "影视歌曲")
              "*  %?               :%^{看了什么|Movie|Song}:\n Watched on %T\n %i\n"
              :empty-lines 1)
-            ("r" "阅读"
+            ("nr" "阅读"
              entry (file+headline "~/org-mode/notes.org" "阅读")
              "*  %?               :Book:\n  %T\n %i\n"
              :empty-lines 1)
@@ -124,9 +143,13 @@
             ("c" "账单"
              table-line (file+headline "~/org-mode/mine.org" "账单")
              "| %^{用途|吃饭|购买衣服|出行} | %U | %? | |")
-            ("s" "代码片段"
-             entry (file "~/org-mode/snippets.org")
-             "*  %?\t%^g\n#+BEGIN_SRC %^{language|python|html|css|javascript}\n\n#+END_SRC")
+            ("s" "代码片段")
+            ("sp" "python"
+             entry (file+function "~/git/pelican/content/org/python gist.org" maple/snip-target)
+             "** %?\t\n#+BEGIN_SRC python\n\n#+END_SRC")
+            ("sl" "lua"
+             entry (file+function "~/git/pelican/content/org/lua gist.org" maple/snip-target)
+             "** %?\t\n#+BEGIN_SRC lua\n\n#+END_SRC")
             ("j" "日程安排"
              entry (file+headline "~/org-mode/gtd.org" "日程安排")
              "* TODO [#B] %?      :%^{去哪儿|上海|南京|常州|昆明}:Journal:\n %^U\n"

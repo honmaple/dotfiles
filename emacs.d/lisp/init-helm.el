@@ -67,12 +67,13 @@
     (add-hook 'helm-before-initialize-hook 'maple/helm-hide-header-line)
     (add-hook 'helm-after-initialize-hook 'maple/helm-hide-cursor)
     ;; (add-hook 'helm-after-initialize-hook 'maple/helm-hide-mode-line)
-
-    ;; (defun helm-toggle-header-line ()
-    ;;   (if (= (length helm-sources) 1)
-    ;;       (set-face-attribute 'helm-source-header nil :height 0.1)
-    ;;     (set-face-attribute 'helm-source-header nil :height 1.0)))
-    ;; (add-hook 'helm-before-initialize-hook 'helm-toggle-header-line)
+    ;; (defun maple/helm-hide-helper()
+    ;;   (set-face-attribute 'helm-header nil
+    ;;                       :foreground (face-attribute 'default :background)
+    ;;                       :background (face-attribute 'default :background)
+    ;;                       :box nil
+    ;;                       :height 0.1))
+    ;; (add-hook 'helm-before-initialize-hook 'maple/helm-hide-helper)
     (helm-mode 1)
     )
   :bind (("M-x" . helm-M-x)

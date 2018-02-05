@@ -1,7 +1,6 @@
 (use-package monokai-theme
   :ensure t
   :defer t)
-;; :init (add-hook 'after-init-hook (lambda () (load-theme 'monokai t))))
 
 (use-package solarized-theme
   :ensure t
@@ -10,24 +9,14 @@
 (use-package spacemacs-theme
   :ensure t
   :defer t)
-;; :init (add-hook 'after-init-hook (lambda () (load-theme 'spacemacs-dark t))))
 
 (use-package doom-themes
   :ensure t
   :defer t)
-;; :init (add-hook 'after-init-hook (lambda () (load-theme 'doom-monokai t))))
 
-(add-hook 'after-init-hook (lambda () (load-theme user-default-theme t)))
+(add-hook 'after-init-hook
+          (lambda () (load-theme user-default-theme t)))
 
-;; (use-package color-theme-approximate
-;;   :ensure t
-;;   :init (color-theme-approximate-on))
-
-(use-package window-numbering
-  :ensure t
-  :defer t
-  ;; :init (add-hook 'after-init-hook #'window-numbering-mode));;这个要在前
-  :init (window-numbering-mode));;这个要在前
 
 (use-package spaceline-config
   :ensure spaceline
@@ -35,16 +24,13 @@
   (progn
     (defun maple/set-spaceline()
       "spaceline config"
-      (set-face-attribute 'mode-line nil :box nil)
-      (setq ns-use-srgb-colorspace nil)
-      (setq powerline-default-separator 'wave)
-      (setq spaceline-toggle-window-number-on-p t)
-      (setq spaceline-toggle-workspace-number-on-p nil)
-      (setq spaceline-workspace-numbers-unicode nil)
-      (setq spaceline-window-numbers-unicode t)
-      (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
+      ;; (set-face-attribute 'mode-line nil :box nil)
+      (setq powerline-default-separator 'wave
+            spaceline-workspace-numbers-unicode nil
+            spaceline-window-numbers-unicode t
+            spaceline-highlight-face-func 'spaceline-highlight-face-evil-state
+            spaceline-helm-help-p nil)
       (spaceline-spacemacs-theme)
-      ;; (spaceline-compile)
       (when (package-installed-p 'helm)
         (spaceline-helm-mode t))
       (maple/set-powerline-for-startup-buffers))
@@ -60,14 +46,20 @@
     ))
 
 (use-package hydra
-  :defer t
   :ensure t
+  :defer t
   :config
   (progn
     ;; (setq maple-cycle-themes (mapcar 'symbol-name (custom-available-themes)))
     ;; (setq maple-cycle-themes (delete "doom-one-light"
     ;;                                  (mapcar 'symbol-name (custom-available-themes))))
-    (setq maple-cycle-themes '("monokai" "spacemacs-dark" "solarized-light" "solarized-dark" "doom-molokai" "doom-one"))
+    (defvar maple-cycle-themes '("monokai"
+                                 "spacemacs-dark"
+                                 "solarized-light"
+                                 "solarized-dark"
+                                 "doom-molokai"
+                                 "doom-one"
+                                 "doom-peacock"))
     (defun maple/cycle-theme (num)
       (interactive)
       (setq maple-current-theme-index
@@ -76,6 +68,8 @@
                 (car (mapcar 'symbol-name custom-enabled-themes)) maple-cycle-themes :test 'equal)))
       (when (>= maple-current-theme-index (length maple-cycle-themes))
         (setq maple-current-theme-index 0))
+      (when (eq maple-current-theme-index -1)
+        (setq maple-current-theme-index (1- (length maple-cycle-themes))))
       (setq maple-current-theme (nth maple-current-theme-index maple-cycle-themes))
       (mapc 'disable-theme custom-enabled-themes)
       (let ((progress-reporter
@@ -99,32 +93,26 @@
   :ensure t
   :diminish which-key-mode
   :defer t
-  ;; :init (add-hook 'after-init-hook #'which-key-mode)
-  :hook (after-init . which-key-mode)
-  :custom
-  (which-key-special-keys nil)
-  (which-key-use-C-h-for-paging t)
-  (which-key-prevent-C-h-from-cycling t)
-  (which-key-echo-keystrokes 0.02)
-  (which-key-max-description-length 32)
-  (which-key-sort-order 'which-key-key-order-alpha)
-  (which-key-idle-delay 0.2)
-  (which-key-allow-evil-operators t)
+  :init
+  (setq which-key-prevent-C-h-from-cycling t
+        which-key-echo-keystrokes 0.02
+        which-key-max-description-length 32
+        which-key-sort-order 'which-key-key-order-alpha
+        which-key-idle-delay 0.2
+        which-key-allow-evil-operators t)
+  (add-hook 'after-init-hook #'which-key-mode)
   :config
-  (progn
-    (which-key-setup-side-window-bottom)
-    (which-key-add-key-based-replacements
-      ",f" "file"
-      ",b" "buffer"
-      ",o" "orgmode"
-      ",e" "flycheck error"
-      ",j" "avy"
-      ",g" "git"
-      ",w" "window"
-      ",p" "project"
-      ",sq" "sql"
-      ",t" "toggle mode")
-    ))
+  (which-key-add-key-based-replacements
+    ",f" "file"
+    ",b" "buffer"
+    ",o" "orgmode"
+    ",e" "flycheck error"
+    ",j" "avy"
+    ",g" "git"
+    ",w" "window"
+    ",p" "project"
+    ",sq" "sql"
+    ",t" "toggle mode"))
 
 (use-package nlinum
   :ensure t
@@ -172,9 +160,8 @@
   :defer t
   :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
   :config
-  (progn
-    ;; 高亮括号配对
-    (show-paren-mode 1))
+  ;; 高亮括号配对
+  (show-paren-mode 1)
   :diminish rainbow-delimiters-mode)
 
 ;; 颜色
@@ -182,9 +169,8 @@
   :ensure t
   :defer t
   :init
-  (progn
-    (add-hook 'prog-mode-hook 'rainbow-mode)
-    (add-hook 'conf-unix-mode-hook 'rainbow-mode))
+  (add-hook 'prog-mode-hook 'rainbow-mode)
+  (add-hook 'conf-unix-mode-hook 'rainbow-mode)
   :diminish rainbow-mode)
 
 
@@ -194,11 +180,10 @@
   :defer t
   :diminish highlight-symbol-mode
   :init
-  (progn
-    (dolist (hook '(prog-mode-hook html-mode-hook css-mode-hook))
-      (add-hook hook 'highlight-symbol-mode)
-      (add-hook hook 'highlight-symbol-nav-mode))
-    (add-hook 'org-mode-hook 'highlight-symbol-nav-mode)))
+  (dolist (hook '(prog-mode-hook html-mode-hook css-mode-hook))
+    (add-hook hook 'highlight-symbol-mode)
+    (add-hook hook 'highlight-symbol-nav-mode))
+  (add-hook 'org-mode-hook 'highlight-symbol-nav-mode))
 
 (use-package volatile-highlights
   :ensure t
@@ -227,15 +212,13 @@
 (use-package highlight-parentheses
   :ensure t
   :diminish highlight-parentheses-mode
-  :init (add-hook 'prog-mode-hook #'highlight-parentheses-mode)
+  :init (add-hook 'after-init-hook #'highlight-parentheses-mode)
   :config
-  (progn
-    (setq hl-paren-delay 0.2)
-    (setq hl-paren-colors '("Springgreen3"
-                            "IndianRed1"
-                            "IndianRed3"))
-    (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold)
-    ))
+  (setq hl-paren-delay 0.2)
+  (setq hl-paren-colors '("Springgreen3"
+                          "IndianRed1"
+                          "IndianRed3"))
+  (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold))
 
 ;; (use-package col-highlight
 ;;   :defer t
@@ -248,18 +231,19 @@
 ;;   :diminish highlight-indentation-mode
 ;;   :init (add-hook 'prog-mode-hook 'highlight-indentation-mode))
 
-;; 光标位于中间 ;; emacs已内置
-;; (use-package smooth-scrolling
-;;   :defer t
-;;   :init (add-hook 'after-init-hook #'smooth-scrolling-mode)
-;;   :config
-;;   (progn
-;;     (setq scroll-preserve-screen-position t
-;;           scroll-margin 0
-;;           scroll-conservatively 101)
-;;     ))
 
-
-
+(use-package whitespace
+  :defer t
+  :diminish whitespace-mode "ⓦ"
+  :init
+  (dolist (hook '(prog-mode-hook
+                  conf-mode-hook))
+    (add-hook hook #'whitespace-mode))
+  :config
+  ;; (setq whitespace-style '(face
+  ;;                          trailing space-before-tab
+  ;;                          indentation empty space-after-tab))
+  (setq whitespace-style '(face))
+  (setq whitespace-action '(cleanup)))
 
 (provide 'init-ui)

@@ -6,6 +6,10 @@
   :defer t
   :config (auto-encryption-mode -1))
 
+(use-package docker-tramp
+  :ensure t
+  :defer t)
+
 (use-package quickrun
   :ensure t
   :defer t
@@ -130,10 +134,8 @@
 (use-package maple-macro
   :load-path "site-lisp/"
   :config
-  (progn
-    (maple/search-engine "google"     "http://www.google.com/search?q="              "Google: ")
-    (maple/search-engine "github"     "https://github.com/search?q="                 "Search GitHub: ")
-    ))
+  (maple/search-engine "google"     "http://www.google.com/search?q="              "Google: ")
+  (maple/search-engine "github"     "https://github.com/search?q="                 "Search GitHub: "))
 
 (use-package startify
   :load-path "site-lisp/startify"

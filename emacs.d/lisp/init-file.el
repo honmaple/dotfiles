@@ -22,29 +22,27 @@
 (use-package savehist
   :defer t
   :init
-  (progn
-    ;; Minibuffer history
-    (setq savehist-file (concat maple-cache-directory "savehist")
-          enable-recursive-minibuffers t ; Allow commands in minibuffers
-          history-length 1000
-          savehist-additional-variables '(mark-ring
-                                          global-mark-ring
-                                          search-ring
-                                          regexp-search-ring
-                                          extended-command-history)
-          savehist-autosave-interval 60)
-    (savehist-mode t)))
+  ;; Minibuffer history
+  (setq savehist-file (concat maple-cache-directory "savehist")
+        enable-recursive-minibuffers t ; Allow commands in minibuffers
+        history-length 1000
+        savehist-additional-variables '(mark-ring
+                                        global-mark-ring
+                                        search-ring
+                                        regexp-search-ring
+                                        extended-command-history)
+        savehist-autosave-interval 60)
+  (add-hook 'after-init-hook #'savehist-mode))
 
 (use-package saveplace
   :defer t
   :init
-  (progn
-    (if (fboundp 'save-place-mode)
-        ;; Emacs 25 has a proper mode for `save-place'
-        (add-hook 'after-init-hook #'save-place-mode)
-      (setq save-place t))
-    ;; Save point position between sessions
-    (setq save-place-file (concat maple-cache-directory "places"))))
+  (if (fboundp 'save-place-mode)
+      ;; Emacs 25 has a proper mode for `save-place'
+      (add-hook 'after-init-hook #'save-place-mode)
+    (setq save-place t))
+  ;; Save point position between sessions
+  (setq save-place-file (concat maple-cache-directory "places")))
 
 
 (use-package neotree
@@ -53,25 +51,22 @@
   :commands neo-global--window-exists-p
   :evil-emacs neotree-mode
   :config
-  (progn
-    (setq
-     neo-create-file-auto-open t
-     neo-banner-message "Press ? for neotree help"
-     neo-show-updir-line t
-     neo-mode-line-type 'neotree
-     neo-smart-open t
-     neo-dont-be-alone t
-     neo-persist-show nil
-     neo-show-hidden-files nil
-     neo-auto-indent-point t
-     neo-modern-sidebar t
-     neo-vc-integration nil)
-    (when neo-persist-show
-      (add-hook 'popwin:before-popup-hook
-                (lambda () (setq neo-persist-show nil)))
-      (add-hook 'popwin:after-popup-hook
-                (lambda () (setq neo-persist-show t))))
-    )
+  (setq neo-create-file-auto-open t
+        neo-banner-message "Press ? for neotree help"
+        neo-show-updir-line t
+        neo-mode-line-type 'neotree
+        neo-smart-open t
+        neo-dont-be-alone t
+        neo-persist-show nil
+        neo-show-hidden-files nil
+        neo-auto-indent-point t
+        neo-modern-sidebar t
+        neo-vc-integration nil)
+  (when neo-persist-show
+    (add-hook 'popwin:before-popup-hook
+              (lambda () (setq neo-persist-show nil)))
+    (add-hook 'popwin:after-popup-hook
+              (lambda () (setq neo-persist-show t))))
   :bind (([f2] . neotree-toggle)
          :map neotree-mode-map
          ("j" . neotree-next-line)
@@ -110,13 +105,6 @@
   :bind (:map evil-normal-state-map
               ("U" . undo-tree-redo)))
 
-(defun maple/system-is-mac ()
-  (eq system-type 'darwin))
-(defun maple/system-is-linux ()
-  (eq system-type 'gnu/linux))
-(defun maple/system-is-mswindows ()
-  (eq system-type 'windows-nt))
-
 
 (defun maple/open-init-file()
   (interactive)
@@ -149,10 +137,10 @@
                      (buffer-file-name))))
     (if file-path
         (cond
-         ((maple/system-is-mswindows) (w32-shell-execute "open" (replace-regexp-in-string "/" "\\\\" file-path)))
-         ((maple/system-is-mac) (shell-command (format "open \"%s\"" file-path)))
-         ((maple/system-is-linux) (let ((process-connection-type nil))
-                                    (start-process "" nil "xdg-open" file-path))))
+         (maple-system-is-mswindows (w32-shell-execute "open" (replace-regexp-in-string "/" "\\\\" file-path)))
+         (maple-system-is-mac (shell-command (format "open \"%s\"" file-path)))
+         (maple-system-is-linux (let ((process-connection-type nil))
+                                  (start-process "" nil "xdg-open" file-path))))
       (message "No file associated to this buffer."))))
 
 (defun maple/sudo-edit (&optional arg)

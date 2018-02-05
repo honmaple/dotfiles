@@ -5,8 +5,13 @@
   :interpreter ("lua" . lua-mode)
   :init
   (progn
-    (setq lua-indent-level 2
+    (setq lua-indent-level 4
           lua-indent-string-contents t)))
+
+(use-package company-lua
+  :ensure t
+  :defer t
+  :config (maple/add-to-company-backend '(company-lua) 'lua-mode-hook))
 
 (use-package go-mode
   :ensure t
@@ -19,8 +24,15 @@
   :config
   (progn
     (setq gofmt-show-errors nil)
-    (add-hook 'before-save-hook 'gofmt-before-save)
-    ))
+    (defun maple/gofmt()
+      (interactive)
+      (gofmt)
+      (untabify (point-min) (point-max)))
+    ;; (add-hook 'before-save-hook 'gofmt-before-save)
+    )
+  :evil-bind
+  (normal go-mode-map
+          [f6] 'maple/gofmt))
 
 
 (use-package company-go

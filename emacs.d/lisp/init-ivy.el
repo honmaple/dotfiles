@@ -1,6 +1,6 @@
 ;; 必须的,使用频率排序
-(use-package smex
-  :ensure t)
+;; (use-package smex
+;;   :ensure t)
 
 (use-package ivy
   :ensure t
@@ -22,7 +22,9 @@
           ivy-format-function #'ivy-format-function-line
           ;; disable magic slash on non-match
           ;; ~ to /home/user
-          ;; ivy-magic-tilde nil
+          ivy-magic-tilde nil
+          ivy-use-virtual-buffers t
+          ivy-virtual-abbreviate 'fullpath
           ivy-magic-slash-non-match-action nil)
     ;; (setq ivy-re-builders-alist
     ;;       '((t . ivy--regex-fuzzy)))

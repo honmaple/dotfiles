@@ -1,92 +1,30 @@
-;;----------------------- -----------------------------------------------------
-;; Navigate window layouts with "C-c <left>" and "C-c <right>"
-;;----------------------------------------------------------------------------
-
-;; Borrowed from http://postmomentum.ch/blog/201304/blog-on-emacs
-(defun sanityinc/split-window()
-  "Split the window to see the most recent buffer in the other window.
-  Call a second time to restore the original window configuration."
-  (interactive)
-  (if (eq last-command 'sanityinc/split-window)
-      (progn
-        (jump-to-register :sanityinc/split-window)
-        (setq this-command 'sanityinc/unsplit-window))
-    (window-configuration-to-register :sanityinc/split-window)
-    (switch-to-buffer-other-window nil)))
-
-(global-set-key (kbd "<f7>") 'sanityinc/split-window)
-
-(unless (memq window-system '(nt w32))
-  (windmove-default-keybindings 'control))
-
 ;;默认分屏
 (setq split-width-threshold 1)
-(setq display-buffer-alist '(("\\*Warnings\\*" display-buffer-below-selected)
-                             ("\\*Help\\*" display-buffer-below-selected))) ;;设置分屏
-;; (add-to-list 'display-buffer-alist (cons "\\*Async Shell Command\\*.*"
-;;                                           (cons #'display-buffer-no-window nil)))
-(defun maybe-set-quit-key ()
-  (when (string= (buffer-name) "*Async Shell Command*")
-    (local-set-key (kbd "q") #'quit-window)))
-
-(defun maple/set-quit-key (map)
-  (after-load 'evil
-    (evil-define-key 'normal map
-      (kbd "q") 'quit-window)))
-
-(add-hook 'shell-mode-hook #'maybe-set-quit-key)
-
-(defun maple/close-process ()
-  "Close current term buffer when `exit' from term buffer."
-  (when (ignore-errors (get-buffer-process (current-buffer)))
-    (set-process-sentinel (get-buffer-process (current-buffer))
-                          (lambda (proc change)
-                            (when (string-match "\\(finished\\|exited\\)"
-                                                change)
-                              (kill-buffer (process-buffer proc))
-                              (when (> (count-windows) 1)
-                                (delete-window)))))))
-
 
 (use-package winner
   :defer t
   :init (winner-mode t))
 
+(use-package window-numbering
+  :ensure t
+  :defer t
+  :init (add-hook 'after-init-hook #'window-numbering-mode))
+
 (use-package popwin
   :ensure t
+  :init (add-hook 'after-init-hook #'popwin-mode)
   :config
-  (progn
-    (popwin-mode 1)
-    (mapc (lambda (buffer)
-            (push '(buffer
-                    :dedicated t
-                    :position bottom
-                    :stick t
-                    :noselect t
-                    :height 0.4)
-                  popwin:special-display-config)
-            )
-          '("*compilation*"
-            " *undo-tree*"
-            "*Compile-Log*"))
-    (mapc (lambda (buffer)
-            (push '(buffer
-                    :dedicated t
-                    :position bottom
-                    :stick t
-                    :noselect t)
-                  popwin:special-display-config)
-            )
-          '("*Shell Command Output*"
-            "*Async Shell Command*"
-            ))
-    (push '("^\\*Flycheck.+\\*$"
-            :regexp t
-            :dedicated t
-            :position bottom
-            :stick t)
-          popwin:special-display-config)
-    ))
+  (setq popwin:special-display-config
+        '(("*Help*" :dedicated t :position bottom :stick nil :noselect nil)
+          ("*compilation*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
+          ("*Compile-Log*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
+          ("*Warnings*" :dedicated t :position bottom :stick t :noselect t)
+          ("*Completions*" :dedicated t :position bottom :stick t :noselect nil)
+          ("*Shell Command Output*" :dedicated t :position bottom :stick t :noselect nil)
+          ("\*Async Shell Command\*.+" :regexp t :position bottom :stick t :noselect nil)
+
+          ("\*flycheck errors\*.+*$" :regexp t :position bottom :stick t :noselect nil)
+          )))
 
 (use-package golden-ratio  ;;黄金分割
   :ensure t

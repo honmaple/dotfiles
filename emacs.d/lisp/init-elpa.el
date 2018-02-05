@@ -8,51 +8,15 @@
 ;; We include the org repository for completeness, but don't normally
 ;; use it.
 
-;; ;; (when (< emacs-major-version 24)
-;; (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
-;; (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
-
-;; ;;; Also use Melpa for most packages
-;; (add-to-list 'package-archives `("melpa" . ,(if (< emacs-major-version 24)
-;;                                                 "http://melpa.org/packages/"
-;;                                               "https://melpa.org/packages/")))
 (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
                          ("melpa" . "http://elpa.emacs-china.org/melpa/")
-                         ;; ("melpa-stable" . "http://stable.melpa.org/packages/")
+                         ("melpa-stable" . "http://stable.melpa.org/packages/")
                          ("org"   . "http://orgmode.org/elpa/")
                          ))
 
 (setq package-enable-at-startup nil)
 
 (package-initialize)
-
-(defun require-package (package &optional min-version no-refresh)
-  "Install given PACKAGE, optionally requiring MIN-VERSION.
-If NO-REFRESH is non-nil, the available package lists will not be
-re-downloaded in order to locate PACKAGE."
-  (if (package-installed-p package min-version)
-      t
-    (if (or (assoc package package-archive-contents) no-refresh)
-        (if (boundp 'package-selected-packages)
-            ;; Record this as a package the user installed explicitly
-            (package-install package nil)
-          (package-install package))
-      (progn
-        (package-refresh-contents)
-        (require-package package min-version t)))))
-
-
-(defun maybe-require-package (package &optional min-version no-refresh)
-  "Try to install PACKAGE, and return non-nil if successful.
-In the event of failure, return nil and print a warning message.
-Optionally require MIN-VERSION.  If NO-REFRESH is non-nil, the
-available package lists will not be re-downloaded in order to
-locate PACKAGE."
-  (condition-case err
-      (require-package package min-version no-refresh)
-    (error
-     (message "Couldn't install package `%s': %S" package err)
-     nil)))
 
 (defun package-upgrade ()
   "Upgrade all packages automatically without showing *Packages* buffer."
@@ -84,11 +48,49 @@ locate PACKAGE."
                 (package-delete  old-package)))))
       (message "All packages are up to date"))))
 
+;; Setup `use-package'
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
-(require-package 'use-package)
+(eval-when-compile
+  (require 'use-package))
+;; (setq use-package-verbose t)
+;; (setq use-package-always-ensure t)
+;; (setq use-package-always-defer t)
+(setq use-package-expand-minimally t)
+(setq use-package-enable-imenu-support t)
 
 (use-package evil-use-package
   :load-path "site-lisp/use-package")
+
+;;显示状态mode
+(use-package diminish
+  :ensure t
+  :defer t)
+
+;;缓冲区
+(use-package scratch
+  :ensure t
+  :defer t)
+
+;; 命令行历史
+(use-package mwe-log-commands
+  :ensure t
+  :defer t)
+
+(use-package async-bytecomp
+  :ensure async
+  :defer t
+  :init
+  (add-hook 'after-init-hook #'async-bytecomp-package-mode)
+  :config
+  (setq async-bytecomp-allowed-packages '(all)))
+
+;; (use-package benchmark-init
+;;   :ensure t
+;;   :init
+;;   (add-hook 'after-init-hook #'benchmark-init/deactivate))
 
 (use-package package-utils
   :ensure t
@@ -107,6 +109,10 @@ locate PACKAGE."
   :defer t)
 ;; :config (setq restart-emacs-restore-frames t))
 
+(use-package exec-path-from-shell
+  :if maple-system-is-mac
+  :ensure t
+  :init (exec-path-from-shell-initialize))
 
 (use-package server
   :defer t
@@ -115,6 +121,6 @@ locate PACKAGE."
     (server-start)))
 
 
-;;; Fire up package.el
-
 (provide 'init-elpa)
+
+;;; init-elpa.el ends here

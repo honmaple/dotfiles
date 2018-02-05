@@ -8,8 +8,6 @@
 (use-package evil-magit
   :ensure t
   :after magit)
-;; (after-load 'magit
-;;   (require 'evil-magit))
 
 (use-package magit
   :ensure t
@@ -21,7 +19,6 @@
     (setq-default
      magit-process-popup-time 10
      magit-diff-refine-hunk t)
-    (add-hook 'magit-popup-mode-hook 'maple/no-trailing-whitespace)
     (fullframe magit-status magit-mode-quit-window))
   :bind
   (("C-x g" . magit-status)
@@ -42,13 +39,11 @@
   :defer t
   :config
   (progn
-    (eval-after-load 'git-timemachine
-      '(progn
-         (global-evil-mc-mode -1)
-         (evil-make-overriding-map git-timemachine-mode-map 'normal)
-         ;; force update evil keymaps after git-timemachine-mode loaded
-         (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps)))
-    ))
+    (evil-mc-mode -1)
+    (evil-make-overriding-map git-timemachine-mode-map 'normal)
+    ;; force update evil keymaps after git-timemachine-mode loaded
+    (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps))
+  )
 
 (use-package git-gutter-fringe
   :ensure t

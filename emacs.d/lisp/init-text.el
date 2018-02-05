@@ -1,8 +1,3 @@
-(use-package ox-rst
-  :ensure t
-  :mode ("\\.org" . org-mode)
-  :defer t)
-
 (use-package markdown-mode
   :ensure t
   :diminish orgtbl-mode
@@ -19,7 +14,6 @@
     (add-hook 'markdown-mode-hook
               (lambda()
                 (add-hook 'after-save-hook 'cleanup-org-tables  nil 'make-it-local)))
-    (push 'markdown-mode whitespace-cleanup-mode-ignore-modes)
     ))
 
 ;; (use-package markdown-preview-mode

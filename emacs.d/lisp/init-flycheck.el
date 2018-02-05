@@ -7,12 +7,16 @@
   (progn
     (setq flycheck-check-syntax-automatically '(save idle-change mode-enabled)
           flycheck-idle-change-delay 0.8)
-    (setq flycheck-display-errors-function #'flycheck-popup-tip-error-messages)
-    (defvar syntax-checking-use-original-bitmaps nil
-      "If non-nil, use the original bitmaps from flycheck.")
-    (when (and (fboundp 'define-fringe-bitmap)
-               (not syntax-checking-use-original-bitmaps))
-      (define-fringe-bitmap 'my-flycheck-fringe-indicator
+
+    (use-package flycheck-popup-tip
+      :ensure t
+      :defer t
+      :init (add-hook 'after-init-hook #'flycheck-popup-tip-mode)
+      :config
+      (setq flycheck-display-errors-function #'flycheck-popup-tip-error-messages))
+
+    (when (and (fboundp 'define-fringe-bitmap))
+      (define-fringe-bitmap 'maple-flycheck-fringe-indicator
         (vector #b00000000
                 #b00000000
                 #b00000000
@@ -31,9 +35,7 @@
                 #b00000000
                 #b00000000)))
 
-    (let ((bitmap (if syntax-checking-use-original-bitmaps
-                      'flycheck-fringe-bitmap-double-arrow
-                    'my-flycheck-fringe-indicator)))
+    (let ((bitmap 'maple-flycheck-fringe-indicator))
       (flycheck-define-error-level 'error
         :severity 2
         :overlay-category 'flycheck-error-overlay
@@ -67,12 +69,6 @@
 
 
 ;; 显示tooltip
-(use-package flycheck-popup-tip
-  :ensure t
-  :after flycheck
-  :defer t
-  :init (flycheck-popup-tip-mode))
-
 ;; (use-package flycheck-pos-tip
 ;;   :ensure t
 ;;   :after flycheck

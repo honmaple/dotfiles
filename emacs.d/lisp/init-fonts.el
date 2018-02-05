@@ -27,13 +27,13 @@
       (maple/utf8-locale-p (getenv "LC_CTYPE"))
       (maple/utf8-locale-p (getenv "LANG"))))
 
-(when (or window-system (maple/locale-is-utf8-p))
   (set-language-environment 'utf-8)
   (setq locale-coding-system 'utf-8)
   (set-default-coding-systems 'utf-8)
   (set-terminal-coding-system 'utf-8)
-  (set-selection-coding-system (if (eq system-type 'windows-nt) 'utf-16-le 'utf-8))
-  (prefer-coding-system 'utf-8))
+  (set-selection-coding-system
+   (if maple-system-is-mswindows 'utf-16-le 'utf-8))
+  (prefer-coding-system 'utf-8)
 
 ;; (set-language-environment 'Chinese-GB)
 

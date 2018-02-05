@@ -5,6 +5,7 @@
   "fF" 'helm-find
   "fr" 'helm-recentf
   "fw" 'helm-ag
+  "fW" 'helm-do-ag
   "fS" 'evil-write-all
   "fs" 'save-buffer
   "fei" 'maple/open-init-file

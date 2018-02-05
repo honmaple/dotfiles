@@ -2,25 +2,21 @@
 (use-package evil-leader
   :ensure t
   :defer t
-  ;; :init (global-evil-leader-mode)
-  ;; :hook (after-init . global-evil-leader-mode)
   :init
-  (progn
-    (add-hook 'after-init-hook #'global-evil-leader-mode)
-    (defun maple/set-leader-for-startup-buffers ()
-      "Set the leader mode for buffers created when Emacs starts."
-      (dolist (buffer '("*Messages*" "*Compile-Log*"))
-        (when (and (get-buffer buffer)
-                   (with-current-buffer buffer
-                     (evil-leader-mode 1))))))
-    (add-hook 'after-init-hook 'maple/set-leader-for-startup-buffers))
+  (add-hook 'after-init-hook #'global-evil-leader-mode)
+  (defun maple/set-leader-for-startup-buffers ()
+    "Set the leader mode for buffers created when Emacs starts."
+    (dolist (buffer '("*Messages*" "*Compile-Log*"))
+      (when (and (get-buffer buffer)
+                 (with-current-buffer buffer
+                   (evil-leader-mode 1))))))
+  (add-hook 'after-init-hook 'maple/set-leader-for-startup-buffers)
   :config (evil-leader/set-leader ","))
 
 
 (use-package evil
   :ensure t
   :defer t
-  ;; :init (evil-mode 1)
   :init (add-hook 'after-init-hook #'evil-mode)
   :config
   (progn
@@ -50,7 +46,8 @@
   (evil-visual-state-cursor '((hbox . 2) "gray"))
   (evil-emacs-state-cursor '(box "SkyBlue2"))
   (evil-replace-state-cursor '((hbox . 2) "chocolate"))
-  :custom-face (region ((t (:background "#66d9ef" :foreground "#272822"))))
+  :custom-face
+  (region ((t (:background "#66d9ef" :foreground "#272822"))))
   :bind (:map evil-normal-state-map
               ("C-k" . evil-scroll-up)
               ("C-j" . evil-scroll-down)))
@@ -68,18 +65,16 @@
   :ensure t
   :defer t
   :init (add-hook 'after-init-hook #'global-evil-matchit-mode))
-;; :init (global-evil-matchit-mode 1))
 
 (use-package evil-ediff
   :ensure t
-  :after (ediff)
-  )
+  :defer t
+  :after ediff)
 
 (use-package evil-escape
   :ensure t
   :defer t
   :init (add-hook 'after-init-hook #'evil-escape-mode)
-  ;; :init (evil-escape-mode 1)
   :diminish 'evil-escape-mode
   :config
   (progn
@@ -108,19 +103,33 @@
   :init (add-hook 'after-init-hook #'global-evil-mc-mode)
   :config
   (progn
+    (evil-define-command evil-mc/undo-cursor-and-quit ()
+      "Initialize `evil-mc-pattern', make a cursor at point, and go to the next match."
+      :repeat ignore
+      :evil-mc t
+      (progn
+        (evil-mc-undo-all-cursors)
+        (hydra-keyboard-quit)))
+
     (defhydra maple/evil-mc ()
       ("n" evil-mc-make-and-goto-next-match "next")
       ("t" evil-mc-skip-and-goto-next-match "skip and next")
       ("T" evil-mc-skip-and-goto-prev-match "skip and prev")
       ("p" evil-mc-make-and-goto-prev-match "prev")
-      ("N" evil-mc-make-and-goto-prev-match "prev"))
+      ("N" evil-mc-make-and-goto-prev-match "prev")
+      ("q" evil-mc/undo-cursor-and-quit "quit")
+      )
     ;; (setq evil-mc-enable-bar-cursor nil)
     (define-key evil-visual-state-map (kbd "n") 'maple/evil-mc/body))
   :custom-face
   (evil-mc-cursor-default-face ((t (:inherit cursor :background "firebrick1" :inverse-video nil))))
   (hydra-face-red ((t (:foreground "chocolate" :weight bold))))
   :bind (:map evil-mc-key-map
-              ("C-g" . evil-mc-undo-all-cursors))
+              ("C-g" . evil-mc-undo-all-cursors)
+              :map evil-visual-state-map
+              ("C-n" . evil-mc-make-and-goto-next-match)
+              ("C-p" . evil-mc-make-and-goto-prev-match)
+              ("C-t" . evil-mc-skip-and-goto-next-match))
   :evil-bind
   (normal evil-mc-key-map
           (kbd "<escape>") 'evil-mc-undo-all-cursors))

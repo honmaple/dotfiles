@@ -4,11 +4,17 @@
   :diminish yas-minor-mode "ⓨ"
   :init
   (progn
+    (defvar yas-global-mode nil)
     (setq yas-triggers-in-field t
           yas-wrap-around-region t
           yas-prompt-functions '(yas-completing-prompt)
           yas-minor-mode-map (make-sparse-keymap))
     ;; helm-yas-display-key-on-candidate t)
+
+    (use-package yasnippet-snippets
+      :ensure t
+      :defer t)
+
     (defun maple/load-yasnippet ()
       (unless yas-global-mode (yas-global-mode 1))
       (yas-minor-mode 1))
@@ -17,78 +23,39 @@
   :bind (:map yas-minor-mode-map
               ("M-s-/" . yas-next-field)))
 
-(use-package yasnippet-snippets
-  :ensure t
-  :defer t)
-
-
-(use-package hippie-exp
-  :defer t
-  :config
-  (progn
-    ;; (global-set-key (kbd "M-/") 'hippie-expand)
-    (setq hippie-expand-try-functions-list
-          '(try-complete-file-name-partially
-            try-complete-file-name
-            try-expand-dabbrev
-            try-expand-dabbrev-all-buffers
-            try-expand-dabbrev-from-kill))
-    )
-  :bind (:map evil-insert-state-map
-              ("<backtab>" . hippie-expand)))
-
-
 (use-package company
   :ensure t
   :defer t
   :diminish company-mode " ⓐ"
   :init
-  (progn
-    (setq ;; company-echo-delay 0
-     company-idle-delay 0.1
-     company-show-numbers t
-     company-tooltip-limit 15
-     company-minimum-prefix-length 1
-     company-dabbrev-downcase t  ;;忽略大小写
-     company-dabbrev-ignore-case t
-     ;; company-dabbrev-other-buffers t
-     company-begin-commands '(self-insert-command)
-     company-global-modes '(not comint-mode erc-mode gud-mode rcirc-mode
-                                minibuffer-inactive-mode inferior-python-mode shell-mode evil-command-window-mode))
-    (defvar-local company-fci-mode-on-p nil)
-    (defun company-turn-off-fci (&rest ignore)
-      (when (boundp 'fci-mode)
-        (setq company-fci-mode-on-p fci-mode)
-        (when fci-mode (fci-mode -1))))
-
-    (defun company-maybe-turn-on-fci (&rest ignore)
-      (when company-fci-mode-on-p (fci-mode 1)))
-
-    (add-hook 'company-completion-started-hook 'company-turn-off-fci)
-    (add-hook 'company-completion-finished-hook 'company-maybe-turn-on-fci)
-    (add-hook 'company-completion-cancelled-hook 'company-maybe-turn-on-fci)
-    (add-hook 'after-init-hook 'global-company-mode)
-    )
+  (setq company-idle-delay 0.1
+        company-show-numbers t
+        company-tooltip-limit 15
+        company-minimum-prefix-length 1
+        company-dabbrev-downcase t  ;;忽略大小写
+        company-dabbrev-ignore-case t
+        ;; company-dabbrev-other-buffers t
+        company-begin-commands '(self-insert-command)
+        company-global-modes '(not comint-mode erc-mode gud-mode rcirc-mode
+                                   minibuffer-inactive-mode inferior-python-mode shell-mode evil-command-window-mode))
+  (add-hook 'after-init-hook 'global-company-mode)
   :config
-  (progn
-    (setq company-backends
-          '((company-dabbrev-code company-gtags company-etags company-capf company-keywords company-files)
-            ;; (company-semantic)
-            (company-dabbrev)
-            ))
+  (setq company-backends
+        '((company-dabbrev-code company-gtags company-etags company-capf company-keywords company-files)
+          ;; (company-semantic)
+          (company-dabbrev)
+          ))
 
-    (defvar company-mode/enable-yas t
-      "Enable yasnippet for all backends.")
+  (defvar company-mode/enable-yas t
+    "Enable yasnippet for all backends.")
 
-    (defun company-mode/backend-with-yas (backend)
-      (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
-          backend
-        (append (if (consp backend) backend (list backend))
-                '(:with company-yasnippet))))
+  (defun company-mode/backend-with-yas (backend)
+    (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
+        backend
+      (append (if (consp backend) backend (list backend))
+              '(:with company-yasnippet))))
 
-    (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
-
-    )
+  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
   :custom-face
   (company-tooltip-common
    ((t (:inherit company-tooltip :weight bold :underline nil))))
@@ -110,29 +77,23 @@
   :ensure t
   :after company
   :config
-  (progn
-    (setq company-statistics-file (concat maple-cache-directory
-                                          "company-statistics-cache.el"))
-    (add-hook 'company-mode-hook 'company-statistics-mode)))
+  (setq company-statistics-file (concat maple-cache-directory
+                                        "company-statistics-cache.el"))
+  (add-hook 'company-mode-hook 'company-statistics-mode))
 
 (use-package company-quickhelp
   :ensure t
-  :if (and t (display-graphic-p))
+  :if (display-graphic-p)
   :commands company-quickhelp-manual-begin
-  :init
-  (progn
-    ;; (add-hook 'company-mode-hook 'company-quickhelp-mode)
-    (after-load 'company
-      (setq company-frontends (delq 'company-echo-metadata-frontend company-frontends))))
+  :after company
   :config
-  (progn
-    (setq company-quickhelp-delay 1)
-    (defun maple/modify-help-pos-tip ()
-      "Modify company-quickhelp."
-      (setq pos-tip-foreground-color "#00ffff"
-            pos-tip-background-color "#272822"
-            pos-tip-border-width 0))
-    (add-hook 'company-quickhelp-mode-hook 'maple/modify-help-pos-tip)))
+  (setq company-quickhelp-delay 1)
+  (defun maple/modify-help-pos-tip ()
+    "Modify company-quickhelp."
+    (setq pos-tip-foreground-color "#00ffff"
+          pos-tip-background-color "#272822"
+          pos-tip-border-width 0))
+  (add-hook 'company-quickhelp-mode-hook 'maple/modify-help-pos-tip))
 
 (defun check-expansion ()
   (save-excursion

@@ -62,6 +62,20 @@
   (interactive)
   (load-file user-init-file))
 
+(defun maple/open-git-repo ()
+  "Open remote repo URL."
+  (interactive)
+  (require 'magit)
+  (let ((url (magit-get "remote" "origin" "url")))
+    (progn
+      (browse-url
+        (if (string-match "^http" url)
+            url
+          (replace-regexp-in-string "\\(.*\\)@\\(.*\\):\\(.*\\)\\(\\.git?\\)"
+                                    "https://\\2/\\3"
+                                    url)))
+      (message "opening repo %s" url))))
+
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (provide 'init-basic)

@@ -1,23 +1,18 @@
 (use-package recentf
   :defer t
   :init
-  (progn
-    ;; lazy load recentf
-    (add-hook 'find-file-hook (lambda () (unless recentf-mode
-                                           (recentf-mode)
-                                           (recentf-track-opened-file))))
-
-    (setq recentf-save-file (concat maple-cache-directory "recentf")
-          recentf-max-saved-items 100
-          recentf-auto-cleanup 'never
-          recentf-auto-save-timer (run-with-idle-timer 600 t
-                                                       'recentf-save-list)))
+  (setq recentf-save-file (concat maple-cache-directory "recentf")
+        recentf-max-saved-items 100
+        recentf-auto-cleanup 'never)
+  ;; lazy load recentf
+  (add-hook 'find-file-hook (lambda () (unless recentf-mode
+                                         (recentf-mode)
+                                         (recentf-track-opened-file))))
   :config
-  (progn
-    (add-to-list 'recentf-exclude
-                 (expand-file-name maple-cache-directory))
-    (add-to-list 'recentf-exclude (expand-file-name package-user-dir))
-    (add-to-list 'recentf-exclude "COMMIT_EDITMSG\\'")))
+  (add-to-list 'recentf-exclude
+               (expand-file-name maple-cache-directory))
+  (add-to-list 'recentf-exclude (expand-file-name package-user-dir))
+  (add-to-list 'recentf-exclude "COMMIT_EDITMSG\\'"))
 
 (use-package savehist
   :defer t
@@ -37,19 +32,17 @@
 (use-package saveplace
   :defer t
   :init
-  (if (fboundp 'save-place-mode)
-      ;; Emacs 25 has a proper mode for `save-place'
-      (add-hook 'after-init-hook #'save-place-mode)
-    (setq save-place t))
-  ;; Save point position between sessions
-  (setq save-place-file (concat maple-cache-directory "places")))
+  (setq save-place-file (concat maple-cache-directory "places"))
+  ;; Emacs 25 has a proper mode for `save-place'
+  (add-hook 'after-init-hook #'save-place-mode))
 
 
 (use-package neotree
   :ensure t
   :defer t
   :commands neo-global--window-exists-p
-  :evil-emacs neotree-mode
+  :evil-state
+  (neotree-mode . emacs)
   :config
   (setq neo-create-file-auto-open t
         neo-banner-message "Press ? for neotree help"
@@ -226,24 +219,6 @@ the current state and point position."
   (evil-previous-line count)
   (evil-escape))
 
-;; (setq maple/large-file-modes-list
-;;       '(archive-mode tar-mode jka-compr git-commit-mode image-mode
-;;                      doc-view-mode doc-view-mode-maybe ebrowse-tree-mode
-;;                      pdf-view-mode))
-
-;; (defun maple/check-large-file ()
-;;   (let* ((filename (buffer-file-name))
-;;          (size (nth 7 (file-attributes filename))))
-;;     (when (and
-;;            ;; (not (memq major-mode maple/large-file-modes-list))
-;;            size (> size (* 1024 1024 1))
-;;            (y-or-n-p (format (concat "%s is a large file, open literally to "
-;;                                      "avoid performance issues?")
-;;                              filename)))
-;;       (setq buffer-read-only t)
-;;       (buffer-disable-undo)
-;;       (fundamental-mode))))
-
 (defun maple/check-large-file ()
   (when (and (> (buffer-size) (* 1024 1024 3))
              (y-or-n-p (format (concat "%s is a large file, open literally to "
@@ -253,15 +228,6 @@ the current state and point position."
     (buffer-disable-undo)
     (fundamental-mode)))
 
-;; (defun maple/check-large-file ()
-;;   (when (> (buffer-size) 500000)
-;;     (progn (fundamental-mode)
-;;            (hl-line-mode -1)))
-;;   (if (and (executable-find "wc")
-;;            (> (string-to-number (shell-command-to-string (format "wc -l %s" (buffer-file-name))))
-;;               5000))
-;;       (linum-mode -1)
-;;     (linum-mode 1)))
 (add-hook 'find-file-hook 'maple/check-large-file)
 
 (provide 'init-file)

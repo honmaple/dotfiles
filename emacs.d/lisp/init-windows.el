@@ -1,9 +1,11 @@
 ;;默认分屏
-(setq split-width-threshold 1)
+(use-package window
+  :defer t
+  :init (setq split-width-threshold 1))
 
 (use-package winner
   :defer t
-  :init (winner-mode t))
+  :init (add-hook 'after-init-hook #'winner-mode))
 
 (use-package window-numbering
   :ensure t
@@ -16,9 +18,9 @@
   :config
   (setq popwin:special-display-config
         '(("*Help*" :dedicated t :position bottom :stick nil :noselect nil)
-          ("*compilation*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
-          ("*Compile-Log*" :dedicated t :position bottom :stick t :noselect t :height 0.4)
-          ("*Warnings*" :dedicated t :position bottom :stick t :noselect t)
+          ("*compilation*" :dedicated t :position bottom :stick t :noselect t :height 0.2)
+          ("*Compile-Log*" :dedicated t :position bottom :stick t :noselect nil :height 0.2)
+          ("*Warnings*" :dedicated t :position bottom :stick t :noselect nil)
           ("*Completions*" :dedicated t :position bottom :stick t :noselect nil)
           ("*Shell Command Output*" :dedicated t :position bottom :stick t :noselect nil)
           ("\*Async Shell Command\*.+" :regexp t :position bottom :stick t :noselect nil)

@@ -4,7 +4,7 @@
 ;;; Code:
 (add-to-list 'use-package-keywords :evil-bind t)
 (add-to-list 'use-package-keywords :evil-leader t)
-(add-to-list 'use-package-keywords :evil-emacs t)
+(add-to-list 'use-package-keywords :evil-state t)
 (add-to-list 'use-package-keywords :mode-setq t)
 
 (defun use-package-normalize/:evil-bind (name keyword args)
@@ -21,7 +21,7 @@
           arg))))
 
 (defalias 'use-package-normalize/:evil-leader 'use-package-normalize/:evil-bind)
-(defalias 'use-package-normalize/:evil-emacs 'use-package-normalize-symlist)
+(defalias 'use-package-normalize/:evil-state 'use-package-normalize-forms)
 (defalias 'use-package-normalize/:mode-setq 'use-package-normalize-forms)
 
 (defun use-package-handler/:evil-bind (name keyword args rest state)
@@ -68,17 +68,15 @@
       args))
    (use-package-process-keywords name rest state)))
 
-(defun use-package-handler/:evil-emacs (name keyword arg rest state)
+(defun use-package-handler/:evil-state (name keyword arg rest state)
   (let ((body (use-package-process-keywords name rest state)))
     (use-package-concat
      (mapcar #'(lambda (var)
                  `(with-eval-after-load 'evil
-                    ,(if (consp var)
-                         `(evil-set-initial-state ',(car var) ,(cdr var))
-                       `(evil-set-initial-state ',var 'emacs))))
+                    (evil-set-initial-state ',(car var) ',(cdr var))
+                    ))
              arg)
      body)))
-
 
 (defun use-package-handler/:mode-setq (name keyword arg rest state)
   (let* ((body (use-package-process-keywords name rest state))
@@ -92,18 +90,6 @@
            body
            (list t))))
     config-body))
-
-;; (defun use-package-handler/:evil-emacs (name keyword arg rest state)
-;;   (let* ((body (use-package-process-keywords name rest state))
-;;          (name-symbol (use-package-as-symbol name))
-;;          (config-body
-;;           (use-package-concat
-;;            (use-package-hook-injector (symbol-name name-symbol)
-;;                                       :config `((after-load 'evil
-;;                                                   (evil-set-initial-state ',arg 'emacs))))
-;;            body
-;;            (list t))))
-;;     config-body))
 
 (provide 'evil-use-package)
 ;;; evil-use-package.el ends here

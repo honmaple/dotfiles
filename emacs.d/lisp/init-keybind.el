@@ -166,6 +166,7 @@
   "ol" 'org-new-blog  ;;插入博客地址
   "od" 'youdao-dictionary-search-at-point+
   "oD" 'youdao-dictionary-search-at-point
+  "op" 'maple/open-git-repo
   )
 
 (evil-leader/set-key
@@ -217,19 +218,20 @@
 (define-key evil-normal-state-map (kbd "M-k") 'evil-window-up)
 (define-key evil-normal-state-map (kbd "M-l") 'evil-window-right)
 (define-key evil-normal-state-map (kbd "M-h") 'evil-window-left)
+(define-key evil-normal-state-map (kbd "H") (kbd "^"))
+(define-key evil-normal-state-map (kbd "L") (kbd "$"))
+(define-key evil-normal-state-map (kbd "S-<return>") 'maple/evil-insert-line-above)
+;; (define-key evil-normal-state-map (kbd "RET") 'maple/evil-insert-line-below)
+
 (define-key evil-insert-state-map (kbd "C-h") (kbd "<left>"))
 (define-key evil-insert-state-map (kbd "C-l") (kbd "<right>"))
 (define-key evil-insert-state-map (kbd "C-v") 'cua-paste)
-(define-key evil-normal-state-map (kbd "H") (kbd "^"))
-(define-key evil-normal-state-map (kbd "L") (kbd "$"))
+
 (define-key evil-visual-state-map (kbd "H") (kbd "^"))
-;; (define-key evil-visual-state-map (kbd "L") (kbd "$"))
 (define-key evil-visual-state-map (kbd "L")
   (lambda ()
     (interactive)
     (evil-end-of-line)))
-;; (define-key evil-normal-state-map (kbd "RET") 'maple/evil-insert-line-below)
-(define-key evil-normal-state-map (kbd "S-<return>") 'maple/evil-insert-line-above)
 (define-key evil-visual-state-map (kbd "<")
   (lambda ()
     (interactive)

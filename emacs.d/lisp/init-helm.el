@@ -16,7 +16,7 @@
           helm-allow-mouse t
           helm-bookmark-show-location t
           helm-display-header-line nil
-          helm-split-window-in-side-p t
+          helm-split-window-inside-p t
           helm-always-two-windows t
           helm-echo-input-in-header-line t
           helm-imenu-execute-action-at-once-if-one nil
@@ -25,14 +25,8 @@
           helm-move-to-line-cycle-in-source     t
           helm-grep-save-buffer-name-no-confirm t)
     ;;模糊搜索
-    (setq helm-M-x-fuzzy-match t
-          helm-apropos-fuzzy-match t
-          helm-file-cache-fuzzy-match t
-          helm-imenu-fuzzy-match t
-          helm-lisp-fuzzy-completion t
-          helm-recentf-fuzzy-match t
-          helm-semantic-fuzzy-match t
-          helm-buffers-fuzzy-matching t)
+    (setq helm-mode-fuzzy-match t
+          helm-completion-in-region-fuzzy-match t)
 
     (defun maple/helm-hide-mode-line ()
       "Hide mode line in `helm-buffer'."
@@ -62,18 +56,10 @@
          :background (face-attribute 'default :background)
          :box nil
          :height 0.1)))
-    (add-hook 'helm-minibuffer-set-up-hook
-              #'helm-hide-minibuffer-maybe)
-    (add-hook 'helm-before-initialize-hook 'maple/helm-hide-header-line)
-    (add-hook 'helm-after-initialize-hook 'maple/helm-hide-cursor)
+    (add-hook 'helm-minibuffer-set-up-hook #'helm-hide-minibuffer-maybe)
+    (add-hook 'helm-before-initialize-hook #'maple/helm-hide-header-line)
+    (add-hook 'helm-after-initialize-hook #'maple/helm-hide-cursor)
     ;; (add-hook 'helm-after-initialize-hook 'maple/helm-hide-mode-line)
-    ;; (defun maple/helm-hide-helper()
-    ;;   (set-face-attribute 'helm-header nil
-    ;;                       :foreground (face-attribute 'default :background)
-    ;;                       :background (face-attribute 'default :background)
-    ;;                       :box nil
-    ;;                       :height 0.1))
-    ;; (add-hook 'helm-before-initialize-hook 'maple/helm-hide-helper)
     (helm-mode 1)
     )
   :bind (("M-x" . helm-M-x)
@@ -102,16 +88,12 @@
   :defer t
   :diminish projectile-mode "ⓟ"
   :init
-  (progn
-    (setq projectile-sort-order 'recentf
-          projectile-cache-file (concat maple-cache-directory
-                                        "projectile.cache")
-          projectile-known-projects-file (concat maple-cache-directory
-                                                 "projectile-bookmarks.eld"))
-    ;; (setq projectile-enable-caching t)
-    ;; (add-to-list 'projectile-globally-ignored-files "*.png")
-    ;; (add-to-list 'projectile-globally-ignored-directories "node_modules")
-    (add-hook 'after-init-hook #'projectile-global-mode))
+  (setq projectile-sort-order 'recentf
+        projectile-cache-file (concat maple-cache-directory
+                                      "projectile.cache")
+        projectile-known-projects-file (concat maple-cache-directory
+                                               "projectile-bookmarks.eld"))
+  (add-hook 'after-init-hook #'projectile-mode)
   :config
   (progn
     (defun neotree-find-project-root ()
@@ -134,8 +116,7 @@
              helm-projectile
              helm-projectile-switch-project)
   :init
-  (progn
-    (setq projectile-switch-project-action 'helm-projectile)))
+  (setq projectile-switch-project-action 'helm-projectile))
 
 
 (provide 'init-helm)

@@ -122,16 +122,15 @@
 (defun maple/add-company-backend (backend)
   "Add BACKEND to `company-backends'."
   (after-load 'company
-    (setq-local company-backends (append (list backend) company-backends))
-    (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))))
+    (setq company-backends (mapcar #'company-mode/backend-with-yas
+                                   (append (list backend) company-backends)))))
 
 (defun maple/add-to-company-backend (backend &optional hook)
-  "Add BACKEND to `company-backends'."
-  (lexical-let ((backend backend)
-                (hook hook))
+  "Add BACKEND to HOOK `company-backends'."
+  (lexical-let ((backend backend))
     (if hook
         (add-hook hook (lambda () (maple/add-company-backend backend)))
-      (lambda () (maple/add-company-backend backend)))))
+      (maple/add-company-backend backend))))
 
 ;; (use-package ycmd
 ;;   :defer t

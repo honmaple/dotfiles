@@ -37,7 +37,7 @@
       indicate-empty-lines t
       transient-mark-mode nil
       backup-directory-alist `(("." . ,(concat maple-cache-directory "auto-save")))
-      x-select-enable-clipboard t) ;;激活粘贴板
+      select-enable-clipboard t) ;;激活粘贴板
 
 ;; (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
 ;; important for golden-ratio to better work
@@ -71,8 +71,16 @@
       scroll-margin 15
       scroll-conservatively 101)
 
+;; 设置默认浏览器
+(use-package browse-url
+  :defer t
+  :config
+  (setq browse-url-browser-function 'browse-url-generic
+        browse-url-generic-program "google-chrome-stable"))
+
 ;;高亮当前行
 (use-package hl-line
+  :defer t
   :init (add-hook 'after-init-hook #'global-hl-line-mode))
 
 (use-package ediff

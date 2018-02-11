@@ -39,6 +39,7 @@
     ;; )
     ;; (add-hook 'focus-out-hook (lambda () (save-some-buffers t)))
     ;; (add-hook 'evil-insert-state-exit-hook 'my-save-if-bufferfilename)
+    ;; (evil-add-hjkl-bindings package-menu-mode-map 'emacs)
     )
   :custom
   (evil-insert-state-cursor '((bar . 2) "chartreuse3"))
@@ -133,6 +134,8 @@
   :evil-bind
   (normal evil-mc-key-map
           (kbd "<escape>") 'evil-mc-undo-all-cursors))
+
+
 
 (use-package expand-region
   :ensure t

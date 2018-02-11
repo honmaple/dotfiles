@@ -7,36 +7,22 @@
   :defer t
   :mode
   (("\\.phtml\\'" . web-mode)
-   ("\\.tpl\\.php\\'" . web-mode)
    ("\\.vue\\'" . web-mode)
-   ("\\.tpl\\'" . web-mode)
-   ("\\.blade\\.php\\'" . web-mode)
    ("\\.jsp\\'" . web-mode)
    ("\\.as[cp]x\\'" . web-mode)
-   ("\\.erb\\'" . web-mode)
    ("\\.html?\\'" . web-mode)
    ("/\\(views\\|html\\|theme\\|templates\\)/.*\\.php\\'" . web-mode))
   :config
   (progn
-    (setq web-mode-markup-indent-offset 2)
-    (setq web-mode-enable-auto-closing t) ; enable auto close tag in text-mode
-    ;; (setq web-mode-enable-current-element-highlight t)
-    ;; (custom-set-faces
-    ;;  '(web-mode-current-element-highlight-face ((t (:foreground "#000" :background "#a6e22e")))))
-    (setq web-mode-enable-auto-indentation nil)
-    (setq web-mode-enable-control-block-indentation nil)
-    (setq web-mode-enable-css-colorization nil)
-    ;; see https://github.com/fxbois/web-mode/issues/275
-    ;; (setq web-mode-enable-auto-pairing nil)
-    ;; (add-hook
-    ;;  'web-mode-hook
-    ;;  '(lambda ()
-    ;;     (setq-local electric-pair-inhibit-predicate
-    ;;                 (lambda (c)
-    ;;                   (if (char-equal c ?{) t (electric-pair-default-inhibit c))))))
-    (setq web-mode-engines-alist '(("django" . "\\.html\\'")
-                                   ("django" . "\\.vue\\'")))
-    (setq web-mode-engines-auto-pairs '(("django" . (("{{ " . " }")
+    (setq web-mode-markup-indent-offset 2
+          web-mode-enable-auto-closing t ; enable auto close tag in text-mode
+          web-mode-enable-current-element-highlight t
+          web-mode-enable-auto-indentation nil
+          web-mode-enable-control-block-indentation nil
+          web-mode-enable-css-colorization nil
+          web-mode-engines-alist '(("django" . "\\.html\\'")
+                                   ("django" . "\\.vue\\'"))
+          web-mode-engines-auto-pairs '(("django" . (("{{ " . " }")
                                                      ("{% " . " %")
                                                      ("{%-" . " | %")
                                                      ("{%=" . " | %")
@@ -60,27 +46,23 @@
 
 (use-package web-beautify
   :ensure t
-  :commands (web-beautify-html web-beautify-css web-beautify-js)
-  )
+  :commands (web-beautify-html web-beautify-css web-beautify-js))
 
 (use-package emmet-mode
   :ensure t
   :defer t
   :diminish emmet-mode
   :init
-  (progn
-    (add-hook 'html-mode-hook 'emmet-mode)
-    (add-hook 'sgml-mode-hook 'emmet-mode)
-    (add-hook 'web-mode-hook 'emmet-mode)
-    ;; (add-hook 'css-mode-hook  'emmet-mode)
-    )
+  (dolist (hook '(html-mode-hook
+                  sgml-mode-hook
+                  web-mode-hook))
+    (add-hook hook 'emmet-mode))
   :config
-  (progn
-    (defun maple/emmet-expand ()
-      (interactive)
-      (if (bound-and-true-p yas-minor-mode)
-          (call-interactively 'emmet-expand-yas)
-        (call-interactively 'emmet-expand-line))))
+  (defun maple/emmet-expand ()
+    (interactive)
+    (if (bound-and-true-p yas-minor-mode)
+        (call-interactively 'emmet-expand-yas)
+      (call-interactively 'emmet-expand-line)))
   :evil-bind
   (insert emmet-mode-keymap
           (kbd "TAB") 'maple/emmet-expand
@@ -90,10 +72,8 @@
   :ensure t
   :defer t
   :config
-  (progn
-    (maple/add-to-company-backend '(company-css) 'css-mode-hook)
-    (put 'css-indent-offset 'safe-local-variable #'integerp)
-    ))
+  (setq css-indent-offset 2)
+  (maple/add-to-company-backend '(company-css) 'css-mode-hook))
 
 (use-package sass-mode
   :ensure t

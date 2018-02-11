@@ -10,7 +10,7 @@
 
 (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
                          ("melpa" . "http://elpa.emacs-china.org/melpa/")
-                         ("melpa-stable" . "http://stable.melpa.org/packages/")
+                         ;; ("melpa-stable" . "http://stable.melpa.org/packages/")
                          ("org"   . "http://orgmode.org/elpa/")
                          ))
 
@@ -74,11 +74,6 @@
   :ensure t
   :defer t)
 
-;; 命令行历史
-(use-package mwe-log-commands
-  :ensure t
-  :defer t)
-
 (use-package async-bytecomp
   :ensure async
   :defer t
@@ -102,7 +97,8 @@
   :config (fullframe list-packages quit-window))
 
 (use-package cl-lib
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package restart-emacs
   :ensure t
@@ -115,7 +111,6 @@
   :init (exec-path-from-shell-initialize))
 
 (use-package server
-  :defer t
   :config
   (unless (server-running-p)
     (server-start)))

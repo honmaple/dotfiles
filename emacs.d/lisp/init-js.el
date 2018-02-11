@@ -1,8 +1,7 @@
 (use-package js2-mode
   :ensure t
   :defer t
-  :mode
-  ("\\.js\\'" . js2-mode)
+  :mode ("\\.js\\'" . js2-mode)
   :config
   (progn
     (setq-default js2-basic-offset 4
@@ -23,10 +22,8 @@
   :defer t
   :mode ("\\.coffee\\.erb\\'" . coffee-mode)
   :config
-  (progn
-    (setq coffee-js-mode preferred-javascript-mode
-          coffee-tab-width preferred-javascript-indent-level)
-    ))
+  (setq coffee-js-mode preferred-javascript-mode
+        coffee-tab-width preferred-javascript-indent-level))
 
 (use-package tern
   :ensure t

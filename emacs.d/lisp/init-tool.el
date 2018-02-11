@@ -14,11 +14,9 @@
   :ensure t
   :defer t
   :config
-  (progn
-    (maple/set-quit-key quickrun--mode-map)
-    (add-hook 'quickrun--mode-hook
-              (lambda () (toggle-truncate-lines t)))
-    ))
+  (maple/set-quit-key quickrun--mode-map)
+  (add-hook 'quickrun--mode-hook
+            (lambda () (toggle-truncate-lines t))))
 
 (use-package blog-admin
   :load-path "site-lisp/blog-admin"
@@ -55,7 +53,8 @@
 (use-package imenu-list
   :ensure t
   :commands imenu-list-minor-mode
-  :evil-emacs imenu-list-major-mode
+  :evil-state
+  (imenu-list-major-mode . emacs)
   :config
   (progn
     (setq imenu-list-focus-after-activation t
@@ -118,24 +117,15 @@
   :ensure t
   :defer t)
 
-(use-package restclient
-  :ensure t
-  :defer t
-  :bind (:map evil-leader--default-map
-              ("rs" . restclient-http-send-current)
-              ("rr" . restclient-http-send-current-raw)
-              ("rn" . restclient-narrow-to-current)
-              ("ry" . restclient-copy-curl-command)))
-
 (use-package 2048-game
   :ensure t
-  :evil-emacs 2048-mode)
+  :defer t
+  :evil-state
+  (2048-mode . emacs))
 
 (use-package maple-macro
-  :load-path "site-lisp/"
-  :config
-  (maple/search-engine "google"     "http://www.google.com/search?q="              "Google: ")
-  (maple/search-engine "github"     "https://github.com/search?q="                 "Search GitHub: "))
+  :load-path "site-lisp/maple"
+  :config (maple/search-macro))
 
 (use-package startify
   :load-path "site-lisp/startify"

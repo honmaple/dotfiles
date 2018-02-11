@@ -3,36 +3,26 @@
   :ensure t
   :defer t
   :config
-  (progn
-    (add-hook 'visual-line-mode-hook 'adaptive-wrap-prefix-mode)))
+  (add-hook 'visual-line-mode-hook 'adaptive-wrap-prefix-mode))
 
 ;; 修改外部文件自动载入
 (use-package autorevert
   :defer t
-  ;; :init (global-auto-revert-mode)
   :init (add-hook 'after-init-hook #'global-auto-revert-mode)
   :diminish auto-revert-mode
   :config
-  (progn
-    (setq global-auto-revert-non-file-buffers t
-          auto-revert-verbose nil)
-    ))
-
-(use-package hide-comnt
-  :ensure t
-  :commands hide/show-comments-toggle)
+  (setq global-auto-revert-non-file-buffers t
+        auto-revert-verbose nil))
 
 (use-package semantic
   :ensure t
   :defer t
   :init
-  (progn
-    (setq srecode-map-save-file
-          (concat maple-cache-directory "srecode-map.el"))
-    (setq semanticdb-default-save-directory
-          (concat maple-cache-directory "semanticdb/"))
-    ;; (add-hook 'after-init-hook 'semantic-mode)
-    )
+  (setq srecode-map-save-file
+        (concat maple-cache-directory "srecode-map.el"))
+  (setq semanticdb-default-save-directory
+        (concat maple-cache-directory "semanticdb/"))
+  ;; (add-hook 'after-init-hook 'semantic-mode)
   :config
   (progn
     (add-to-list 'semantic-default-submodes
@@ -45,13 +35,12 @@
   :defer t)
 
 
-(use-package electric
+(use-package elec-pair
   :defer t
   :init (add-hook 'after-init-hook #'electric-pair-mode)
   :config
-  (progn
-    ;; (setq electric-pair-pairs '((?\' . ?\')))
-    (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)))
+  ;; (setq electric-pair-pairs '((?\' . ?\')))
+  (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
 
 ;; (use-package page
 ;;   :init
@@ -68,22 +57,29 @@
 (use-package dumb-jump
   :ensure t
   :defer t
-  :config (setq dumb-jump-selector 'helm)
-  :bind (:map evil-normal-state-map
-              ("gd" . dumb-jump-go)))
+  :config
+  (setq dumb-jump-selector 'helm)
+  :bind
+  (:map evil-normal-state-map
+        ("gd" . dumb-jump-go)))
 
 
 (use-package eldoc
   :defer t
   :diminish eldoc-mode
   :config
-  (progn
-    ;; enable eldoc in `eval-expression'
-    (add-hook 'eval-expression-minibuffer-setup-hook #'eldoc-mode)
-    ;; enable eldoc in IELM
-    (add-hook 'ielm-mode-hook #'eldoc-mode)
-    ;; don't display eldoc on modeline
-    ))
+  ;; enable eldoc in `eval-expression'
+  (add-hook 'eval-expression-minibuffer-setup-hook #'eldoc-mode)
+  ;; enable eldoc in IELM
+  (add-hook 'ielm-mode-hook #'eldoc-mode))
 
+
+(use-package hideshow
+  :defer t
+  :diminish hs-minor-mode
+  :init
+  (add-hook 'yaml-mode-hook #'hs-minor-mode)
+  (add-hook 'conf-mode-hook #'hs-minor-mode)
+  (add-hook 'prog-mode-hook #'hs-minor-mode))
 
 (provide 'init-editor)

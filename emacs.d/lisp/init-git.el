@@ -13,13 +13,11 @@
   :ensure t
   :defer t
   :config
-  (progn
-    (setq magit-completing-read-function 'magit-builtin-completing-read
-          magit-revision-show-gravatars '("^Author:     " . "^Commit:     "))
-    (setq-default
-     magit-process-popup-time 10
-     magit-diff-refine-hunk t)
-    (fullframe magit-status magit-mode-quit-window))
+  (setq magit-completing-read-function 'magit-builtin-completing-read
+        magit-revision-show-gravatars '("^Author:     " . "^Commit:     ")
+        magit-process-popup-time 10
+        magit-diff-refine-hunk t)
+  (fullframe magit-status magit-mode-quit-window)
   :bind
   (("C-x g" . magit-status)
    ("C-x M-g" . magit-dispatch-popup)
@@ -38,25 +36,19 @@
   :ensure t
   :defer t
   :config
-  (progn
-    (evil-mc-mode -1)
-    (evil-make-overriding-map git-timemachine-mode-map 'normal)
-    ;; force update evil keymaps after git-timemachine-mode loaded
-    (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps))
-  )
+  (evil-make-overriding-map git-timemachine-mode-map 'normal)
+  ;; force update evil keymaps after git-timemachine-mode loaded
+  (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps))
 
 (use-package git-gutter-fringe
   :ensure t
-  :commands git-gutter-mode
+  :defer t
   :diminish git-gutter-mode
   :init
-  (progn
-    (with-eval-after-load 'git-gutter
-      (require 'git-gutter-fringe))
-    (setq git-gutter-fr:side 'right-fringe)
-    (add-hook 'after-init-hook #'global-git-gutter-mode)
-    ;; (global-git-gutter-mode t)
-    )
+  (with-eval-after-load 'git-gutter
+    (require 'git-gutter-fringe))
+  (setq git-gutter-fr:side 'right-fringe)
+  (add-hook 'after-init-hook #'global-git-gutter-mode)
   :config
   (progn
     ;; custom graphics that works nice with half-width fringes

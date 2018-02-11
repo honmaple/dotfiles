@@ -50,42 +50,12 @@
   :defer t
   :config
   (progn
-    ;; (setq maple-cycle-themes (mapcar 'symbol-name (custom-available-themes)))
-    ;; (setq maple-cycle-themes (delete "doom-one-light"
-    ;;                                  (mapcar 'symbol-name (custom-available-themes))))
-    (defvar maple-cycle-themes '("monokai"
-                                 "spacemacs-dark"
-                                 "solarized-light"
-                                 "solarized-dark"
-                                 "doom-molokai"
-                                 "doom-one"
-                                 "doom-peacock"))
-    (defun maple/cycle-theme (num)
-      (interactive)
-      (setq maple-current-theme-index
-            (+ num
-               (cl-position
-                (car (mapcar 'symbol-name custom-enabled-themes)) maple-cycle-themes :test 'equal)))
-      (when (>= maple-current-theme-index (length maple-cycle-themes))
-        (setq maple-current-theme-index 0))
-      (when (eq maple-current-theme-index -1)
-        (setq maple-current-theme-index (1- (length maple-cycle-themes))))
-      (setq maple-current-theme (nth maple-current-theme-index maple-cycle-themes))
-      (mapc 'disable-theme custom-enabled-themes)
-      (let ((progress-reporter
-             (make-progress-reporter
-              (format "Loading theme %s..." maple-current-theme))))
-        (load-theme (intern maple-current-theme) t)
-        (progress-reporter-done progress-reporter)))
-    (defun maple/next-theme()
-      (interactive)
-      (maple/cycle-theme 1))
-    (defun maple/previous-theme()
-      (interactive)
-      (maple/cycle-theme -1))
-    (defhydra maple/cycle-themes ()
-      ("n" maple/next-theme "next theme")
-      ("p" maple/previous-theme "prev theme"))
+    (use-package maple-theme
+      :load-path "site-lisp/maple"
+      :config
+      (defhydra maple/cycle-themes ()
+        ("n" maple/next-theme "next theme")
+        ("p" maple/previous-theme "prev theme")))
     ))
 
 
@@ -94,8 +64,7 @@
   :diminish which-key-mode
   :defer t
   :init
-  (setq which-key-prevent-C-h-from-cycling t
-        which-key-echo-keystrokes 0.02
+  (setq which-key-echo-keystrokes 0.02
         which-key-max-description-length 32
         which-key-sort-order 'which-key-key-order-alpha
         which-key-idle-delay 0.2
@@ -140,11 +109,10 @@
   :ensure t
   :defer t
   :config
-  (progn
-    ;; (setq fci-rule-column 80)
-    (setq fci-rule-width 1)
-    (setq fci-rule-color "#D0BF8F")
-    (push '(fci-mode "") minor-mode-alist)))
+  (setq fci-rule-column 80)
+  (setq fci-rule-width 1)
+  (setq fci-rule-color "#D0BF8F")
+  (push '(fci-mode "") minor-mode-alist))
 
 ;; (use-package vline
 ;;   :ensure t
@@ -185,8 +153,11 @@
     (add-hook hook 'highlight-symbol-nav-mode))
   (add-hook 'org-mode-hook 'highlight-symbol-nav-mode))
 
+
 (use-package volatile-highlights
   :ensure t
+  :defer t
+  :init (add-hook 'after-init-hook #'volatile-highlights-mode)
   :diminish volatile-highlights-mode
   :config
   (progn
@@ -204,17 +175,15 @@
       (vhl/define-extension 'undo-tree
                             'undo-tree-move
                             'undo-tree-yank)
-      (vhl/install-extension 'undo-tree))
-    (volatile-highlights-mode))
+      (vhl/install-extension 'undo-tree)))
   :custom-face (vhl/default-face ((t (:background "Springgreen3" :foreground "#272822")))))
 
 ;; 高亮当前括号
 (use-package highlight-parentheses
   :ensure t
   :diminish highlight-parentheses-mode
-  :init (add-hook 'after-init-hook #'highlight-parentheses-mode)
+  :init (add-hook 'after-init-hook #'global-highlight-parentheses-mode)
   :config
-  (setq hl-paren-delay 0.2)
   (setq hl-paren-colors '("Springgreen3"
                           "IndianRed1"
                           "IndianRed3"))
@@ -226,10 +195,11 @@
 ;;   :config (set-face-background col-highlight-face "#3c3d37"))
 
 ;; 显示缩进
-;; (use-package highlight-indentation
-;;   :defer t
-;;   :diminish highlight-indentation-mode
-;;   :init (add-hook 'prog-mode-hook 'highlight-indentation-mode))
+(use-package highlight-indent-guides
+  :ensure t
+  :defer t
+  :init (add-hook 'prog-mode-hook #'highlight-indent-guides-mode)
+  :config (setq highlight-indent-guides-method 'character))
 
 
 (use-package whitespace
@@ -240,10 +210,9 @@
                   conf-mode-hook))
     (add-hook hook #'whitespace-mode))
   :config
-  ;; (setq whitespace-style '(face
-  ;;                          trailing space-before-tab
-  ;;                          indentation empty space-after-tab))
-  (setq whitespace-style '(face))
-  (setq whitespace-action '(cleanup)))
+  (setq whitespace-style '(face
+                           trailing space-before-tab
+                           indentation empty space-after-tab))
+  (setq whitespace-action '(auto-cleanup)))
 
 (provide 'init-ui)

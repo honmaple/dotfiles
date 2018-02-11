@@ -1,6 +1,6 @@
 (use-package autoinsert
   :defer t
-  :init (auto-insert-mode)
+  :init (add-hook 'after-init-hook #'auto-insert-mode)
   :config
   (progn
     (defun maple//insert-string()
@@ -75,4 +75,3 @@
     (add-hook 'before-save-hook 'maple/header-auto-update)))
 
 (provide 'init-auto-insert)
-

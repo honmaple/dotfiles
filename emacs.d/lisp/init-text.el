@@ -14,7 +14,10 @@
     (add-hook 'markdown-mode-hook
               (lambda()
                 (add-hook 'after-save-hook 'cleanup-org-tables  nil 'make-it-local)))
-    ))
+    )
+  :bind
+  (:map markdown-mode-map
+        ([f5] . markdown-toggle-markup-hiding)))
 
 ;; (use-package markdown-preview-mode
 ;;   :load-path "site-lisp/markdown-preview/")
@@ -24,6 +27,10 @@
 ;;   :init (add-hook 'org-mode-hook 'olivetti-mode))
 
 (use-package markdown-toc
+  :ensure t
+  :defer t)
+
+(use-package yaml-mode
   :ensure t
   :defer t)
 

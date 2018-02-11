@@ -7,26 +7,17 @@
   :ensure t
   :defer 5)
 
-;; (use-package evil-org
-;;   :ensure t
-;;   :commands (evil-org-mode evil-org-recompute-clocks)
-;;   :init (add-hook 'org-mode-hook 'evil-org-mode)
-;;   :diminish evil-org-mode)
-
 (use-package org
   :mode ("\\.org$" . org-mode)
   :defer t
-  :commands (orgtbl-mode)
+  :commands orgtbl-mode
   :init
-  (progn
-    (setq org-emphasis-regexp-components
-          ;; markup 记号前后允许中文
-          (list (concat " \t('\"{"            "[:nonascii:]")
-                (concat "- \t.,:!?;'\")}\\["  "[:nonascii:]")
-                " \t\r\n,\"'"
-                "."
-                1))
-    )
+  (setq org-emphasis-regexp-components
+        ;; markup 记号前后允许中文
+        (list (concat " \t('\"{"            "[:nonascii:]")
+              (concat "- \t.,:!?;'\")}\\["  "[:nonascii:]")
+              " \t\r\n,\"'"
+              "." 1))
   :config
   (progn
     (setq org-tags-column 80)
@@ -34,16 +25,15 @@
     (setq org-image-actual-width '(600))
     (setq org-export-with-sub-superscripts (quote {}))
     (setq org-descriptive-links nil) ;; 不要锁定连接，保持原样
-    (after-load 'org
-      (setq org-match-substring-regexp
-            (concat
-             ;; 限制上标和下标的匹配范围，org 中对其的介绍见：(org) Subscripts and superscripts
-             "\\([0-9a-zA-Zα-γΑ-Ω]\\)\\([_^]\\)\\("
-             "\\(?:" (org-create-multibrace-regexp "{" "}" org-match-sexp-depth) "\\)"
-             "\\|"
-             "\\(?:" (org-create-multibrace-regexp "(" ")" org-match-sexp-depth) "\\)"
-             "\\|"
-             "\\(?:\\*\\|[+-]?[[:alnum:].,\\]*[[:alnum:]]\\)\\)")))
+    (setq org-match-substring-regexp
+          (concat
+           ;; 限制上标和下标的匹配范围，org 中对其的介绍见：(org) Subscripts and superscripts
+           "\\([0-9a-zA-Zα-γΑ-Ω]\\)\\([_^]\\)\\("
+           "\\(?:" (org-create-multibrace-regexp "{" "}" org-match-sexp-depth) "\\)"
+           "\\|"
+           "\\(?:" (org-create-multibrace-regexp "(" ")" org-match-sexp-depth) "\\)"
+           "\\|"
+           "\\(?:\\*\\|[+-]?[[:alnum:].,\\]*[[:alnum:]]\\)\\)"))
 
     ;; 中英文对齐
     (when (display-graphic-p)
@@ -75,15 +65,7 @@
 
     (defadvice org-open-at-point (after org-open-at-point activate)
       (while (>  (count-windows) 2)
-        (delete-window (cadr (window-list-1)))))
-    ;; (defadvice org-toggle-inline-images (after org-toggle-inline-images activate)
-    ;;   (if smooth-scrolling-mode (smooth-scrolling-mode -1)
-    ;;     (smooth-scrolling-mode 1)))
-    )
-  :bind (("C-c c" . org-capture)
-         ("C-c a" . org-agenda)
-         ("C-c b" . org-iswitchb)
-         ("C-c l" . org-store-link))
+        (delete-window (cadr (window-list-1))))))
   :evil-bind
   (normal org-mode-map
           "RET" 'org-open-at-point
@@ -96,24 +78,6 @@
   :defer t
   :config
   (progn
-    (defun maple/snip-target ()
-      "Set point for capturing at what capture target file+headline with headline set to %l would do."
-      (org-capture-put :target (list
-                                'file+headline
-                                (nth 1 (org-capture-get :target))
-                                (completing-read "Followed by: " '("Tool" "Flask" "Tornado"))))
-      (org-capture-put-target-region-and-position)
-      (widen)
-      (let ((hd (nth 2 (org-capture-get :target))))
-        (goto-char (point-min))
-        (if (re-search-forward
-             (format org-complex-heading-regexp-format (regexp-quote hd))
-             nil t)
-            (goto-char (point-at-bol))
-          (goto-char (point-max))
-          (or (bolp) (insert "\n"))
-          (insert "* " hd "\n")
-          (beginning-of-line 0))))
     (setq org-capture-templates
           '(("t" "待办"
              entry (file+headline "~/org-mode/gtd.org" "待办事项")
@@ -144,12 +108,6 @@
              table-line (file+headline "~/org-mode/mine.org" "账单")
              "| %^{用途|吃饭|购买衣服|出行} | %U | %? | |")
             ("s" "代码片段")
-            ("sp" "python"
-             entry (file+function "~/git/pelican/content/org/python gist.org" maple/snip-target)
-             "** %?\t\n#+BEGIN_SRC python\n\n#+END_SRC")
-            ("sl" "lua"
-             entry (file+function "~/git/pelican/content/org/lua gist.org" maple/snip-target)
-             "** %?\t\n#+BEGIN_SRC lua\n\n#+END_SRC")
             ("j" "日程安排"
              entry (file+headline "~/org-mode/gtd.org" "日程安排")
              "* TODO [#B] %?      :%^{去哪儿|上海|南京|常州|昆明}:Journal:\n %^U\n"
@@ -163,6 +121,36 @@
              "* %?                :%^{周期|Yearly|Monthly|Weekly|Daily}:Summary:\n"
              :empty-lines 1)
             ))
+
+    (defun maple/capture-target ()
+      "Set point for capturing at what capture target file+headline with headline set to %l would do."
+      (org-capture-put :target (list
+                                'file+headline
+                                (nth 1 (org-capture-get :target))
+                                (completing-read "Followed by: " (plist-get org-capture-plist :tags))))
+      (org-capture-put-target-region-and-position)
+      (widen)
+      (let ((hd (nth 2 (org-capture-get :target))))
+        (goto-char (point-min))
+        (if (re-search-forward
+             (format org-complex-heading-regexp-format (regexp-quote hd))
+             nil t)
+            (goto-char (point-at-bol))
+          (goto-char (point-max))
+          (or (bolp) (insert "\n"))
+          (insert "* " hd "\n")
+          (beginning-of-line 0))))
+
+    (defun maple/capture-snip (keybind src &optional tags)
+      (add-to-list 'org-capture-templates
+                   `(,keybind ,src entry (file+function
+                                          ,(format "~/git/pelican/content/org/%s gist.org" src)
+                                          maple/capture-target)
+                              ,(concat "** %?\t\n#+BEGIN_SRC " src "\n\n#+END_SRC") :tags ,tags)))
+
+    (maple/capture-snip "sp" "python" '("Tool" "Flask" "Tornado"))
+    (maple/capture-snip "sl" "lua" '("Tool" "Nginx"))
+
     (setq org-refile-targets
           (quote (("~/org-mode/gtd.org" :level . 1)
                   ("~/org-mode/summary.org" :maxlevel . 4))))
@@ -170,21 +158,17 @@
     (advice-add 'org-todo :after 'org-save-all-org-buffers)
     ))
 
-;; 设置默认浏览器
-(setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "google-chrome-stable")
-
 (use-package org-agenda
   :defer t
-  :init (setq org-agenda-restore-windows-after-quit t)
   :config
   (progn
-    (setq org-agenda-window-setup 'current-window)
-    (setq org-agenda-inhibit-startup t)   ;; ~50x speedup
-    (setq org-agenda-use-tag-inheritance nil) ;; 3-4x speedup
-    (setq org-log-done t)
-    (setq org-agenda-files (quote ("~/org-mode" )))
-    (setq org-default-notes-file "~/org-mode/gtd.org")
+    (setq org-agenda-restore-windows-after-quit t
+          org-agenda-window-setup 'current-window
+          org-agenda-inhibit-startup t   ;; ~50x speedup
+          org-agenda-use-tag-inheritance nil ;; 3-4x speedup
+          org-log-done t
+          org-agenda-files '("~/org-mode" )
+          org-default-notes-file "~/org-mode/gtd.org")
     (advice-add 'org-agenda-todo :after 'org-save-all-org-buffers)
     (setq org-agenda-custom-commands
           '(
@@ -212,19 +196,15 @@
   :ensure t
   :defer t
   :init (add-hook 'org-mode-hook 'org-bullets-mode)
-  :config (setq org-bullets-bullet-list '("①" "②" "③" "④" "⑤"))
-  )
+  :config (setq org-bullets-bullet-list '("①" "②" "③" "④" "⑤")))
 
 
 (use-package org-pomodoro
   :ensure t
   :defer t
-  :config
-  (progn
-    (setq org-pomodoro-keep-killed-pomodoro-time t)
-    (after-load 'org-agenda
-      (define-key org-agenda-mode-map (kbd "P") 'org-pomodoro)
-      )))
+  :config (setq org-pomodoro-keep-killed-pomodoro-time t)
+  :bind (:map org-agenda-mode-map
+              ("P" . org-pomodoro)))
 
 (use-package org-crypt
   :after org
@@ -242,11 +222,6 @@
     (setq org-crypt-key "21305E7E")
     ;; (add-hook 'org-mode-hook (lambda () (run-hooks 'org-mode-hook)))
     ))
-
-(use-package ox-reveal
-  :ensure t
-  :after org
-  :init(setq org-reveal-root "file:///home/jianglin/git/ppt/reveal.js"))
 
 ;; 写博客
 (defun org-new-blog (title)

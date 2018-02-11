@@ -15,14 +15,13 @@
 ;; Customs
 ;;
 
-(defvar statify-mode-map
+(defvar startify-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "j") #'startify-next-button)
-    (define-key map (kbd "k") #'startify-previous-button)
-    (define-key map (kbd "n") #'startify-next-button)
-    (define-key map (kbd "p") #'startify-previous-button)
-    (define-key map (kbd "q") #'quit-window)
-    map))
+    (define-key map (kbd "C-n") #'startify-next-button)
+    (define-key map (kbd "C-p") #'startify-previous-button)
+    (define-key map (kbd "C-q") #'save-buffers-kill-terminal)
+    map)
+  "Keymap of command `startify-mode'.")
 
 (defvar startify-init-finished nil)
 
@@ -36,7 +35,7 @@ SEQ, START and END are the same arguments as for `cl-subseq'"
                               (min len end)))))
 
 (defun startify-insert-file-list (title title-action list list-action)
-  "Insert `title `list of files in the home buffer."
+  "Insert list of files with `TITLE` `TITLE-ACTION` `LIST` `LIST-ACTION`."
   (when (car list)
     (startify--create-widget
      title title-action)
@@ -50,6 +49,7 @@ SEQ, START and END are the same arguments as for `cl-subseq'"
   (insert "\n"))
 
 (defun startify--create-widget (text func)
+  "Create widget button with `TEXT` and `FUNC`."
   (widget-create 'push-button
                  :action `(lambda (&rest ignore) (,func))
                  :mouse-face 'highlight
@@ -58,35 +58,27 @@ SEQ, START and END are the same arguments as for `cl-subseq'"
                  :format "\n[%[%t%]]" text))
 
 (defun startify--insert-text (num text func)
+  "Insert `NUM` `TEXT` with `FUNC`."
   (startify--create-widget num func)
   (insert "\t")
   (insert (propertize text 'font-lock-face '(:inherit font-lock-comment-face))))
 
 (defun startify--insert-startup ()
+  "Insert start message."
   (insert "\n\n")
   (insert (propertize
            (format "Emacs startup finished in %.2fms with %s packages\n"
                    (* 1000.0 (float-time (time-subtract after-init-time before-init-time)))
                    (length load-path)) 'font-lock-face '(:inherit font-lock-comment-face))))
 
-
-(defvar startify--width 80)
-
-(defun startify-center (len s)
-  (concat (make-string (ceiling (max 0 (- len (length s))) 2) ? )
-          s))
-
-;;;###autoload
 (defun startify-init()
   (recentf-mode)
   (startify-insert-file-list
-   "Files"
-   'helm-recentf
+   "Files" 'helm-recentf
    (startify-subseq recentf-list 0 10)
    'find-file-existing)
   (startify-insert-file-list
-   "Projects"
-   'helm-projectile
+   "Projects" 'helm-projectile
    (startify-subseq projectile-known-projects 0 10)
    'projectile-switch-project-by-name)
   (require 'bookmark)
@@ -98,32 +90,32 @@ SEQ, START and END are the same arguments as for `cl-subseq'"
   (startify--insert-text "q" "quit" 'save-buffers-kill-terminal)
   (startify--insert-startup))
 
-(defun startify-next-button ()
-  (interactive)
-  (ignore-errors (goto-char (next-button (point)))))
-
 (defun startify-previous-button ()
   (interactive)
-  (ignore-errors (goto-char (previous-button (point)))))
+  (move-beginning-of-line 1)
+  (let ((btn (previous-button (point))))
+    (if btn (goto-char btn)
+      (progn
+        (goto-char (point-max))
+        (startify-previous-button)))))
+
+(defun startify-next-button ()
+  (interactive)
+  (let ((btn (next-button (point))))
+    (if btn (goto-char btn)
+      (progn
+        (goto-char (point-min))
+        (startify-next-button)))))
 
 ;;;###autoload
 (define-minor-mode startify-mode
   :global nil
-  :keymap (let ((map (make-sparse-keymap)))
-            (after-load 'evil
-              (evil-define-key 'normal map
-                "j" 'startify-next-button
-                "k" 'startify-previous-button
-                "n" 'startify-next-button
-                "p" 'startify-previous-button
-                "q" 'quit-window))
-            map)
-  (if (and (not startify-init-finished) startify-mode)
-      (dolist (buffer '("*scratch*"))
-        (when (and (get-buffer buffer)
-                   (with-current-buffer buffer
-                     (startify-init)
-                     (setq-local startify-init-finished t)
-                     ))))))
+  :keymap startify-mode-map
+  (when (and (not startify-init-finished)
+             startify-mode)
+    (with-current-buffer "*scratch*"
+      (startify-init)
+      (setq-local startify-init-finished t))))
+
 
 (provide 'startify)

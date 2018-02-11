@@ -26,8 +26,10 @@
     (setq gofmt-show-errors nil)
     (defun maple/gofmt()
       (interactive)
-      (gofmt)
-      (untabify (point-min) (point-max)))
+      (let ((p (point)))
+        (gofmt)
+        (untabify (point-min) (point-max))
+        (goto-char p)))
     ;; (add-hook 'before-save-hook 'gofmt-before-save)
     )
   :evil-bind

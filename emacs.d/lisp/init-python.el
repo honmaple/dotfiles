@@ -56,7 +56,9 @@
   :ensure t
   :defer t
   :diminish anaconda-mode
-  :evil-emacs (inferior-python-mode anaconda-mode-view-mode)
+  :evil-state
+  (inferior-python-mode . insert)
+  (anaconda-mode-view-mode . emacs)
   :init
   (progn
     (setq anaconda-mode-installation-directory
@@ -80,36 +82,4 @@
   :after anaconda-mode
   :init (maple/add-to-company-backend 'company-anaconda 'python-mode-hook))
 
-
-;; (use-package elpy
-;;   :after python
-;;   :diminish elpy-mode "ⓔ"
-;;   :config
-;;   (progn
-;;     (push '("*Python*") popwin:special-display-config)
-;;     ;; (setq python-shell-interpreter "python")
-;;     (setenv "PYTHONPATH" "$PYTHONPATH:/usr/lib/python3.5/site-packages")
-;;     (setq python-shell-completion-native-enable nil)
-;;     (setq python-shell-interpreter "ipython"
-;;           python-shell-interpreter-args "--simple-prompt -i")
-;;     (remove-hook 'elpy-modules 'elpy-module-flymake)
-;;     ;; (setq elpy-rpc-backend "jedi")
-;;     (remove-hook 'elpy-modules 'elpy-module-company)
-;;     (setq shell-file-name "/bin/bash")
-;;     (elpy-enable)
-;;     (add-hook 'python-mode-hook
-;;               (lambda ()
-;;                 (define-key evil-normal-state-local-map [f6] 'elpy-yapf-fix-code)
-;;                 (define-key evil-normal-state-local-map [f5] 'elpy-shell-send-region-or-buffer)
-;;                 (define-key evil-normal-state-local-map "gd" 'elpy-goto-definition)))
-;;     ))
-
-;; (use-package jinja2-mode
-;;   :commands (jinja2-mode)
-;;   :mode ("\\.html\\'" . jinja2-mode)
-;;   :init
-;;   (progn
-;;     (after-load 'smartparens
-;;       (sp-local-pair 'jinja2-mode "{% "  " %}"))
-;;     ))
 (provide 'init-python)

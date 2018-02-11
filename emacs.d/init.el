@@ -50,18 +50,17 @@
   (require 'init-gui) ;;ui设置 显示行号
   (require 'init-ui)  ;; modeline,which-key
 
-  (require 'init-evil)
-
   (require 'init-editor) ;;自动补全括号等
-  (require 'init-folding) ;;代码折叠
   (require 'init-auto-insert)  ;;自动插入文件头
+  (require 'init-evil)
 
   (require 'init-helm)
   ;; (require 'init-ivy)
   (require 'init-dired)   ;;自带文件管理
   (require 'init-file)   ;;文件操作
   (require 'init-buffer)   ;;buffer操作
-  (require 'init-windows))  ;;窗口管理C-x 2上下,C-x 3左右
+  (require 'init-windows))
+
 
 (when *develop*
   (require 'init-flycheck)

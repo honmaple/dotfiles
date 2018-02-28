@@ -1,24 +1,20 @@
-(use-package esup
-  :ensure t
-  :defer t)
+(use-package esup)
 
 (use-package epa
-  :defer t
+  :ensure nil
   :config (auto-encryption-mode -1))
 
-(use-package docker-tramp
-  :ensure t
-  :defer t)
+(use-package docker-tramp)
+
+(use-package dockerfile-mode)
 
 (use-package quickrun
-  :ensure t
-  :defer t
   :config
   (maple/set-quit-key quickrun--mode-map)
-  (add-hook 'quickrun--mode-hook
-            (lambda () (toggle-truncate-lines t))))
+  (add-hook 'quickrun--mode-hook 'maple/truncate-lines))
 
 (use-package blog-admin
+  :ensure nil
   :load-path "site-lisp/blog-admin"
   :commands blog-admin-start
   :config
@@ -51,7 +47,6 @@
     ))
 
 (use-package imenu-list
-  :ensure t
   :commands imenu-list-minor-mode
   :evil-state
   (imenu-list-major-mode . emacs)
@@ -75,15 +70,12 @@
               ("k" . previous-line)))
 
 (use-package youdao-dictionary
-  :ensure t
-  :defer t
   :config
-  (progn
-    (maple/set-quit-key youdao-dictionary-mode-map)
-    (setq url-automatic-caching t
-          youdao-dictionary-search-history-file (concat maple-cache-directory "youdao")
-          youdao-dictionary-use-chinese-word-segmentation t))
-  )
+  (maple/set-quit-key youdao-dictionary-mode-map)
+  (setq url-automatic-caching t
+        youdao-dictionary-search-history-file (concat maple-cache-directory "youdao")
+        youdao-dictionary-use-chinese-word-segmentation t))
+
 ;; (use-package cal-china-x
 ;;   :config
 ;;   (progn
@@ -93,8 +85,6 @@
 ;;     ))
 
 (use-package avy
-  :ensure t
-  :defer t
   :commands (maple/avy-open-url maple/avy-goto-url avy-pop-mark)
   :init
   (progn
@@ -113,22 +103,19 @@
         (maple/avy-goto-url)
         (browse-url-at-point)))))
 
-(use-package figlet
-  :ensure t
-  :defer t)
+(use-package figlet)
 
 (use-package 2048-game
-  :ensure t
-  :defer t
   :evil-state
   (2048-mode . emacs))
 
 (use-package maple-macro
+  :demand t
   :load-path "site-lisp/maple"
   :config (maple/search-macro))
 
-(use-package startify
-  :load-path "site-lisp/startify"
-  :init (add-hook 'emacs-startup-hook 'startify-mode))
+(use-package maple-startify
+  :load-path "site-lisp/maple"
+  :hook (emacs-startup . startify-mode))
 
 (provide 'init-tool)

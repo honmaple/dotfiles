@@ -1,17 +1,19 @@
+;;; init.el --- user init configuration.
+
+;;; Commentary:
 ;;; This file bootstraps the configuration, which is divided into
 ;;; a number of other files.
 
 ;;; Without this comment emacs25 adds (package-initialize) here
 ;; (package-initialize); You may delete these explanatory comments.
 
-(defconst *at_home* nil)
+
+;;; Code:
 (defvar default-file-name-handler-alist file-name-handler-alist)
 
 (setq user-full-name "jianglin")
-(setq user-mail-address "lin.jiang@upai.com")
-(setq user-default-theme 'monokai)
-(when *at_home*
-  (setq user-mail-address "xiyang0807@gmail.com"))
+(setq user-default-theme 'doom-one)
+(setq user-mail-address "xiyang0807@gmail.com")
 (setq file-name-handler-alist nil)
 (setq gc-cons-threshold (* 256 1024 1024))
 (setq inhibit-startup-echo-area-message "jianglin")
@@ -26,6 +28,7 @@
 (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
 
 (defadvice require (around require activate)
+  "Show require time."
   (let ((start (current-time))
         res delta)
     (setq res ad-do-it)
@@ -96,7 +99,4 @@
 
 (provide 'init)
 
-;; Local Variables:
-;; coding: utf-8
-;; no-byte-compile: t
-;; End:
+;;; init.el ends here

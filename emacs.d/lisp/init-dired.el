@@ -13,34 +13,29 @@
 ;; H 显示隐藏文件
 
 (use-package dired
-  :defer t
+  :ensure nil
+  :hook (dired-mode . dired-async-mode)
   :config
-  (progn
-    (setq dired-recursive-copies 'always) ;;递归拷贝
-    (add-hook 'dired-mode-hook #'dired-async-mode)
-    (put 'dired-find-alternate-file 'disabled nil)  ;; 只有一个buffer
-    )
+  (setq dired-recursive-copies 'always) ;;递归拷贝
+  (put 'dired-find-alternate-file 'disabled nil)  ;; 只有一个buffer
   :bind (:map dired-mode-map
               ("H" . dired-omit-mode)
               ("RET" . dired-find-alternate-file)
               ("C-c C-e" . wdired-change-to-wdired-mode)))
 
 (use-package dired-x
-  :commands (dired-jump
-             dired-jump-other-window)
+  :ensure nil
+  :commands (dired-jump dired-jump-other-window)
+  :hook (dired-mode . dired-omit-mode)
   :config
-  (progn
-    (defun maple/set-dired()
-      ;; (setq dired-dwim-target t)
-      (setq-default dired-omit-files-p t) ; this is buffer-local variable
-      (setq dired-omit-files
-            (concat dired-omit-files "\\|^\\..+$\\|\\.pdf$\\|\\.tex$\\|\\*~$")))
-    (add-hook 'dired-mode-hook 'maple/set-dired)
-    ))
+  (setq dired-omit-files
+        (concat dired-omit-files "\\|^\\..+$\\|\\.pdf$\\|\\.tex$\\|\\*~$")))
 
 (use-package image-dired
+  :ensure nil
   :commands image-dired
-  :config (setq image-dired-thumbnail-storage 'standard)
+  :config
+  (setq image-dired-thumbnail-storage 'standard)
   :evil-bind
   (normal image-dired-thumbnail-mode-map
           "j"  'image-dired-next-line

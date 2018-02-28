@@ -1,15 +1,12 @@
-(use-package org-plus-contrib
-  :ensure t
-  :defer t)
+(use-package org-plus-contrib)
 
 ;; org-pomodoro依赖
 (use-package alert
-  :ensure t
   :defer 5)
 
 (use-package org
+  :ensure nil
   :mode ("\\.org$" . org-mode)
-  :defer t
   :commands orgtbl-mode
   :init
   (setq org-emphasis-regexp-components
@@ -75,7 +72,7 @@
 
 
 (use-package org-capture
-  :defer t
+  :ensure nil
   :config
   (progn
     (setq org-capture-templates
@@ -159,7 +156,7 @@
     ))
 
 (use-package org-agenda
-  :defer t
+  :ensure nil
   :config
   (progn
     (setq org-agenda-restore-windows-after-quit t
@@ -193,20 +190,17 @@
               ("M-l" . org-agenda-later)))
 
 (use-package org-bullets
-  :ensure t
-  :defer t
-  :init (add-hook 'org-mode-hook 'org-bullets-mode)
+  :hook (org-mode . org-bullets-mode)
   :config (setq org-bullets-bullet-list '("①" "②" "③" "④" "⑤")))
 
 
 (use-package org-pomodoro
-  :ensure t
-  :defer t
   :config (setq org-pomodoro-keep-killed-pomodoro-time t)
   :bind (:map org-agenda-mode-map
               ("P" . org-pomodoro)))
 
 (use-package org-crypt
+  :ensure nil
   :after org
   :config
   (progn

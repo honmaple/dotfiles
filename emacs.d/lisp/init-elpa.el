@@ -10,8 +10,8 @@
 
 (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
                          ("melpa" . "http://elpa.emacs-china.org/melpa/")
-                         ;; ("melpa-stable" . "http://stable.melpa.org/packages/")
                          ("org"   . "http://orgmode.org/elpa/")
+                         ("melpa-stable" . "http://stable.melpa.org/packages/")
                          ))
 
 (setq package-enable-at-startup nil)
@@ -56,29 +56,24 @@
 (eval-when-compile
   (require 'use-package))
 ;; (setq use-package-verbose t)
-;; (setq use-package-always-ensure t)
-;; (setq use-package-always-defer t)
+(setq use-package-always-ensure t)
+(setq use-package-always-defer t)
 (setq use-package-expand-minimally t)
 (setq use-package-enable-imenu-support t)
 
 (use-package evil-use-package
+  :demand t
   :load-path "site-lisp/use-package")
 
 ;;显示状态mode
-(use-package diminish
-  :ensure t
-  :defer t)
+(use-package diminish)
 
 ;;缓冲区
-(use-package scratch
-  :ensure t
-  :defer t)
+(use-package scratch)
 
 (use-package async-bytecomp
   :ensure async
-  :defer t
-  :init
-  (add-hook 'after-init-hook #'async-bytecomp-package-mode)
+  :hook (after-init . async-bytecomp-package-mode)
   :config
   (setq async-bytecomp-allowed-packages '(all)))
 
@@ -87,30 +82,22 @@
 ;;   :init
 ;;   (add-hook 'after-init-hook #'benchmark-init/deactivate))
 
-(use-package package-utils
-  :ensure t
-  :defer t)
+(use-package package-utils)
 
 (use-package fullframe
-  :ensure t
-  :defer t
   :config (fullframe list-packages quit-window))
 
-(use-package cl-lib
-  :ensure t
-  :defer t)
+(use-package cl-lib)
 
-(use-package restart-emacs
-  :ensure t
-  :defer t)
+(use-package restart-emacs)
 ;; :config (setq restart-emacs-restore-frames t))
 
 (use-package exec-path-from-shell
   :if maple-system-is-mac
-  :ensure t
   :init (exec-path-from-shell-initialize))
 
 (use-package server
+  :ensure nil
   :config
   (unless (server-running-p)
     (server-start)))

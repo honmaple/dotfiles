@@ -1,19 +1,10 @@
 (use-package flycheck
-  :ensure t
-  :defer t
   :diminish flycheck-mode "ⓢ"
-  :init (add-hook 'after-init-hook #'global-flycheck-mode)
+  :hook (after-init . global-flycheck-mode)
   :config
   (progn
     (setq flycheck-check-syntax-automatically '(save idle-change mode-enabled)
           flycheck-idle-change-delay 0.8)
-
-    (use-package flycheck-popup-tip
-      :ensure t
-      :defer t
-      :init (add-hook 'after-init-hook #'flycheck-popup-tip-mode)
-      :config
-      (setq flycheck-display-errors-function #'flycheck-popup-tip-error-messages))
 
     (when (and (fboundp 'define-fringe-bitmap))
       (define-fringe-bitmap 'maple-flycheck-fringe-indicator
@@ -73,6 +64,12 @@
 ;;   :ensure t
 ;;   :after flycheck
 ;;   :defer t )
+
+(use-package flycheck-popup-tip
+  :hook (flycheck-mode . flycheck-popup-tip-mode)
+  :config
+  (setq flycheck-display-errors-function #'flycheck-popup-tip-error-messages))
+
 
 
 (provide 'init-flycheck)

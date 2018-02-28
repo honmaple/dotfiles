@@ -43,7 +43,7 @@ Repeated invocations toggle between the two most recently open buffers."
       (erase-buffer)))
 
 (defun maple/switch-to-scratch-buffer ()
-  "Switch to the `*scratch*' buffer. Create it first if needed."
+  "Switch to the `*scratch*' buffer.  Create it first if needed."
   (interactive)
   (let ((exists (get-buffer "*scratch*")))
     (switch-to-buffer (get-buffer-create "*scratch*"))))

@@ -1,6 +1,4 @@
 (use-package js2-mode
-  :ensure t
-  :defer t
   :mode ("\\.js\\'" . js2-mode)
   :config
   (progn
@@ -12,29 +10,21 @@
     (add-hook 'js2-mode-hook 'js2-imenu-extras-mode)
     ))
 
-(use-package json-mode
-  :ensure t
-  :defer t)
+(use-package json-mode)
 
 ;;; Coffeescript
 (use-package coffee-mode
-  :ensure t
-  :defer t
   :mode ("\\.coffee\\.erb\\'" . coffee-mode)
   :config
   (setq coffee-js-mode preferred-javascript-mode
         coffee-tab-width preferred-javascript-indent-level))
 
 (use-package tern
-  :ensure t
-  :defer t
   :diminish tern-mode
-  :init (add-hook 'js2-mode-hook 'tern-mode)
+  :hook (js2-mode . tern-mode)
   :config (add-to-list 'tern-command "--no-port-file" 'append))
 
 (use-package company-tern
-  :ensure t
-  :defer t
   :init
   (progn
     (defadvice company-tern (before web-mode-set-up-ac-sources activate)

@@ -73,29 +73,27 @@
 
 ;; 设置默认浏览器
 (use-package browse-url
-  :defer t
-  :config
+  :ensure nil
+  :init
   (setq browse-url-browser-function 'browse-url-generic
         browse-url-generic-program "google-chrome-stable"))
 
 ;;高亮当前行
 (use-package hl-line
-  :defer t
-  :init (add-hook 'after-init-hook #'global-hl-line-mode))
+  :ensure nil
+  :hook (after-init . global-hl-line-mode))
 
 (use-package ediff
-  :defer t
-  :config
-  (setq ediff-split-window-function 'split-window-horizontally)
-  (setq ediff-window-setup-function 'ediff-setup-windows-plain))
+  :ensure nil
+  :init
+  (setq ediff-split-window-function 'split-window-horizontally
+        ediff-window-setup-function 'ediff-setup-windows-plain))
 
 (use-package bookmark
-  :defer t
+  :ensure nil
   :init
-  (progn
-    (setq bookmark-default-file (concat maple-cache-directory "bookmarks")
-          ;; autosave each change
-          bookmark-save-flag 1))
+  (setq bookmark-default-file (concat maple-cache-directory "bookmarks")
+        bookmark-save-flag 1)
   :evil-leader ("fb" . bookmark-jump))
 
 

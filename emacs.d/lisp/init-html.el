@@ -1,10 +1,6 @@
-(use-package company-web
-  :ensure t
-  :defer t)
+(use-package company-web)
 
 (use-package web-mode
-  :ensure t
-  :defer t
   :mode
   (("\\.phtml\\'" . web-mode)
    ("\\.vue\\'" . web-mode)
@@ -45,18 +41,11 @@
           (kbd "za") 'web-mode-fold-or-unfold))
 
 (use-package web-beautify
-  :ensure t
   :commands (web-beautify-html web-beautify-css web-beautify-js))
 
 (use-package emmet-mode
-  :ensure t
-  :defer t
   :diminish emmet-mode
-  :init
-  (dolist (hook '(html-mode-hook
-                  sgml-mode-hook
-                  web-mode-hook))
-    (add-hook hook 'emmet-mode))
+  :hook ((html-mode sgml-mode web-mode) . emmet-mode)
   :config
   (defun maple/emmet-expand ()
     (interactive)
@@ -69,27 +58,19 @@
           (kbd "<tab>") 'maple/emmet-expand))
 
 (use-package css-mode
-  :ensure t
-  :defer t
   :config
   (setq css-indent-offset 2)
   (maple/add-to-company-backend '(company-css) 'css-mode-hook))
 
 (use-package sass-mode
-  :ensure t
-  :defer t
   :mode ("\\.sass\\'" . sass-mode))
 
 (use-package scss-mode
-  :ensure t
-  :defer t
   :config (setq-default scss-compile-at-save nil)
   :mode ("\\.scss\\'" . scss-mode))
 
 
 (use-package less-css-mode
-  :ensure t
-  :defer t
   :mode ("\\.less\\'" . less-css-mode))
 
 

@@ -7,8 +7,6 @@
 ;; 多文件C-x C-s
 ;; helm-color 比较有用的
 (use-package helm
-  :ensure t
-  :defer t
   :diminish helm-mode
   :config
   (progn
@@ -26,7 +24,16 @@
           helm-grep-save-buffer-name-no-confirm t)
     ;;模糊搜索
     (setq helm-mode-fuzzy-match t
-          helm-completion-in-region-fuzzy-match t)
+          helm-completion-in-region-fuzzy-match t
+          helm-M-x-fuzzy-match t
+          helm-ff-fuzzy-matching t
+          helm-recentf-fuzzy-match t
+          helm-apropos-fuzzy-match t
+          helm-file-cache-fuzzy-match t
+          helm-imenu-fuzzy-match t
+          helm-lisp-fuzzy-completion t
+          helm-semantic-fuzzy-match t
+          helm-buffers-fuzzy-matching t)
 
     (defun maple/helm-hide-mode-line ()
       "Hide mode line in `helm-buffer'."
@@ -60,6 +67,9 @@
     (add-hook 'helm-before-initialize-hook #'maple/helm-hide-header-line)
     (add-hook 'helm-after-initialize-hook #'maple/helm-hide-cursor)
     ;; (add-hook 'helm-after-initialize-hook 'maple/helm-hide-mode-line)
+    (after-load 'projectile
+      (setq projectile-completion-system 'helm))
+
     (helm-mode 1)
     )
   :bind (("M-x" . helm-M-x)
@@ -79,34 +89,9 @@
          ))
 
 (use-package helm-ag
-  :ensure t
-  :defer t
   :init (advice-add 'helm-ag--edit :after #'evil-mc-mode)) ;;在helm-ag-edit中激活evil-mc
 
-(use-package projectile
-  :ensure t
-  :defer t
-  :diminish projectile-mode "ⓟ"
-  :init
-  (setq projectile-sort-order 'recentf
-        projectile-cache-file (concat maple-cache-directory
-                                      "projectile.cache")
-        projectile-known-projects-file (concat maple-cache-directory
-                                               "projectile-bookmarks.eld"))
-  (add-hook 'after-init-hook #'projectile-mode)
-  :config
-  (progn
-    (defun neotree-find-project-root ()
-      (interactive)
-      (if (neo-global--window-exists-p)
-          (neotree-hide)
-        (let ((origin-buffer-file-name (buffer-file-name)))
-          (neotree-find (projectile-project-root))
-          (neotree-find origin-buffer-file-name)))))
-  )
-
 (use-package helm-projectile
-  :ensure t
   :commands (helm-projectile-switch-to-buffer
              helm-projectile-find-dir
              helm-projectile-dired-find-dir
@@ -114,9 +99,7 @@
              helm-projectile-find-file
              helm-projectile-grep
              helm-projectile
-             helm-projectile-switch-project)
-  :init
-  (setq projectile-switch-project-action 'helm-projectile))
+             helm-projectile-switch-project))
 
 
 (provide 'init-helm)

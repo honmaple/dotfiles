@@ -1,5 +1,5 @@
 (use-package recentf
-  :defer t
+  :ensure nil
   :init
   (setq recentf-save-file (concat maple-cache-directory "recentf")
         recentf-max-saved-items 100
@@ -15,7 +15,7 @@
   (add-to-list 'recentf-exclude "COMMIT_EDITMSG\\'"))
 
 (use-package savehist
-  :defer t
+  :ensure nil
   :init
   ;; Minibuffer history
   (setq savehist-file (concat maple-cache-directory "savehist")
@@ -30,7 +30,7 @@
   (add-hook 'after-init-hook #'savehist-mode))
 
 (use-package saveplace
-  :defer t
+  :ensure nil
   :init
   (setq save-place-file (concat maple-cache-directory "places"))
   ;; Emacs 25 has a proper mode for `save-place'
@@ -38,8 +38,6 @@
 
 
 (use-package neotree
-  :ensure t
-  :defer t
   :commands neo-global--window-exists-p
   :evil-state
   (neotree-mode . emacs)
@@ -73,19 +71,18 @@
   )
 
 (use-package desktop
-  :defer t
+  :ensure nil
   :init
   (setq desktop-dirname maple-cache-directory)
   :config
   (push maple-cache-directory desktop-path))
 
 (use-package undo-tree
-  :defer t
+  :ensure nil
   :after evil
+  :hook (after-init . global-undo-tree-mode)
   :init
   (progn
-    (add-hook 'after-init-hook #'global-undo-tree-mode)
-    ;; (global-undo-tree-mode)
     (setq undo-tree-auto-save-history t)
     (setq undo-tree-history-directory-alist
           `(("." . ,(concat maple-cache-directory "undo-tree"))))

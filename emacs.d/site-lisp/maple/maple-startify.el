@@ -1,4 +1,3 @@
-;;;  -*- lexical-binding: t -*-
 ;;; startify.el --- A startup screen
 
 ;; Copyright (c) 2017 honmaple
@@ -91,6 +90,7 @@ SEQ, START and END are the same arguments as for `cl-subseq'"
   (startify--insert-startup))
 
 (defun startify-previous-button ()
+  "Previous button."
   (interactive)
   (move-beginning-of-line 1)
   (let ((btn (previous-button (point))))
@@ -100,6 +100,7 @@ SEQ, START and END are the same arguments as for `cl-subseq'"
         (startify-previous-button)))))
 
 (defun startify-next-button ()
+  "Next button."
   (interactive)
   (let ((btn (next-button (point))))
     (if btn (goto-char btn)
@@ -109,6 +110,7 @@ SEQ, START and END are the same arguments as for `cl-subseq'"
 
 ;;;###autoload
 (define-minor-mode startify-mode
+  "Startify."
   :global nil
   :keymap startify-mode-map
   (when (and (not startify-init-finished)
@@ -118,4 +120,6 @@ SEQ, START and END are the same arguments as for `cl-subseq'"
       (setq-local startify-init-finished t))))
 
 
-(provide 'startify)
+(provide 'maple-startify)
+
+;;; maple-startify.el ends here

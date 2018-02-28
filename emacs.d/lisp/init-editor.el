@@ -1,22 +1,17 @@
 ;; 注释
 (use-package adaptive-wrap
-  :ensure t
-  :defer t
-  :config
-  (add-hook 'visual-line-mode-hook 'adaptive-wrap-prefix-mode))
+  :hook (visual-line-mode adaptive-wrap-prefix-mode))
 
 ;; 修改外部文件自动载入
 (use-package autorevert
-  :defer t
-  :init (add-hook 'after-init-hook #'global-auto-revert-mode)
+  :ensure nil
+  :hook (after-init . global-auto-revert-mode)
   :diminish auto-revert-mode
   :config
   (setq global-auto-revert-non-file-buffers t
         auto-revert-verbose nil))
 
 (use-package semantic
-  :ensure t
-  :defer t
   :init
   (setq srecode-map-save-file
         (concat maple-cache-directory "srecode-map.el"))
@@ -30,14 +25,12 @@
     (add-to-list 'semantic-default-submodes
                  'global-semantic-idle-summary-mode)))
 
-(use-package stickyfunc-enhance
-  :ensure t
-  :defer t)
+(use-package stickyfunc-enhance)
 
 
 (use-package elec-pair
-  :defer t
-  :init (add-hook 'after-init-hook #'electric-pair-mode)
+  :ensure nil
+  :hook (after-init . electric-pair-mode)
   :config
   ;; (setq electric-pair-pairs '((?\' . ?\')))
   (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
@@ -55,8 +48,7 @@
 ;;   :init (add-hook 'after-init-hook 'which-function-mode))
 
 (use-package dumb-jump
-  :ensure t
-  :defer t
+  :after (evil)
   :config
   (setq dumb-jump-selector 'helm)
   :bind
@@ -65,21 +57,54 @@
 
 
 (use-package eldoc
-  :defer t
+  :ensure nil
   :diminish eldoc-mode
-  :config
+  :hook
   ;; enable eldoc in `eval-expression'
-  (add-hook 'eval-expression-minibuffer-setup-hook #'eldoc-mode)
+  (eval-expression-minibuffer-setup . eldoc-mode)
   ;; enable eldoc in IELM
-  (add-hook 'ielm-mode-hook #'eldoc-mode))
+  (ielm-mode . eldoc-mode))
 
+
+(use-package comint
+  :ensure nil
+  :evil-state
+  (comint-mode . insert)
+  :config
+  (setq comint-prompt-read-only t)
+  :bind (:map comint-mode-map
+              ("<up>" . comint-previous-input)
+              ("<down>" . comint-next-input)
+              ;; ("<mouse-4>" . comint-previous-input)
+              ;; ("<mouse-5>" . comint-next-input)
+              ("<escape>" . (lambda() (interactive)
+                              (goto-char (cdr comint-last-prompt))))
+              ))
 
 (use-package hideshow
-  :defer t
+  :ensure nil
   :diminish hs-minor-mode
+  :hook ((yaml-mode conf-mode prog-mode) . hs-minor-mode))
+
+
+(use-package projectile
+  :diminish projectile-mode "ⓟ"
+  :hook (after-init . projectile-mode)
   :init
-  (add-hook 'yaml-mode-hook #'hs-minor-mode)
-  (add-hook 'conf-mode-hook #'hs-minor-mode)
-  (add-hook 'prog-mode-hook #'hs-minor-mode))
+  (setq projectile-sort-order 'recentf
+        projectile-cache-file (concat maple-cache-directory
+                                      "projectile.cache")
+        projectile-known-projects-file (concat maple-cache-directory
+                                               "projectile-bookmarks.eld"))
+  :config
+  (defun neotree-find-project-root ()
+    (interactive)
+    (if (neo-global--window-exists-p)
+        (neotree-hide)
+      (let ((origin-buffer-file-name (buffer-file-name)))
+        (neotree-find (projectile-project-root))
+        (neotree-find origin-buffer-file-name))))
+  )
+
 
 (provide 'init-editor)

@@ -1,5 +1,4 @@
 (use-package yasnippet
-  :ensure t
   :commands (yas-global-mode yas-minor-mode)
   :diminish yas-minor-mode "ⓨ"
   :init
@@ -11,22 +10,19 @@
           yas-minor-mode-map (make-sparse-keymap))
     ;; helm-yas-display-key-on-candidate t)
 
-    (use-package yasnippet-snippets
-      :ensure t
-      :defer t)
-
     (defun maple/load-yasnippet ()
       (unless yas-global-mode (yas-global-mode 1))
       (yas-minor-mode 1))
-    (add-hook 'prog-mode-hook 'maple/load-yasnippet)
-    )
+    (add-hook 'prog-mode-hook 'maple/load-yasnippet))
   :bind (:map yas-minor-mode-map
               ("M-s-/" . yas-next-field)))
 
+(use-package yasnippet-snippets
+  :after (yasnippet))
+
 (use-package company
-  :ensure t
-  :defer t
   :diminish company-mode " ⓐ"
+  :hook (after-init . global-company-mode)
   :init
   (setq company-idle-delay 0.1
         company-show-numbers t
@@ -36,9 +32,12 @@
         company-dabbrev-ignore-case t
         ;; company-dabbrev-other-buffers t
         company-begin-commands '(self-insert-command)
-        company-global-modes '(not comint-mode erc-mode gud-mode rcirc-mode
+        company-global-modes '(not comint-mode
+                                   erc-mode
+                                   gud-mode
+                                   rcirc-mode
+                                   sql-interactive-mode
                                    minibuffer-inactive-mode inferior-python-mode shell-mode evil-command-window-mode))
-  (add-hook 'after-init-hook 'global-company-mode)
   :config
   (setq company-backends
         '((company-dabbrev-code company-gtags company-etags company-capf company-keywords company-files)
@@ -74,15 +73,13 @@
 
 
 (use-package company-statistics
-  :ensure t
   :after company
+  :hook (company-mode . company-statistics-mode)
   :config
   (setq company-statistics-file (concat maple-cache-directory
-                                        "company-statistics-cache.el"))
-  (add-hook 'company-mode-hook 'company-statistics-mode))
+                                        "company-statistics-cache.el")))
 
 (use-package company-quickhelp
-  :ensure t
   :if (display-graphic-p)
   :commands company-quickhelp-manual-begin
   :after company

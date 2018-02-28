@@ -1,20 +1,17 @@
 ;;默认分屏
 (use-package window
-  :defer t
+  :ensure nil
   :init (setq split-width-threshold 1))
 
 (use-package winner
-  :defer t
-  :init (add-hook 'after-init-hook #'winner-mode))
+  :ensure nil
+  :hook (after-init . winner-mode))
 
 (use-package window-numbering
-  :ensure t
-  :defer t
-  :init (add-hook 'after-init-hook #'window-numbering-mode))
+  :hook (after-init . window-numbering-mode))
 
 (use-package popwin
-  :ensure t
-  :init (add-hook 'after-init-hook #'popwin-mode)
+  :hook (after-init . popwin-mode)
   :config
   (setq popwin:special-display-config
         '(("*Help*" :dedicated t :position bottom :stick nil :noselect nil)
@@ -29,9 +26,7 @@
           )))
 
 (use-package golden-ratio  ;;黄金分割
-  :ensure t
-  :defer t
-  :init (golden-ratio-mode 1)
+  :hook (after-init . golden-ratio-mode)
   :diminish golden-ratio-mode "ⓖ"
   :config
   (progn

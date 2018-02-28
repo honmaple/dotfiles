@@ -1,9 +1,7 @@
 ;;leader 要在evil-mode前,否则messages无法激活
 (use-package evil-leader
-  :ensure t
-  :defer t
+  :hook (after-init . global-evil-leader-mode)
   :init
-  (add-hook 'after-init-hook #'global-evil-leader-mode)
   (defun maple/set-leader-for-startup-buffers ()
     "Set the leader mode for buffers created when Emacs starts."
     (dolist (buffer '("*Messages*" "*Compile-Log*"))
@@ -15,9 +13,7 @@
 
 
 (use-package evil
-  :ensure t
-  :defer t
-  :init (add-hook 'after-init-hook #'evil-mode)
+  :hook (after-init . evil-mode)
   :config
   (progn
     (fset 'evil-visual-update-x-selection 'ignore) ;;粘贴板
@@ -54,28 +50,20 @@
               ("C-j" . evil-scroll-down)))
 
 (use-package evil-surround
-  :ensure t
-  :defer t
-  :init (add-hook 'after-init-hook #'global-evil-surround-mode)
+  :hook (after-init . global-evil-surround-mode)
   :evil-bind
   (visual evil-surround-mode-map
           "s" 'evil-surround-region
           "S" 'evil-substitute))
 
 (use-package evil-matchit
-  :ensure t
-  :defer t
-  :init (add-hook 'after-init-hook #'global-evil-matchit-mode))
+  :hook (after-init . global-evil-matchit-mode))
 
 (use-package evil-ediff
-  :ensure t
-  :defer t
   :after ediff)
 
 (use-package evil-escape
-  :ensure t
-  :defer t
-  :init (add-hook 'after-init-hook #'evil-escape-mode)
+  :hook (after-init . evil-escape-mode)
   :diminish 'evil-escape-mode
   :config
   (progn
@@ -98,10 +86,8 @@
 
 
 (use-package evil-mc
-  :ensure t
-  :defer t
   :diminish evil-mc-mode "ⓒ"
-  :init (add-hook 'after-init-hook #'global-evil-mc-mode)
+  :hook (after-init . global-evil-mc-mode)
   :config
   (progn
     (evil-define-command evil-mc/undo-cursor-and-quit ()
@@ -138,8 +124,6 @@
 
 
 (use-package expand-region
-  :ensure t
-  :defer t
   :after evil
   :bind (:map evil-visual-state-map
               ("v" . er/expand-region)

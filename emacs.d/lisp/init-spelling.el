@@ -1,10 +1,8 @@
 (use-package auto-dictionary
-  :ensure t
-  :defer t
   :diminish auto-dictionary-mode
+  :hook (flyspell-mode . auto-dictionary-mode)
   :init
   (progn
-    (add-hook 'flyspell-mode-hook 'auto-dictionary-mode)
     ;; Select the buffer local dictionary if it was set, otherwise
     ;; auto-dictionary will replace it with a guessed one at each activation.
     ;; https://github.com/nschum/auto-dictionary-mode/issues/5
@@ -17,8 +15,6 @@
               'maple/adict-set-local-dictionary 'append)))
 
 (use-package flyspell
-  :ensure t
-  :defer t
   :diminish flyspell-mode "⒮"
   :config
   (progn
@@ -33,7 +29,6 @@
     ))
 
 (use-package flyspell-correct
-  :ensure t
   :commands (flyspell-correct-word-generic
              flyspell-correct-previous-word-generic)
   )

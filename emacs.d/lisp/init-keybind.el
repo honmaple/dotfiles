@@ -1,11 +1,6 @@
 (evil-leader/set-key
   "fj" 'dired-jump
   "fl" 'find-file-literally
-  "ff" 'helm-find-files
-  "fF" 'helm-find
-  "fr" 'helm-recentf
-  "fw" 'helm-ag
-  "fW" 'helm-do-ag
   "fS" 'evil-write-all
   "fs" 'save-buffer
   "fei" 'maple/open-init-file
@@ -22,16 +17,13 @@
 
 (evil-leader/set-key
   "cc" 'maple/comment-or-uncomment-region-or-line
-  "ch" 'hide/show-comments-toggle ;;显示隐藏注释
-  "/" 'helm-do-ag-this-file ;;当前文件内容
   "u"  'undo-tree-visualize
-  "'" 'maple/default-pop-shell
+  "'" 'shell-pop
   "=" 'maple/indent-buffer
   "se" 'evil-mc-make-all-cursors
   "ss" 'replace-regexp
   "sd" 'delete-matching-lines
   "sD" 'delete-non-matching-lines
-  "sj" 'helm-semantic-or-imenu
   "sp" 'flyspell-correct-word-generic
   "sh" 'shell-command
   "el" 'maple/toggle-flycheck-error-list
@@ -48,7 +40,6 @@
 
 (evil-leader/set-key
   "h" 'help
-  "," 'helm-M-x
   "rc" 'recentf-cleanup
   )
 
@@ -112,13 +103,12 @@
   )
 
 (evil-leader/set-key
-  "pb"  'helm-projectile-switch-to-buffer
-  "pw"  'helm-projectile-ag
-  "pd"  'helm-projectile-find-dir
-  "pf"  'helm-projectile-find-file
-  "ph"  'helm-projectile ;;在工程内查找
-  "pp"  'helm-projectile-switch-project
-  "pr"  'helm-projectile-recentf
+  "pb"  'projectile-switch-to-buffer
+  "pw"  'projectile-ag
+  "pd"  'projectile-find-dir
+  "pf"  'projectile-find-file
+  "pp"  'projectile-switch-project
+  "pr"  'projectile-recentf
   "pv"  'projectile-vc
   "pi"  'projectile-invalidate-cache
   "pc"  'projectile-cleanup-known-projects
@@ -128,8 +118,6 @@
 (evil-leader/set-key
   "<tab>" 'maple/switch-to-previous-buffer
   "TAB" 'maple/switch-to-previous-buffer
-  ;; "bb" 'helm-mini  ;;显示缓冲区(已经打开的文件)
-  "bb" 'helm-buffers-list  ;;显示缓冲区(已经打开的文件)
   "bd" 'kill-this-buffer
   "be" 'maple/safe-erase-buffer
   "bh" 'maple/switch-to-scratch-buffer
@@ -193,6 +181,12 @@
   "rI" 'py-isort-buffer
   )
 
+(evil-leader/set-key-for-mode 'go-mode
+  "rI" 'go-remove-unused-imports
+  "ra" 'go-import-add
+  "rd" 'godef-describe
+  )
+
 (evil-leader/set-key-for-mode 'org-mode
   "oe" 'org-export-dispatch
   "ot" 'org-set-tags
@@ -248,4 +242,37 @@
 (global-set-key [f6] 'maple/indent-buffer)
 ;; (global-set-key (kbd "C-a") 'maple/smart-move-beginning-of-line)
 ;; (global-set-key (kbd "C-e") 'maple/backward-kill-word-or-region)
+
+
+;; helm
+
+(evil-leader/set-key
+  "," 'helm-M-x
+  "/" 'helm-do-ag-this-file ;;当前文件内容
+  "ff" 'helm-find-files
+  "fF" 'helm-find
+  "fr" 'helm-recentf
+  "fw" 'helm-ag
+  "fW" 'helm-do-ag
+  "sj" 'helm-semantic-or-imenu
+  "bb" 'helm-buffers-list  ;;显示缓冲区(已经打开的文件)
+  "ph"  'helm-projectile ;;在工程内查找
+  "pw"  'helm-projectile-ag
+  )
+
+;; ivy
+;; (evil-leader/set-key
+;;   "," 'counsel-M-x
+;;   "/" 'counsel-do-ag-this-file ;;当前文件内容
+;;   "ff" 'find-file
+;;   "fF" 'counsel-find
+;;   "fr" 'counsel-recentf
+;;   "fw" 'counsel-ag
+;;   "fW" 'counsel-ag
+;;   "sj" 'counsel-semantic-or-imenu
+;;   "bb" 'ivy-switch-buffer  ;;显示缓冲区(已经打开的文件)
+;;   "ph"  'counsel-projectile ;;在工程内查找
+  ;; "pw"  'counsel-projectile-ag
+;;   )
+
 (provide 'init-keybind)

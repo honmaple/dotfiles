@@ -80,6 +80,15 @@ C   ... Jump to the config          F   ... Filter and show only rows with keywo
                  keymap2))))
 
 
+(defun move-first ()
+  "[internal] Move to the cell with the abstract position."
+  (interactive)
+  (let* ((cp (ctbl:cp-get-component))
+         (cell-id (ctbl:cursor-to-nearest-cell))
+         (row-id (car cell-id)) (col-id (cdr cell-id)))
+    (when (and cp cell-id)
+      (ctbl:navi-goto-cell (ctbl:cell-id 0 (+ 0 col-id))))))
+
 ;; map
 (defun load-map ()
   (setq mode-map (make-sparse-keymap))
@@ -97,6 +106,8 @@ C   ... Jump to the config          F   ... Filter and show only rows with keywo
   (define-key mode-map "F" #'filter)
   (define-key mode-map "o" #'sort)
   (define-key mode-map "O" #'desc)
+  (define-key mode-map "gg" #'move-first)
+  (define-key mode-map "G" #'(lambda() (interactive) (end-of-buffer)(line-move -1) ))
   (setq mode-map
         (-merge-keymap mode-map ctbl:table-mode-map)))
 

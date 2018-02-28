@@ -1,30 +1,34 @@
+;; init-basic.el --- Auto insert file header.
+
+;;; Commentary:
+
+;;; Code:
+
 (use-package autoinsert
-  :defer t
-  :init (add-hook 'after-init-hook #'auto-insert-mode)
+  :ensure nil
+  :hook (after-init . auto-insert-mode)
   :config
   (progn
-    (defun maple//insert-string()
-      (concat
-       (make-string 80 ?*)
-       "\n"
-       "Copyright © " (substring (current-time-string) -4) " " (user-full-name) "\n"
-       "File Name: " (file-name-nondirectory buffer-file-name) "\n"
-       "Author: " (user-full-name)"\n"
-       "Email: " user-mail-address "\n"
-       "Created: " (format-time-string "%Y-%m-%d %T (%Z)" (current-time)) "\n"
-       "Last Update: \n"
-       "         By: \n"
-       "Description: \n"
-       (make-string 80 ?*)))
-
     (defun maple/insert-string(&optional prefix)
       (or prefix (setq prefix comment-start))
       (mapconcat
        (lambda (x) (concat prefix x))
-       (split-string (maple//insert-string) "\n") "\n"))
+       (split-string
+        (concat
+         (make-string 80 ?*)
+         "\n"
+         "Copyright © " (substring (current-time-string) -4) " " (user-full-name) "\n"
+         "File Name: " (file-name-nondirectory buffer-file-name) "\n"
+         "Author: " (user-full-name)"\n"
+         "Email: " user-mail-address "\n"
+         "Created: " (format-time-string "%Y-%m-%d %T (%Z)" (current-time)) "\n"
+         "Last Update: \n"
+         "         By: \n"
+         "Description: \n"
+         (make-string 80 ?*)) "\n") "\n"))
 
-    (setq auto-insert-query nil)
-    (setq auto-insert-alist
+    (setq auto-insert-query nil
+          auto-insert-alist
           '(((ruby-mode . "Ruby program") nil
              "#!/usr/bin/env ruby\n"
              "# -*- encoding: utf-8 -*-\n"
@@ -49,29 +53,33 @@
 
 
 (use-package time-stamp
-  :defer t
-  :init (add-hook 'before-save-hook 'time-stamp)
+  :ensure nil
+  :hook (before-save . time-stamp)
+  :config
+  (setq time-stamp-active t
+        time-stamp-line-limit 11
+        time-stamp-start "[lL]ast[ -][uU]pdate[ \t]*:?"
+        time-stamp-end "\n"
+        time-stamp-format (concat
+                           " "
+                           (car (rassq (string-to-number (format-time-string "%w"))
+                                       url-weekday-alist))
+                           " %Y-%02m-%02d %02H:%02M:%02S (%Z)"))
   :mode-setq
   (org-mode
    time-stamp-start "MODIFIED[ \t]*?"
    time-stamp-format " %Y-%02m-%02d %02H:%02M:%02S")
   (markdown-mode
-   time-stamp-start "Modified[ \t]*:?")
-  :config
-  (progn
-    (setq time-stamp-active t)
-    (setq time-stamp-line-limit 11)
-    (setq time-stamp-start "[lL]ast[ -][uU]pdate[ \t]*:?")
-    (setq time-stamp-end "\n")
-    (setq time-stamp-format " %#A %Y-%02m-%02d %02H:%02M:%02S (%Z)")
-    ))
+   time-stamp-start "Modified[ \t]*:?"))
 
 (use-package header
+  :demand t
   :load-path "site-lisp/header"
   :config
-  (progn
-    (setq maple//header-update-filename t
-          maple//header-update-email nil)
-    (add-hook 'before-save-hook 'maple/header-auto-update)))
+  (setq maple//header-update-filename t
+        maple//header-update-email nil)
+  (add-hook 'before-save-hook 'maple/header-auto-update))
 
 (provide 'init-auto-insert)
+
+;;; init-auto-insert.el ends here

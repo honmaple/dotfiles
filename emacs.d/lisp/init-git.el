@@ -6,18 +6,17 @@
 
 ;;; Code:
 (use-package evil-magit
-  :ensure t
+  :demand t
   :after magit)
 
 (use-package magit
-  :ensure t
-  :defer t
   :config
   (setq magit-completing-read-function 'magit-builtin-completing-read
         magit-revision-show-gravatars '("^Author:     " . "^Commit:     ")
         magit-process-popup-time 10
         magit-diff-refine-hunk t)
-  (fullframe magit-status magit-mode-quit-window)
+  (after-load 'fullframe
+    (fullframe magit-status magit-mode-quit-window))
   :bind
   (("C-x g" . magit-status)
    ("C-x M-g" . magit-dispatch-popup)
@@ -27,28 +26,21 @@
    ("C-<tab>" . magit-section-toggle)))
 
 (use-package git-commit
-  :ensure t
-  :defer t
-  :config
-  (add-hook 'git-commit-mode-hook 'goto-address-mode))
+  :hook (git-commit-mode . goto-address-mode))
 
 (use-package git-timemachine
-  :ensure t
-  :defer t
   :config
   (evil-make-overriding-map git-timemachine-mode-map 'normal)
   ;; force update evil keymaps after git-timemachine-mode loaded
   (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps))
 
 (use-package git-gutter-fringe
-  :ensure t
-  :defer t
   :diminish git-gutter-mode
+  :hook (after-init . global-git-gutter-mode)
   :init
   (with-eval-after-load 'git-gutter
     (require 'git-gutter-fringe))
   (setq git-gutter-fr:side 'right-fringe)
-  (add-hook 'after-init-hook #'global-git-gutter-mode)
   :config
   (progn
     ;; custom graphics that works nice with half-width fringes

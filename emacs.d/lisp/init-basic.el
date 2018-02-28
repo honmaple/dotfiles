@@ -42,7 +42,7 @@
   "Comments or uncomments the region or the current line if there's no active region."
   (interactive)
   (save-excursion
-    (when (hs-already-hidden-p)
+    (when (and (hs-minor-mode) (hs-already-hidden-p))
       (end-of-visual-line)
       (evil-visual-state)
       (beginning-of-visual-line))
@@ -69,12 +69,18 @@
   (let ((url (magit-get "remote" "origin" "url")))
     (progn
       (browse-url
-        (if (string-match "^http" url)
-            url
-          (replace-regexp-in-string "\\(.*\\)@\\(.*\\):\\(.*\\)\\(\\.git?\\)"
-                                    "https://\\2/\\3"
-                                    url)))
+       (if (string-match "^http" url)
+           url
+         (replace-regexp-in-string "\\(.*\\)@\\(.*\\):\\(.*\\)\\(\\.git?\\)"
+                                   "https://\\2/\\3"
+                                   url)))
       (message "opening repo %s" url))))
+
+(defun maple/truncate-lines()
+  (toggle-truncate-lines t))
+
+(defun maple/close-nlinum()
+  (nlinum-mode -1))
 
 (fset 'yes-or-no-p 'y-or-n-p)
 

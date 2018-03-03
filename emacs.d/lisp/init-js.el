@@ -36,8 +36,6 @@
                     (string= web-mode-cur-language "jsx"))
                 (unless tern-mode (tern-mode))
               (if tern-mode (tern-mode -1))))))
-    (maple/add-to-company-backend '(company-tern) 'web-mode-hook)
-    (maple/add-to-company-backend '(company-tern) 'js2-mode-hook)
-    ))
+    (maple/company-backend 'js2-mode-hook 'company-tern)))
 
 (provide 'init-js)

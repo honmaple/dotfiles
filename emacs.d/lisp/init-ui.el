@@ -1,14 +1,10 @@
 (use-package monokai-theme)
-
-
 (use-package solarized-theme)
-
 (use-package spacemacs-theme)
-
 (use-package doom-themes)
 
-(add-hook 'after-init-hook
-          (lambda () (load-theme user-default-theme t)))
+(add-hook 'after-init-hook #'maple/load-theme)
+
 
 
 (use-package spaceline-config
@@ -20,7 +16,6 @@
       "spaceline config"
       ;; (set-face-attribute 'mode-line nil :box nil)
       (setq powerline-default-separator 'wave
-            spaceline-workspace-numbers-unicode nil
             spaceline-window-numbers-unicode t
             spaceline-highlight-face-func 'spaceline-highlight-face-evil-state
             spaceline-helm-help-p nil)
@@ -74,8 +69,6 @@
     ",t" "toggle mode"))
 
 (use-package nlinum
-  ;; :init
-  ;; (setq nlinum-format "%3d")
   :hook ((prog-mode text-mode) . nlinum-mode))
 
 ;; (use-package nlinum-relative

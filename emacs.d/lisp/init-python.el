@@ -52,10 +52,6 @@
   :init
   (setq anaconda-mode-installation-directory
         (concat maple-cache-directory "anaconda-mode"))
-  :config
-  (defadvice anaconda-mode-goto (before python/anaconda-mode-goto activate)
-    (evil--jumps-push))
-  ;; (maple/set-quit-key anaconda-mode-view-mode-map)
   :evil-bind
   (normal anaconda-mode-map
           (kbd "gd") 'anaconda-mode-find-assignments))
@@ -63,6 +59,6 @@
 
 (use-package company-anaconda
   :after anaconda-mode
-  :init (maple/add-to-company-backend 'company-anaconda 'python-mode-hook))
+  :init (maple/company-backend 'python-mode-hook 'company-anaconda))
 
 (provide 'init-python)

@@ -1,52 +1,15 @@
 ;;; Find and load the correct package.el
 
 ;; enter表示安装,d表示删除,x表示执行删除
+
 (require 'package)
-
-;;; Standard package repositories
-
-;; We include the org repository for completeness, but don't normally
-;; use it.
-
 (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
                          ("melpa" . "http://elpa.emacs-china.org/melpa/")
-                         ("org"   . "http://orgmode.org/elpa/")
-                         ("melpa-stable" . "http://stable.melpa.org/packages/")
+                         ("org"   . "http://elpa.emacs-china.org/org/")
+                         ("melpa-stable" . "http://elpa.emacs-china.org/melpa-stable/")
                          ))
-
 (setq package-enable-at-startup nil)
-
 (package-initialize)
-
-(defun package-upgrade ()
-  "Upgrade all packages automatically without showing *Packages* buffer."
-  (interactive)
-  (package-refresh-contents)
-  (let (upgrades)
-    (cl-flet ((get-version (name where)
-                           (let ((pkg (cadr (assq name where))))
-                             (when pkg
-                               (package-desc-version pkg)))))
-      (dolist (package (mapcar #'car package-alist))
-        (let ((in-archive (get-version package package-archive-contents)))
-          (when (and in-archive
-                     (version-list-< (get-version package package-alist)
-                                     in-archive))
-            (push (cadr (assq package package-archive-contents))
-                  upgrades)))))
-    (if upgrades
-        (when (yes-or-no-p
-               (message "Upgrade %d package%s (%s)? "
-                        (length upgrades)
-                        (if (= (length upgrades) 1) "" "s")
-                        (mapconcat #'package-desc-full-name upgrades ", ")))
-          (save-window-excursion
-            (dolist (package-desc upgrades)
-              (let ((old-package (cadr (assq (package-desc-name package-desc)
-                                             package-alist))))
-                (package-install package-desc)
-                (package-delete  old-package)))))
-      (message "All packages are up to date"))))
 
 ;; Setup `use-package'
 (unless (package-installed-p 'use-package)
@@ -55,11 +18,13 @@
 
 (eval-when-compile
   (require 'use-package))
-;; (setq use-package-verbose t)
-(setq use-package-always-ensure t)
-(setq use-package-always-defer t)
-(setq use-package-expand-minimally t)
-(setq use-package-enable-imenu-support t)
+
+(setq use-package-verbose t
+      use-package-always-ensure t
+      use-package-always-defer t
+      use-package-expand-minimally nil
+      use-package-minimum-reported-time 0.8
+      use-package-enable-imenu-support t)
 
 (use-package evil-use-package
   :demand t
@@ -78,11 +43,28 @@
   (setq async-bytecomp-allowed-packages '(all)))
 
 ;; (use-package benchmark-init
-;;   :ensure t
-;;   :init
-;;   (add-hook 'after-init-hook #'benchmark-init/deactivate))
+;;   :demand t
+;;   :config (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
-(use-package package-utils)
+(use-package package-utils
+  :commands (package-utils-with-packages-list)
+  :init
+  (defun package-upgrade()
+    "Upgrade packages."
+    (interactive)
+    (package-refresh-contents)
+    (let ((packages (package-utils-with-packages-list t
+                                                      (mapcar #'cdr (package-menu--find-upgrades)))))
+      (if packages
+          (when (yes-or-no-p
+                 (message "Upgrade %d package%s (%s)? "
+                          (length packages)
+                          (if (= (length packages) 1) "" "s")
+                          (mapconcat #'package-desc-full-name packages ",")))
+            (package-utils-with-packages-list t
+                                              (package-menu-mark-upgrades)
+                                              (package-menu-execute t)))
+        (message "All packages are already up to date.")))))
 
 (use-package fullframe
   :config (fullframe list-packages quit-window))

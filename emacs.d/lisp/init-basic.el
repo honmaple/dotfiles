@@ -82,6 +82,9 @@
 (defun maple/close-nlinum()
   (nlinum-mode -1))
 
+(defun maple/load-theme()
+  (load-theme user-default-theme t))
+
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (provide 'init-basic)

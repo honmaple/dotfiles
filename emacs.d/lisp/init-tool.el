@@ -1,9 +1,5 @@
 (use-package esup)
 
-(use-package epa
-  :ensure nil
-  :config (auto-encryption-mode -1))
-
 (use-package docker-tramp)
 
 (use-package dockerfile-mode)
@@ -14,7 +10,6 @@
   (add-hook 'quickrun--mode-hook 'maple/truncate-lines))
 
 (use-package blog-admin
-  :ensure nil
   :load-path "site-lisp/blog-admin"
   :commands blog-admin-start
   :config
@@ -51,13 +46,11 @@
   :evil-state
   (imenu-list-major-mode . emacs)
   :config
-  (progn
-    (setq imenu-list-focus-after-activation t
-          imenu-list-auto-resize t
-          imenu-list-mode-line-format "")
-    (if (bound-and-true-p semantic-mode)
-        (setq imenu-create-index-function 'semantic-create-imenu-index))
-    )
+  (setq imenu-list-focus-after-activation t
+        imenu-list-auto-resize t
+        imenu-list-mode-line-format "")
+  (if (bound-and-true-p semantic-mode)
+      (setq imenu-create-index-function 'semantic-create-imenu-index))
   :custom-face
   (imenu-list-entry-face-0 ((t (:foreground "#f92672"))))
   :bind (:map evil-leader--default-map
@@ -87,9 +80,8 @@
 (use-package avy
   :commands (maple/avy-open-url maple/avy-goto-url avy-pop-mark)
   :init
-  (progn
-    (setq avy-all-windows 'all-frames)
-    (setq avy-background t))
+  (setq avy-all-windows 'all-frames)
+  (setq avy-background t)
   :config
   (progn
     (defun maple/avy-goto-url()

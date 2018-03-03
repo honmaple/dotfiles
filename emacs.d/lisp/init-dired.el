@@ -45,4 +45,8 @@
           "q"  'image-dired-kill-buffer-and-window
           (kbd "RET") 'image-dired-display-thumbnail-original-image))
 
+(use-package image-mode
+  :ensure nil
+  :evil-state (image-mode . emacs))
+
 (provide 'init-dired)

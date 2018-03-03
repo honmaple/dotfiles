@@ -15,34 +15,13 @@
 (use-package evil
   :hook (after-init . evil-mode)
   :config
-  (progn
-    (fset 'evil-visual-update-x-selection 'ignore) ;;粘贴板
-    (evil-set-initial-state 'image-mode 'emacs)
-    (add-hook 'view-mode-hook #'evil-emacs-state)
-    ;; (defun evil-paste-after-from-0 ()
-    ;;   (interactive)
-    ;;   (let ((evil-this-register ?0))
-    ;;     (call-interactively 'evil-paste-after)))
-
-    ;; (define-key evil-visual-state-map "p" 'evil-paste-after-from-0)
-    ;; (defun my-save-if-bufferfilename ()
-    ;; (if (buffer-file-name)
-    ;;     (progn
-    ;;       (save-buffer)
-    ;;       )
-    ;;   (message "no file is associated to this buffer: do nothing")
-    ;;   )
-    ;; )
-    ;; (add-hook 'focus-out-hook (lambda () (save-some-buffers t)))
-    ;; (add-hook 'evil-insert-state-exit-hook 'my-save-if-bufferfilename)
-    ;; (evil-add-hjkl-bindings package-menu-mode-map 'emacs)
-    )
-  :custom
-  (evil-insert-state-cursor '((bar . 2) "chartreuse3"))
-  (evil-normal-state-cursor '(box "DarkGoldenrod2"))
-  (evil-visual-state-cursor '((hbox . 2) "gray"))
-  (evil-emacs-state-cursor '(box "SkyBlue2"))
-  (evil-replace-state-cursor '((hbox . 2) "chocolate"))
+  (fset 'evil-visual-update-x-selection 'ignore) ;;粘贴板
+  ;; (evil-add-hjkl-bindings package-menu-mode-map 'emacs)
+  (setq evil-insert-state-cursor '((bar . 2) "chartreuse3")
+        evil-normal-state-cursor '(box "DarkGoldenrod2")
+        evil-visual-state-cursor '((hbox . 2) "gray")
+        evil-emacs-state-cursor '(box "SkyBlue2")
+        evil-replace-state-cursor '((hbox . 2) "chocolate"))
   :custom-face
   (region ((t (:background "#66d9ef" :foreground "#272822"))))
   :bind (:map evil-normal-state-map
@@ -66,23 +45,22 @@
   :hook (after-init . evil-escape-mode)
   :diminish 'evil-escape-mode
   :config
-  (progn
-    (setq-default evil-escape-key-sequence "jj")
-    (setq-default evil-escape-delay 0.4)
-    (setq evil-escape-excluded-major-modes '(dired-mode
-                                             neotree-mode
-                                             help-mode
-                                             magit-mode
-                                             shell-mode
-                                             term-mode
-                                             org-agenda-mode
-                                             undo-tree-visualizer-mode
-                                             newsticker-treeview-mode
-                                             newsticker-treeview-list-mode
-                                             newsticker-treeview-item-mode
-                                             imenu-list-major-mode))
-    (setq evil-escape-inhibit-functions '(evil-visual-state-p evil-escape--is-magit-buffer))
-    ))
+  (setq evil-escape-key-sequence "jj"
+        evil-escape-delay 0.4
+        evil-escape-excluded-major-modes '(dired-mode
+                                           neotree-mode
+                                           help-mode
+                                           magit-mode
+                                           shell-mode
+                                           term-mode
+                                           org-agenda-mode
+                                           undo-tree-visualizer-mode
+                                           newsticker-treeview-mode
+                                           newsticker-treeview-list-mode
+                                           newsticker-treeview-item-mode
+                                           imenu-list-major-mode)
+        evil-escape-inhibit-functions '(evil-visual-state-p
+                                        evil-escape--is-magit-buffer)))
 
 
 (use-package evil-mc

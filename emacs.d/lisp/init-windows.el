@@ -17,8 +17,8 @@
         '(("*Help*" :dedicated t :position bottom :stick nil :noselect nil)
           ("*compilation*" :dedicated t :position bottom :stick t :noselect t :height 0.2)
           ("*Compile-Log*" :dedicated t :position bottom :stick t :noselect nil :height 0.2)
-          ("*Warnings*" :dedicated t :position bottom :stick t :noselect nil)
-          ("*Completions*" :dedicated t :position bottom :stick t :noselect nil)
+          ("*Warnings*" :dedicated t :position bottom :stick t :noselect t)
+          ("*Completions*" :dedicated t :position bottom :stick t :noselect nil :height 0.2)
           ("*Shell Command Output*" :dedicated t :position bottom :stick t :noselect nil)
           ("\*Async Shell Command\*.+" :regexp t :position bottom :stick t :noselect nil)
 
@@ -27,7 +27,7 @@
 
 (use-package golden-ratio  ;;黄金分割
   :hook (after-init . golden-ratio-mode)
-  :diminish golden-ratio-mode "ⓖ"
+  :diminish golden-ratio-mode
   :config
   (progn
     (dolist (m '("bs-mode"

@@ -1,8 +1,8 @@
 (use-package markdown-mode
-  :mode ("\\.m[k]d" . markdown-mode)
   :config
   (progn
     (use-package org-table
+      :ensure nil
       :diminish orgtbl-mode
       :hook (markdown-mode . orgtbl-mode))
 

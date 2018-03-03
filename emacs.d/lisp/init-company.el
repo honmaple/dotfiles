@@ -39,22 +39,25 @@
                                    sql-interactive-mode
                                    minibuffer-inactive-mode inferior-python-mode shell-mode evil-command-window-mode))
   :config
-  (setq company-backends
-        '((company-dabbrev-code company-gtags company-etags company-capf company-keywords company-files)
-          ;; (company-semantic)
-          (company-dabbrev)
-          ))
-
   (defvar company-mode/enable-yas t
     "Enable yasnippet for all backends.")
 
-  (defun company-mode/backend-with-yas (backend)
+  (defun company-backend-with-yas (backend)
     (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
         backend
       (append (if (consp backend) backend (list backend))
               '(:with company-yasnippet))))
 
-  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
+  (defvar company-default-backends
+    (mapcar #'company-backend-with-yas
+            '((company-dabbrev-code
+               company-gtags
+               company-etags
+               company-capf
+               company-keywords
+               company-files)
+              (company-dabbrev))))
+  (setq company-backends company-default-backends)
   :custom-face
   (company-tooltip-common
    ((t (:inherit company-tooltip :weight bold :underline nil))))
@@ -116,18 +119,18 @@
 
 (global-set-key [tab] 'tab-indent-or-complete)
 
-(defun maple/add-company-backend (backend)
-  "Add BACKEND to `company-backends'."
-  (after-load 'company
-    (setq company-backends (mapcar #'company-mode/backend-with-yas
-                                   (append (list backend) company-backends)))))
 
-(defun maple/add-to-company-backend (backend &optional hook)
-  "Add BACKEND to HOOK `company-backends'."
+(defun maple/company-backend-init (backend)
+  "Add BACKEND to `company-backends'."
+  (set (make-variable-buffer-local 'company-backends)
+       (mapcar #'company-backend-with-yas
+               (append (list backend) company-default-backends))))
+
+(defun maple/company-backend (hook backend)
+  "Set HOOK with BACKEND `company-backends'."
   (lexical-let ((backend backend))
-    (if hook
-        (add-hook hook (lambda () (maple/add-company-backend backend)))
-      (maple/add-company-backend backend))))
+    (add-hook hook (lambda () (maple/company-backend-init backend)))))
+
 
 ;; (use-package ycmd
 ;;   :defer t

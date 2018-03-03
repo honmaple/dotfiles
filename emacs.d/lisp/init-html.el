@@ -30,9 +30,9 @@
     (add-hook 'web-mode-hook
               (lambda ()
                 (setq electric-pair-pairs '((?\' . ?\')))))
-    (maple/add-to-company-backend '(company-web-html
-                                    company-css
-                                    company-tern) 'web-mode-hook)
+    (maple/company-backend 'web-mode-hook '(company-web-html
+                                            company-css
+                                            company-tern))
     )
   :evil-bind
   (normal web-mode-map
@@ -60,7 +60,7 @@
 (use-package css-mode
   :config
   (setq css-indent-offset 2)
-  (maple/add-to-company-backend '(company-css) 'css-mode-hook))
+  (maple/company-backend 'css-mode-hook 'company-css))
 
 (use-package sass-mode
   :mode ("\\.sass\\'" . sass-mode))

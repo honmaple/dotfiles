@@ -7,7 +7,8 @@
   :init
   (setq lua-indent-level 4
         lua-indent-string-contents t)
-  (maple/add-to-company-backend '(company-lua) 'lua-mode-hook))
+  (maple/company-backend 'lua-mode-hook 'company-lua)
+  )
 
 
 (use-package company-go
@@ -16,21 +17,20 @@
 
 (use-package go-mode
   :mode ("\\.go\\'" . go-mode)
-  :mode-setq
-  (go-mode
-   tab-width 4
-   indent-tabs-mode t)
+  :setq
+  (:mode go-mode
+         tab-width 4
+         indent-tabs-mode t)
   :config
   (setq gofmt-show-errors nil
         godef-command "/home/jianglin/go/bin/godef")
 
   (defun maple/gofmt()
     (interactive)
-    (let ((p (point)))
-      (gofmt)
+    (save-excursion
       ;; (untabify (point-min) (point-max))
-      (goto-char p)))
-  (maple/add-to-company-backend '(company-go) 'go-mode-hook)
+      (gofmt)))
+  (maple/company-backend 'go-mode-hook 'company-go)
   :evil-bind
   (normal go-mode-map
           [f6] 'maple/gofmt

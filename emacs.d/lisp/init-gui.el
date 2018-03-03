@@ -1,12 +1,13 @@
 ;;----------------------------------------------------------------------------
 ;; Suppress GUI features
 ;;----------------------------------------------------------------------------
-;; 关闭文件滑动控件
-(when (featurep 'scroll-bar) (scroll-bar-mode -1))
-;; 关闭工具栏
-(when (featurep 'tool-bar) (tool-bar-mode -1))
-;;关闭菜单栏
-(when (featurep 'menu-bar) (menu-bar-mode -1))
+  ;; 关闭文件滑动控件
+  (when (featurep 'scroll-bar) (scroll-bar-mode -1))
+  ;; 关闭工具栏
+  (when (featurep 'tool-bar) (tool-bar-mode -1))
+  ;;关闭菜单栏
+  (when (featurep 'menu-bar) (menu-bar-mode -1))
+
 
 ;; 和上面一样，但要快一些
 ;; (push '(tool-bar-lines . 0) default-frame-alist)

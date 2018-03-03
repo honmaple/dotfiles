@@ -61,24 +61,28 @@
         time-stamp-start "[lL]ast[ -][uU]pdate[ \t]*:?"
         time-stamp-end "\n"
         time-stamp-format (concat
-                           " "
                            (car (rassq (string-to-number (format-time-string "%w"))
-                                       url-weekday-alist))
+                                       '((" Sunday" . 0)
+                                         (" Monday" . 1)
+                                         (" Tuesday" . 2)
+                                         (" Wednesday" . 3)
+                                         (" Thursday" . 4)
+                                         (" Friday" . 5)
+                                         (" Saturday" . 6))))
                            " %Y-%02m-%02d %02H:%02M:%02S (%Z)"))
-  :mode-setq
-  (org-mode
+  :setq
+  (:mode org-mode
    time-stamp-start "MODIFIED[ \t]*?"
    time-stamp-format " %Y-%02m-%02d %02H:%02M:%02S")
-  (markdown-mode
+  (:mode markdown-mode
    time-stamp-start "Modified[ \t]*:?"))
 
 (use-package header
-  :demand t
   :load-path "site-lisp/header"
-  :config
+  :hook (before-save . maple/header-auto-update)
+  :init
   (setq maple//header-update-filename t
-        maple//header-update-email nil)
-  (add-hook 'before-save-hook 'maple/header-auto-update))
+        maple//header-update-email nil))
 
 (provide 'init-auto-insert)
 

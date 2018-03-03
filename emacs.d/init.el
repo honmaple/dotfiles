@@ -10,9 +10,10 @@
 
 ;;; Code:
 (defvar default-file-name-handler-alist file-name-handler-alist)
+(defvar user-default-theme nil)
 
 (setq user-full-name "jianglin")
-(setq user-default-theme 'doom-one)
+(setq user-default-theme 'monokai)
 (setq user-mail-address "xiyang0807@gmail.com")
 (setq file-name-handler-alist nil)
 (setq gc-cons-threshold (* 256 1024 1024))
@@ -26,16 +27,6 @@
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
-
-(defadvice require (around require activate)
-  "Show require time."
-  (let ((start (current-time))
-        res delta)
-    (setq res ad-do-it)
-    (setq delta (float-time (time-since start)))
-    (when (> delta 0.1)
-      (message "Required %s: %s sec" (ad-get-arg 0) delta))
-    res))
 
 ;;----------------------------------------------------------------------------
 ;; Bootstrap config
@@ -63,7 +54,6 @@
   (require 'init-file)   ;;文件操作
   (require 'init-buffer)   ;;buffer操作
   (require 'init-windows))
-
 
 (when *develop*
   (require 'init-flycheck)

@@ -11,21 +11,19 @@
   (setq global-auto-revert-non-file-buffers t
         auto-revert-verbose nil))
 
-(use-package semantic
-  :init
-  (setq srecode-map-save-file
-        (concat maple-cache-directory "srecode-map.el"))
-  (setq semanticdb-default-save-directory
-        (concat maple-cache-directory "semanticdb/"))
-  ;; (add-hook 'after-init-hook 'semantic-mode)
-  :config
-  (progn
-    (add-to-list 'semantic-default-submodes
-                 'global-semantic-stickyfunc-mode)
-    (add-to-list 'semantic-default-submodes
-                 'global-semantic-idle-summary-mode)))
-
-(use-package stickyfunc-enhance)
+;; (use-package semantic
+;;   :init
+;;   (setq srecode-map-save-file
+;;         (concat maple-cache-directory "srecode-map.el"))
+;;   (setq semanticdb-default-save-directory
+;;         (concat maple-cache-directory "semanticdb/"))
+;;   ;; (add-hook 'after-init-hook 'semantic-mode)
+;;   :config
+;;   (progn
+;;     (add-to-list 'semantic-default-submodes
+;;                  'global-semantic-stickyfunc-mode)
+;;     (add-to-list 'semantic-default-submodes
+;;                  'global-semantic-idle-summary-mode)))
 
 
 (use-package elec-pair
@@ -35,26 +33,16 @@
   ;; (setq electric-pair-pairs '((?\' . ?\')))
   (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
 
-;; (use-package page
-;;   :init
-;;   (progn
-;;     ;; Don't disable narrowing commands
-;;     (put 'narrow-to-region 'disabled nil)
-;;     (put 'narrow-to-page 'disabled nil)
-;;     (put 'narrow-to-defun 'disabled nil)
-;;     ))
-
 ;; (use-package which-func
-;;   :init (add-hook 'after-init-hook 'which-function-mode))
+;;   :hook (after-init which-function-mode))
 
 (use-package dumb-jump
   :after (evil)
   :config
   (setq dumb-jump-selector 'helm)
-  :bind
-  (:map evil-normal-state-map
-        ("gd" . dumb-jump-go)))
-
+  :evil-bind
+  (normal prog-mode-map
+          "gd"  'dumb-jump-go))
 
 (use-package eldoc
   :ensure nil
@@ -72,14 +60,15 @@
   (comint-mode . insert)
   :config
   (setq comint-prompt-read-only t)
-  :bind (:map comint-mode-map
-              ("<up>" . comint-previous-input)
-              ("<down>" . comint-next-input)
-              ;; ("<mouse-4>" . comint-previous-input)
-              ;; ("<mouse-5>" . comint-next-input)
-              ("<escape>" . (lambda() (interactive)
-                              (goto-char (cdr comint-last-prompt))))
-              ))
+  :bind
+  (:map comint-mode-map
+        ("<up>" . comint-previous-input)
+        ("<down>" . comint-next-input)
+        ;; ("<mouse-4>" . comint-previous-input)
+        ;; ("<mouse-5>" . comint-next-input)
+        ("<escape>" . (lambda() (interactive)
+                        (goto-char (cdr comint-last-prompt))))
+        ))
 
 (use-package hideshow
   :ensure nil

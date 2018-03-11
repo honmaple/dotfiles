@@ -227,7 +227,8 @@ C   ... Jump to the config          F   ... Filter and show only rows with keywo
   (interactive)
   (let* ((keyword (read-from-minibuffer "Search filter: ")))
     (setq -filter-keyword keyword)
-    (ctbl:cp-set-model blog-admin-table (-get-model))))
+    (ctbl:cp-set-model blog-admin-table (-get-model)))
+  (move-first))
 
 ;; main
 

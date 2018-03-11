@@ -1,3 +1,6 @@
+(eval-when-compile (require 'evil)
+                   (require 'evil-leader))
+
 (evil-leader/set-key
   "fj" 'dired-jump
   "fl" 'find-file-literally
@@ -203,41 +206,44 @@
   "eh" 'maple/org-html-export-to-html
   )
 
-
-(define-key evil-normal-state-map (kbd "M-J") 'evil-window-move-very-bottom)
-(define-key evil-normal-state-map (kbd "M-K") 'evil-window-move-very-top)
-(define-key evil-normal-state-map (kbd "M-L") 'evil-window-move-far-right)
-(define-key evil-normal-state-map (kbd "M-H") 'evil-window-move-far-left)
-(define-key evil-normal-state-map (kbd "M-j") 'evil-window-down)
-(define-key evil-normal-state-map (kbd "M-k") 'evil-window-up)
-(define-key evil-normal-state-map (kbd "M-l") 'evil-window-right)
-(define-key evil-normal-state-map (kbd "M-h") 'evil-window-left)
-(define-key evil-normal-state-map (kbd "H") (kbd "^"))
-(define-key evil-normal-state-map (kbd "L") (kbd "$"))
-(define-key evil-normal-state-map (kbd "S-<return>") 'maple/evil-insert-line-above)
+(maple/define-key evil-normal-state-map
+                  (kbd "M-J") 'evil-window-move-very-bottom
+                  (kbd "M-K") 'evil-window-move-very-top
+                  (kbd "M-L") 'evil-window-move-far-right
+                  (kbd "M-H") 'evil-window-move-far-left
+                  (kbd "M-j") 'evil-window-down
+                  (kbd "M-k") 'evil-window-up
+                  (kbd "M-l") 'evil-window-right
+                  (kbd "M-h") 'evil-window-left
+                  (kbd "H") (kbd "^")
+                  (kbd "L") (kbd "$")
+                  (kbd "S-<return>") 'maple/evil-insert-line-above)
 ;; (define-key evil-normal-state-map (kbd "RET") 'maple/evil-insert-line-below)
 
-(define-key evil-insert-state-map (kbd "C-h") (kbd "<left>"))
-(define-key evil-insert-state-map (kbd "C-l") (kbd "<right>"))
-(define-key evil-insert-state-map (kbd "C-v") 'cua-paste)
 
-(define-key evil-visual-state-map (kbd "H") (kbd "^"))
-(define-key evil-visual-state-map (kbd "L")
-  (lambda ()
-    (interactive)
-    (evil-end-of-line)))
-(define-key evil-visual-state-map (kbd "<")
-  (lambda ()
-    (interactive)
-    (call-interactively 'evil-shift-left)
-    (evil-normal-state)
-    (evil-visual-restore)))
-(define-key evil-visual-state-map (kbd ">")
-  (lambda ()
-    (interactive)
-    (call-interactively 'evil-shift-right)
-    (evil-normal-state)
-    (evil-visual-restore)))
+
+(maple/define-key evil-insert-state-map
+                  (kbd "C-h") (kbd "<left>")
+                  (kbd "C-l") (kbd "<right>")
+                  (kbd "C-j") (kbd "<down>")
+                  (kbd "C-k") (kbd "<up>")
+                  (kbd "C-v") 'cua-paste)
+
+(maple/define-key evil-visual-state-map
+                  (kbd "H") (kbd "^")
+                  (kbd "L") (lambda ()
+                              (interactive)
+                              (evil-end-of-line))
+                  (kbd "<") (lambda ()
+                              (interactive)
+                              (call-interactively 'evil-shift-left)
+                              (evil-normal-state)
+                              (evil-visual-restore))
+                  (kbd ">") (lambda ()
+                              (interactive)
+                              (call-interactively 'evil-shift-right)
+                              (evil-normal-state)
+                              (evil-visual-restore)))
 
 (global-set-key [f6] 'maple/indent-buffer)
 ;; (global-set-key (kbd "C-a") 'maple/smart-move-beginning-of-line)
@@ -272,7 +278,7 @@
 ;;   "sj" 'counsel-semantic-or-imenu
 ;;   "bb" 'ivy-switch-buffer  ;;显示缓冲区(已经打开的文件)
 ;;   "ph"  'counsel-projectile ;;在工程内查找
-  ;; "pw"  'counsel-projectile-ag
+;; "pw"  'counsel-projectile-ag
 ;;   )
 
 (provide 'init-keybind)

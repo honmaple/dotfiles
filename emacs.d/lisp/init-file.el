@@ -43,9 +43,10 @@
   (neotree-mode . emacs)
   :config
   (setq neo-create-file-auto-open t
-        neo-banner-message "Press ? for neotree help"
-        neo-show-updir-line t
-        neo-mode-line-type 'neotree
+        neo-banner-message nil
+        neo-show-updir-line nil
+        ;; neo-mode-line-type 'neotree
+        neo-mode-line-type 'none
         neo-smart-open t
         neo-dont-be-alone t
         neo-persist-show nil

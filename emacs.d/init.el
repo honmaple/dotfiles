@@ -13,7 +13,7 @@
 (defvar user-default-theme nil)
 
 (setq user-full-name "jianglin")
-(setq user-default-theme 'monokai)
+(setq user-default-theme 'doom-one)
 (setq user-mail-address "xiyang0807@gmail.com")
 (setq file-name-handler-alist nil)
 (setq gc-cons-threshold (* 256 1024 1024))

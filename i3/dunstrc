@@ -1,4 +1,6 @@
 [global]
+frame_width = 0
+frame_color = "#000000"
 font = "Monospace 9"
 # allow a small subset of html markup:
 # <b>bold</b>
@@ -8,7 +10,7 @@ font = "Monospace 9"
 #
 # for a complete reference see http://developer.gnome.org/pango/stable/PangoMarkupFormat.html
 # If markup is not allowed, those tags will be stripped out of the message.
-allow_markup = yes
+markup = yes
 # The format of the message. Possible variables are:
 #   %a  appname
 #   %s  summary
@@ -52,7 +54,7 @@ ignore_newline = no
 geometry = "300x6-8+21"
 # The transparency of the window. range: [0; 100]
 # This option will only work if a compositing windowmanager is present (e.g. xcompmgr, compiz, etc..)
-transparency = 0
+transparency = 15
 # Don't remove messages, if the user is idle (no mouse or keyboard input)
 # for longer than idle_threshold seconds.
 # Set to 0 to disable.
@@ -111,16 +113,10 @@ browser = /usr/bin/google-chrome-stable
 # Align icons left/right/off
 # icon_position = left
 # # Scale larger icons down to this size, set to 0 to disable
-# max_icon_size = 32
+# max_icon_size = 128
 
 # # Paths to default icons.
-# icon_folders = /usr/share/icons/gnome/32x32/status/:/usr/share/icons/gnome/32x32/devices/
-
-
-
-[frame]
-width = 0
-color = "#000000"
+# icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
 
 [shortcuts]
 # shortcuts are specified as [modifier+][modifier+]...key
@@ -129,7 +125,8 @@ color = "#000000"
 # xev might be helpful to find names for keys
 close = ctrl+space
 close_all = ctrl+shift+space
-history = ctrl+grave
+# history = ctrl+grave
+history = mod4+mod1+h
 context = ctrl+shift+period
 
 [urgency_low]

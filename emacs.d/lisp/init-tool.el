@@ -28,16 +28,10 @@
     (defun blog-set-face()
       "set face"
       (interactive)
-      (dolist (charset '(kana han symbol cjk-misc bopomofo))
-        (set-fontset-font (frame-parameter nil 'font) charset
-                          (font-spec :family "WenQuanYi Micro Hei Mono" :size 18)))
-      (defadvice switch-to-buffer (after switch-to-buffer activate)
-        (dolist (charset '(kana han symbol cjk-misc bopomofo))
-          (set-fontset-font (frame-parameter nil 'font) charset
-                            (font-spec :family "DejaVu Sans Mono" :size 14)))))
+      (set-face-attribute 'variable-pitch nil :font "-Sony-Sony Fixed-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1")
+      (buffer-face-mode))
 
     (when (display-graphic-p)
-      (add-hook 'blog-admin-mode-hook 'font-lock-mode)
       (add-hook 'blog-admin-mode-hook 'blog-set-face))
     ))
 

@@ -35,6 +35,7 @@
 (defvar markdown-preview:home-path (file-name-directory load-file-name))
 
 (defvar markdown-preview:preview-file (concat markdown-preview:home-path "index.html"))
+(defvar markdown-preview:css (concat markdown-preview:home-path "static/css/markdown.css"))
 
 
 (defun markdown-preview:init-websocket ()
@@ -43,19 +44,19 @@
 
 (defun markdown-preview:start-ws-server ()
   (when (not markdown-preview:websocket-server)
-    (setq markdown-preview:websocket-server
-          (websocket-server
-           markdown-preview:port
-           :host markdown-preview:host
-           :on-message (lambda (_websocket frame)
-                         (setq markdown-preview:websocket _websocket)
-                         (markdown-preview:send-preview _websocket))
-           :on-open (lambda (_websocket)
-                      (message "websocket: I'm opened."))
-           :on-error (lambda (_websocket type err)
-                       (message "error connecting"))
-           :on-close (lambda (_websocket)
-                       (setq markdown-preview:websocket-server nil))))))
+    (setq-local markdown-preview:websocket-server
+                (websocket-server
+                 markdown-preview:port
+                 :host markdown-preview:host
+                 :on-message (lambda (_websocket frame)
+                               (setq markdown-preview:websocket _websocket)
+                               (markdown-preview:send-preview _websocket))
+                 :on-open (lambda (_websocket)
+                            (message "websocket: I'm opened."))
+                 :on-error (lambda (_websocket type err)
+                             (message "error connecting"))
+                 :on-close (lambda (_websocket)
+                             (setq markdown-preview:websocket-server nil))))))
 
 (defun markdown-preview:start-ws-client ()
   "Start the `markdown-preview' local client."
@@ -92,22 +93,28 @@
 
 (defun markdown-preview:init-http-server ()
   "Start http server at PORT to serve preview file via http."
-  (unless markdown-preview:http-server
-    (lexical-let ((docroot default-directory))
-      (setq markdown-preview:http-server
-            (ws-start
-             (lambda (request)
-               (with-slots (process headers) request
-                 (let* ((path (substring (cdr (assoc :GET headers)) 1))
-                        (filename (expand-file-name path docroot)))
-                   (if (string= path "")
+  (when (not markdown-preview:http-server)
+    (setq markdown-preview:http-server
+          (ws-start
+           (lambda (request)
+             (with-slots (process headers) request
+               (let* ((path (substring (cdr (assoc :GET headers)) 1))
+                      (filename (expand-file-name path default-directory)))
+                 (if (string= path "")
+                     (progn
+                       (ws-send-file
+                        process
+                        (expand-file-name
+                         markdown-preview:preview-file)))
+                   (if (string= path "static/css/markdown.css")
                        (progn
                          (ws-send-file
                           process
                           (expand-file-name
-                           markdown-preview:preview-file)))
-                     ))))
-             markdown-preview:http-port nil :host markdown-preview:host)))))
+                           markdown-preview:css)))
+                     )
+                   ))))
+           markdown-preview:http-port nil :host markdown-preview:host))))
 
 (defun markdown-preview:open-browser ()
   "Open browser."
@@ -119,22 +126,26 @@
   (markdown-preview:init-websocket)
   (markdown-preview:init-http-server)
   (markdown-preview:open-browser)
-  ;; (add-hook 'post-command-hook (lambda ()
-  ;;                              (markdown-preview:send-to-server) nil t)))
-  (add-hook 'after-save-hook (lambda ()
-                               (markdown-preview:send-to-server) nil t)))
+  (add-hook 'after-save-hook #'markdown-preview:send-to-server nil t))
 
 (defun markdown-preview:finalize ()
   "Markdown preview close."
-  (when markdown-preview:websocket-server
-    (websocket-server-close markdown-preview:websocket-server))
   (when markdown-preview:websocket-client
     (websocket-close markdown-preview:websocket-client))
+  (when markdown-preview:websocket-server
+    ;; (websocket-server-close markdown-preview:websocket-server)
+    (delete-process markdown-preview:websocket-server)
+    (setq markdown-preview:websocket-server nil))
   (when markdown-preview:http-server
-    (ws-stop markdown-preview:http-server))
-  ;; (remove-hook 'post-command-hook 'markdown-preview:send-to-server t))
+    (ws-stop markdown-preview:http-server)
+    (setq markdown-preview:http-server nil))
   (remove-hook 'after-save-hook 'markdown-preview:send-to-server t))
 
+;;;###autoload
+(defun markdown-preview-cleanup ()
+  "Cleanup `markdown-preview' mode."
+  (interactive)
+  (markdown-preview:finalize))
 
 ;;;###autoload
 (define-minor-mode markdown-preview-mode

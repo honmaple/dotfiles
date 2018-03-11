@@ -59,7 +59,7 @@
 
 (use-package css-mode
   :config
-  (setq css-indent-offset 2)
+  (setq css-indent-offset 4)
   (maple/company-backend 'css-mode-hook 'company-css))
 
 (use-package sass-mode

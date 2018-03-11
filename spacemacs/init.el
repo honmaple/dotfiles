@@ -1,5 +1,5 @@
 ;; Time-stamp: <>
-;; 
+;;
 ;; --------------------------------------------------------------------------------
 ;; -*- mode: emacs-lisp -*-
 ;; This file is loaded by Spacemacs at startup.
@@ -292,7 +292,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (add-hook 'web-mode-hook 'ycmd-mode)
   (add-hook 'after-init-hook #'global-ycmd-mode)
   ;; (company-ycmd-setup)
-  ;; (flycheck-ycmd-setup)  
+  ;; (flycheck-ycmd-setup)
   (set-variable 'ycmd-server-command '("python2" "/home/jianglin/.vim/bundle/YouCompleteMe/third_party/ycmd/ycmd"))
   ;; (set-variable 'ycmd-global-config "/home/jianglin/.emacs.d/layer/+tool/ycmd/global_config.py")
   (set-variable 'ycmd-global-config "/home/jianglin/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py")
@@ -319,77 +319,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq indent-tabs-mode nil)
   (setq default-tab-width 4)
   (setq tab-width 4)
-
-
-  (auto-insert-mode 1)
-  (setq auto-insert-query nil)
   (setq user-full-name "jianglin")
-
-  (setq auto-insert-alist
-        '(((ruby-mode . "Ruby program") nil
-          "# !/usr/bin/env ruby\n"
-          "# -*- encoding:UTF-8 -*-\n"
-          "# **************************************************************************\n"
-          "# Copyright © " (substring (current-time-string) -4) " " (user-full-name) "\n"
-          "# File: " (file-name-nondirectory buffer-file-name) "\n"
-          "# Author: " (user-full-name)"\n"
-          "# Email: xiyang0807@gmail.com\n"
-          "# Created: " (format-time-string "%a %b %e %T %Y (%z)" (current-time)) "\n"
-          "# Last-Updated: \n"
-          "#           By: \n"
-          "#     Update #: 0\n"
-          "# Description: \n"
-          "# **************************************************************************\n")
-          ((python-mode . "Python program") nil
-          "# !/usr/bin/env python\n"
-          "# -*- coding=UTF-8 -*-\n"
-          "# **************************************************************************\n"
-          "# Copyright © " (substring (current-time-string) -4) " " (user-full-name) "\n"
-          "# File: " (file-name-nondirectory buffer-file-name) "\n"
-          "# Author: " (user-full-name)"\n"
-          "# Email: xiyang0807@gmail.com\n"
-          "# Created: " (format-time-string "%a %b %e %T %Y (%z)" (current-time)) "\n"
-          "# Last-Updated: \n"
-          "#           By: \n"
-          "#     Update #: 0\n"
-          "# Description: \n"
-          "# **************************************************************************\n")
-          ((c-mode . "C program") nil
-          "/**************************************************************************\n"
-          " Copyright © " (substring (current-time-string) -4) " " (user-full-name) "\n"
-          " File: " (file-name-nondirectory buffer-file-name) "\n"
-          " Author: " (user-full-name)"\n"
-          " Email: xiyang0807@gmail.com\n"
-          " Created: " (format-time-string "%a %b %e %T %Y (%z)" (current-time)) "\n"
-          " Last-Updated: \n"
-          "           By: \n"
-          "     Update #: 0\n"
-          " Description: \n"
-          " **************************************************************************/\n"
-          "#include<stdio.h>\n"
-          "#include<string.h>\n")
-          ((sh-mode . "Shell script") nil
-          "#!/bin/bash\n"
-          "#**************************************************************************\n"
-          "#Copyright © " (substring (current-time-string) -4) " " (user-full-name) "\n"
-          "#File: " (file-name-nondirectory buffer-file-name) "\n"
-          "#Author: " (user-full-name)"\n"
-          "#Email: xiyang0807@gmail.com\n"
-          "#Created: " (format-time-string "%a %b %e %T %Y (%z)" (current-time)) "\n"
-          "#Last-Updated: \n"
-          "#          By: \n"
-          "#    Update #: 0\n"
-          "#Description: \n"
-          "#**************************************************************************/\n")
-          ((markdown-mode . "Markdown") nil
-          "Title: " (file-name-nondirectory buffer-file-name) "  \n"
-          "Author: honmaple   \n"
-          "Date: " (format-time-string "%F" (current-time)) "\n"
-          "Category:   \n"
-          "Tags: []  \n"
-          "Slug: " (file-name-nondirectory buffer-file-name) "  \n"
-          "Summary: ")))
-  (auto-insert)
   (set-default 'truncate-lines t)
   ;; 格式化代码
   (defun indent-buffer ()
@@ -411,4 +341,3 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (shell-command (format "python3 %s" (file-name-nondirectory buffer-file-name)))
     )
 )
-

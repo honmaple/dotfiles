@@ -34,7 +34,15 @@
 
     ;; 中英文对齐
     (when (display-graphic-p)
-      (set-face-attribute 'org-table nil :font "-Misc-Fixed-normal-normal-normal-*-18-*-*-*-c-90-iso10646-1"))
+      (set-face-attribute 'org-table nil :font "-Misc-Fixed-normal-normal-normal-*-18-*-*-*-c-90-iso10646-1")
+      ;; (set-face-attribute 'org-table nil :font "-jis-fixed-medium-r-normal--16-*-75-75-c-160-jisx0208.1983-0")
+      ;; (set-face-attribute 'org-table nil :font "-Sony-Sony Fixed-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1")
+      )
+
+    ;; (set-face-attribute 'org-table nil :font "-Sony-Sony Fixed-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1")
+    ;; (set-face-attribute 'org-table nil :font "-jis-fixed-medium-r-normal--16-*-75-75-c-160-jisx0208.1983-0")
+    ;; (set-face-attribute 'org-table nil :font "-jis-fixed-medium-r-normal--16-*-100-100-c-160-jisx0208.1983-0")
+    ;; (set-face-attribute 'org-table nil :font "-Misc-Misc Fixed Wide-normal-normal-normal-ko-18-*-*-*-c-180-iso10646-1")
 
 
     (org-babel-do-load-languages

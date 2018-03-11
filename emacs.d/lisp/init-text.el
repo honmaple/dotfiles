@@ -19,7 +19,9 @@
         ([f5] . markdown-toggle-markup-hiding)))
 
 ;; (use-package markdown-preview-mode
-;;   :load-path "site-lisp/markdown-preview/")
+;;   :after (markdown-mode)
+;;   :demand t
+;;   :load-path "site-lisp/markdown-preview")
 
 ;; (use-package olivetti
 ;;   :defer t

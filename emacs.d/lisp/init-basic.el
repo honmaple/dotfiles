@@ -76,6 +76,14 @@
                                    url)))
       (message "opening repo %s" url))))
 
+(defun maple/define-key (keymap key def &rest bindings)
+  "Define multi keybind with KEYMAP KEY DEF BINDINGS."
+  (interactive)
+  (while key
+    (define-key keymap key def)
+    (setq key (pop bindings)
+          def (pop bindings))))
+
 (defun maple/truncate-lines()
   (toggle-truncate-lines t))
 

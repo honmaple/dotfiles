@@ -1,238 +1,167 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+caption, tfoot{
+    background: transparent;
+    border: 0;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+
 body {
-    width: 980px;
+    line-height: 1.5;
+    font-size:13px;
+    border: 0;
+    max-width:980px;
     margin: 20px auto;
-    color: #333333;
-    border: 1px solid #CCCCCC;
-    border-radius: 6px;
-    box-shadow: 0 1px 6px #aaaaaa;
-    box-sizing: border-box;
-    background: #fafafa;
+    padding:20px;
 }
 
-.markdown-content > a:first-child ~ *:nth-child(2) {
-  margin-top: 0 !important;
+/* Headings */
+h1 {font-size: 24px;}
+h2 {font-size: 22px;}
+h3 {font-size: 20px;}
+h4 {font-size: 18px;}
+h5 {font-size: 16px;}
+h6 {font-size: 14px;}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: .8em;
+    margin-top: .8em;
+    font-family: 'Lobster', cursive;
+
 }
 
-.margin-tb-zero,
-.markdown-content ol ol,
-.markdown-content ul ol,
-.markdown-content ol ul,
-.markdown-content ul ul,
-.markdown-content ol ul ol,
-.markdown-content ul ul ol,
-.markdown-content ol ul ul,
-.markdown-content ul ul ul {
-  margin-top: 0;
-  margin-bottom: 0;
+hr { border: 1px solid #eee; }
+
+/* Anchors */
+a {outline: 0;}
+a img {border: 0px; text-decoration: none;}
+a:link, a:visited {
+    /* color: #0cf; */
+    text-decoration: none;
 }
-.markdown-content {
-  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-size: 16px;
-  color: #333;
-  line-height: 1.6;
-  word-wrap: break-word;
-  padding: 45px;
-  background: #fff;
-  border: 1px solid #ddd;
-  -webkit-border-radius: 6px;
-  border-radius: 6px;
+a:hover, a:active {
+    /* color: #0cf; */
+    color: #C74451;
+    /* text-shadow: 1px 1px 1px #333; */
 }
-.markdown-content > *:first-child {
-  margin-top: 0 !important;
+/*remove chrome focus border*/
+a:focus {outline: none;}
+
+img {
+    width:100%;
 }
-.markdown-content > *:last-child {
-  margin-bottom: 0 !important;
+
+pre{
+    background-color:#23241f;
+    padding: 10px;
+    color: #ddd;
+    margin:10px 0;
+    overflow: auto;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
 }
-.markdown-content * {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+/* Paragraphs */
+p {margin-bottom: 1.143em;}
+
+/* Lists */
+ul {
+    list-style: outside circle;
+    /* margin: 1em 0 1.5em 1.5em; */
 }
-.markdown-content h1,
-.markdown-content h2,
-.markdown-content h3,
-.markdown-content h4,
-.markdown-content h5,
-.markdown-content h6 {
-  margin-top: 1em;
-  margin-bottom: 16px;
-  font-weight: bold;
-  line-height: 1.4;
+
+ol {
+    list-style: outside decimal;
+    margin: 1em 0 1.5em 1.5em;
 }
-.markdown-content p,
-.markdown-content blockquote,
-.markdown-content ul,
-.markdown-content ol,
-.markdown-content dl,
-.markdown-content table,
-.markdown-content pre {
-  margin-top: 0;
-  margin-bottom: 16px;
+
+/* Quotes */
+blockquote {
+    border-left: 2px solid rgba(0,0,0,0.4);
+    margin:0 0 20px;
+    padding:10px 20px;
+    background: rgba(255,255,255,0.4);
+    clear:both;
+    word-break: break-all;
+    /* font-style: italic; */
 }
-.markdown-content h1 {
-  margin: 0.67em 0;
-  padding-bottom: 0.3em;
-  font-size: 2.25em;
-  line-height: 1.2;
-  border-bottom: 1px solid #eee;
+blockquote *:last-child{
+    margin-bottom:0px;
 }
-.markdown-content h2 {
-  padding-bottom: 0.3em;
-  font-size: 1.75em;
-  line-height: 1.225;
-  border-bottom: 1px solid #eee;
+/* Tables */
+table {margin: .5em auto 1.5em auto; width: 100%;
+       border: 1px solid #ddd;}
+/* Thead */
+thead th {padding: .5em .4em; text-align: left;}
+thead td {}
+
+/* Tbody */
+tbody td {padding: .5em .4em;}
+tbody th {padding: .5em .4em;}
+
+tbody .alt td {}
+tbody .alt th {}
+
+/* Tfoot */
+tfoot th {}
+tfoot td {}
+
+th,tr,td,thead,tbody {
+    border: 1px solid #ddd;
 }
-.markdown-content h3 {
-  font-size: 1.5em;
-  line-height: 1.43;
+
+/* HTML5 tags */
+header, section, footer,
+aside, nav, article, figure {
+    display: block;
 }
-.markdown-content h4 {
-  font-size: 1.25em;
+
+
+.hljs{
+    display:block;overflow-x:auto;padding:0.5em;background:#23241f
 }
-.markdown-content h5 {
-  font-size: 1em;
+.hljs,.hljs-tag,.hljs-subst{
+    color:#f8f8f2
 }
-.markdown-content h6 {
-  font-size: 1em;
-  color: #777;
+.hljs-strong,.hljs-emphasis{
+    color:#a8a8a2
 }
-.markdown-content ol,
-.markdown-content ul {
-  padding-left: 2em;
+.hljs-bullet,.hljs-quote,.hljs-number,.hljs-regexp,.hljs-literal,.hljs-link{
+    color:#ae81ff
 }
-.markdown-content ol ol,
-.markdown-content ul ol {
-  list-style-type: lower-roman;
+.hljs-code,.hljs-title,.hljs-section,.hljs-selector-class{
+    color:#a6e22e
 }
-.markdown-content ol ul,
-.markdown-content ul ul {
-  list-style-type: circle;
+.hljs-strong{
+    font-weight:bold
 }
-.markdown-content ol ul ul,
-.markdown-content ul ul ul {
-  list-style-type: square;
+.hljs-emphasis{
+    font-style:italic
 }
-.markdown-content ol {
-  list-style-type: decimal;
+.hljs-keyword,.hljs-selector-tag,.hljs-name,.hljs-attr{
+    color:#f92672
 }
-.markdown-content ul {
-  list-style-type: disc;
+.hljs-symbol,.hljs-attribute{
+    color:#66d9ef
 }
-.markdown-content blockquote {
-  margin-left: 0;
-  margin-right: 0;
-  padding: 0 15px;
-  color: #777;
-  border-left: 4px solid #ddd;
+.hljs-params,.hljs-class .hljs-title{
+    color:#f8f8f2
 }
-.markdown-content table {
-  display: block;
-  width: 100%;
-  overflow: auto;
-  word-break: normal;
-  word-break: keep-all;
-  border-collapse: collapse;
-  border-spacing: 0;
+.hljs-string,.hljs-type,.hljs-built_in,.hljs-builtin-name,.hljs-selector-id,.hljs-selector-attr,.hljs-selector-pseudo,.hljs-addition,.hljs-variable,.hljs-template-variable{
+    color:#e6db74
 }
-.markdown-content table tr {
-  background-color: #fff;
-  border-top: 1px solid #ccc;
-}
-.markdown-content table tr:nth-child(2n) {
-  background-color: #f8f8f8;
-}
-.markdown-content table th,
-.markdown-content table td {
-  padding: 6px 13px;
-  border: 1px solid #ddd;
-}
-.markdown-content pre {
-  word-wrap: normal;
-  padding: 16px;
-  overflow: auto;
-  font-size: 85%;
-  line-height: 1.45;
-  background-color: #f7f7f7;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
-}
-.markdown-content pre code {
-  display: inline;
-  max-width: initial;
-  padding: 0;
-  margin: 0;
-  overflow: initial;
-  font-size: 100%;
-  line-height: inherit;
-  word-wrap: normal;
-  white-space: pre;
-  border: 0;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
-  background-color: transparent;
-}
-.markdown-content pre code:before,
-.markdown-content pre code:after {
-  content: normal;
-}
-.markdown-content code {
-  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
-  padding: 0;
-  padding-top: 0.2em;
-  padding-bottom: 0.2em;
-  margin: 0;
-  font-size: 85%;
-  background-color: rgba(0,0,0,0.04);
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
-}
-.markdown-content code:before,
-.markdown-content code:after {
-  letter-spacing: -0.2em;
-  content: "\00a0";
-}
-.markdown-content a {
-  color: #4078c0;
-  text-decoration: none;
-  background: transparent;
-}
-.markdown-content img {
-  max-width: 100%;
-  max-height: 100%;
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
-  -webkit-box-shadow: 0 0 10px #555;
-  box-shadow: 0 0 10px #555;
-}
-.markdown-content strong {
-  font-weight: bold;
-}
-.markdown-content em {
-  font-style: italic;
-}
-.markdown-content del {
-  text-decoration: line-through;
-}
-.task-list-item {
-  list-style-type: none;
-}
-.task-list-item input {
-  font: 13px/1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  margin: 0 0.35em 0.25em -1.6em;
-  vertical-align: middle;
-}
-.task-list-item input[disabled] {
-  cursor: default;
-}
-.task-list-item input[type="checkbox"] {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 0;
-}
-.task-list-item input[type="radio"] {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 0;
+.hljs-comment,.hljs-deletion,.hljs-meta{
+    color:#75715e
 }

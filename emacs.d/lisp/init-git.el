@@ -45,10 +45,10 @@
   ;; (setq-default fringes-outside-margins t)
   ;; custom graphics that works nice with half-width fringes
   (fringe-helper-define 'git-gutter-fr:added '(center repeated)
-    "XXX.....")
+    "XX")
   (fringe-helper-define 'git-gutter-fr:modified '(center repeated)
-    "XXX.....")
+    "XX")
   (fringe-helper-define 'git-gutter-fr:deleted '(center repeated)
-    "XXX....."))
+    "XX"))
 
 (provide 'init-git)

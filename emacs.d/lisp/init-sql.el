@@ -1,8 +1,7 @@
 (use-package sql
   :ensure nil
-  :init
-  (setq sql-input-ring-file-name (concat maple-cache-directory "sql_history"))
   :config
+  (setq sql-input-ring-file-name (concat maple-cache-directory "sql.history"))
   (setq sql-postgres-login-params
         '((user :default "postgres")
           (database :default "postgres")

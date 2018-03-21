@@ -2,6 +2,8 @@
 ;;; Commentary:
 
 ;;; Code:
+
+
 (add-to-list 'use-package-keywords :evil-bind t)
 (add-to-list 'use-package-keywords :evil-leader t)
 (add-to-list 'use-package-keywords :evil-state t)
@@ -93,11 +95,6 @@
                    ))
              args)
      body)))
-
-;; (pp (macroexpand
-;;      ))
-
-
 
 (provide 'evil-use-package)
 ;;; evil-use-package.el ends here

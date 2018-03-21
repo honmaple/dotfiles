@@ -12,18 +12,20 @@
 (defvar default-file-name-handler-alist file-name-handler-alist)
 (defvar user-default-theme nil)
 
-(setq user-full-name "jianglin")
-(setq user-default-theme 'doom-one)
-(setq user-mail-address "xiyang0807@gmail.com")
-(setq file-name-handler-alist nil)
-(setq gc-cons-threshold (* 256 1024 1024))
-(setq inhibit-startup-echo-area-message "jianglin")
+(setq user-full-name "jianglin"
+      user-default-theme 'monokai
+      user-mail-address "xiyang0807@gmail.com"
+      gc-cons-threshold (* 256 1024 1024)
+      gc-cons-percentage 0.6
+      file-name-handler-alist nil
+      inhibit-startup-echo-area-message user-full-name)
 
 (add-hook 'emacs-startup-hook
           (lambda ()
             "Restore defalut values after init"
-            (setq file-name-handler-alist default-file-name-handler-alist)
-            (setq gc-cons-threshold 800000)))
+            (setq file-name-handler-alist default-file-name-handler-alist
+                  gc-cons-threshold 800000
+                  gc-cons-percentage 0.1)))
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
@@ -57,7 +59,7 @@
 
 (when *develop*
   (require 'init-flycheck)
-  (require 'init-spelling)
+  ;; (require 'init-spelling)
   (require 'init-company)
 
   (require 'init-git)
@@ -67,6 +69,7 @@
   (require 'init-js)
   (require 'init-python)
   (require 'init-go)
+  (require 'init-lua)
   (require 'init-c)
   (require 'init-sql)
   (require 'init-text) ;; markdown rst
@@ -80,8 +83,8 @@
 ;; Variables configured via the interactive 'customize' interface
 ;;----------------------------------------------------------------------------
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(when (file-exists-p custom-file)
-  (load custom-file))
+;; (when (file-exists-p custom-file)
+;;   (load custom-file))
 
 ;;----------------------------------------------------------------------------
 ;; Allow access from emacsclient

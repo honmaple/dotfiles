@@ -35,7 +35,9 @@
   :ensure nil
   :commands image-dired
   :config
-  (setq image-dired-thumbnail-storage 'standard)
+  (setq image-dired-dir (concat maple-cache-directory
+                                "image-dired")
+        image-dired-thumbnail-storage 'standard)
   :evil-bind
   (normal image-dired-thumbnail-mode-map
           "j"  'image-dired-next-line
@@ -47,6 +49,12 @@
 
 (use-package image-mode
   :ensure nil
-  :evil-state (image-mode . emacs))
+  :evil-bind
+  (normal image-mode-map
+          "j"  'image-next-file
+          "k"  'image-previous-file
+          "n"  'image-next-file
+          "p"  'image-previous-file
+          "q"  'quit-window))
 
 (provide 'init-dired)

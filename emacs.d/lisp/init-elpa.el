@@ -19,12 +19,11 @@
 (eval-when-compile
   (require 'use-package))
 
-(setq use-package-verbose t
+(setq use-package-verbose nil
       use-package-always-ensure t
       use-package-always-defer t
-      use-package-expand-minimally nil
-      use-package-minimum-reported-time 0.8
-      use-package-enable-imenu-support t)
+      use-package-expand-minimally t
+      use-package-minimum-reported-time 0.01)
 
 (use-package evil-use-package
   :demand t
@@ -80,10 +79,10 @@
 
 (use-package server
   :ensure nil
-  :config
+  :commands (server-running-p)
+  :init
   (unless (server-running-p)
-    (server-start)))
-
+    (add-hook 'after-init-hook #'server-mode)))
 
 (provide 'init-elpa)
 

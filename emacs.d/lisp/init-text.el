@@ -20,7 +20,7 @@
 
 ;; (use-package markdown-preview-mode
 ;;   :after (markdown-mode)
-;;   :demand t
+;;   :commands (markdown-preview-mode)
 ;;   :load-path "site-lisp/markdown-preview")
 
 ;; (use-package olivetti
@@ -28,7 +28,7 @@
 ;;   :init (add-hook 'org-mode-hook 'olivetti-mode))
 
 (use-package markdown-toc)
-
 (use-package yaml-mode)
+(use-package vimrc-mode)
 
 (provide 'init-text)

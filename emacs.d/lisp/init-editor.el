@@ -1,4 +1,7 @@
 ;; 注释
+(eval-when-compile
+  (require 'init-basic))
+
 (use-package adaptive-wrap
   :hook (visual-line-mode adaptive-wrap-prefix-mode))
 
@@ -33,11 +36,18 @@
   ;; (setq electric-pair-pairs '((?\' . ?\')))
   (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
 
+;; 高亮括号配对
+(use-package paren
+  :ensure nil
+  :hook (after-init . show-paren-mode)
+  :config
+  (setq show-paren-when-point-inside-paren t)
+  (setq show-paren-when-point-in-periphery t))
+
 ;; (use-package which-func
 ;;   :hook (after-init which-function-mode))
 
 (use-package dumb-jump
-  :after (evil)
   :config
   (setq dumb-jump-selector 'helm)
   :evil-bind

@@ -23,6 +23,7 @@
           ("\*Async Shell Command\*.+" :regexp t :position bottom :stick t :noselect nil)
 
           ("\*flycheck errors\*.+*$" :regexp t :position bottom :stick t :noselect nil)
+          ("*Anaconda*" :regexp t :position bottom :stick t :noselect t)
           )))
 
 (use-package golden-ratio  ;;黄金分割
@@ -38,6 +39,7 @@
                  "speedbar-mode"
                  "term-mode"
                  "restclient-mode"
+                 "anaconda-view-mode"
                  "newsticker-treeview-mode"
                  "newsticker-treeview-list-mode"
                  "newsticker-treeview-item-mode"

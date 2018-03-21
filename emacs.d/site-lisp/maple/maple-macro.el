@@ -43,4 +43,9 @@
   "Search macro."
   `(progn ,@(mapcar #'maple/search-engine maple/search-alist)))
 
+;;;###autoload
+(defun maple/search-init ()
+  "Search macro init."
+  (maple/search-macro))
+
 (provide 'maple-macro)

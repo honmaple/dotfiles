@@ -1,6 +1,3 @@
-(eval-when-compile (require 'evil)
-                   (require 'evil-leader))
-
 (evil-leader/set-key
   "fj" 'dired-jump
   "fl" 'find-file-literally
@@ -19,7 +16,8 @@
   )
 
 (evil-leader/set-key
-  "cc" 'maple/comment-or-uncomment-region-or-line
+  "cc" 'maple/comment-or-uncomment
+  "cC" 'maple/copy-and-comment
   "u"  'undo-tree-visualize
   "'" 'shell-pop
   "=" 'maple/indent-buffer
@@ -29,7 +27,7 @@
   "sD" 'delete-non-matching-lines
   "sp" 'flyspell-correct-word-generic
   "sh" 'shell-command
-  "el" 'maple/toggle-flycheck-error-list
+  "el" 'flycheck-list-errors
   "ec" 'flycheck-clear
   "Sg" 'maple/search-google
   "Sh" 'maple/search-github
@@ -64,9 +62,7 @@
   "jj" 'evil-avy-goto-char
   "jJ" 'evil-avy-goto-char-2
   "jl" 'evil-avy-goto-line
-  "ju" 'maple/avy-goto-url
-  "jw" 'evil-avy-goto-word-or-subword-1
-  "xo" 'maple/avy-open-url)
+  "jw" 'evil-avy-goto-word-or-subword-1)
 
 (evil-leader/set-key
   "gi" 'magit-init
@@ -112,7 +108,6 @@
   "pf"  'projectile-find-file
   "pp"  'projectile-switch-project
   "pr"  'projectile-recentf
-  "pv"  'projectile-vc
   "pi"  'projectile-invalidate-cache
   "pc"  'projectile-cleanup-known-projects
   "pt"  'neotree-find-project-root
@@ -154,7 +149,6 @@
   "oa" 'org-agenda
   "oc" 'org-capture
   "ob" 'org-iswitchb
-  "ol" 'org-new-blog  ;;插入博客地址
   "od" 'youdao-dictionary-search-at-point+
   "oD" 'youdao-dictionary-search-at-point
   "op" 'maple/open-git-repo
@@ -217,10 +211,9 @@
                   (kbd "M-h") 'evil-window-left
                   (kbd "H") (kbd "^")
                   (kbd "L") (kbd "$")
+                  (kbd "U") 'undo-tree-redo
+                  ;; (kbd "RET") 'maple/evil-insert-line-below
                   (kbd "S-<return>") 'maple/evil-insert-line-above)
-;; (define-key evil-normal-state-map (kbd "RET") 'maple/evil-insert-line-below)
-
-
 
 (maple/define-key evil-insert-state-map
                   (kbd "C-h") (kbd "<left>")
@@ -246,8 +239,11 @@
                               (evil-visual-restore)))
 
 (global-set-key [f6] 'maple/indent-buffer)
-;; (global-set-key (kbd "C-a") 'maple/smart-move-beginning-of-line)
-;; (global-set-key (kbd "C-e") 'maple/backward-kill-word-or-region)
+(global-set-key [tab] (lambda()
+                        (interactive)
+                        (if (minibufferp)
+                            (minibuffer-complete)
+                          (company-indent-or-complete-common))))
 
 
 ;; helm
@@ -278,7 +274,8 @@
 ;;   "sj" 'counsel-semantic-or-imenu
 ;;   "bb" 'ivy-switch-buffer  ;;显示缓冲区(已经打开的文件)
 ;;   "ph"  'counsel-projectile ;;在工程内查找
-;; "pw"  'counsel-projectile-ag
+;;   "pw"  'counsel-projectile-ag
 ;;   )
 
 (provide 'init-keybind)
+;;; init-keybind.el ends here

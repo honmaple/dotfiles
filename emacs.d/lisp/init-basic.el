@@ -9,7 +9,7 @@
        '(progn ,@body))))
 
 (defconst maple-cache-directory
-  (expand-file-name (concat user-emacs-directory ".cache/"))
+  (expand-file-name (concat user-emacs-directory "cache/"))
   "Maple storage area for persistent files.")
 
 (defconst maple-system-is-mac
@@ -38,8 +38,25 @@
                               (when (> (count-windows) 1)
                                 (delete-window)))))))
 
-(defun maple/comment-or-uncomment-region-or-line ()
-  "Comments or uncomments the region or the current line if there's no active region."
+(defun maple/initial-message(&optional prefix)
+  (interactive)
+  (if (executable-find "fortune")
+      (format (concat prefix "%s\n\n%s")
+              (replace-regexp-in-string
+               "\\[[0-9]*m" "" ; remove chinese shell char
+               (replace-regexp-in-string
+                "\n" (concat "\n" prefix) ; comment each line
+                (replace-regexp-in-string
+                 "\s*$" ""    ; remove spaces
+                 (replace-regexp-in-string
+                  "\n$" ""    ; remove trailing linebreak
+                  (shell-command-to-string
+                   "fortune -a | fmt -80 -s | cowsay -$(shuf -n 1 -e b d g p s t w y) -f $(shuf -n 1 -e $(cowsay -l | tail -n +2)) -n")))))
+              (concat prefix "Happy hacking, " user-login-name " - Emacs ♥ you!\n\n"))
+    (concat prefix "Happy hacking, " user-login-name " - Emacs ♥ you!\n\n")))
+
+(defun maple/comment-or-uncomment (&optional paste)
+  "Comments or uncomments the region or the current line if there's no active region with no `PASTE`."
   (interactive)
   (save-excursion
     (when (and (hs-minor-mode) (hs-already-hidden-p))
@@ -50,7 +67,16 @@
       (if (region-active-p)
           (setq beg (region-beginning) end (region-end))
         (setq beg (line-beginning-position) end (line-end-position)))
+      (when paste
+        (copy-region-as-kill beg end)
+        (goto-char end)
+        (yank))
       (comment-or-uncomment-region beg end))))
+
+(defun maple/copy-and-comment ()
+  "Copy and comment."
+  (interactive)
+  (maple/comment-or-uncomment t))
 
 (defun maple/indent-buffer ()
   "Format buffer with `indent-region`."
@@ -84,13 +110,30 @@
     (setq key (pop bindings)
           def (pop bindings))))
 
+(defun maple/company-backend (hook backend)
+  "Set HOOK with BACKEND `company-backends'."
+  (add-hook hook `(lambda()
+    (set (make-variable-buffer-local 'company-backends)
+            (append (list (company-backend-with-yas ',backend))
+                    company-default-backends)))))
+
+(defun maple/get-weekday()
+  (car (rassq (string-to-number (format-time-string "%w"))
+              '(("Sunday" . 0)
+                ("Monday" . 1)
+                ("Tuesday" . 2)
+                ("Wednesday" . 3)
+                ("Thursday" . 4)
+                ("Friday" . 5)
+                ("Saturday" . 6)))))
+
 (defun maple/truncate-lines()
   (toggle-truncate-lines t))
 
 (defun maple/close-nlinum()
   (nlinum-mode -1))
 
-(defun maple/load-theme()
+(defun maple/switch-theme()
   (load-theme user-default-theme t))
 
 (fset 'yes-or-no-p 'y-or-n-p)

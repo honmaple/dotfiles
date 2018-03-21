@@ -6,26 +6,25 @@
 
 (use-package python
   :ensure nil
-  :mode ("\\.py\\'" . python-mode)
-  :init
-  (progn
-    (setq imenu-create-index-function 'semantic-create-imenu-index)
-    (setq electric-indent-chars (delq ?: electric-indent-chars)))
+  :setq
+  (:mode python-mode
+         imenu-create-index-function 'semantic-create-imenu-index
+         electric-indent-chars (delq ?: electric-indent-chars))
   :config
-  (progn
-    (setq python-indent-offset 4
-          python-indent-guess-indent-offset nil
-          python-shell-completion-native-enable nil
-          python-shell-interpreter "ipython"
-          python-shell-interpreter-args "--simple-prompt -i")
-    (setenv "PYTHONPATH" "$PYTHONPATH:/usr/lib/python3.5/site-packages")
-    (defun maple/run-python ()
-      (interactive)
-      (python-shell-get-or-create-process)
-      (if (region-active-p)
-          (python-shell-send-region (region-beginning) (region-end) t)
-        (python-shell-send-buffer t)))
-    (add-hook 'inferior-python-mode-hook 'maple/close-process))
+  (setq python-indent-offset 4
+        python-indent-guess-indent-offset nil
+        python-shell-completion-native-enable nil
+        python-shell-interpreter "ipython"
+        python-shell-interpreter-args "--simple-prompt -i")
+  (setenv "PYTHONPATH" "$PYTHONPATH:/usr/lib/python3.5/site-packages")
+  (defun maple/run-python ()
+    (interactive)
+    (python-shell-get-or-create-process)
+    (if (region-active-p)
+        (python-shell-send-region (region-beginning) (region-end) t)
+      (python-shell-send-buffer t)))
+  (add-hook 'inferior-python-mode-hook 'maple/close-process)
+  :evil-state (inferior-python-mode . insert)
   :bind (:map python-mode-map
               ([f5] . maple/run-python)))
 
@@ -43,9 +42,7 @@
 
 (use-package anaconda-mode
   :diminish anaconda-mode
-  :evil-state
-  (inferior-python-mode . insert)
-  (anaconda-mode-view-mode . emacs)
+  :evil-state (anaconda-mode-view-mode . emacs)
   :hook
   (python-mode . anaconda-mode)
   (python-mode . anaconda-eldoc-mode)
@@ -58,7 +55,6 @@
 
 
 (use-package company-anaconda
-  :after anaconda-mode
-  :init (maple/company-backend 'python-mode-hook 'company-anaconda))
+  :init (maple/company-backend 'anaconda-mode-hook 'company-anaconda))
 
 (provide 'init-python)

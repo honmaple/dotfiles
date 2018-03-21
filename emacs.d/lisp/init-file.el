@@ -9,6 +9,7 @@
                                          (recentf-mode)
                                          (recentf-track-opened-file))))
   :config
+  (add-to-list 'recentf-exclude "\\.jpg\\'")
   (add-to-list 'recentf-exclude
                (expand-file-name maple-cache-directory))
   (add-to-list 'recentf-exclude (expand-file-name package-user-dir))
@@ -16,31 +17,24 @@
 
 (use-package savehist
   :ensure nil
-  :init
+  :hook (after-init . savehist-mode)
+  :config
   ;; Minibuffer history
   (setq savehist-file (concat maple-cache-directory "savehist")
-        enable-recursive-minibuffers t ; Allow commands in minibuffers
-        history-length 1000
-        savehist-additional-variables '(mark-ring
-                                        global-mark-ring
+        savehist-autosave-interval nil ; save on kill only
+        savehist-additional-variables '(kill-ring
                                         search-ring
-                                        regexp-search-ring
-                                        extended-command-history)
-        savehist-autosave-interval 60)
-  (add-hook 'after-init-hook #'savehist-mode))
+                                        regexp-search-ring)))
 
 (use-package saveplace
   :ensure nil
-  :init
-  (setq save-place-file (concat maple-cache-directory "places"))
-  ;; Emacs 25 has a proper mode for `save-place'
-  (add-hook 'after-init-hook #'save-place-mode))
-
+  :hook (after-init . save-place-mode)
+  :config
+  (setq save-place-file (concat maple-cache-directory "places")))
 
 (use-package neotree
   :commands neo-global--window-exists-p
-  :evil-state
-  (neotree-mode . emacs)
+  :evil-state (neotree-mode . emacs)
   :config
   (setq neo-create-file-auto-open t
         neo-banner-message nil
@@ -67,34 +61,28 @@
          ("D" . neotree-delete-node)
          ("R" . neotree-rename-node)
          ("+" . neotree-create-node)
-         ("^" . neotree-select-up-node)
-         )
+         ("^" . neotree-select-up-node))
   )
 
-(use-package desktop
-  :ensure nil
-  :init
-  (setq desktop-dirname maple-cache-directory)
-  :config
-  (push maple-cache-directory desktop-path))
+;; (use-package desktop
+;;   :ensure nil
+;;   :init
+;;   (setq desktop-dirname maple-cache-directory)
+;;   :config
+;;   (push maple-cache-directory desktop-path))
 
 (use-package undo-tree
   :ensure nil
-  :after evil
   :hook (after-init . global-undo-tree-mode)
-  :init
-  (progn
-    (setq undo-tree-auto-save-history t)
-    (setq undo-tree-history-directory-alist
-          `(("." . ,(concat maple-cache-directory "undo-tree"))))
-    (unless (file-exists-p (concat maple-cache-directory "undo-tree"))
-      (make-directory (concat maple-cache-directory "undo-tree")))
-    (setq undo-tree-visualizer-timestamps t)
-    (setq undo-tree-visualizer-diff t)
-    )
-  :diminish undo-tree-mode
-  :bind (:map evil-normal-state-map
-              ("U" . undo-tree-redo)))
+  :config
+  (setq undo-tree-auto-save-history t
+        undo-tree-visualizer-timestamps t
+        undo-tree-visualizer-diff t
+        undo-tree-history-directory-alist
+        (list (cons "." (concat maple-cache-directory "undo-tree"))))
+  (unless (file-exists-p (concat maple-cache-directory "undo-tree"))
+    (make-directory (concat maple-cache-directory "undo-tree")))
+  :diminish undo-tree-mode)
 
 
 (defun maple/open-init-file()
@@ -110,12 +98,12 @@
   (find-file "~/org-mode/gtd.org"))
 
 (defun maple/dos2unix ()
-  "Converts the current buffer to UNIX file format."
+  "Convert the current buffer to UNIX file format."
   (interactive)
   (set-buffer-file-coding-system 'undecided-unix nil))
 
 (defun maple/unix2dos ()
-  "Converts the current buffer to DOS file format."
+  "Convert the current buffer to DOS file format."
   (interactive)
   (set-buffer-file-coding-system 'undecided-dos nil))
 
@@ -135,6 +123,7 @@
       (message "No file associated to this buffer."))))
 
 (defun maple/sudo-edit (&optional arg)
+  "Edit file with sudo ARG."
   (interactive "p")
   (let ((fname (if (or arg (not buffer-file-name)) (read-file-name "File: ") buffer-file-name)))
     (find-file
@@ -152,7 +141,7 @@
            (t (concat "/sudo:root@localhost:" fname))))))
 
 (defun maple/delete-current-buffer-file ()
-  "Removes file connected to current buffer and kills buffer."
+  "Remove file connected to current buffer and kill buffer."
   (interactive)
   (let ((filename (buffer-file-name))
         (buffer (current-buffer))

@@ -3,59 +3,58 @@
 (use-package spacemacs-theme)
 (use-package doom-themes)
 
-(add-hook 'after-init-hook #'maple/load-theme)
+(add-hook 'after-init-hook #'maple/switch-theme)
 
+;; (use-package mapleline
+;;   :load-path "site-lisp/maple"
+;;   :hook (after-init . mapleline-default-theme)
+;;   :config
+;;   (setq powerline-default-separator 'wave))
 
+;; (use-package powerline
+;;   :hook (after-init . powerline-center-evil-theme))
 
 (use-package spaceline-config
   :ensure spaceline
-  :commands (spaceline-spacemacs-theme)
+  :hook (after-init . spaceline-spacemacs-theme)
   :init
-  (progn
-    (defun maple/set-spaceline()
-      "spaceline config"
-      ;; (set-face-attribute 'mode-line nil :box nil)
-      (setq powerline-default-separator 'wave
-            spaceline-window-numbers-unicode t
-            spaceline-highlight-face-func 'spaceline-highlight-face-evil-state
-            spaceline-helm-help-p nil)
-      (spaceline-spacemacs-theme)
-      (when (package-installed-p 'helm)
-        (spaceline-helm-mode t))
-      (maple/set-powerline-for-startup-buffers))
-    (defun maple/set-powerline-for-startup-buffers ()
-      "Set the powerline for buffers created when Emacs starts."
-      (dolist (buffer '("*Messages*" "*Compile-Log*"))
-        (when (and (get-buffer buffer)
-                   (with-current-buffer buffer
-                     (setq-local mode-line-format (default-value 'mode-line-format))
-                     (powerline-set-selected-window)
-                     (powerline-reset))))))
-    (add-hook 'after-init-hook 'maple/set-spaceline)
-    ))
+  (setq spaceline-byte-compile nil)
+  (defun maple/set-powerline-for-startup-buffers ()
+    "Set the powerline for buffers created when Emacs starts."
+    (dolist (buffer '("*Messages*" "*Compile-Log*"))
+      (when (and (get-buffer buffer)
+                 (with-current-buffer buffer
+                   (setq-local mode-line-format (default-value 'mode-line-format))
+                   (powerline-set-selected-window)
+                   (powerline-reset))))))
+  (add-hook 'after-init-hook #'maple/set-powerline-for-startup-buffers)
+  :config
+  (setq powerline-default-separator 'wave
+        spaceline-window-numbers-unicode t
+        spaceline-highlight-face-func 'spaceline-highlight-face-evil-state
+        spaceline-helm-help-p nil)
+  (after-load 'helm
+    (spaceline-helm-mode t)))
 
 (use-package hydra
   :config
-  (progn
-    (use-package maple-theme
-      :demand t
-      :load-path "site-lisp/maple"
-      :config
-      (defhydra maple/cycle-themes ()
-        ("n" maple/next-theme "next theme")
-        ("p" maple/previous-theme "prev theme")))
-    ))
+  (use-package maple-theme
+    :commands (maple/cycle-themes/body)
+    :load-path "site-lisp/maple"
+    :config
+    (defhydra maple/cycle-themes ()
+      ("n" maple/next-theme "next theme")
+      ("p" maple/previous-theme "prev theme"))))
 
 (use-package which-key
   :diminish which-key-mode
   :hook (after-init . which-key-mode)
-  :init
+  :config
   (setq which-key-echo-keystrokes 0.02
         which-key-max-description-length 32
         which-key-sort-order 'which-key-key-order-alpha
         which-key-idle-delay 0.2
         which-key-allow-evil-operators t)
-  :config
   (which-key-add-key-based-replacements
     ",f" "file"
     ",b" "buffer"
@@ -72,35 +71,23 @@
   :hook ((prog-mode text-mode) . nlinum-mode))
 
 ;; (use-package nlinum-relative
-;;   :commands (nlinum-relative-toggle nlinum-relative-on)
 ;;   :hook (nlinum-mode . nlinum-relative-on)
-;;   :init
-;;   (progn
-;;     (setq nlinum-relative-current-symbol ""
-;;           nlinum-relative-redisplay-delay 0)
-;;     ;; (nlinum-relative-setup-evil)
-;;     ))
+;;   :config
+;;   (setq nlinum-relative-current-symbol ""
+;;         nlinum-relative-redisplay-delay 0)
+;;   (nlinum-relative-setup-evil))
 
 ;; ;;; 80列
 (use-package fill-column-indicator
   :config
-  (setq fci-rule-column 80)
-  (setq fci-rule-width 1)
-  (setq fci-rule-color "#D0BF8F")
+  (setq fci-rule-column 80
+        fci-rule-width 1
+        fci-rule-color "#D0BF8F")
   (push '(fci-mode "") minor-mode-alist))
-
-;; (use-package vline
-;;   :hook (after-init . vline-global-mode)
-;;   :config
-;;   ;; 与默认的行高亮的颜色相同
-;;   (set-face-background vline-face "#3c3d37"))
 
 ;; 高亮括号
 (use-package rainbow-delimiters
-  :hook (after-init . rainbow-delimiters-mode)
-  :config
-  ;; 高亮括号配对
-  (show-paren-mode 1)
+  :hook (prog-mode . rainbow-delimiters-mode)
   :diminish rainbow-delimiters-mode)
 
 ;; 颜色
@@ -113,9 +100,8 @@
 (use-package highlight-symbol
   :diminish highlight-symbol-mode
   :hook
-  ((prog-mode html-mode css-mode) . highlight-symbol-nav-mode)
-  ((prog-mode html-mode css-mode) . highlight-symbol-mode)
-  ((org-mode) . highlight-symbol-nav-mode))
+  ((prog-mode html-mode css-mode org-mode) . highlight-symbol-nav-mode)
+  ((prog-mode html-mode css-mode) . highlight-symbol-mode))
 
 
 (use-package volatile-highlights
@@ -140,23 +126,9 @@
       (vhl/install-extension 'undo-tree)))
   :custom-face (vhl/default-face ((t (:background "Springgreen3" :foreground "#272822")))))
 
-;; 高亮当前括号
-(use-package highlight-parentheses
-  :diminish highlight-parentheses-mode
-  :hook (after-init . global-highlight-parentheses-mode)
-  :config
-  (setq hl-paren-colors '("Springgreen3"
-                          "IndianRed1"
-                          "IndianRed3"))
-  (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold))
-
-;; (use-package col-highlight
-;;   :defer t
-;;   :hook (after-init . column-highlight-mode)
-;;   :config (set-face-background col-highlight-face "#3c3d37"))
-
 ;; 显示缩进
 (use-package highlight-indent-guides
+  :diminish highlight-indent-guides-mode
   :hook (prog-mode . highlight-indent-guides-mode)
   :config (setq highlight-indent-guides-method 'character))
 
@@ -166,9 +138,9 @@
   :diminish whitespace-mode "ⓦ"
   :hook ((prog-mode conf-mode) . whitespace-mode)
   :config
-  (setq whitespace-style '(face
+  (setq whitespace-action '(auto-cleanup)
+        whitespace-style '(face
                            trailing space-before-tab
-                           indentation empty space-after-tab))
-  (setq whitespace-action '(auto-cleanup)))
+                           indentation empty space-after-tab)))
 
 (provide 'init-ui)

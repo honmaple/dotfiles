@@ -59,7 +59,7 @@ d   ... Delete current post         c   ... Duplicate current post
 o   ... Sort                        O   ... Desc sort
 r   ... Refresh                     RET ... Open current post
 B   ... Build site                  D   ... Deploy site
-C   ... Jump to the config          F   ... Filter and show only rows with keyword
+C   ... Jump to the config          f   ... Filter and show only rows with keyword
 
 "
   "Help of table")
@@ -103,7 +103,7 @@ C   ... Jump to the config          F   ... Filter and show only rows with keywo
   (define-key mode-map "B" (plist-get (blog-admin-backend-get-backend) :build-site-func))
   (define-key mode-map "C" (plist-get (blog-admin-backend-get-backend) :open-site-config-func))
   (define-key mode-map "D" (plist-get (blog-admin-backend-get-backend) :deploy-site-func))
-  (define-key mode-map "F" #'filter)
+  (define-key mode-map "f" #'filter)
   (define-key mode-map "o" #'sort)
   (define-key mode-map "O" #'desc)
   (define-key mode-map "gg" #'move-first)

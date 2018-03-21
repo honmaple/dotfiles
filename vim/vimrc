@@ -8,6 +8,8 @@ if has("gui_running")
 else
     let g:is_gui = 0
 endif
+
+set viminfo+=n$HOME/.vim/viminfo
 set rtp+=$HOME/.vim/bundle/Vundle.vim
 
 

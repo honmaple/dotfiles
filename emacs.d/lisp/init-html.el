@@ -2,38 +2,33 @@
 
 (use-package web-mode
   :mode
-  (("\\.phtml\\'" . web-mode)
-   ("\\.vue\\'" . web-mode)
-   ("\\.jsp\\'" . web-mode)
-   ("\\.as[cp]x\\'" . web-mode)
+  (("\\.vue\\'" . web-mode)
    ("\\.html?\\'" . web-mode)
    ("/\\(views\\|html\\|theme\\|templates\\)/.*\\.php\\'" . web-mode))
   :config
-  (progn
-    (setq web-mode-markup-indent-offset 2
-          web-mode-enable-auto-closing t ; enable auto close tag in text-mode
-          web-mode-enable-current-element-highlight t
-          web-mode-enable-auto-indentation nil
-          web-mode-enable-control-block-indentation nil
-          web-mode-enable-css-colorization nil
-          web-mode-engines-alist '(("django" . "\\.html\\'")
-                                   ("django" . "\\.vue\\'"))
-          web-mode-engines-auto-pairs '(("django" . (("{{ " . " }")
-                                                     ("{% " . " %")
-                                                     ("{%-" . " | %")
-                                                     ("{%=" . " | %")
-                                                     ("{{-" . " | }")
-                                                     ("{{{" . " | }}")
-                                                     ("{# " . " #")
-                                                     ("<% " . " %>")
-                                                     ))))
-    (add-hook 'web-mode-hook
-              (lambda ()
-                (setq electric-pair-pairs '((?\' . ?\')))))
-    (maple/company-backend 'web-mode-hook '(company-web-html
-                                            company-css
-                                            company-tern))
-    )
+  (setq web-mode-markup-indent-offset 2
+        web-mode-enable-auto-closing t ; enable auto close tag in text-mode
+        web-mode-enable-current-element-highlight t
+        web-mode-enable-auto-indentation nil
+        web-mode-enable-control-block-indentation nil
+        web-mode-enable-css-colorization nil
+        web-mode-engines-alist '(("django" . "\\.html\\'")
+                                 ("django" . "\\.vue\\'"))
+        web-mode-engines-auto-pairs '(("django" . (("{{ " . " }")
+                                                   ("{% " . " %")
+                                                   ("{%-" . " | %")
+                                                   ("{%=" . " | %")
+                                                   ("{{-" . " | }")
+                                                   ("{{{" . " | }}")
+                                                   ("{# " . " #")
+                                                   ("<% " . " %>")
+                                                   ))))
+  (maple/company-backend 'web-mode-hook '(company-web-html
+                                          company-css
+                                          company-tern))
+  :setq
+  (:mode web-mode
+         electric-pair-pairs '((?\' . ?\')))
   :evil-bind
   (normal web-mode-map
           (kbd "<f5>") 'browse-url-of-file
@@ -66,8 +61,8 @@
   :mode ("\\.sass\\'" . sass-mode))
 
 (use-package scss-mode
-  :config (setq-default scss-compile-at-save nil)
-  :mode ("\\.scss\\'" . scss-mode))
+  :mode ("\\.scss\\'" . scss-mode)
+  :config (setq scss-compile-at-save nil))
 
 
 (use-package less-css-mode

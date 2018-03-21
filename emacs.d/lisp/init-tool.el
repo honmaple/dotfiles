@@ -72,22 +72,10 @@
 ;;     ))
 
 (use-package avy
-  :commands (maple/avy-open-url maple/avy-goto-url avy-pop-mark)
-  :init
-  (setq avy-all-windows 'all-frames)
-  (setq avy-background t)
+  :commands (avy-pop-mark)
   :config
-  (progn
-    (defun maple/avy-goto-url()
-      "Use avy to go to an URL in the buffer."
-      (interactive)
-      (avy--generic-jump "https?://" nil 'pre))
-    (defun maple/avy-open-url ()
-      "Use avy to select an URL in the buffer and open it."
-      (interactive)
-      (save-excursion
-        (maple/avy-goto-url)
-        (browse-url-at-point)))))
+  (setq avy-all-windows 'all-frames
+        avy-background t))
 
 (use-package figlet)
 
@@ -96,9 +84,8 @@
   (2048-mode . emacs))
 
 (use-package maple-macro
-  :demand t
   :load-path "site-lisp/maple"
-  :config (maple/search-macro))
+  :hook (after-init . maple/search-init))
 
 (use-package maple-startify
   :load-path "site-lisp/maple"

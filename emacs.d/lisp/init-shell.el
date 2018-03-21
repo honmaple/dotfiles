@@ -14,21 +14,20 @@
 
 (use-package shell-pop
   :init
-  (progn
-    (setq shell-pop-window-position "bottom"
-          shell-pop-window-size 30
-          shell-pop-term-shell "/bin/bash"
-          shell-pop-full-span t
-          shell-pop-shell-type (if maple-system-is-mswindows
-                                   '("eshell" "*eshell*" (lambda () (eshell)))
-                                 '("ansi-term" "*ansi-term*"
-                                   (lambda () (ansi-term shell-pop-term-shell)))))
-    (add-hook 'term-mode-hook 'maple/close-process)
-    (add-hook 'term-mode-hook (lambda () (nlinum-mode -1)))
-    (defun term-send-tab ()
-      "Send tab in term mode."
-      (interactive)
-      (term-send-raw-string "\t")))
+  (setq shell-pop-window-position "bottom"
+        shell-pop-window-size 30
+        shell-pop-term-shell "/bin/bash"
+        shell-pop-full-span t
+        shell-pop-shell-type (if maple-system-is-mswindows
+                                 '("eshell" "*eshell*" (lambda () (eshell)))
+                               '("ansi-term" "*ansi-term*"
+                                 (lambda () (ansi-term shell-pop-term-shell)))))
+  (add-hook 'term-mode-hook 'maple/close-process)
+  (add-hook 'term-mode-hook (lambda () (nlinum-mode -1)))
+  (defun term-send-tab ()
+    "Send tab in term mode."
+    (interactive)
+    (term-send-raw-string "\t"))
   :evil-bind
   ((normal term-raw-map
            "p" 'term-paste)

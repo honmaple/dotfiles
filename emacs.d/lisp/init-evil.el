@@ -39,7 +39,7 @@
   :hook (after-init . global-evil-matchit-mode))
 
 (use-package evil-ediff
-  :after ediff)
+  :hook (ediff-mode . evil-ediff-mode))
 
 (use-package evil-escape
   :hook (after-init . evil-escape-mode)
@@ -67,31 +67,26 @@
   :diminish evil-mc-mode "ⓒ"
   :hook (after-init . global-evil-mc-mode)
   :config
-  (progn
-    (evil-define-command evil-mc/undo-cursor-and-quit ()
-      "Initialize `evil-mc-pattern', make a cursor at point, and go to the next match."
-      :repeat ignore
-      :evil-mc t
-      (progn
-        (evil-mc-undo-all-cursors)
-        (hydra-keyboard-quit)))
+  (evil-define-command evil-mc/undo-cursor-and-quit ()
+    "Initialize `evil-mc-pattern', make a cursor at point, and go to the next match."
+    :repeat ignore
+    :evil-mc t
+    (progn
+      (evil-mc-undo-all-cursors)
+      (hydra-keyboard-quit)))
 
-    (defhydra maple/evil-mc ()
-      ("n" evil-mc-make-and-goto-next-match "next")
-      ("t" evil-mc-skip-and-goto-next-match "skip and next")
-      ("T" evil-mc-skip-and-goto-prev-match "skip and prev")
-      ("p" evil-mc-make-and-goto-prev-match "prev")
-      ("N" evil-mc-make-and-goto-prev-match "prev")
-      ("q" evil-mc/undo-cursor-and-quit "quit")
-      )
-    ;; (setq evil-mc-enable-bar-cursor nil)
-    (define-key evil-visual-state-map (kbd "n") 'maple/evil-mc/body))
+  (defhydra maple/evil-mc ()
+    ("n" evil-mc-make-and-goto-next-match "next")
+    ("t" evil-mc-skip-and-goto-next-match "skip and next")
+    ("p" evil-mc-make-and-goto-prev-match "prev")
+    ("q" evil-mc/undo-cursor-and-quit "quit"))
   :custom-face
   (evil-mc-cursor-default-face ((t (:inherit cursor :background "firebrick1" :inverse-video nil))))
   (hydra-face-red ((t (:foreground "chocolate" :weight bold))))
   :bind (:map evil-mc-key-map
               ("C-g" . evil-mc-undo-all-cursors)
               :map evil-visual-state-map
+              ("n" . maple/evil-mc/body)
               ("C-n" . evil-mc-make-and-goto-next-match)
               ("C-p" . evil-mc-make-and-goto-prev-match)
               ("C-t" . evil-mc-skip-and-goto-next-match))
@@ -105,14 +100,7 @@
   :after evil
   :bind (:map evil-visual-state-map
               ("v" . er/expand-region)
-              ("V" . er/contract-region)
-              ("ew" . er/mark-word)
-              ("es" . er/mark-symbol)
-              ("eu" . er/mark-url)
-              ("ee" . er/mark-email)
-              ("ed" . er/mark-defun)
-              ("ec" . er/mark-comment)
-              ("ep" . er/mark-inside-pairs)))
+              ("V" . er/contract-region)))
 
 
 (provide 'init-evil)

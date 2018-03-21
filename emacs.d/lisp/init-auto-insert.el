@@ -10,22 +10,19 @@
   :config
   (progn
     (defun maple/insert-string(&optional prefix)
-      (or prefix (setq prefix comment-start))
-      (mapconcat
-       (lambda (x) (concat prefix x))
-       (split-string
-        (concat
-         (make-string 80 ?*)
-         "\n"
-         "Copyright © " (substring (current-time-string) -4) " " (user-full-name) "\n"
-         "File Name: " (file-name-nondirectory buffer-file-name) "\n"
-         "Author: " (user-full-name)"\n"
-         "Email: " user-mail-address "\n"
-         "Created: " (format-time-string "%Y-%m-%d %T (%Z)" (current-time)) "\n"
-         "Last Update: \n"
-         "         By: \n"
-         "Description: \n"
-         (make-string 80 ?*)) "\n") "\n"))
+      (replace-regexp-in-string
+       "^" (or prefix comment-start)
+       (concat
+        (make-string 80 ?*) "\n"
+        "Copyright © " (substring (current-time-string) -4) " " (user-full-name) "\n"
+        "File Name: " (file-name-nondirectory buffer-file-name) "\n"
+        "Author: " (user-full-name)"\n"
+        "Email: " user-mail-address "\n"
+        "Created: " (format-time-string "%Y-%m-%d %T (%Z)" (current-time)) "\n"
+        "Last Update: \n"
+        "         By: \n"
+        "Description: \n"
+        (make-string 80 ?*))))
 
     (setq auto-insert-query nil
           auto-insert-alist
@@ -60,22 +57,14 @@
         time-stamp-line-limit 11
         time-stamp-start "[lL]ast[ -][uU]pdate[ \t]*:?"
         time-stamp-end "\n"
-        time-stamp-format (concat
-                           (car (rassq (string-to-number (format-time-string "%w"))
-                                       '((" Sunday" . 0)
-                                         (" Monday" . 1)
-                                         (" Tuesday" . 2)
-                                         (" Wednesday" . 3)
-                                         (" Thursday" . 4)
-                                         (" Friday" . 5)
-                                         (" Saturday" . 6))))
-                           " %Y-%02m-%02d %02H:%02M:%02S (%Z)"))
+        time-stamp-format (concat " " (maple/get-weekday)
+                                  " %Y-%02m-%02d %02H:%02M:%02S (%Z)"))
   :setq
   (:mode org-mode
-   time-stamp-start "MODIFIED[ \t]*?"
-   time-stamp-format " %Y-%02m-%02d %02H:%02M:%02S")
+         time-stamp-start "MODIFIED[ \t]*?"
+         time-stamp-format " %Y-%02m-%02d %02H:%02M:%02S")
   (:mode markdown-mode
-   time-stamp-start "Modified[ \t]*:?"))
+         time-stamp-start "Modified[ \t]*:?"))
 
 (use-package header
   :load-path "site-lisp/header"

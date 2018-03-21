@@ -1,4 +1,4 @@
-;;; startify.el --- A startup screen
+;;; startify.el --- A startup screen.   -*- lexical-binding: t -*-
 
 ;; Copyright (c) 2017 honmaple
 ;;
@@ -41,8 +41,7 @@ SEQ, START and END are the same arguments as for `cl-subseq'"
     (insert ":\n")
     (mapc (lambda (el)
             (startify--insert-text
-             (cl-position el list :test 'equal)
-             el
+             (cl-position el list :test 'equal) el
              (lambda() (funcall list-action el))))
           list))
   (insert "\n"))
@@ -77,13 +76,12 @@ SEQ, START and END are the same arguments as for `cl-subseq'"
    (startify-subseq recentf-list 0 10)
    'find-file-existing)
   (startify-insert-file-list
-   "Projects" 'helm-projectile
+   "Projects" 'projectile-switch-project
    (startify-subseq projectile-known-projects 0 10)
    'projectile-switch-project-by-name)
   (require 'bookmark)
   (startify-insert-file-list
-   "Bookmarks"
-   'helm-bookmarks
+   "Bookmarks" 'helm-bookmarks
    (startify-subseq (bookmark-all-names) 0 10)
    'bookmark-jump)
   (startify--insert-text "q" "quit" 'save-buffers-kill-terminal)

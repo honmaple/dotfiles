@@ -5,7 +5,7 @@
 #Author: jianglin
 #Email: xiyang0807@gmail.com
 #Created: 2016-06-21 14:38:53 (CST)
-#Last Update: Thursday 2018-03-08 16:45:16 (CST)
+#Last Update: Wednesday 2018-04-11 18:21:26 (CST)
 #          By:
 #Description:
 #**************************************************************************/
@@ -25,16 +25,23 @@
 #   exit 1
 # fi
 
-link() {
-  from="$1"
-  to="$2"
-  echo "Linking '$from' to '$to'"
-  # rm -f "$to"
-  ln -s "$from" "$to"
+link_file() {
+    from="$1"
+    to="$2"
+    read -p "Linking '$from' to '$to' [Y/n/q]? "  answer
+    answer="${answer:-Y}"
+
+    if [ "$answer" == "Y" ] || [ "$answer" == "y" ];then
+        echo "Linking '$from' to '$to'"
+    elif [ "$answer" == "q" ];then
+        exit 0
+    fi
+    # rm -f "$to"
+    # ln -s "$from" "$to"
 }
-link emacs.d $HOME/.emacs.d
-link vim $HOME/.vim
-link i3 $HOME/.i3
+link_file emacs.d $HOME/.emacs.d
+link_file vim $HOME/.vim
+link_file i3 $HOME/.i3
 
 # for location in $(find home -name '.*'); do
 #   file="${location##*/}"

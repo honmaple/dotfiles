@@ -19,7 +19,7 @@
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-selection-coding-system
- (if maple-system-is-mswindows 'utf-16-le 'utf-8))
+ (if maple-system-is-windows 'utf-16-le 'utf-8))
 (prefer-coding-system 'utf-8)
 
 ;; (set-language-environment 'Chinese-GB)

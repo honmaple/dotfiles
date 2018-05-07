@@ -15,6 +15,7 @@
         company-tooltip-limit 15
         company-minimum-prefix-length 1
         company-tooltip-align-annotations t ;; 提示右对齐
+        company-dabbrev-downcase nil
         ;; company-transformers '(company-sort-by-occurrence) ;; 按使用频次排序
         company-begin-commands '(self-insert-command)
         company-global-modes '(not comint-mode
@@ -61,7 +62,7 @@
   :hook (company-mode . company-statistics-mode)
   :config
   (setq company-statistics-file (concat maple-cache-directory
-                                        "company-statistics-cache.el")))
+                                        "company-statistics.el")))
 
 (use-package company-quickhelp
   :disabled

@@ -1,16 +1,7 @@
 ;;leader 要在evil-mode前,否则messages无法激活
 (use-package evil-leader
   :hook (after-init . global-evil-leader-mode)
-  :init
-  (defun maple/set-leader-for-startup-buffers ()
-    "Set the leader mode for buffers created when Emacs starts."
-    (dolist (buffer '("*Messages*" "*Compile-Log*"))
-      (when (and (get-buffer buffer)
-                 (with-current-buffer buffer
-                   (evil-leader-mode 1))))))
-  (add-hook 'after-init-hook 'maple/set-leader-for-startup-buffers)
   :config (evil-leader/set-leader ","))
-
 
 (use-package evil
   :hook (after-init . evil-mode)
@@ -28,6 +19,13 @@
               ("C-k" . evil-scroll-up)
               ("C-j" . evil-scroll-down)))
 
+(use-package evil-numbers
+  :after evil
+  :bind
+  (:map evil-normal-state-map
+        ("+" . evil-numbers/inc-at-pt)
+        ("-" . evil-numbers/dec-at-pt)))
+
 (use-package evil-surround
   :hook (after-init . global-evil-surround-mode)
   :evil-bind
@@ -39,6 +37,7 @@
   :hook (after-init . global-evil-matchit-mode))
 
 (use-package evil-ediff
+  :commands (evil-ediff-mode)
   :hook (ediff-mode . evil-ediff-mode))
 
 (use-package evil-escape

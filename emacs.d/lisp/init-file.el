@@ -9,11 +9,10 @@
                                          (recentf-mode)
                                          (recentf-track-opened-file))))
   :config
-  (add-to-list 'recentf-exclude "\\.jpg\\'")
-  (add-to-list 'recentf-exclude
-               (expand-file-name maple-cache-directory))
-  (add-to-list 'recentf-exclude (expand-file-name package-user-dir))
-  (add-to-list 'recentf-exclude "COMMIT_EDITMSG\\'"))
+  (setq recentf-exclude (list "\\.jpg\\'"
+                              "COMMIT_EDITMSG\\'"
+                              (expand-file-name maple-cache-directory)
+                              (expand-file-name package-user-dir))))
 
 (use-package savehist
   :ensure nil
@@ -39,15 +38,14 @@
   (setq neo-create-file-auto-open t
         neo-banner-message nil
         neo-show-updir-line nil
-        ;; neo-mode-line-type 'neotree
-        neo-mode-line-type 'none
+        neo-mode-line-type 'default
         neo-smart-open t
         neo-dont-be-alone t
         neo-persist-show nil
         neo-show-hidden-files nil
         neo-auto-indent-point t
         neo-modern-sidebar t
-        neo-vc-integration nil)
+        neo-vc-integration '(face))
   (when neo-persist-show
     (add-hook 'popwin:before-popup-hook
               (lambda () (setq neo-persist-show nil)))
@@ -116,7 +114,7 @@
                      (buffer-file-name))))
     (if file-path
         (cond
-         (maple-system-is-mswindows (w32-shell-execute "open" (replace-regexp-in-string "/" "\\\\" file-path)))
+         (maple-system-is-windows (w32-shell-execute "open" (replace-regexp-in-string "/" "\\\\" file-path)))
          (maple-system-is-mac (shell-command (format "open \"%s\"" file-path)))
          (maple-system-is-linux (let ((process-connection-type nil))
                                   (start-process "" nil "xdg-open" file-path))))
@@ -181,6 +179,15 @@
   (interactive)
   ;; list-buffers-directory is the variable set in dired buffers
   (let ((file-name (or (buffer-file-name) list-buffers-directory)))
+    (if file-name
+        (message (kill-new file-name))
+      (error "Buffer not visiting a file"))))
+
+(defun maple/copy-buffer-filename ()
+  "Show the full path to the current file in the minibuffer."
+  (interactive)
+  ;; list-buffers-directory is the variable set in dired buffers
+  (let ((file-name (or (file-name-nondirectory buffer-file-name) list-buffers-directory)))
     (if file-name
         (message (kill-new file-name))
       (error "Buffer not visiting a file"))))

@@ -9,24 +9,22 @@
 (use-package autorevert
   :ensure nil
   :hook (after-init . global-auto-revert-mode)
-  :diminish auto-revert-mode
   :config
   (setq global-auto-revert-non-file-buffers t
-        auto-revert-verbose nil))
+        auto-revert-verbose nil)
+  :diminish auto-revert-mode)
 
-;; (use-package semantic
-;;   :init
-;;   (setq srecode-map-save-file
-;;         (concat maple-cache-directory "srecode-map.el"))
-;;   (setq semanticdb-default-save-directory
-;;         (concat maple-cache-directory "semanticdb/"))
-;;   ;; (add-hook 'after-init-hook 'semantic-mode)
-;;   :config
-;;   (progn
-;;     (add-to-list 'semantic-default-submodes
-;;                  'global-semantic-stickyfunc-mode)
-;;     (add-to-list 'semantic-default-submodes
-;;                  'global-semantic-idle-summary-mode)))
+(use-package semantic
+  :ensure nil
+  :hook (after-init . semantic-mode)
+  :init
+  (setq semanticdb-default-save-directory
+        (concat maple-cache-directory "semantic/"))
+  :config
+  (add-to-list 'semantic-default-submodes
+               'global-semantic-stickyfunc-mode)
+  (add-to-list 'semantic-default-submodes
+               'global-semantic-idle-summary-mode))
 
 
 (use-package elec-pair
@@ -41,18 +39,32 @@
   :ensure nil
   :hook (after-init . show-paren-mode)
   :config
-  (setq show-paren-when-point-inside-paren t)
-  (setq show-paren-when-point-in-periphery t))
+  (setq show-paren-when-point-inside-paren t
+        show-paren-when-point-in-periphery t))
 
 ;; (use-package which-func
 ;;   :hook (after-init which-function-mode))
 
-(use-package dumb-jump
-  :config
-  (setq dumb-jump-selector 'helm)
-  :evil-bind
-  (normal prog-mode-map
-          "gd"  'dumb-jump-go))
+;; (use-package dumb-jump
+;;   :config
+;;   (setq dumb-jump-selector 'helm)
+;;   :evil-bind
+;;   (normal prog-mode-map
+;;           "gd"  'dumb-jump-go))
+
+(use-package isearch
+  :ensure nil
+  :init
+  (defun maple/evil-search-paste()
+    (when (region-active-p)
+      (isearch-yank-string
+       (save-excursion
+         (buffer-substring-no-properties
+          (region-beginning) (1+ (region-end)))))
+      (deactivate-mark)))
+  :hook (isearch-mode . maple/evil-search-paste)
+  :bind (:map isearch-mode-map
+              ([remap isearch-delete-char] . isearch-del-char)))
 
 (use-package eldoc
   :ensure nil
@@ -62,7 +74,6 @@
   (eval-expression-minibuffer-setup . eldoc-mode)
   ;; enable eldoc in IELM
   (ielm-mode . eldoc-mode))
-
 
 (use-package comint
   :ensure nil
@@ -74,8 +85,6 @@
   (:map comint-mode-map
         ("<up>" . comint-previous-input)
         ("<down>" . comint-next-input)
-        ;; ("<mouse-4>" . comint-previous-input)
-        ;; ("<mouse-5>" . comint-next-input)
         ("<escape>" . (lambda() (interactive)
                         (goto-char (cdr comint-last-prompt))))
         ))
@@ -94,16 +103,7 @@
         projectile-cache-file (concat maple-cache-directory
                                       "projectile.cache")
         projectile-known-projects-file (concat maple-cache-directory
-                                               "projectile-bookmarks.eld"))
-  :config
-  (defun neotree-find-project-root ()
-    (interactive)
-    (if (neo-global--window-exists-p)
-        (neotree-hide)
-      (let ((origin-buffer-file-name (buffer-file-name)))
-        (neotree-find (projectile-project-root))
-        (neotree-find origin-buffer-file-name))))
-  )
+                                               "projectile-bookmarks.eld")))
 
 
 (provide 'init-editor)

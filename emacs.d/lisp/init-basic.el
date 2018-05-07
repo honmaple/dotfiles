@@ -18,7 +18,7 @@
 (defconst maple-system-is-linux
   (eq system-type 'gnu/linux))
 
-(defconst maple-system-is-mswindows
+(defconst maple-system-is-windows
   (eq system-type 'windows-nt))
 
 (defun maple/set-quit-key (map)
@@ -113,9 +113,9 @@
 (defun maple/company-backend (hook backend)
   "Set HOOK with BACKEND `company-backends'."
   (add-hook hook `(lambda()
-    (set (make-variable-buffer-local 'company-backends)
-            (append (list (company-backend-with-yas ',backend))
-                    company-default-backends)))))
+                    (set (make-variable-buffer-local 'company-backends)
+                         (append (list (company-backend-with-yas ',backend))
+                                 company-default-backends)))))
 
 (defun maple/get-weekday()
   (car (rassq (string-to-number (format-time-string "%w"))
@@ -135,6 +135,23 @@
 
 (defun maple/switch-theme()
   (load-theme user-default-theme t))
+
+(defun maple/reopen-buffer(buffer-name &optional restore)
+  "Reopen BUFFER-NAME."
+  (if (get-buffer buffer-name)
+      (let ((buffer-text (with-current-buffer buffer-name
+                           (buffer-substring (point-min) (point-max)))))
+        (kill-buffer buffer-name)
+        (with-current-buffer (get-buffer-create buffer-name)
+          (when restore
+            (insert buffer-text))))
+    (message (format "%s buffer is not exists" buffer-name))))
+
+(defun maple/startup-buffer()
+  (dolist (buffer '("*Messages*" "*Compile-Log*"))
+    (and (get-buffer buffer) (maple/reopen-buffer buffer t))))
+
+(add-hook 'emacs-startup-hook 'maple/startup-buffer)
 
 (fset 'yes-or-no-p 'y-or-n-p)
 

@@ -41,7 +41,7 @@ own_window_transparent yes
 
 alignment top_right
 gap_x 25
-gap_y 40
+gap_y 25
 minimum_size 230 700
 maximum_width 230
 

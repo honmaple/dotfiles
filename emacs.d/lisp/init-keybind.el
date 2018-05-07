@@ -9,6 +9,7 @@
   "fo" 'maple/open-in-external-app
   "fE" 'maple/sudo-edit
   "fy" 'maple/show-and-copy-buffer-filename
+  "fY" 'maple/copy-buffer-filename
   "fCd" 'maple/unix2dos
   "fCu" 'maple/dos2unix
   "fD" 'maple/delete-current-buffer-file
@@ -42,6 +43,7 @@
 (evil-leader/set-key
   "h" 'help
   "rc" 'recentf-cleanup
+  "rr" 'quickrun
   )
 
 (evil-leader/set-key
@@ -99,6 +101,12 @@
   "wv"  'split-window-right
   "ww"  'other-window
   "w="  'balance-windows
+  "w0"  'select-window-0
+  "w1"  'select-window-1
+  "w2"  'select-window-2
+  "w3"  'select-window-3
+  "w4"  'select-window-4
+  "w5"  'select-window-5
   )
 
 (evil-leader/set-key
@@ -110,7 +118,6 @@
   "pr"  'projectile-recentf
   "pi"  'projectile-invalidate-cache
   "pc"  'projectile-cleanup-known-projects
-  "pt"  'neotree-find-project-root
   )
 
 (evil-leader/set-key

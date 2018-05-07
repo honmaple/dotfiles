@@ -13,10 +13,10 @@
   :config
   (setq python-indent-offset 4
         python-indent-guess-indent-offset nil
-        python-shell-completion-native-enable nil
-        python-shell-interpreter "ipython"
-        python-shell-interpreter-args "--simple-prompt -i")
-  (setenv "PYTHONPATH" "$PYTHONPATH:/usr/lib/python3.5/site-packages")
+        python-shell-completion-native-enable nil)
+        ;; python-shell-interpreter "ipython"
+        ;; python-shell-interpreter-args "--simple-prompt -i")
+  (setenv "PYTHONPATH" "$PYTHONPATH:/usr/lib/python3.6/site-packages")
   (defun maple/run-python ()
     (interactive)
     (python-shell-get-or-create-process)
@@ -29,7 +29,7 @@
               ([f5] . maple/run-python)))
 
 (use-package py-isort)
-
+(use-package pyvenv)
 
 (use-package yapfify
   ;; 保存时自动格式化
@@ -38,7 +38,6 @@
   (normal python-mode-map
           [f6] 'yapfify-buffer))
 
-(use-package pyvenv)
 
 (use-package anaconda-mode
   :diminish anaconda-mode

@@ -55,7 +55,7 @@
   (require 'init-dired)   ;;自带文件管理
   (require 'init-file)   ;;文件操作
   (require 'init-buffer)   ;;buffer操作
-  (require 'init-windows))
+  (require 'init-window))
 
 (when *develop*
   (require 'init-flycheck)
@@ -65,7 +65,7 @@
   (require 'init-git)
 
   (require 'init-shell) ;;shell
-  (require 'init-html)
+  (require 'init-web)
   (require 'init-js)
   (require 'init-python)
   (require 'init-go)

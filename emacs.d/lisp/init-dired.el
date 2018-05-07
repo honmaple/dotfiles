@@ -11,6 +11,7 @@
 ;; C 直接拷贝文件
 ;; q 退出
 ;; H 显示隐藏文件
+;; w 复制文件名
 
 (use-package dired
   :ensure nil

@@ -1,8 +1,14 @@
 (use-package esup)
-
 (use-package docker-tramp)
-
 (use-package dockerfile-mode)
+
+(use-package maple-minimap
+  :commands (minimap-mode)
+  :load-path "site-lisp/maple"
+  :evil-state (minimap-mode . emacs))
+
+(use-package pangu-spacing
+  :commands (pangu-spacing-space-current-buffer))
 
 (use-package quickrun
   :config
@@ -43,8 +49,8 @@
   (setq imenu-list-focus-after-activation t
         imenu-list-auto-resize t
         imenu-list-mode-line-format "")
-  (if (bound-and-true-p semantic-mode)
-      (setq imenu-create-index-function 'semantic-create-imenu-index))
+  (when (bound-and-true-p semantic-mode)
+    (setq imenu-create-index-function 'semantic-create-imenu-index))
   :custom-face
   (imenu-list-entry-face-0 ((t (:foreground "#f92672"))))
   :bind (:map evil-leader--default-map

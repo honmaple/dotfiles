@@ -1,16 +1,12 @@
 (use-package company-web)
 
 (use-package web-mode
-  :mode
-  (("\\.vue\\'" . web-mode)
-   ("\\.html?\\'" . web-mode)
-   ("/\\(views\\|html\\|theme\\|templates\\)/.*\\.php\\'" . web-mode))
+  :mode ("\\.\\(vue\\|html?\\)$")
   :config
   (setq web-mode-markup-indent-offset 2
         web-mode-enable-auto-closing t ; enable auto close tag in text-mode
         web-mode-enable-current-element-highlight t
         web-mode-enable-auto-indentation nil
-        web-mode-enable-control-block-indentation nil
         web-mode-enable-css-colorization nil
         web-mode-engines-alist '(("django" . "\\.html\\'")
                                  ("django" . "\\.vue\\'"))
@@ -69,4 +65,4 @@
   :mode ("\\.less\\'" . less-css-mode))
 
 
-(provide 'init-html)
+(provide 'init-web)

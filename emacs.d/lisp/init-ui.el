@@ -17,23 +17,13 @@
 (use-package spaceline-config
   :ensure spaceline
   :hook (after-init . spaceline-spacemacs-theme)
-  :init
-  (setq spaceline-byte-compile nil)
-  (defun maple/set-powerline-for-startup-buffers ()
-    "Set the powerline for buffers created when Emacs starts."
-    (dolist (buffer '("*Messages*" "*Compile-Log*"))
-      (when (and (get-buffer buffer)
-                 (with-current-buffer buffer
-                   (setq-local mode-line-format (default-value 'mode-line-format))
-                   (powerline-set-selected-window)
-                   (powerline-reset))))))
-  (add-hook 'after-init-hook #'maple/set-powerline-for-startup-buffers)
   :config
+  (setq spaceline-byte-compile nil)
   (setq powerline-default-separator 'wave
         spaceline-window-numbers-unicode t
         spaceline-highlight-face-func 'spaceline-highlight-face-evil-state
         spaceline-helm-help-p nil)
-  (after-load 'helm
+  (with-eval-after-load 'helm
     (spaceline-helm-mode t)))
 
 (use-package hydra
@@ -98,49 +88,48 @@
 
 ;; 相同字符
 (use-package highlight-symbol
-  :diminish highlight-symbol-mode
   :hook
   ((prog-mode html-mode css-mode org-mode) . highlight-symbol-nav-mode)
-  ((prog-mode html-mode css-mode) . highlight-symbol-mode))
+  ((prog-mode html-mode css-mode) . highlight-symbol-mode)
+  :diminish highlight-symbol-mode)
 
 
 (use-package volatile-highlights
   :hook (after-init . volatile-highlights-mode)
-  :diminish volatile-highlights-mode
   :config
-  (progn
-    ;; additional extensions
-    ;; evil
-    (after-load 'evil
-      (vhl/define-extension 'evil
-                            'evil-move
-                            'evil-paste-after
-                            'evil-paste-before
-                            'evil-paste-pop)
-      (vhl/install-extension 'evil))
-    ;; undo-tree
-    (after-load 'undo-tree
-      (vhl/define-extension 'undo-tree
-                            'undo-tree-move
-                            'undo-tree-yank)
-      (vhl/install-extension 'undo-tree)))
-  :custom-face (vhl/default-face ((t (:background "Springgreen3" :foreground "#272822")))))
+  ;; additional extensions
+  ;; evil
+  (after-load 'evil
+    (vhl/define-extension 'evil
+                          'evil-move
+                          'evil-paste-after
+                          'evil-paste-before
+                          'evil-paste-pop)
+    (vhl/install-extension 'evil))
+  ;; undo-tree
+  (after-load 'undo-tree
+    (vhl/define-extension 'undo-tree
+                          'undo-tree-move
+                          'undo-tree-yank)
+    (vhl/install-extension 'undo-tree))
+  :custom-face (vhl/default-face ((t (:background "Springgreen3" :foreground "#272822"))))
+  :diminish volatile-highlights-mode)
 
 ;; 显示缩进
 (use-package highlight-indent-guides
-  :diminish highlight-indent-guides-mode
   :hook (prog-mode . highlight-indent-guides-mode)
-  :config (setq highlight-indent-guides-method 'character))
+  :config (setq highlight-indent-guides-method 'character)
+  :diminish highlight-indent-guides-mode)
 
 
 (use-package whitespace
   :ensure nil
-  :diminish whitespace-mode "ⓦ"
   :hook ((prog-mode conf-mode) . whitespace-mode)
   :config
   (setq whitespace-action '(auto-cleanup)
         whitespace-style '(face
                            trailing space-before-tab
-                           indentation empty space-after-tab)))
+                           indentation empty space-after-tab))
+  :diminish whitespace-mode "ⓦ")
 
 (provide 'init-ui)

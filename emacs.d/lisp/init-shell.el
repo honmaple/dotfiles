@@ -18,7 +18,7 @@
         shell-pop-window-size 30
         shell-pop-term-shell "/bin/bash"
         shell-pop-full-span t
-        shell-pop-shell-type (if maple-system-is-mswindows
+        shell-pop-shell-type (if maple-system-is-windows
                                  '("eshell" "*eshell*" (lambda () (eshell)))
                                '("ansi-term" "*ansi-term*"
                                  (lambda () (ansi-term shell-pop-term-shell)))))

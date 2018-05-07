@@ -25,6 +25,7 @@
           ivy-use-virtual-buffers nil
           ivy-virtual-abbreviate 'fullpath
           ivy-magic-slash-non-match-action nil)
+
     ;; (setq ivy-re-builders-alist
     ;;       '((t . ivy--regex-fuzzy)))
     ;; (setq confirm-nonexistent-file-or-buffer t)
@@ -72,5 +73,18 @@
 
 
 (use-package counsel-projectile)
+
+
+;; (setq ivy-count-format "")
+;; (let ((padding (make-string (window-left-column) ?\s)))
+;;   (ivy-read (concat padding "Pick:")
+;;             (mapcar (lambda (x)
+;;                       (concat padding (number-to-string x)))
+;;                     (number-sequence 1 10))))
+;; (defun maple/ivy-read-around (-ivy-read &rest args)
+;;   (let ((padding (make-string (window-left-column) ?\s)))
+;;     (setcar args (concat padding (car args)))
+;;     (apply -ivy-read args)))
+;; (advice-add 'ivy-read :around #'maple/ivy-read-around)
 
 (provide 'init-ivy)

@@ -1,25 +1,20 @@
-(use-package go-mode
-  :setq
-  (:mode go-mode
-         tab-width 4
-         indent-tabs-mode t)
-  :config
-  (setq gofmt-show-errors nil
-        godef-command "/home/jianglin/go/bin/godef")
+;; go get -u github.com/nsf/gocode
+;; go get -u github.com/rogpeppe/godef
+;; go get -u github.com/golang/lint/golint
 
-  (defun maple/gofmt()
-    (interactive)
-    (save-excursion
-      ;; (untabify (point-min) (point-max))
-      (gofmt)))
+(use-package go-mode
+  :config
+  (setq gofmt-show-errors nil)
+
+  (use-package golint)
+  (use-package go-eldoc
+    :hook (go-mode . go-eldoc-setup))
   :evil-bind
   (normal go-mode-map
-          [f6] 'maple/gofmt
+          [f6] 'gofmt
           "gd" 'godef-jump))
 
 (use-package company-go
-  :init (maple/company-backend 'go-mode-hook 'company-go)
-  :config
-  (setq company-go-gocode-command "/home/jianglin/go/bin/gocode"))
+  :init (maple/company-backend 'go-mode-hook 'company-go))
 
 (provide 'init-go)

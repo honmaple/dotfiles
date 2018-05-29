@@ -20,10 +20,6 @@
                 (sequence "PROJECT(p)" "|" "DONE(d!/!)" "CANCELLED(c@/!)")
                 (sequence "WAITING(w@/!)" "HOLD(h)" "|" "CANCELLED(c@/!)"))))
 
-  (setq org-todo-keyword-faces
-        (quote (("NEXT" :inherit warning)
-                ("PROJECT" :inherit font-lock-string-face))))
-
   (defadvice org-open-at-point (after org-open-at-point activate)
     (while (>  (count-windows) 2)
       (delete-window (cadr (window-list-1)))))
@@ -52,8 +48,7 @@
   :config
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((sh . t)
-     (python . t)
+   '((python . t)
      (dot . t)
      (octave . t)
      (sqlite . t)

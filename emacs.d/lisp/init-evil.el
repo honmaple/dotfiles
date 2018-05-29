@@ -61,38 +61,28 @@
         evil-escape-inhibit-functions '(evil-visual-state-p
                                         evil-escape--is-magit-buffer)))
 
-
-(use-package evil-mc
-  :diminish evil-mc-mode "ⓒ"
-  :hook (after-init . global-evil-mc-mode)
+(use-package evil-multiedit
+  :after evil
+  :load-path "site-lisp/evil-multiedit"
   :config
-  (evil-define-command evil-mc/undo-cursor-and-quit ()
-    "Initialize `evil-mc-pattern', make a cursor at point, and go to the next match."
-    :repeat ignore
-    :evil-mc t
-    (progn
-      (evil-mc-undo-all-cursors)
-      (hydra-keyboard-quit)))
-
-  (defhydra maple/evil-mc ()
-    ("n" evil-mc-make-and-goto-next-match "next")
-    ("t" evil-mc-skip-and-goto-next-match "skip and next")
-    ("p" evil-mc-make-and-goto-prev-match "prev")
-    ("q" evil-mc/undo-cursor-and-quit "quit"))
+  (setq evil-multiedit-follow-matches t
+        evil-multiedit-state-cursor '(box "firebrick1"))
+  (defhydra maple/evil-multiedit ()
+    ("n" evil-multiedit-match-and-next "next")
+    ("t" evil-multiedit-toggle-or-restrict-region "skip and next")
+    ("p" evil-multiedit-match-and-prev "prev"))
   :custom-face
-  (evil-mc-cursor-default-face ((t (:inherit cursor :background "firebrick1" :inverse-video nil))))
+  (iedit-occurrence ((t (:background "chocolate" :foreground "#272822"))))
   (hydra-face-red ((t (:foreground "chocolate" :weight bold))))
-  :bind (:map evil-mc-key-map
-              ("C-g" . evil-mc-undo-all-cursors)
-              :map evil-visual-state-map
-              ("n" . maple/evil-mc/body)
-              ("C-n" . evil-mc-make-and-goto-next-match)
-              ("C-p" . evil-mc-make-and-goto-prev-match)
-              ("C-t" . evil-mc-skip-and-goto-next-match))
-  :evil-bind
-  (normal evil-mc-key-map
-          (kbd "<escape>") 'evil-mc-undo-all-cursors))
-
+  :bind (:map evil-visual-state-map
+              ("n" . maple/evil-multiedit/body)
+              ("C-n" . evil-multiedit-match-and-next)
+              ("C-p" . evil-multiedit-match-and-prev)
+              ("C-t" . evil-multiedit-make-skip-and-next)
+              :map evil-multiedit-state-map
+              ("C-n" . evil-multiedit-match-and-next)
+              ("C-p" . evil-multiedit-match-and-prev)
+              ("C-t" . evil-multiedit-make-skip-and-next)))
 
 
 (use-package expand-region

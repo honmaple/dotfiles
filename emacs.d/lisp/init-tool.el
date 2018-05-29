@@ -48,7 +48,7 @@
   :config
   (setq imenu-list-focus-after-activation t
         imenu-list-auto-resize t
-        imenu-list-mode-line-format "")
+        imenu-list-mode-line-format mode-line-format)
   (when (bound-and-true-p semantic-mode)
     (setq imenu-create-index-function 'semantic-create-imenu-index))
   :custom-face

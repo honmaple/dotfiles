@@ -24,7 +24,8 @@
                              "solarized-dark"
                              "doom-molokai"
                              "doom-one"
-                             "doom-peacock"))
+                             "doom-peacock"
+                             "doom-vibrant"))
 (defun maple/cycle-theme (num)
   "Theme switch with NUM."
   (interactive)

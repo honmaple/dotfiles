@@ -1,13 +1,3 @@
-(use-package sh-script
-  :ensure nil
-  :mode
-  (("\\.bash_profile\\'" . sh-mode)
-   ("\\.bash_history\\'" . sh-mode)
-   ("\\.sh\\'" . sh-mode)
-   ("\\.bash\\'" . sh-mode)
-   ("\\.bashrc.local\\'" . sh-mode)
-   ))
-
 (use-package multi-term
   :config
   (add-to-list 'term-bind-key-alist '("<tab>" . term-send-tab)))

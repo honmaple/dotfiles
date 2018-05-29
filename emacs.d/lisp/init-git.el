@@ -51,4 +51,7 @@
   (fringe-helper-define 'git-gutter-fr:deleted '(center repeated)
     "XX"))
 
+(use-package browse-at-remote
+  :commands (browse-at-remote))
+
 (provide 'init-git)

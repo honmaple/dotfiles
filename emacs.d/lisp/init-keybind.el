@@ -22,16 +22,21 @@
   "u"  'undo-tree-visualize
   "'" 'shell-pop
   "=" 'maple/indent-buffer
-  "se" 'evil-mc-make-all-cursors
+  "se" 'evil-multiedit-match-all
   "ss" 'replace-regexp
   "sd" 'delete-matching-lines
   "sD" 'delete-non-matching-lines
   "sp" 'flyspell-correct-word-generic
   "sh" 'shell-command
-  "el" 'flycheck-list-errors
-  "ec" 'flycheck-clear
   "Sg" 'maple/search-google
   "Sh" 'maple/search-github
+  )
+
+
+(evil-leader/set-key
+  "el" 'flycheck-list-errors
+  "ec" 'flycheck-clear
+  "es" 'flycheck-select-checker
   )
 
 ;; 字体大小写
@@ -72,7 +77,7 @@
   "gb" 'magit-branch
   "gd" 'magit-diff
   "gD" 'magit-branch-delete
-  "gc" 'magit-branch-checkout
+  "gc" 'magit-branch-or-checkout
   "gt" 'git-timemachine
   )
 
@@ -123,7 +128,7 @@
 (evil-leader/set-key
   "<tab>" 'maple/switch-to-previous-buffer
   "TAB" 'maple/switch-to-previous-buffer
-  "bd" 'kill-this-buffer
+  "bk" 'kill-this-buffer
   "be" 'maple/safe-erase-buffer
   "bh" 'maple/switch-to-scratch-buffer
   "bK" 'maple/kill-other-buffers
@@ -158,7 +163,7 @@
   "ob" 'org-iswitchb
   "od" 'youdao-dictionary-search-at-point+
   "oD" 'youdao-dictionary-search-at-point
-  "op" 'maple/open-git-repo
+  "op" 'browse-at-remote
   )
 
 (evil-leader/set-key

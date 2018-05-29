@@ -57,6 +57,15 @@
     ",sq" "sql"
     ",t" "toggle mode"))
 
+
+;; this is ugly
+;; (use-package display-line-numbers
+;;   :ensure nil
+;;   :hook ((prog-mode text-mode) . display-line-numbers-mode)
+;;   :config
+;;   (setq display-line-numbers-width 1
+;;         display-line-numbers-type 'relative))
+
 (use-package nlinum
   :hook ((prog-mode text-mode) . nlinum-mode))
 

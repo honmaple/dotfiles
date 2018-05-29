@@ -9,7 +9,7 @@
                                          (recentf-mode)
                                          (recentf-track-opened-file))))
   :config
-  (setq recentf-exclude (list "\\.jpg\\'"
+  (setq recentf-exclude (list "\\.\\(png\\|jpg\\)\\'"
                               "COMMIT_EDITMSG\\'"
                               (expand-file-name maple-cache-directory)
                               (expand-file-name package-user-dir))))
@@ -123,7 +123,8 @@
 (defun maple/sudo-edit (&optional arg)
   "Edit file with sudo ARG."
   (interactive "p")
-  (let ((fname (if (or arg (not buffer-file-name)) (read-file-name "File: ") buffer-file-name)))
+  (let ((fname (if (or arg (not buffer-file-name))
+                   (read-file-name "File: ") buffer-file-name)))
     (find-file
      (cond ((string-match-p "^/ssh:" fname)
             (with-temp-buffer

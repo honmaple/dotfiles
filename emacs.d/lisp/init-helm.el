@@ -88,8 +88,7 @@
          ("C-h" . helm-find-files-up-one-level)
          ))
 
-(use-package helm-ag
-  :init (advice-add 'helm-ag--edit :after #'evil-mc-mode)) ;;在helm-ag-edit中激活evil-mc
+(use-package helm-ag)
 
 (use-package helm-projectile
   :commands (helm-projectile-switch-to-buffer

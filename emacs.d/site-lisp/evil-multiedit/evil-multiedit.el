@@ -254,13 +254,13 @@ or visual mode.
   (evil-multiedit-match-and-next (or (and count (* -1 count)) -1)))
 
 ;;;###autoload
-(defun evil-multiedit-make-skip-and-next()
+(defun evil-multiedit-skip-and-match-next()
   (interactive)
   (evil-multiedit-toggle-or-restrict-region)
   (evil-multiedit-match-and-next))
 
 ;;;###autoload
-(defun evil-multiedit-make-skip-and-prev()
+(defun evil-multiedit-skip-and-match-prev()
   (interactive)
   (evil-multiedit-toggle-or-restrict-region)
   (evil-multiedit-match-and-prev))

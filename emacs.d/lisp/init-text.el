@@ -18,10 +18,10 @@
   (:map markdown-mode-map
         ([f5] . markdown-toggle-markup-hiding)))
 
-;; (use-package markdown-preview-mode
-;;   :after (markdown-mode)
-;;   :commands (markdown-preview-mode)
-;;   :load-path "site-lisp/markdown-preview")
+(use-package markdown-preview-mode
+  :after (markdown-mode)
+  :commands (markdown-preview-mode)
+  :load-path "site-lisp/markdown-preview")
 
 ;; (use-package olivetti
 ;;   :defer t

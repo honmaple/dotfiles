@@ -10,8 +10,7 @@
   :bind (("C-M-=" . default-text-scale-increase)
          ("C-M--" . default-text-scale-decrease)
          ("<C-wheel-up>" . default-text-scale-increase)
-         ("<C-wheel-down>" . default-text-scale-decrease)
-         ))
+         ("<C-wheel-down>" . default-text-scale-decrease)))
 
 
 (setq locale-coding-system 'utf-8)

@@ -3,7 +3,7 @@
   (require 'init-basic))
 
 (use-package adaptive-wrap
-  :hook (visual-line-mode adaptive-wrap-prefix-mode))
+  :hook (adaptive-wrap-prefix-mode))
 
 ;; 修改外部文件自动载入
 (use-package autorevert

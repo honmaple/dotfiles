@@ -69,7 +69,7 @@
         evil-multiedit-state-cursor '(box "firebrick1"))
   (defhydra maple/evil-multiedit ()
     ("n" evil-multiedit-match-and-next "next")
-    ("t" evil-multiedit-toggle-or-restrict-region "skip and next")
+    ("t" evil-multiedit-skip-and-match-next "skip and next")
     ("p" evil-multiedit-match-and-prev "prev"))
   :custom-face
   (iedit-occurrence ((t (:background "chocolate" :foreground "#272822"))))
@@ -78,11 +78,11 @@
               ("n" . maple/evil-multiedit/body)
               ("C-n" . evil-multiedit-match-and-next)
               ("C-p" . evil-multiedit-match-and-prev)
-              ("C-t" . evil-multiedit-make-skip-and-next)
+              ("C-t" . evil-multiedit-skip-and-match-next)
               :map evil-multiedit-state-map
               ("C-n" . evil-multiedit-match-and-next)
               ("C-p" . evil-multiedit-match-and-prev)
-              ("C-t" . evil-multiedit-make-skip-and-next)))
+              ("C-t" . evil-multiedit-skip-and-match-next)))
 
 
 (use-package expand-region

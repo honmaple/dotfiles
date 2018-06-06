@@ -37,6 +37,8 @@
   "el" 'flycheck-list-errors
   "ec" 'flycheck-clear
   "es" 'flycheck-select-checker
+  "en" 'flycheck-next-error
+  "ep" 'flycheck-previous-error
   )
 
 ;; 字体大小写
@@ -191,6 +193,7 @@
   )
 
 (evil-leader/set-key-for-mode 'go-mode
+  "ri" 'go-goto-imports
   "rI" 'go-remove-unused-imports
   "ra" 'go-import-add
   "rd" 'godef-describe
@@ -260,34 +263,34 @@
 
 ;; helm
 
-(evil-leader/set-key
-  "," 'helm-M-x
-  "/" 'helm-do-ag-this-file ;;当前文件内容
-  "ff" 'helm-find-files
-  "fF" 'helm-find
-  "fr" 'helm-recentf
-  "fw" 'helm-ag
-  "fW" 'helm-do-ag
-  "sj" 'helm-semantic-or-imenu
-  "bb" 'helm-buffers-list  ;;显示缓冲区(已经打开的文件)
-  "ph"  'helm-projectile ;;在工程内查找
-  "pw"  'helm-projectile-ag
-  )
+;; (evil-leader/set-key
+;;   "," 'helm-M-x
+;;   "/" 'helm-do-ag-this-file ;;当前文件内容
+;;   "ff" 'helm-find-files
+;;   "fF" 'helm-find
+;;   "fr" 'helm-recentf
+;;   "fw" 'helm-ag
+;;   "fW" 'helm-do-ag
+;;   "sj" 'helm-semantic-or-imenu
+;;   "bb" 'helm-buffers-list  ;;显示缓冲区(已经打开的文件)
+;;   "ph"  'helm-projectile ;;在工程内查找
+;;   "pw"  'helm-projectile-ag
+;;   )
 
 ;; ivy
-;; (evil-leader/set-key
-;;   "," 'counsel-M-x
-;;   "/" 'counsel-do-ag-this-file ;;当前文件内容
-;;   "ff" 'find-file
-;;   "fF" 'counsel-find
-;;   "fr" 'counsel-recentf
-;;   "fw" 'counsel-ag
-;;   "fW" 'counsel-ag
-;;   "sj" 'counsel-semantic-or-imenu
-;;   "bb" 'ivy-switch-buffer  ;;显示缓冲区(已经打开的文件)
-;;   "ph"  'counsel-projectile ;;在工程内查找
-;;   "pw"  'counsel-projectile-ag
-;;   )
+(evil-leader/set-key
+  "," 'counsel-M-x
+  "/" 'counsel-do-ag-this-file ;;当前文件内容
+  "ff" 'find-file
+  "fF" 'counsel-find
+  "fr" 'counsel-recentf
+  "fw" 'counsel-ag
+  "fW" 'counsel-ag
+  "sj" 'counsel-semantic-or-imenu
+  "bb" 'ivy-switch-buffer  ;;显示缓冲区(已经打开的文件)
+  "ph"  'counsel-projectile ;;在工程内查找
+  "pw"  'counsel-projectile-ag
+  )
 
 (provide 'init-keybind)
 ;;; init-keybind.el ends here

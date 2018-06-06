@@ -11,35 +11,33 @@
   :commands (pangu-spacing-space-current-buffer))
 
 (use-package quickrun
+  :hook (quickrun--mode . maple/truncate-lines)
   :config
-  (maple/set-quit-key quickrun--mode-map)
-  (add-hook 'quickrun--mode-hook 'maple/truncate-lines))
+  (maple/set-quit-key quickrun--mode-map))
 
 (use-package blog-admin
   :load-path "site-lisp/blog-admin"
   :commands blog-admin-start
   :config
-  (progn
-    (setq blog-admin-backend-type 'pelican)
-    (setq blog-admin-backend-new-post-in-drafts t) ;; create new post in drafts by default
-    (setq blog-admin-backend-new-post-with-same-name-dir nil) ;; create same-name directory with new post
-    (setq blog-admin-backend-path "~/git/pelican")
-    (setq blog-admin-backend-pelican-config-file "pelicanconf.py")
-    (setq blog-admin-backend-pelican-posts-dir "content/org")
-    (setq blog-admin-backend-pelican-org-mode-dir "content/org")
-    (setq blog-admin-backend-pelican-markdown-dir "content/markdown")
-    (setq blog-admin-backend-pelican-drafts-dir "content/draft")
-    (add-hook 'blog-admin-backend-after-new-post-hook 'find-file)
+  (setq blog-admin-backend-type 'pelican
+        blog-admin-backend-new-post-in-drafts t ;; create new post in drafts by default
+        blog-admin-backend-new-post-with-same-name-dir nil ;; create same-name directory with new post
+        blog-admin-backend-path "~/git/pelican"
+        blog-admin-backend-pelican-config-file "pelicanconf.py"
+        blog-admin-backend-pelican-posts-dir "content/org"
+        blog-admin-backend-pelican-org-mode-dir "content/org"
+        blog-admin-backend-pelican-markdown-dir "content/markdown"
+        blog-admin-backend-pelican-drafts-dir "content/draft")
+  (add-hook 'blog-admin-backend-after-new-post-hook 'find-file)
 
-    (defun blog-set-face()
-      "set face"
-      (interactive)
-      (set-face-attribute 'variable-pitch nil :font "-Sony-Sony Fixed-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1")
-      (buffer-face-mode))
+  (defun blog-set-face()
+    "set face"
+    (interactive)
+    (set-face-attribute 'variable-pitch nil :font "-Sony-Sony Fixed-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1")
+    (buffer-face-mode))
 
-    (when (display-graphic-p)
-      (add-hook 'blog-admin-mode-hook 'blog-set-face))
-    ))
+  (when (display-graphic-p)
+    (add-hook 'blog-admin-mode-hook 'blog-set-face)))
 
 (use-package imenu-list
   :commands imenu-list-minor-mode

@@ -7,48 +7,68 @@
   (after-init . ivy-mode)
   (ivy-mode . counsel-mode)
   :config
-  (progn
-    (setq enable-recursive-minibuffers t)
-    (setq ivy-height 12
-          ivy-do-completion-in-region t
-          ivy-use-selectable-prompt t
-          ivy-wrap t
-          ivy-extra-directories nil
-          ivy-fixed-height-minibuffer t
-          ;; Don't use ^ as initial input
-          ivy-initial-inputs-alist nil
-          ;; highlight til EOL
-          ivy-format-function #'ivy-format-function-line
-          ;; disable magic slash on non-match
-          ;; ~ to /home/user
-          ivy-magic-tilde nil
-          ivy-use-virtual-buffers nil
-          ivy-virtual-abbreviate 'fullpath
-          ivy-magic-slash-non-match-action nil)
+  (setq enable-recursive-minibuffers t)
+  (setq ivy-height 12
+        ivy-do-completion-in-region t
+        ivy-use-selectable-prompt t
+        ivy-wrap t
+        ivy-extra-directories nil
+        ivy-fixed-height-minibuffer t
+        ;; Don't use ^ as initial input
+        ivy-initial-inputs-alist nil
+        ;; highlight til EOL
+        ivy-format-function #'ivy-format-function-line
+        ;; disable magic slash on non-match
+        ;; ~ to /home/user
+        ivy-magic-tilde nil
+        ivy-use-virtual-buffers nil
+        ivy-virtual-abbreviate 'fullpath
+        ivy-magic-slash-non-match-action nil)
 
-    ;; (setq ivy-re-builders-alist
-    ;;       '((t . ivy--regex-fuzzy)))
-    ;; (setq confirm-nonexistent-file-or-buffer t)
-    (setq ivy-re-builders-alist
-          '((t   . ivy--regex-ignore-order)))
-    (setq completing-read-function 'ivy-completing-read
-          read-file-name-function  'read-file-name-default)
-    (after-load 'evil
-      (evil-make-overriding-map ivy-occur-mode-map 'normal))
+  (defvar maple/ivy-format-padding nil)
 
-    ;; Integration with `projectile'
-    (after-load 'projectile
-      (setq projectile-completion-system 'ivy))
+  (defun maple/ivy-read-around (-ivy-read &rest args)
+    "Advice ivy-read `-IVY-READ` `ARGS`."
+    (let ((maple/ivy-format-padding (make-string (window-left-column) ?\s)))
+      (setcar args (concat maple/ivy-format-padding (car args)))
+      (apply -ivy-read args)))
 
-    (defadvice find-file (before make-directory-maybe (filename &optional wildcards) activate)
-      "Create parent directory if not exists while visiting file."
-      (unless (file-exists-p filename)
-        (let ((dir (file-name-directory filename)))
-          (unless (file-exists-p dir)
-            (if (y-or-n-p (format "Directory %s does not exist,do you want you create it? " dir))
-                (make-directory dir)
-              (keyboard-quit))
-            )))))
+  (advice-add 'ivy-read :around #'maple/ivy-read-around)
+
+  (defun maple/ivy-format-function (cands)
+    "Transform CANDS into a string for minibuffer."
+    (ivy--format-function-generic
+     (lambda (str)
+       (concat maple/ivy-format-padding (ivy--add-face str 'ivy-current-match)))
+     (lambda (str)
+       (concat maple/ivy-format-padding str))
+     cands "\n"))
+
+  (setq ivy-count-format ""
+        ivy-format-function 'maple/ivy-format-function)
+  ;; (setq ivy-re-builders-alist
+  ;;       '((t . ivy--regex-fuzzy)))
+  ;; (setq confirm-nonexistent-file-or-buffer t)
+  (setq ivy-re-builders-alist
+        '((t   . ivy--regex-ignore-order)))
+  (setq completing-read-function 'ivy-completing-read
+        read-file-name-function  'read-file-name-default)
+  (after-load 'evil
+    (evil-set-initial-state 'ivy-occur-grep-mode 'normal)
+    (evil-make-overriding-map ivy-occur-mode-map 'normal))
+
+  ;; Integration with `projectile'
+  (after-load 'projectile
+    (setq projectile-completion-system 'ivy))
+
+  (defadvice find-file (before make-directory-maybe (filename &optional wildcards) activate)
+    "Create parent directory if not exists while visiting file."
+    (unless (file-exists-p filename)
+      (let ((dir (file-name-directory filename)))
+        (unless (file-exists-p dir)
+          (if (y-or-n-p (format "Directory %s does not exist,do you want you create it? " dir))
+              (make-directory dir)
+            (keyboard-quit))))))
   :bind (("M-x" . counsel-M-x)
          ("C-x C-m" . counsel-M-x)
          ("M-y" . counsel-yank-pop)
@@ -57,9 +77,12 @@
          ("C-k" . ivy-previous-line)
          ("<tab>" . ivy-partial)
          ("TAB" . ivy-partial)
+         ("C-c C-e" . ivy-occur)
          ([escape] . minibuffer-keyboard-quit)
          :map counsel-find-file-map
          ("C-h" . counsel-up-directory)
+         ("<tab>" . ivy-alt-done)
+         ("TAB" . ivy-alt-done)
          ("C-<return>" . ivy-immediate-done)))
 
 (use-package ivy-rich
@@ -85,6 +108,8 @@
 ;;   (let ((padding (make-string (window-left-column) ?\s)))
 ;;     (setcar args (concat padding (car args)))
 ;;     (apply -ivy-read args)))
+
 ;; (advice-add 'ivy-read :around #'maple/ivy-read-around)
+
 
 (provide 'init-ivy)

@@ -15,6 +15,6 @@
           "gd" 'godef-jump))
 
 (use-package company-go
-  :init (maple/company-backend 'go-mode-hook 'company-go))
+  :init (maple/company-backend 'go-mode-hook '(company-go company-keywords)))
 
 (provide 'init-go)

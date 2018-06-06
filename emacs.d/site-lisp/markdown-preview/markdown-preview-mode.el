@@ -2,7 +2,7 @@
 
 (require 'cl-lib)
 (require 'websocket)
-(require 'web-server)
+(require 'simple-httpd)
 
 (defgroup markdown-preview nil
   "Realtime Markdown Viewer"
@@ -33,30 +33,31 @@
   "`markdown-preview' http server.")
 
 (defvar markdown-preview:home-path (file-name-directory load-file-name))
-
 (defvar markdown-preview:preview-file (concat markdown-preview:home-path "index.html"))
 (defvar markdown-preview:css (concat markdown-preview:home-path "static/css/markdown.css"))
 
 
 (defun markdown-preview:init-websocket ()
+  "Init websocket."
   (markdown-preview:start-ws-server)
   (markdown-preview:start-ws-client))
 
 (defun markdown-preview:start-ws-server ()
+  "Start websocket."
   (when (not markdown-preview:websocket-server)
-    (setq-local markdown-preview:websocket-server
-                (websocket-server
-                 markdown-preview:port
-                 :host markdown-preview:host
-                 :on-message (lambda (_websocket frame)
-                               (setq markdown-preview:websocket _websocket)
-                               (markdown-preview:send-preview _websocket))
-                 :on-open (lambda (_websocket)
-                            (message "websocket: I'm opened."))
-                 :on-error (lambda (_websocket type err)
-                             (message "error connecting"))
-                 :on-close (lambda (_websocket)
-                             (setq markdown-preview:websocket-server nil))))))
+    (setq markdown-preview:websocket-server
+          (websocket-server
+           markdown-preview:port
+           :host markdown-preview:host
+           :on-message (lambda (_websocket frame)
+                         (setq markdown-preview:websocket _websocket)
+                         (markdown-preview:send-preview _websocket))
+           :on-open (lambda (_websocket)
+                      (message "websocket: I'm opened."))
+           :on-error (lambda (_websocket type err)
+                       (message "error connecting"))
+           :on-close (lambda (_websocket)
+                       (setq markdown-preview:websocket-server nil))))))
 
 (defun markdown-preview:start-ws-client ()
   "Start the `markdown-preview' local client."
@@ -94,27 +95,22 @@
 (defun markdown-preview:init-http-server ()
   "Start http server at PORT to serve preview file via http."
   (when (not markdown-preview:http-server)
+    (fset 'httpd-log 'ignore)
+    (setq httpd-root markdown-preview:home-path
+          httpd-host markdown-preview:host
+          httpd-port markdown-preview:http-port)
+    (httpd-stop)
     (setq markdown-preview:http-server
-          (ws-start
-           (lambda (request)
-             (with-slots (process headers) request
-               (let* ((path (substring (cdr (assoc :GET headers)) 1))
-                      (filename (expand-file-name path default-directory)))
-                 (if (string= path "")
-                     (progn
-                       (ws-send-file
-                        process
-                        (expand-file-name
-                         markdown-preview:preview-file)))
-                   (if (string= path "static/css/markdown.css")
-                       (progn
-                         (ws-send-file
-                          process
-                          (expand-file-name
-                           markdown-preview:css)))
-                     )
-                   ))))
-           markdown-preview:http-port nil :host markdown-preview:host))))
+          (make-network-process
+           :name     "httpd"
+           :service  httpd-port
+           :server   t
+           :host     httpd-host
+           :family   httpd-ip-family
+           :filter   'httpd--filter
+           :filter-multibyte nil
+           :coding   'binary
+           :log      'httpd--log))))
 
 (defun markdown-preview:open-browser ()
   "Open browser."
@@ -133,11 +129,15 @@
   (when markdown-preview:websocket-client
     (websocket-close markdown-preview:websocket-client))
   (when markdown-preview:websocket-server
-    ;; (websocket-server-close markdown-preview:websocket-server)
-    (delete-process markdown-preview:websocket-server)
-    (setq markdown-preview:websocket-server nil))
+    (websocket-server-close markdown-preview:websocket-server))
   (when markdown-preview:http-server
-    (ws-stop markdown-preview:http-server)
+    (when (process-status markdown-preview:http-server)
+      (delete-process markdown-preview:http-server)
+      ;; close connection
+      (dolist (i (process-list))
+        (when (and (string-prefix-p "httpd <127.0.0.1" (process-name i))
+                   (equal (process-type i) 'network))
+          (delete-process i))))
     (setq markdown-preview:http-server nil))
   (remove-hook 'after-save-hook 'markdown-preview:send-to-server t))
 

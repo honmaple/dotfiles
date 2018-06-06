@@ -114,6 +114,8 @@
                 ("Saturday" . 6)))))
 
 (defun maple/truncate-lines()
+  "Turn on `truncate-lines`."
+  (visual-line-mode t)
   (toggle-truncate-lines t))
 
 (defun maple/close-nlinum()

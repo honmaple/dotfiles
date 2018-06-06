@@ -16,7 +16,7 @@
         python-shell-completion-native-enable nil)
         ;; python-shell-interpreter "ipython"
         ;; python-shell-interpreter-args "--simple-prompt -i")
-  (setenv "PYTHONPATH" "$PYTHONPATH:/usr/lib/python3.6/site-packages")
+  (setenv "PYTHONPATH" "$PYTHONPATH:/usr/lib/python3.6/site-packages:$HOME/.local/lib/python3.6/site-packages")
   (defun maple/run-python ()
     (interactive)
     (python-shell-get-or-create-process)
@@ -33,7 +33,7 @@
 
 (use-package yapfify
   ;; 保存时自动格式化
-  ;; :init (add-hook 'python-mode-hook 'yapf-mode)
+  ;; :hook (python-mode . yapf-mode)
   :evil-bind
   (normal python-mode-map
           [f6] 'yapfify-buffer))

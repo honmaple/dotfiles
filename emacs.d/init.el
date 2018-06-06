@@ -50,8 +50,8 @@
   (require 'init-auto-insert)  ;;自动插入文件头
   (require 'init-evil)
 
-  (require 'init-helm)
-  ;; (require 'init-ivy)
+  ;; (require 'init-helm)
+  (require 'init-ivy)
   (require 'init-dired)   ;;自带文件管理
   (require 'init-file)   ;;文件操作
   (require 'init-buffer)   ;;buffer操作

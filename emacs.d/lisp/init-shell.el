@@ -5,7 +5,7 @@
 (use-package shell-pop
   :init
   (setq shell-pop-window-position "bottom"
-        shell-pop-window-size 30
+        shell-pop-window-size 20
         shell-pop-term-shell "/bin/bash"
         shell-pop-full-span t
         shell-pop-shell-type (if maple-system-is-windows

@@ -18,7 +18,7 @@
   :ensure spaceline
   :hook (after-init . spaceline-spacemacs-theme)
   :config
-  (setq spaceline-byte-compile nil)
+  (setq spaceline-byte-compile t)
   (setq powerline-default-separator 'wave
         spaceline-window-numbers-unicode t
         spaceline-highlight-face-func 'spaceline-highlight-face-evil-state
@@ -63,8 +63,7 @@
 ;;   :ensure nil
 ;;   :hook ((prog-mode text-mode) . display-line-numbers-mode)
 ;;   :config
-;;   (setq display-line-numbers-width 1
-;;         display-line-numbers-type 'relative))
+;;   (setq display-line-numbers-type 'relative))
 
 (use-package nlinum
   :hook ((prog-mode text-mode) . nlinum-mode))

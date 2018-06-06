@@ -36,8 +36,7 @@
   :ensure nil
   :commands image-dired
   :config
-  (setq image-dired-dir (concat maple-cache-directory
-                                "image-dired")
+  (setq image-dired-dir (concat maple-cache-directory "image-dired")
         image-dired-thumbnail-storage 'standard)
   :evil-bind
   (normal image-dired-thumbnail-mode-map
@@ -47,6 +46,9 @@
           "h"  'image-dired-backward-image
           "q"  'image-dired-kill-buffer-and-window
           (kbd "RET") 'image-dired-display-thumbnail-original-image))
+
+(use-package diredfl
+  :hook (dired-mode . diredfl-mode))
 
 (use-package image-mode
   :ensure nil

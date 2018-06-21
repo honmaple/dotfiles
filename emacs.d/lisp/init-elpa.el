@@ -52,8 +52,7 @@
     "Upgrade packages."
     (interactive)
     (package-refresh-contents)
-    (let ((packages (package-utils-with-packages-list t
-                                                      (mapcar #'cdr (package-menu--find-upgrades)))))
+    (let ((packages (package-utils-with-packages-list t (mapcar #'cdr (package-menu--find-upgrades)))))
       (if packages
           (when (yes-or-no-p
                  (message "Upgrade %d package%s (%s)? "
@@ -77,10 +76,11 @@
   :if maple-system-is-mac
   :init (exec-path-from-shell-initialize))
 
+
 (use-package server
   :ensure nil
-  :commands (server-running-p)
-  :init
+  :demand t
+  :config
   (unless (server-running-p)
     (add-hook 'after-init-hook #'server-mode)))
 

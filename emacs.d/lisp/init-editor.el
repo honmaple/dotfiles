@@ -51,6 +51,11 @@
 ;;   :evil-bind
 ;;   (normal prog-mode-map
 ;;           "gd"  'dumb-jump-go))
+(use-package tramp
+  :ensure nil
+  :config
+  (setq tramp-ssh-controlmaster-options
+        "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no"))
 
 (use-package isearch
   :ensure nil

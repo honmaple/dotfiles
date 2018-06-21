@@ -1,6 +1,15 @@
 ;; 必须的,使用频率排序
 (use-package smex)
 
+(use-package wgrep
+  :init
+  (defun maple/wgrep-finish-edit()
+    (interactive)
+    (wgrep-finish-edit)
+    (quit-window))
+  :bind (:map wgrep-mode-map
+              ("C-c C-c" . maple/wgrep-finish-edit)))
+
 (use-package counsel
   :diminish (ivy-mode counsel-mode)
   :hook
@@ -20,11 +29,16 @@
         ivy-format-function #'ivy-format-function-line
         ;; disable magic slash on non-match
         ;; ~ to /home/user
-        ivy-magic-tilde nil
+        ivy-magic-tilde t
         ivy-use-virtual-buffers nil
         ivy-virtual-abbreviate 'fullpath
-        ivy-magic-slash-non-match-action nil)
+        ;; ivy-magic-slash-non-match-action 'ivy-magic-slash-non-match-create)
+        ivy-magic-slash-non-match-action 'ivy-magic-slash-non-match-cd-selected
+        ;; fuzzy match
+        ivy-re-builders-alist
+        '((t   . ivy--regex-ignore-order)))
 
+  ;; custom ivy display function
   (defvar maple/ivy-format-padding nil)
 
   (defun maple/ivy-read-around (-ivy-read &rest args)
@@ -32,8 +46,6 @@
     (let ((maple/ivy-format-padding (make-string (window-left-column) ?\s)))
       (setcar args (concat maple/ivy-format-padding (car args)))
       (apply -ivy-read args)))
-
-  (advice-add 'ivy-read :around #'maple/ivy-read-around)
 
   (defun maple/ivy-format-function (cands)
     "Transform CANDS into a string for minibuffer."
@@ -44,72 +56,79 @@
        (concat maple/ivy-format-padding str))
      cands "\n"))
 
+  (advice-add 'ivy-read :around #'maple/ivy-read-around)
   (setq ivy-count-format ""
         ivy-format-function 'maple/ivy-format-function)
-  ;; (setq ivy-re-builders-alist
-  ;;       '((t . ivy--regex-fuzzy)))
-  ;; (setq confirm-nonexistent-file-or-buffer t)
-  (setq ivy-re-builders-alist
-        '((t   . ivy--regex-ignore-order)))
+
+  (defun maple/counsel-ag(-counsel-ag &optional initial-input initial-directory extra-ag-args ag-prompt)
+    (when (and (not initial-input) (region-active-p))
+      (setq initial-input (buffer-substring-no-properties
+                           (region-beginning) (region-end))))
+    (unless initial-directory (setq initial-directory default-directory))
+    (funcall -counsel-ag initial-input initial-directory extra-ag-args ag-prompt))
+
+  (advice-add 'counsel-ag :around #'maple/counsel-ag)
+
+  (defun maple/ivy-done()
+    (interactive)
+    (ivy-partial-or-done)
+    (delete-minibuffer-contents)
+    (let ((ivy-text (ivy-state-current ivy-last)) dir)
+      (insert ivy-text)
+      (when (and (eq (ivy-state-collection ivy-last) #'read-file-name-internal)
+                 (setq dir (ivy-expand-file-if-directory ivy-text)))
+        (ivy--cd dir))))
+
+
+  (defun maple/ivy-edit ()
+    "Edit the current search results in a buffer using wgrep."
+    (interactive)
+    (run-with-idle-timer 0 nil 'ivy-wgrep-change-to-wgrep-mode)
+    (ivy-occur))
+
   (setq completing-read-function 'ivy-completing-read
         read-file-name-function  'read-file-name-default)
+
   (after-load 'evil
     (evil-set-initial-state 'ivy-occur-grep-mode 'normal)
     (evil-make-overriding-map ivy-occur-mode-map 'normal))
 
-  ;; Integration with `projectile'
   (after-load 'projectile
     (setq projectile-completion-system 'ivy))
 
-  (defadvice find-file (before make-directory-maybe (filename &optional wildcards) activate)
-    "Create parent directory if not exists while visiting file."
-    (unless (file-exists-p filename)
-      (let ((dir (file-name-directory filename)))
-        (unless (file-exists-p dir)
-          (if (y-or-n-p (format "Directory %s does not exist,do you want you create it? " dir))
-              (make-directory dir)
-            (keyboard-quit))))))
+  (after-load 'magit
+    (setq magit-completing-read-function 'ivy-completing-read))
+
+
+  (use-package ivy-rich
+    :init
+    (setq ivy-virtual-abbreviate 'full
+          ivy-rich-path-style 'abbrev
+          ivy-rich-switch-buffer-align-virtual-buffer t)
+    (ivy-set-display-transformer 'ivy-switch-buffer
+                                 'ivy-rich-switch-buffer-transformer))
+
+  :custom-face
+  (ivy-highlight-face ((t (:background nil))))
   :bind (("M-x" . counsel-M-x)
          ("C-x C-m" . counsel-M-x)
          ("M-y" . counsel-yank-pop)
          :map ivy-minibuffer-map
          ("C-j" . ivy-next-line)
          ("C-k" . ivy-previous-line)
-         ("<tab>" . ivy-partial)
-         ("TAB" . ivy-partial)
-         ("C-c C-e" . ivy-occur)
+         ("<tab>" . maple/ivy-done)
+         ("TAB" . maple/ivy-done)
+         ("C-c C-e" . maple/ivy-edit)
+         ("C-h" . [backspace])
          ([escape] . minibuffer-keyboard-quit)
          :map counsel-find-file-map
          ("C-h" . counsel-up-directory)
-         ("<tab>" . ivy-alt-done)
-         ("TAB" . ivy-alt-done)
+         ("<tab>" . maple/ivy-done)
+         ("TAB" . maple/ivy-done)
          ("C-<return>" . ivy-immediate-done)))
 
-(use-package ivy-rich
-  :after (ivy)
-  :config
-  (setq ivy-virtual-abbreviate 'full
-        ivy-rich-path-style 'abbrev
-        ivy-rich-switch-buffer-align-virtual-buffer t)
-  (ivy-set-display-transformer 'ivy-switch-buffer
-                               'ivy-rich-switch-buffer-transformer))
 
 
 (use-package counsel-projectile)
-
-
-;; (setq ivy-count-format "")
-;; (let ((padding (make-string (window-left-column) ?\s)))
-;;   (ivy-read (concat padding "Pick:")
-;;             (mapcar (lambda (x)
-;;                       (concat padding (number-to-string x)))
-;;                     (number-sequence 1 10))))
-;; (defun maple/ivy-read-around (-ivy-read &rest args)
-;;   (let ((padding (make-string (window-left-column) ?\s)))
-;;     (setcar args (concat padding (car args)))
-;;     (apply -ivy-read args)))
-
-;; (advice-add 'ivy-read :around #'maple/ivy-read-around)
-
 
 (provide 'init-ivy)

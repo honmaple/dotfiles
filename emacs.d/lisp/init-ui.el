@@ -18,7 +18,7 @@
   :ensure spaceline
   :hook (after-init . spaceline-spacemacs-theme)
   :config
-  (setq spaceline-byte-compile t)
+  (setq spaceline-byte-compile nil)
   (setq powerline-default-separator 'wave
         spaceline-window-numbers-unicode t
         spaceline-highlight-face-func 'spaceline-highlight-face-evil-state
@@ -97,8 +97,8 @@
 ;; 相同字符
 (use-package highlight-symbol
   :hook
-  ((prog-mode html-mode css-mode org-mode) . highlight-symbol-nav-mode)
-  ((prog-mode html-mode css-mode) . highlight-symbol-mode)
+  ((prog-mode text-mode) . highlight-symbol-nav-mode)
+  ((prog-mode text-mode) . highlight-symbol-mode)
   :diminish highlight-symbol-mode)
 
 

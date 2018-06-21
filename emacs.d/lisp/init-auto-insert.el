@@ -6,47 +6,44 @@
 
 (use-package autoinsert
   :ensure nil
-  :hook (after-init . auto-insert-mode)
+  :hook (prog-mode . auto-insert-mode)
   :config
-  (progn
-    (defun maple/insert-string(&optional prefix)
-      (replace-regexp-in-string
-       "^" (or prefix comment-start)
-       (concat
-        (make-string 80 ?*) "\n"
-        "Copyright © " (substring (current-time-string) -4) " " (user-full-name) "\n"
-        "File Name: " (file-name-nondirectory buffer-file-name) "\n"
-        "Author: " (user-full-name)"\n"
-        "Email: " user-mail-address "\n"
-        "Created: " (format-time-string "%Y-%m-%d %T (%Z)" (current-time)) "\n"
-        "Last Update: \n"
-        "         By: \n"
-        "Description: \n"
-        (make-string 80 ?*))))
+  (defun maple/insert-string(&optional prefix)
+    (replace-regexp-in-string
+     "^" (or prefix comment-start)
+     (concat
+      (make-string 80 ?*) "\n"
+      "Copyright © " (substring (current-time-string) -4) " " (user-full-name) "\n"
+      "File Name: " (file-name-nondirectory buffer-file-name) "\n"
+      "Author: " (user-full-name)"\n"
+      "Email: " user-mail-address "\n"
+      "Created: " (format-time-string "%Y-%m-%d %T (%Z)" (current-time)) "\n"
+      "Last Update: \n"
+      "         By: \n"
+      "Description: \n"
+      (make-string 80 ?*))))
 
-    (setq auto-insert-query nil
-          auto-insert-alist
-          '(((ruby-mode . "Ruby program") nil
-             "#!/usr/bin/env ruby\n"
-             "# -*- encoding: utf-8 -*-\n"
-             (maple/insert-string) "\n")
-            ((python-mode . "Python program") nil
-             "#!/usr/bin/env python\n"
-             "# -*- coding: utf-8 -*-\n"
-             (maple/insert-string) "\n")
-            ((c-mode . "C program") nil
-             "/*"
-             (string-trim-left (maple/insert-string " ")) "*/\n"
-             "#include<stdio.h>\n"
-             "#include<string.h>\n")
-            ((sh-mode . "Shell script") nil
-             "#!/bin/bash\n"
-             (maple/insert-string) "\n")
-            ((go-mode . "Go program") nil
-             "/*"
-             (string-trim-left (maple/insert-string " ")) "*/\n")))
-    )
-  )
+  (setq auto-insert-query nil
+        auto-insert-alist
+        '(((ruby-mode . "Ruby program") nil
+           "#!/usr/bin/env ruby\n"
+           "# -*- encoding: utf-8 -*-\n"
+           (maple/insert-string) "\n")
+          ((python-mode . "Python program") nil
+           "#!/usr/bin/env python\n"
+           "# -*- coding: utf-8 -*-\n"
+           (maple/insert-string) "\n")
+          ((c-mode . "C program") nil
+           "/*"
+           (string-trim-left (maple/insert-string " ")) "*/\n"
+           "#include<stdio.h>\n"
+           "#include<string.h>\n")
+          ((sh-mode . "Shell script") nil
+           "#!/bin/bash\n"
+           (maple/insert-string) "\n")
+          ((go-mode . "Go program") nil
+           "/*"
+           (string-trim-left (maple/insert-string " ")) "*/\n"))))
 
 
 (use-package time-stamp

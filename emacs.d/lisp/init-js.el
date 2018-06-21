@@ -8,8 +8,6 @@
         js2-mode-show-parse-errors nil
         js2-mode-show-strict-warnings nil))
 
-(use-package json-mode)
-
 ;;; Coffeescript
 (use-package coffee-mode
   :mode ("\\.coffee\\.erb\\'" . coffee-mode)

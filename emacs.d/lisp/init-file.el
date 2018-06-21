@@ -124,7 +124,8 @@
   "Edit file with sudo ARG."
   (interactive "p")
   (let ((fname (if (or arg (not buffer-file-name))
-                   (read-file-name "File: ") buffer-file-name)))
+                   (read-file-name "File: ")
+                 buffer-file-name)))
     (find-file
      (cond ((string-match-p "^/ssh:" fname)
             (with-temp-buffer

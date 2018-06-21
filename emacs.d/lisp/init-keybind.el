@@ -262,7 +262,6 @@
 
 
 ;; helm
-
 ;; (evil-leader/set-key
 ;;   "," 'helm-M-x
 ;;   "/" 'helm-do-ag-this-file ;;当前文件内容
@@ -273,14 +272,12 @@
 ;;   "fW" 'helm-do-ag
 ;;   "sj" 'helm-semantic-or-imenu
 ;;   "bb" 'helm-buffers-list  ;;显示缓冲区(已经打开的文件)
-;;   "ph"  'helm-projectile ;;在工程内查找
-;;   "pw"  'helm-projectile-ag
-;;   )
+;;   "pw"  'helm-projectile-ag)
 
 ;; ivy
 (evil-leader/set-key
   "," 'counsel-M-x
-  "/" 'counsel-do-ag-this-file ;;当前文件内容
+  "/" 'swiper ;;当前文件内容
   "ff" 'find-file
   "fF" 'counsel-find
   "fr" 'counsel-recentf

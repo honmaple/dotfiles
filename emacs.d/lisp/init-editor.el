@@ -46,8 +46,6 @@
 ;;   :hook (after-init which-function-mode))
 
 ;; (use-package dumb-jump
-;;   :config
-;;   (setq dumb-jump-selector 'helm)
 ;;   :evil-bind
 ;;   (normal prog-mode-map
 ;;           "gd"  'dumb-jump-go))
@@ -73,12 +71,7 @@
 
 (use-package eldoc
   :ensure nil
-  :diminish eldoc-mode
-  :hook
-  ;; enable eldoc in `eval-expression'
-  (eval-expression-minibuffer-setup . eldoc-mode)
-  ;; enable eldoc in IELM
-  (ielm-mode . eldoc-mode))
+  :diminish eldoc-mode)
 
 (use-package comint
   :ensure nil

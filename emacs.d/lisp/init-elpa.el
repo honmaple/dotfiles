@@ -42,8 +42,8 @@
   (setq async-bytecomp-allowed-packages '(all)))
 
 ;; (use-package benchmark-init
-;;   :demand t
-;;   :config (add-hook 'after-init-hook 'benchmark-init/deactivate))
+;;   :init (benchmark-init/activate)
+;;   :hook (after-init . benchmark-init/deactivate))
 
 (use-package package-utils
   :commands (package-utils-with-packages-list)
@@ -76,13 +76,10 @@
   :if maple-system-is-mac
   :init (exec-path-from-shell-initialize))
 
-
 (use-package server
   :ensure nil
-  :demand t
-  :config
-  (unless (server-running-p)
-    (add-hook 'after-init-hook #'server-mode)))
+  :commands (server-running-p)
+  :init (unless (server-running-p) (server-start)))
 
 (provide 'init-elpa)
 

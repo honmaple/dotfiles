@@ -57,7 +57,7 @@
   (add-hook 'helm-before-initialize-hook #'maple/helm-hide-header-line)
   (add-hook 'helm-after-initialize-hook #'maple/helm-hide-cursor)
   ;; (add-hook 'helm-after-initialize-hook 'maple/helm-hide-mode-line)
-  (after-load 'projectile
+  (with-eval-after-load 'projectile
     (setq projectile-completion-system 'helm))
   (helm-mode 1)
   :bind (("M-x" . helm-M-x)

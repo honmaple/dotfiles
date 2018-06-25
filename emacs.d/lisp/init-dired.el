@@ -17,7 +17,8 @@
   :ensure nil
   :hook (dired-mode . dired-async-mode)
   :config
-  (setq dired-recursive-copies 'always) ;;递归拷贝
+  (setq dired-recursive-copies 'always ;;递归拷贝
+        dired-recursive-deletes 'always)
   (put 'dired-find-alternate-file 'disabled nil)  ;; 只有一个buffer
   :bind (:map dired-mode-map
               ("H" . dired-omit-mode)
@@ -26,15 +27,15 @@
 
 (use-package dired-x
   :ensure nil
-  :commands (dired-jump dired-jump-other-window)
   :hook (dired-mode . dired-omit-mode)
   :config
-  (setq dired-omit-files
+  (setq dired-omit-verbose nil
+        dired-omit-files
         (concat dired-omit-files "\\|^\\..+$\\|\\.pdf$\\|\\.tex$\\|\\*~$")))
 
 (use-package image-dired
   :ensure nil
-  :commands image-dired
+  :commands (image-dired)
   :config
   (setq image-dired-dir (concat maple-cache-directory "image-dired")
         image-dired-thumbnail-storage 'standard)

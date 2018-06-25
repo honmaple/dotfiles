@@ -10,12 +10,13 @@
   :after magit)
 
 (use-package magit
+  :commands (magit-status)
   :config
   (setq magit-completing-read-function 'magit-builtin-completing-read
         magit-revision-show-gravatars '("^Author:     " . "^Commit:     ")
         magit-process-popup-time 10
         magit-diff-refine-hunk t)
-  (after-load 'fullframe
+  (with-eval-after-load 'fullframe
     (fullframe magit-status magit-mode-quit-window))
   :bind
   (("C-x g" . magit-status)
@@ -30,9 +31,10 @@
 
 (use-package git-timemachine
   :config
-  (evil-make-overriding-map git-timemachine-mode-map 'normal)
-  ;; force update evil keymaps after git-timemachine-mode loaded
-  (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps))
+  (with-eval-after-load 'evil
+    (evil-make-overriding-map git-timemachine-mode-map 'normal)
+    ;; force update evil keymaps after git-timemachine-mode loaded
+    (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps)))
 
 (use-package git-gutter-fringe
   :diminish git-gutter-mode

@@ -21,10 +21,7 @@
   (setq spaceline-byte-compile nil)
   (setq powerline-default-separator 'wave
         spaceline-window-numbers-unicode t
-        spaceline-highlight-face-func 'spaceline-highlight-face-evil-state
-        spaceline-helm-help-p nil)
-  (with-eval-after-load 'helm
-    (spaceline-helm-mode t)))
+        spaceline-highlight-face-func 'spaceline-highlight-face-evil-state))
 
 (use-package hydra
   :config
@@ -59,14 +56,14 @@
 
 
 ;; this is ugly
-;; (use-package display-line-numbers
-;;   :ensure nil
-;;   :hook ((prog-mode text-mode) . display-line-numbers-mode)
-;;   :config
-;;   (setq display-line-numbers-type 'relative))
+(use-package display-line-numbers
+  :ensure nil
+  :hook ((prog-mode text-mode) . display-line-numbers-mode)
+  :config
+  (setq display-line-numbers-type 'relative))
 
-(use-package nlinum
-  :hook ((prog-mode text-mode) . nlinum-mode))
+;; (use-package nlinum
+;;   :hook ((prog-mode text-mode) . nlinum-mode))
 
 ;; (use-package nlinum-relative
 ;;   :hook (nlinum-mode . nlinum-relative-on)
@@ -107,7 +104,7 @@
   :config
   ;; additional extensions
   ;; evil
-  (after-load 'evil
+  (with-eval-after-load 'evil
     (vhl/define-extension 'evil
                           'evil-move
                           'evil-paste-after
@@ -115,7 +112,7 @@
                           'evil-paste-pop)
     (vhl/install-extension 'evil))
   ;; undo-tree
-  (after-load 'undo-tree
+  (with-eval-after-load 'undo-tree
     (vhl/define-extension 'undo-tree
                           'undo-tree-move
                           'undo-tree-yank)
@@ -126,7 +123,8 @@
 ;; 显示缩进
 (use-package highlight-indent-guides
   :hook (prog-mode . highlight-indent-guides-mode)
-  :config (setq highlight-indent-guides-method 'character)
+  :config
+  (setq highlight-indent-guides-method 'character)
   :diminish highlight-indent-guides-mode)
 
 

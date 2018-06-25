@@ -35,9 +35,6 @@
 (setq-default tab-width 4
               major-mode 'conf-mode
               fill-column 80
-              regex-tool-backend 'perl
-              blink-cursor-interval 0.4
-              buffers-menu-max-size 30
               case-fold-search t
               column-number-mode t
               ;; delete-selection-mode t ;;粘贴删除选中区域
@@ -45,8 +42,8 @@
               make-backup-files nil ;;禁止生成类似init.el~文件
               save-interprogram-paste-before-kill t
               set-mark-command-repeat-pop t
-              tooltip-delay 1
               x-gtk-use-system-tooltips nil
+              x-wait-for-event-timeout nil
               truncate-lines t
               truncate-partial-width-windows t
               ad-redefinition-action 'accept)
@@ -64,6 +61,16 @@
 (setq scroll-preserve-screen-position t
       scroll-margin 15
       scroll-conservatively 101)
+
+(use-package frame
+  :ensure nil
+  ;; blink-cursor-interval 0.4
+  :init (blink-cursor-mode -1))
+
+(use-package tooltip
+  :ensure nil
+  :config
+  (setq tooltip-delay 1))
 
 ;; 设置默认浏览器
 (use-package browse-url

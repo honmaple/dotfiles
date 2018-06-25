@@ -72,7 +72,7 @@ SEQ, START and END are the same arguments as for `cl-subseq'"
 (defun startify-init()
   (recentf-mode)
   (startify-insert-file-list
-   "Files" 'helm-recentf
+   "Files" 'ivy-recentf
    (startify-subseq recentf-list 0 10)
    'find-file-existing)
   (startify-insert-file-list
@@ -81,7 +81,7 @@ SEQ, START and END are the same arguments as for `cl-subseq'"
    'projectile-switch-project-by-name)
   (require 'bookmark)
   (startify-insert-file-list
-   "Bookmarks" 'helm-bookmarks
+   "Bookmarks" 'counsel-bookmark
    (startify-subseq (bookmark-all-names) 0 10)
    'bookmark-jump)
   (startify--insert-text "q" "quit" 'save-buffers-kill-terminal)

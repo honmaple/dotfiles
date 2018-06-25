@@ -1,4 +1,5 @@
 (use-package esup)
+(use-package ctable)
 (use-package docker-tramp)
 (use-package dockerfile-mode)
 

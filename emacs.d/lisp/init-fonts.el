@@ -2,8 +2,7 @@
 
 
 (use-package fontawesome
-  :commands (helm-fontawesome)
-  :load-path "site-lisp/fontawesome")
+  :commands (counsel-fontawesome))
 
 ;; Changing font sizes
 (use-package default-text-scale

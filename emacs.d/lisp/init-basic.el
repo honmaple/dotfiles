@@ -1,13 +1,5 @@
 (eval-when-compile (require 'cl))
 
-(if (fboundp 'with-eval-after-load)
-    (defalias 'after-load 'with-eval-after-load)
-  (defmacro after-load (feature &rest body)
-    "After FEATURE is loaded, evaluate BODY."
-    (declare (indent defun))
-    `(eval-after-load ,feature
-       '(progn ,@body))))
-
 (defconst maple-cache-directory
   (expand-file-name (concat user-emacs-directory "cache/"))
   "Maple storage area for persistent files.")
@@ -23,7 +15,7 @@
 
 (defun maple/set-quit-key (map)
   "Use q `quit-window` in MAP."
-  (after-load 'evil
+  (with-eval-after-load 'evil
     (evil-define-key 'normal map
       (kbd "q") 'quit-window)))
 
@@ -131,8 +123,7 @@
                            (buffer-substring (point-min) (point-max)))))
         (kill-buffer buffer-name)
         (with-current-buffer (get-buffer-create buffer-name)
-          (when restore
-            (insert buffer-text))))
+          (when restore (insert buffer-text))))
     (message (format "%s buffer is not exists" buffer-name))))
 
 (defun maple/startup-buffer()

@@ -76,7 +76,7 @@
   (require 'init-org)
   (require 'init-tool))
 
-(after-load 'evil-leader
+(with-eval-after-load 'evil-leader
   (require 'init-keybind))
 
 ;;----------------------------------------------------------------------------

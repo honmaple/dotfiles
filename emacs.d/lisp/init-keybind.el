@@ -286,8 +286,7 @@
   "sj" 'counsel-semantic-or-imenu
   "bb" 'ivy-switch-buffer  ;;显示缓冲区(已经打开的文件)
   "ph"  'counsel-projectile ;;在工程内查找
-  "pw"  'counsel-projectile-ag
-  )
+  "pw"  'counsel-projectile-ag)
 
 (provide 'init-keybind)
 ;;; init-keybind.el ends here

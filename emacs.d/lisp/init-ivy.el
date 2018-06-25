@@ -10,13 +10,13 @@
   :bind (:map wgrep-mode-map
               ("C-c C-c" . maple/wgrep-finish-edit)))
 
-(use-package counsel
-  :diminish (ivy-mode counsel-mode)
-  :hook
-  (after-init . ivy-mode)
-  (ivy-mode . counsel-mode)
+(use-package ivy
+  :diminish (ivy-mode)
+  :hook (after-init . ivy-mode)
   :config
-  (setq enable-recursive-minibuffers t)
+  (setq enable-recursive-minibuffers t
+        completing-read-function 'ivy-completing-read)
+
   (setq ivy-height 12
         ivy-do-completion-in-region t
         ivy-use-selectable-prompt t
@@ -25,20 +25,23 @@
         ivy-fixed-height-minibuffer t
         ;; Don't use ^ as initial input
         ivy-initial-inputs-alist nil
-        ;; highlight til EOL
-        ivy-format-function #'ivy-format-function-line
         ;; disable magic slash on non-match
         ;; ~ to /home/user
         ivy-magic-tilde t
         ivy-use-virtual-buffers nil
-        ivy-virtual-abbreviate 'fullpath
+        ivy-virtual-abbreviate 'full
         ;; ivy-magic-slash-non-match-action 'ivy-magic-slash-non-match-create)
         ivy-magic-slash-non-match-action 'ivy-magic-slash-non-match-cd-selected
+        ;; ivy display
+        ivy-count-format ""
+        ivy-format-function 'maple/ivy-format-function
         ;; fuzzy match
         ivy-re-builders-alist
         '((t   . ivy--regex-ignore-order)))
 
   ;; custom ivy display function
+  (advice-add 'ivy-read :around #'maple/ivy-read-around)
+
   (defvar maple/ivy-format-padding nil)
 
   (defun maple/ivy-read-around (-ivy-read &rest args)
@@ -56,19 +59,7 @@
        (concat maple/ivy-format-padding str))
      cands "\n"))
 
-  (advice-add 'ivy-read :around #'maple/ivy-read-around)
-  (setq ivy-count-format ""
-        ivy-format-function 'maple/ivy-format-function)
-
-  (defun maple/counsel-ag(-counsel-ag &optional initial-input initial-directory extra-ag-args ag-prompt)
-    (when (and (not initial-input) (region-active-p))
-      (setq initial-input (buffer-substring-no-properties
-                           (region-beginning) (region-end))))
-    (unless initial-directory (setq initial-directory default-directory))
-    (funcall -counsel-ag initial-input initial-directory extra-ag-args ag-prompt))
-
-  (advice-add 'counsel-ag :around #'maple/counsel-ag)
-
+  ;; complete or done
   (defun maple/ivy-done()
     (interactive)
     (ivy-partial-or-done)
@@ -79,37 +70,54 @@
                  (setq dir (ivy-expand-file-if-directory ivy-text)))
         (ivy--cd dir))))
 
-
+  ;; ivy-occur custom
   (defun maple/ivy-edit ()
     "Edit the current search results in a buffer using wgrep."
     (interactive)
     (run-with-idle-timer 0 nil 'ivy-wgrep-change-to-wgrep-mode)
     (ivy-occur))
 
-  (setq completing-read-function 'ivy-completing-read
-        read-file-name-function  'read-file-name-default)
-
-  (after-load 'evil
-    (evil-set-initial-state 'ivy-occur-grep-mode 'normal)
+  ;; completion-system
+  (with-eval-after-load 'evil
     (evil-make-overriding-map ivy-occur-mode-map 'normal))
 
-  (after-load 'projectile
+  (with-eval-after-load 'projectile
     (setq projectile-completion-system 'ivy))
 
-  (after-load 'magit
+  (with-eval-after-load 'magit
     (setq magit-completing-read-function 'ivy-completing-read))
-
 
   (use-package ivy-rich
     :init
-    (setq ivy-virtual-abbreviate 'full
-          ivy-rich-path-style 'abbrev
+    (setq ivy-rich-path-style 'abbrev
           ivy-rich-switch-buffer-align-virtual-buffer t)
     (ivy-set-display-transformer 'ivy-switch-buffer
                                  'ivy-rich-switch-buffer-transformer))
-
   :custom-face
-  (ivy-highlight-face ((t (:background nil))))
+  (ivy-highlight-face ((t (:background nil)))))
+
+(use-package counsel
+  :diminish (counsel-mode)
+  :hook (ivy-mode . counsel-mode)
+  :config
+  (setq counsel-preselect-current-file t)
+
+  (defun maple/counsel-up-directory()
+    (interactive)
+    (if (string-equal (ivy--input) "")
+        (counsel-up-directory)
+      (delete-minibuffer-contents)))
+
+  ;; custom counsel-ag
+  (defun maple/counsel-ag(-counsel-ag &optional initial-input initial-directory extra-ag-args ag-prompt)
+    (when (and (not initial-input) (region-active-p))
+      (setq initial-input (buffer-substring-no-properties
+                           (region-beginning) (region-end))))
+    (unless initial-directory (setq initial-directory default-directory))
+    (funcall -counsel-ag initial-input initial-directory extra-ag-args ag-prompt))
+
+  (advice-add 'counsel-ag :around #'maple/counsel-ag)
+
   :bind (("M-x" . counsel-M-x)
          ("C-x C-m" . counsel-M-x)
          ("M-y" . counsel-yank-pop)
@@ -122,12 +130,10 @@
          ("C-h" . [backspace])
          ([escape] . minibuffer-keyboard-quit)
          :map counsel-find-file-map
-         ("C-h" . counsel-up-directory)
+         ("C-h" . maple/counsel-up-directory)
          ("<tab>" . maple/ivy-done)
          ("TAB" . maple/ivy-done)
          ("C-<return>" . ivy-immediate-done)))
-
-
 
 (use-package counsel-projectile)
 

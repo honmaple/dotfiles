@@ -1,6 +1,30 @@
-;;; Find and load the correct package.el
+;;; init-elpa.el --- Initialize elpa configurations.	-*- lexical-binding: t -*-
 
+;; Copyright (C) 2015-2018 lin.jiang
+
+;; Author: lin.jiang <xiyang0807@gmail.com>
+;; URL: https://github.com/honmaple/dotfiles/tree/master/emacs.d
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Evil configurations.
 ;; enter表示安装,d表示删除,x表示执行删除
+;;
+
+;;; Code:
 
 (require 'package)
 (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
@@ -64,10 +88,10 @@
                                               (package-menu-execute t)))
         (message "All packages are already up to date.")))))
 
-(use-package fullframe
-  :config (fullframe list-packages quit-window))
 
 (use-package cl-lib)
+
+(use-package fullframe)
 
 (use-package restart-emacs)
 ;; :config (setq restart-emacs-restore-frames t))
@@ -78,7 +102,7 @@
 
 (use-package server
   :ensure nil
-  :commands (server-running-p)
+  :commands (server-running-p server-start)
   :init (unless (server-running-p) (server-start)))
 
 (provide 'init-elpa)

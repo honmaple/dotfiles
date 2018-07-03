@@ -1,9 +1,39 @@
+;;; init-ui.el --- Initialize ui configurations.	-*- lexical-binding: t -*-
+
+;; Copyright (C) 2015-2018 lin.jiang
+
+;; Author: lin.jiang <xiyang0807@gmail.com>
+;; URL: https://github.com/honmaple/dotfiles/tree/master/emacs.d
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; UI configurations.
+;;
+
+;;; Code:
+
+(eval-when-compile (require 'init-basic))
+
 (use-package monokai-theme)
 (use-package solarized-theme)
 (use-package spacemacs-theme)
 (use-package doom-themes)
 
-(add-hook 'after-init-hook #'maple/switch-theme)
+(maple/add-hook 'after-init-hook
+  (load-theme user-default-theme t))
 
 ;; (use-package mapleline
 ;;   :load-path "site-lisp/maple"
@@ -139,3 +169,5 @@
   :diminish whitespace-mode "ⓦ")
 
 (provide 'init-ui)
+
+;;; init-ui.el ends here

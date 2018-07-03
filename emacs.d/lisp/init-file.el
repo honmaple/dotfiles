@@ -1,15 +1,42 @@
+;;; init-file.el --- Initialize file configurations.	-*- lexical-binding: t -*-
+
+;; Copyright (C) 2015-2018 lin.jiang
+
+;; Author: lin.jiang <xiyang0807@gmail.com>
+;; URL: https://github.com/honmaple/dotfiles/tree/master/emacs.d
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; file configurations.
+;;
+
+;;; Code:
+
 (use-package recentf
   :ensure nil
   :init
+  (maple/add-hook 'find-file-hook
+    (unless recentf-mode
+      (recentf-mode)
+      (recentf-track-opened-file)))
+  :config
   (setq recentf-save-file (concat maple-cache-directory "recentf")
         recentf-max-saved-items 100
-        recentf-auto-cleanup 'never)
-  ;; lazy load recentf
-  (add-hook 'find-file-hook (lambda () (unless recentf-mode
-                                         (recentf-mode)
-                                         (recentf-track-opened-file))))
-  :config
-  (setq recentf-exclude (list "\\.\\(png\\|jpg\\)\\'"
+        recentf-auto-cleanup 'never
+        recentf-exclude (list "\\.\\(png\\|jpg\\)\\'"
                               "COMMIT_EDITMSG\\'"
                               (expand-file-name maple-cache-directory)
                               (expand-file-name package-user-dir))))
@@ -62,13 +89,6 @@
          ("^" . neotree-select-up-node))
   )
 
-;; (use-package desktop
-;;   :ensure nil
-;;   :init
-;;   (setq desktop-dirname maple-cache-directory)
-;;   :config
-;;   (push maple-cache-directory desktop-path))
-
 (use-package undo-tree
   :ensure nil
   :hook (after-init . global-undo-tree-mode)
@@ -81,7 +101,6 @@
   (unless (file-exists-p (concat maple-cache-directory "undo-tree"))
     (make-directory (concat maple-cache-directory "undo-tree")))
   :diminish undo-tree-mode)
-
 
 (defun maple/open-init-file()
   (interactive)
@@ -227,3 +246,5 @@ the current state and point position."
 (add-hook 'find-file-hook 'maple/check-large-file)
 
 (provide 'init-file)
+
+;;; init-file.el ends here

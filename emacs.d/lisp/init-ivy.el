@@ -1,8 +1,35 @@
+;;; init-ivy.el --- Initialize ivy configurations.	-*- lexical-binding: t -*-
+
+;; Copyright (C) 2015-2018 lin.jiang
+
+;; Author: lin.jiang <xiyang0807@gmail.com>
+;; URL: https://github.com/honmaple/dotfiles/tree/master/emacs.d
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Ivy configurations.
+;;
+
+;;; Code:
+
 ;; 必须的,使用频率排序
 (use-package smex)
 
 (use-package wgrep
-  :init
+  :config
   (defun maple/wgrep-finish-edit()
     (interactive)
     (wgrep-finish-edit)
@@ -13,6 +40,9 @@
 (use-package ivy
   :diminish (ivy-mode)
   :hook (after-init . ivy-mode)
+  :defines
+  (magit-completing-read-function
+   projectile-completion-system)
   :config
   (setq enable-recursive-minibuffers t
         completing-read-function 'ivy-completing-read)
@@ -31,7 +61,7 @@
         ivy-use-virtual-buffers nil
         ivy-virtual-abbreviate 'full
         ;; ivy-magic-slash-non-match-action 'ivy-magic-slash-non-match-create)
-        ivy-magic-slash-non-match-action 'ivy-magic-slash-non-match-cd-selected
+        ;; ivy-magic-slash-non-match-action nil
         ;; ivy display
         ivy-count-format ""
         ivy-format-function 'maple/ivy-format-function
@@ -76,6 +106,16 @@
     (interactive)
     (run-with-idle-timer 0 nil 'ivy-wgrep-change-to-wgrep-mode)
     (ivy-occur))
+
+  ;; custom find-file
+  (defadvice find-file (before make-directory-maybe (filename &optional wildcards) activate)
+    "Create parent directory if not exists while visiting file."
+    (unless (file-exists-p filename)
+      (let ((dir (file-name-directory filename)))
+        (unless (file-exists-p dir)
+          (if (y-or-n-p (format "Directory %s does not exist,do you want you create it? " dir))
+              (make-directory dir)
+            (keyboard-quit))))))
 
   ;; completion-system
   (with-eval-after-load 'evil
@@ -138,3 +178,5 @@
 (use-package counsel-projectile)
 
 (provide 'init-ivy)
+
+;;; init-ivy.el ends here

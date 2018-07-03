@@ -1,3 +1,30 @@
+;;; init-company.el --- Initialize company configurations.	-*- lexical-binding: t -*-
+
+;; Copyright (C) 2015-2018 lin.jiang
+
+;; Author: lin.jiang <xiyang0807@gmail.com>
+;; URL: https://github.com/honmaple/dotfiles/tree/master/emacs.d
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Basic configurations.
+;;
+
+;;; Code:
+
 (use-package yasnippet
   :diminish yas-minor-mode
   :hook (after-init . yas-global-mode)
@@ -9,7 +36,7 @@
 (use-package company
   :diminish company-mode " ⓐ"
   :hook (after-init . global-company-mode)
-  :init
+  :config
   (setq company-idle-delay 0.1
         company-show-numbers t
         company-tooltip-limit 15
@@ -23,8 +50,10 @@
                                    gud-mode
                                    rcirc-mode
                                    sql-interactive-mode
-                                   minibuffer-inactive-mode inferior-python-mode shell-mode evil-command-window-mode))
-  :config
+                                   minibuffer-inactive-mode
+                                   inferior-python-mode
+                                   shell-mode
+                                   evil-command-window-mode))
   (defvar company-enable-yas t
     "Enable yasnippet for all backends.")
 
@@ -73,3 +102,5 @@
   (setq company-quickhelp-delay 1))
 
 (provide 'init-company)
+
+;;; init-company.el ends here

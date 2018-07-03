@@ -1,3 +1,30 @@
+;;; init-js.el --- Initialize js configurations.	-*- lexical-binding: t -*-
+
+;; Copyright (C) 2015-2018 lin.jiang
+
+;; Author: lin.jiang <xiyang0807@gmail.com>
+;; URL: https://github.com/honmaple/dotfiles/tree/master/emacs.d
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Javascript configurations.
+;;
+
+;;; Code:
+
 (use-package js2-mode
   :mode ("\\.js\\'" . js2-mode)
   :hook (js2-mode . js2-imenu-extras-mode)
@@ -12,8 +39,7 @@
 (use-package coffee-mode
   :mode ("\\.coffee\\.erb\\'" . coffee-mode)
   :config
-  (setq coffee-js-mode preferred-javascript-mode
-        coffee-tab-width preferred-javascript-indent-level))
+  (setq coffee-tab-width 4))
 
 (use-package tern
   :diminish tern-mode
@@ -21,16 +47,8 @@
   :config (add-to-list 'tern-command "--no-port-file" 'append))
 
 (use-package company-tern
-  :init
-  (defadvice company-tern (before web-mode-set-up-ac-sources activate)
-    "Set `tern-mode' based on current language before running `company-tern'."
-    (if (equal major-mode 'web-mode)
-        (let ((web-mode-cur-language
-               (web-mode-language-at-pos)))
-          (if (or (string= web-mode-cur-language "javascript")
-                  (string= web-mode-cur-language "jsx"))
-              (unless tern-mode (tern-mode))
-            (if tern-mode (tern-mode -1))))))
-  (maple/company-backend 'js2-mode-hook 'company-tern))
+  :init (maple/company-backend 'js2-mode-hook 'company-tern))
 
 (provide 'init-js)
+
+;;; init-js.el ends here

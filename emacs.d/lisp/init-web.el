@@ -1,4 +1,29 @@
-(use-package company-web)
+;;; init-web.el --- Initialize web configurations.	-*- lexical-binding: t -*-
+
+;; Copyright (C) 2015-2018 lin.jiang
+
+;; Author: lin.jiang <xiyang0807@gmail.com>
+;; URL: https://github.com/honmaple/dotfiles/tree/master/emacs.d
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Web configurations.
+;;
+
+;;; Code:
 
 (use-package web-mode
   :mode ("\\.\\(vue\\|html?\\)$")
@@ -19,9 +44,7 @@
                                                    ("{# " . " #")
                                                    ("<% " . " %>")
                                                    ))))
-  (maple/company-backend 'web-mode-hook '(company-web-html
-                                          company-css
-                                          company-tern))
+
   :setq
   (:mode web-mode
          electric-pair-pairs '((?\' . ?\')))
@@ -30,6 +53,12 @@
           (kbd "<f5>") 'browse-url-of-file
           ;; (kbd "<f6>") 'web-beautify-html
           (kbd "za") 'web-mode-fold-or-unfold))
+
+(use-package company-web
+  :functions maple/company-backend
+  :init (maple/company-backend 'web-mode-hook '(company-web-html
+                                                company-css
+                                                company-tern)))
 
 (use-package web-beautify
   :commands (web-beautify-html web-beautify-css web-beautify-js))
@@ -66,3 +95,5 @@
 
 
 (provide 'init-web)
+
+;;; init-web.el ends here

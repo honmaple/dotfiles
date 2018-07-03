@@ -1,3 +1,30 @@
+;;; init-tool.el --- Initialize tool configurations.	-*- lexical-binding: t -*-
+
+;; Copyright (C) 2015-2018 lin.jiang
+
+;; Author: lin.jiang <xiyang0807@gmail.com>
+;; URL: https://github.com/honmaple/dotfiles/tree/master/emacs.d
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; TOOL configurations.
+;;
+
+;;; Code:
+
 (use-package esup)
 (use-package ctable)
 (use-package docker-tramp)
@@ -14,7 +41,8 @@
 (use-package quickrun
   :hook (quickrun--mode . maple/truncate-lines)
   :config
-  (maple/set-quit-key quickrun--mode-map))
+  (with-eval-after-load 'evil
+    (evil-make-overriding-map quickrun--mode-map 'normal)))
 
 (use-package blog-admin
   :load-path "site-lisp/blog-admin"
@@ -31,17 +59,13 @@
         blog-admin-backend-pelican-drafts-dir "content/draft")
   (add-hook 'blog-admin-backend-after-new-post-hook 'find-file)
 
-  (defun blog-set-face()
-    "set face"
-    (interactive)
+  (maple/add-hook 'blog-admin-mode-hook
+    :if (display-graphic-p)
     (set-face-attribute 'variable-pitch nil :font "-Sony-Sony Fixed-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1")
-    (buffer-face-mode))
-
-  (when (display-graphic-p)
-    (add-hook 'blog-admin-mode-hook 'blog-set-face)))
+    (buffer-face-mode)))
 
 (use-package imenu-list
-  :commands imenu-list-minor-mode
+  :commands (imenu-list-minor-mode)
   :evil-state
   (imenu-list-major-mode . emacs)
   :config
@@ -63,10 +87,11 @@
 
 (use-package youdao-dictionary
   :config
-  (maple/set-quit-key youdao-dictionary-mode-map)
   (setq url-automatic-caching t
         youdao-dictionary-search-history-file (concat maple-cache-directory "youdao")
-        youdao-dictionary-use-chinese-word-segmentation t))
+        youdao-dictionary-use-chinese-word-segmentation t)
+  (with-eval-after-load 'evil
+    (evil-make-overriding-map youdao-dictionary-mode-map 'normal)))
 
 ;; (use-package cal-china-x
 ;;   :config
@@ -97,3 +122,5 @@
   :hook (emacs-startup . startify-mode))
 
 (provide 'init-tool)
+
+;;; init-tool.el ends here

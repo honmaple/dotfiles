@@ -1,3 +1,30 @@
+;;; init-basic.el --- Initialize basic configurations.	-*- lexical-binding: t -*-
+
+;; Copyright (C) 2015-2018 lin.jiang
+
+;; Author: lin.jiang <xiyang0807@gmail.com>
+;; URL: https://github.com/honmaple/dotfiles/tree/master/emacs.d
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Basic configurations.
+;;
+
+;;; Code:
+
 (eval-when-compile (require 'cl))
 
 (defconst maple-cache-directory
@@ -13,11 +40,32 @@
 (defconst maple-system-is-windows
   (eq system-type 'windows-nt))
 
-(defun maple/set-quit-key (map)
-  "Use q `quit-window` in MAP."
-  (with-eval-after-load 'evil
-    (evil-define-key 'normal map
-      (kbd "q") 'quit-window)))
+(defun maple/plist-get(args key &optional default)
+  "Custom `plist-get` with ARGS and KEY DEFAULT."
+  (or (plist-get args key)
+      (plist-get (cdr args) key)
+      default))
+
+(defmacro maple/add-hook(hook &rest args)
+  "Custom hook with HOOK and ARGS no need lambda."
+  (declare (indent defun))
+  (let ((if-p (maple/plist-get args :if t))
+        (local-p (maple/plist-get args :local))
+        (append-p (maple/plist-get args :append))
+        (hooks (if (cdr-safe (cadr hook))
+                   (cadr hook)
+                 (list (cadr hook))))
+        (funcs (let ((val (car args)))
+                 (if (memq (car-safe val) '(quote function))
+                     (if (cdr-safe (cadr val)) (cadr val)
+                       (list (cadr val)))
+                   (list `(lambda(&rest _) ,@args)))))
+        forms)
+    (dolist (fn funcs)
+      (setq fn `(function ,fn))
+      (dolist (i hooks)
+        (push `(add-hook ',i ,fn ,append-p ,local-p) forms)))
+    `(progn (when ,if-p ,@forms))))
 
 (defun maple/close-process ()
   "Close current term buffer when `exit' from term buffer."
@@ -31,6 +79,7 @@
                                 (delete-window)))))))
 
 (defun maple/initial-message(&optional prefix)
+  "Show initial message when PREFIX comment."
   (interactive)
   (if (executable-find "fortune")
       (format (concat prefix "%s\n\n%s")
@@ -77,6 +126,7 @@
     (indent-region (point-min) (point-max) nil)))
 
 (defun maple/reload-user-init-file()
+  "Reload init file."
   (interactive)
   (load-file user-init-file))
 
@@ -88,14 +138,16 @@
     (setq key (pop bindings)
           def (pop bindings))))
 
-(defun maple/company-backend (hook backend)
-  "Set HOOK with BACKEND `company-backends'."
-  (add-hook hook `(lambda()
-                    (set (make-variable-buffer-local 'company-backends)
-                         (append (list (company-backend-with-yas ',backend))
-                                 company-default-backends)))))
+(defun maple/company-backend (hook backends)
+  "Set HOOK with BACKENDS `company-backends'."
+  (declare (indent defun))
+  (let ((fn `(set (make-variable-buffer-local 'company-backends)
+                  (append (list (company-backend-with-yas ',backends))
+                          company-default-backends))))
+    (add-hook hook `(lambda() ,fn))))
 
 (defun maple/get-weekday()
+  "Show weekday of today."
   (car (rassq (string-to-number (format-time-string "%w"))
               '(("Sunday" . 0)
                 ("Monday" . 1)
@@ -107,17 +159,16 @@
 
 (defun maple/truncate-lines()
   "Turn on `truncate-lines`."
+  (interactive)
   (visual-line-mode t)
   (toggle-truncate-lines t))
 
 (defun maple/close-nlinum()
+  "Close nlinum."
   (nlinum-mode -1))
 
-(defun maple/switch-theme()
-  (load-theme user-default-theme t))
-
 (defun maple/reopen-buffer(buffer-name &optional restore)
-  "Reopen BUFFER-NAME."
+  "Reopen BUFFER-NAME RESTORE."
   (if (get-buffer buffer-name)
       (let ((buffer-text (with-current-buffer buffer-name
                            (buffer-substring (point-min) (point-max)))))
@@ -127,12 +178,11 @@
     (message (format "%s buffer is not exists" buffer-name))))
 
 (defun maple/startup-buffer()
+  "Start buffer."
   (dolist (buffer '("*Messages*" "*Compile-Log*"))
     (and (get-buffer buffer) (maple/reopen-buffer buffer t))))
 
 (add-hook 'emacs-startup-hook 'maple/startup-buffer)
-
-(fset 'yes-or-no-p 'y-or-n-p)
 
 (provide 'init-basic)
 

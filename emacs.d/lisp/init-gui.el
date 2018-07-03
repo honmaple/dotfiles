@@ -1,3 +1,33 @@
+;;; init-gui.el --- Initialize global configurations.	-*- lexical-binding: t -*-
+
+;; Copyright (C) 2015-2018 lin.jiang
+
+;; Author: lin.jiang <xiyang0807@gmail.com>
+;; URL: https://github.com/honmaple/dotfiles/tree/master/emacs.d
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Gui configurations.
+;;
+
+;;; Code:
+
+(eval-when-compile
+  (require 'init-basic))
+
 ;;----------------------------------------------------------------------------
 ;; Suppress GUI features
 ;;----------------------------------------------------------------------------
@@ -8,19 +38,12 @@
 ;;关闭菜单栏
 (when (featurep 'menu-bar) (menu-bar-mode -1))
 
-
-;; 和上面一样，但要快一些
-;; (push '(tool-bar-lines . 0) default-frame-alist)
-;; (push '(menu-bar-lines . 0) default-frame-alist)
-;; (push '(scroll-bar-lines . 0) default-frame-alist)
-(defun maple/startup()
-  "Set startup."
+(maple/add-hook 'after-init-hook
   ;; (setq initial-major-mode 'fundamental-mode)
+  (fset 'yes-or-no-p 'y-or-n-p)
   (fset 'display-startup-echo-area-message 'ignore)
   (setq inhibit-startup-screen t
         initial-scratch-message (maple/initial-message ";; ")))
-
-(add-hook 'after-init-hook #'maple/startup)
 
 (setq use-file-dialog nil
       use-dialog-box nil
@@ -98,3 +121,5 @@
   :evil-leader ("fb" . bookmark-jump))
 
 (provide 'init-gui)
+
+;;; init-gui.el ends here

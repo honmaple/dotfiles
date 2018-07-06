@@ -52,6 +52,11 @@
   (add-to-list 'semantic-default-submodes
                'global-semantic-idle-summary-mode))
 
+(use-package imenu
+  :ensure nil
+  :config
+  (when (bound-and-true-p semantic-mode)
+    (setq imenu-create-index-function 'semantic-create-imenu-index)))
 
 (use-package elec-pair
   :ensure nil
@@ -70,6 +75,11 @@
 
 ;; (use-package which-func
 ;;   :hook (after-init which-function-mode))
+
+(use-package xref
+  :ensure nil
+  :config
+  (maple/evil-map xref--xref-buffer-mode-map))
 
 ;; (use-package dumb-jump
 ;;   :evil-bind
@@ -101,8 +111,8 @@
 
 (use-package comint
   :ensure nil
-  :evil-state
-  (comint-mode . insert)
+  :evil-state (comint-mode . insert)
+  :hook (comint-mode . maple/close-process)
   :config
   (setq comint-prompt-read-only t)
   :bind
@@ -110,8 +120,7 @@
         ("<up>" . comint-previous-input)
         ("<down>" . comint-next-input)
         ("<escape>" . (lambda() (interactive)
-                        (goto-char (cdr comint-last-prompt))))
-        ))
+                        (goto-char (cdr comint-last-prompt))))))
 
 (use-package hideshow
   :ensure nil

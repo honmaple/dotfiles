@@ -31,10 +31,10 @@
 
   :evil-bind
   (normal org-mode-map
-          (kbd "RET") 'org-open-at-point
-          "t" 'org-todo
-          "TAB" 'org-cycle
-          "<tab>" 'org-cycle))
+          ((kbd "RET") . org-open-at-point)
+          ("t" . org-todo)
+          ("TAB" . org-cycle)
+          ("<tab>" . org-cycle)))
 
 (use-package ob
   :ensure nil

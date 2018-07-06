@@ -42,13 +42,12 @@
 (defun use-package-handler/:evil-bind (name keyword args rest state)
   (use-package-concat
    (mapcar
-    #'(lambda (def)
-        (let ((state (nth 0 def))
-              (map (nth 1 def))
-              (bind (nthcdr 2 def)))
+    #'(lambda (arg)
+        (let ((state (pop arg))
+              (map (pop arg))
+              (bind (mapcan (lambda (i) (list (car i) `',(cdr i))) arg)))
           (eval-after-load 'evil
-            `(evil-define-key ',state ,map ,@bind)))
-        )
+            `(evil-define-key ',state ,map ,@bind))))
     args)
    (use-package-process-keywords name rest state)))
 
@@ -56,20 +55,15 @@
   (use-package-concat
    (mapcar
     #'(lambda (arg)
-        (let ((mode (maple/mplist-get (if (plist-get arg :mode) arg (list arg)) :mode))
-              (binds '()))
+        (let* ((mode (plist-get arg :mode))
+               (binds (mapcan (lambda (i) (list (car i) `',(cdr i)))
+                              (if mode (cdr (cdr arg))
+                                (if (listp (cdr arg)) arg
+                                  (list arg))))))
           (if (not mode)
-              `(eval-after-load 'evil
-                 (evil-leader/set-key ,(car arg) ',(cdr arg)))
-            (mapc #'(lambda (arg)
-                      (setq binds (append binds `(,(car arg) ',(cdr arg)))))
-                  (cdr mode))
-            `(eval-after-load 'evil
-               (evil-leader/set-key-for-mode ',(car mode)
-                 ,@binds))
-            )
-          )
-        )
+              `(eval-after-load 'evil-leader (evil-leader/set-key ,@binds))
+            `(eval-after-load 'evil-leader
+               (evil-leader/set-key-for-mode ',mode ,@binds)))))
     args)
    (use-package-process-keywords name rest state)))
 
@@ -77,23 +71,25 @@
 (defun use-package-handler/:evil-state (name keyword args rest state)
   (let ((body (use-package-process-keywords name rest state)))
     (use-package-concat
-     (mapcar #'(lambda (arg)
-                 `(with-eval-after-load 'evil
-                    (evil-set-initial-state ',(car arg) ',(cdr arg))
-                    ))
-             args)
+     (mapcar
+      #'(lambda (arg)
+          `(with-eval-after-load 'evil
+             (evil-set-initial-state ',(car arg) ',(cdr arg))))
+      args)
      body)))
 
 (defun use-package-handler/:setq (name keyword args rest state)
   (let ((body (use-package-process-keywords name rest state)))
     (use-package-concat
-     (mapcar #'(lambda (arg)
-                 (when (not (featurep 'mode-local))
-                   (require 'mode-local))
-                 (let ((mode (maple/mplist-get arg :mode)))
-                   `(setq-mode-local ,(car mode) ,@(cdr mode))
-                   ))
-             args)
+     (mapcar
+      #'(lambda (arg)
+          (let ((mode (plist-get arg :mode)))
+            (if (not mode) `(setq ,@arg)
+              (progn
+                (when (not (featurep 'mode-local))
+                  (require 'mode-local))
+                `(setq-mode-local ,mode ,@(cdr (cdr arg)))))))
+      args)
      body)))
 
 (provide 'evil-use-package)

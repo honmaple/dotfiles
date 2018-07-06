@@ -31,8 +31,8 @@
 
 (use-package git-timemachine
   :config
+  (maple/evil-map git-timemachine-mode-map)
   (with-eval-after-load 'evil
-    (evil-make-overriding-map git-timemachine-mode-map 'normal)
     ;; force update evil keymaps after git-timemachine-mode loaded
     (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps)))
 

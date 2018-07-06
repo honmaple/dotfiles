@@ -25,15 +25,19 @@
 
 ;;; Code:
 
-(use-package esup)
 (use-package ctable)
 (use-package docker-tramp)
 (use-package dockerfile-mode)
 
-(use-package maple-minimap
-  :commands (minimap-mode)
-  :load-path "site-lisp/maple"
-  :evil-state (minimap-mode . emacs))
+(use-package esup
+  :config
+  (maple/evil-map esup-mode-map))
+
+;; (use-package maple-minimap
+;;   :commands (minimap-mode)
+;;   :load-path "site-lisp/maple"
+;;   :config
+;;   (maple/evil-map minimap-mode-map))
 
 (use-package pangu-spacing
   :commands (pangu-spacing-space-current-buffer))
@@ -41,8 +45,7 @@
 (use-package quickrun
   :hook (quickrun--mode . maple/truncate-lines)
   :config
-  (with-eval-after-load 'evil
-    (evil-make-overriding-map quickrun--mode-map 'normal)))
+  (maple/evil-map quickrun--mode-map))
 
 (use-package blog-admin
   :load-path "site-lisp/blog-admin"
@@ -66,14 +69,11 @@
 
 (use-package imenu-list
   :commands (imenu-list-minor-mode)
-  :evil-state
-  (imenu-list-major-mode . emacs)
   :config
+  (maple/evil-map imenu-list-major-mode-map)
   (setq imenu-list-focus-after-activation t
         imenu-list-auto-resize t
         imenu-list-mode-line-format mode-line-format)
-  (when (bound-and-true-p semantic-mode)
-    (setq imenu-create-index-function 'semantic-create-imenu-index))
   :custom-face
   (imenu-list-entry-face-0 ((t (:foreground "#f92672"))))
   :bind (:map evil-leader--default-map
@@ -90,8 +90,7 @@
   (setq url-automatic-caching t
         youdao-dictionary-search-history-file (concat maple-cache-directory "youdao")
         youdao-dictionary-use-chinese-word-segmentation t)
-  (with-eval-after-load 'evil
-    (evil-make-overriding-map youdao-dictionary-mode-map 'normal)))
+  (maple/evil-map youdao-dictionary-mode-map))
 
 ;; (use-package cal-china-x
 ;;   :config
@@ -110,8 +109,8 @@
 (use-package figlet)
 
 (use-package 2048-game
-  :evil-state
-  (2048-mode . emacs))
+  :config
+  (maple/evil-map 2048-mode-map))
 
 (use-package maple-macro
   :load-path "site-lisp/maple"

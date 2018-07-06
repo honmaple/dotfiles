@@ -30,6 +30,8 @@
 
 (use-package wgrep
   :config
+  (setq wgrep-auto-save-buffer t)
+
   (defun maple/wgrep-finish-edit()
     (interactive)
     (wgrep-finish-edit)
@@ -93,12 +95,13 @@
   (defun maple/ivy-done()
     (interactive)
     (ivy-partial-or-done)
-    (delete-minibuffer-contents)
-    (let ((ivy-text (ivy-state-current ivy-last)) dir)
-      (insert ivy-text)
-      (when (and (eq (ivy-state-collection ivy-last) #'read-file-name-internal)
-                 (setq dir (ivy-expand-file-if-directory ivy-text)))
-        (ivy--cd dir))))
+    (when (not (eq this-command last-command))
+      (delete-minibuffer-contents)
+      (let ((ivy-text (ivy-state-current ivy-last)) dir)
+        (insert ivy-text)
+        (when (and (eq (ivy-state-collection ivy-last) #'read-file-name-internal)
+                   (setq dir (ivy-expand-file-if-directory ivy-text)))
+          (ivy--cd dir)))))
 
   ;; ivy-occur custom
   (defun maple/ivy-edit ()
@@ -106,6 +109,16 @@
     (interactive)
     (run-with-idle-timer 0 nil 'ivy-wgrep-change-to-wgrep-mode)
     (ivy-occur))
+
+  (defun maple/ivy-search-at-point (func)
+    (let* ((region (region-active-p))
+           (string (if (not region) ""
+                     (buffer-substring-no-properties
+                      (region-beginning) (region-end))))
+           (ivy-initial-inputs-alist
+            (list (cons func string))))
+      (when region (deactivate-mark))
+      (funcall func)))
 
   ;; custom find-file
   (defadvice find-file (before make-directory-maybe (filename &optional wildcards) activate)
@@ -118,8 +131,7 @@
             (keyboard-quit))))))
 
   ;; completion-system
-  (with-eval-after-load 'evil
-    (evil-make-overriding-map ivy-occur-mode-map 'normal))
+  (maple/evil-map ivy-occur-mode-map)
 
   (with-eval-after-load 'projectile
     (setq projectile-completion-system 'ivy))
@@ -128,11 +140,11 @@
     (setq magit-completing-read-function 'ivy-completing-read))
 
   (use-package ivy-rich
-    :init
+    :hook (ivy-mode . ivy-rich-mode)
+    :config
     (setq ivy-rich-path-style 'abbrev
-          ivy-rich-switch-buffer-align-virtual-buffer t)
-    (ivy-set-display-transformer 'ivy-switch-buffer
-                                 'ivy-rich-switch-buffer-transformer))
+          ivy-rich-switch-buffer-align-virtual-buffer t))
+
   :custom-face
   (ivy-highlight-face ((t (:background nil)))))
 
@@ -152,7 +164,8 @@
   (defun maple/counsel-ag(-counsel-ag &optional initial-input initial-directory extra-ag-args ag-prompt)
     (when (and (not initial-input) (region-active-p))
       (setq initial-input (buffer-substring-no-properties
-                           (region-beginning) (region-end))))
+                           (region-beginning) (region-end)))
+      (deactivate-mark))
     (unless initial-directory (setq initial-directory default-directory))
     (funcall -counsel-ag initial-input initial-directory extra-ag-args ag-prompt))
 
@@ -176,6 +189,13 @@
          ("C-<return>" . ivy-immediate-done)))
 
 (use-package counsel-projectile)
+
+(use-package swiper
+  :config
+  ;; custom swiper
+  (defun maple/swiper()
+    (interactive)
+    (maple/ivy-search-at-point 'swiper)))
 
 (provide 'init-ivy)
 

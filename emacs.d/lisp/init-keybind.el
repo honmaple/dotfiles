@@ -291,7 +291,7 @@
 ;; ivy
 (evil-leader/set-key
   "," 'counsel-M-x
-  "/" 'swiper ;;当前文件内容
+  "/" 'maple/swiper ;;当前文件内容
   "ff" 'find-file
   "fF" 'counsel-find
   "fr" 'counsel-recentf
@@ -300,7 +300,8 @@
   "sj" 'counsel-semantic-or-imenu
   "bb" 'ivy-switch-buffer  ;;显示缓冲区(已经打开的文件)
   "ph"  'counsel-projectile ;;在工程内查找
-  "pw"  'counsel-projectile-ag)
+  "pw"  'counsel-projectile-ag
+  "pb"  'counsel-projectile-switch-to-buffer)
 
 (provide 'init-keybind)
 ;;; init-keybind.el ends here

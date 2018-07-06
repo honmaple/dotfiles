@@ -70,29 +70,12 @@
 ;;   :hook (after-init . benchmark-init/deactivate))
 
 (use-package package-utils
-  :commands (package-utils-with-packages-list)
+  :commands (package-utils-upgrade-all)
   :init
-  (defun package-upgrade()
-    "Upgrade packages."
-    (interactive)
-    (package-refresh-contents)
-    (let ((packages (package-utils-with-packages-list t (mapcar #'cdr (package-menu--find-upgrades)))))
-      (if packages
-          (when (yes-or-no-p
-                 (message "Upgrade %d package%s (%s)? "
-                          (length packages)
-                          (if (= (length packages) 1) "" "s")
-                          (mapconcat #'package-desc-full-name packages ",")))
-            (package-utils-with-packages-list t
-                                              (package-menu-mark-upgrades)
-                                              (package-menu-execute t)))
-        (message "All packages are already up to date.")))))
-
+  (defalias 'package-upgrade 'package-utils-upgrade-all))
 
 (use-package cl-lib)
-
 (use-package fullframe)
-
 (use-package restart-emacs)
 ;; :config (setq restart-emacs-restore-frames t))
 

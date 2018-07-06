@@ -48,8 +48,8 @@
   :ensure spaceline
   :hook (after-init . spaceline-spacemacs-theme)
   :config
-  (setq spaceline-byte-compile nil)
-  (setq powerline-default-separator 'wave
+  (setq powerline-default-separator (if (display-graphic-p) 'wave 'utf-8)
+        spaceline-byte-compile nil
         spaceline-window-numbers-unicode t
         spaceline-highlight-face-func 'spaceline-highlight-face-evil-state))
 
@@ -92,17 +92,7 @@
   :config
   (setq display-line-numbers-type 'relative))
 
-;; (use-package nlinum
-;;   :hook ((prog-mode text-mode) . nlinum-mode))
-
-;; (use-package nlinum-relative
-;;   :hook (nlinum-mode . nlinum-relative-on)
-;;   :config
-;;   (setq nlinum-relative-current-symbol ""
-;;         nlinum-relative-redisplay-delay 0)
-;;   (nlinum-relative-setup-evil))
-
-;; ;;; 80列
+;; 80列
 (use-package fill-column-indicator
   :config
   (setq fci-rule-column 80
@@ -115,11 +105,21 @@
   :hook (prog-mode . rainbow-delimiters-mode)
   :diminish rainbow-delimiters-mode)
 
+;; 外置高亮括号
+(use-package highlight-parentheses
+  :hook (prog-mode . highlight-parentheses-mode)
+  :config
+  (setq hl-paren-colors '("Springgreen3"
+                          "IndianRed1"
+                          "IndianRed3"
+                          "IndianRed4"))
+  (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold)
+  :diminish highlight-parentheses-mode)
+
 ;; 颜色
 (use-package rainbow-mode
   :hook ((prog-mode conf-unix-mode) . rainbow-mode)
   :diminish rainbow-mode)
-
 
 ;; 相同字符
 (use-package highlight-symbol

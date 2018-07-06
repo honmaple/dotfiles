@@ -60,24 +60,34 @@
 
 (use-package neotree
   :commands neo-global--window-exists-p
-  :evil-state (neotree-mode . emacs)
   :config
   (setq neo-create-file-auto-open t
         neo-banner-message nil
-        neo-show-updir-line nil
+        neo-show-updir-line t
         neo-mode-line-type 'default
+        neo-cwd-line-style 'button
         neo-smart-open t
-        neo-dont-be-alone t
-        neo-persist-show nil
         neo-show-hidden-files nil
         neo-auto-indent-point t
-        neo-modern-sidebar t
         neo-vc-integration '(face))
-  (when neo-persist-show
-    (add-hook 'popwin:before-popup-hook
-              (lambda () (setq neo-persist-show nil)))
-    (add-hook 'popwin:after-popup-hook
-              (lambda () (setq neo-persist-show t))))
+  (defun maple/neo-buffer--insert-root-entry (node)
+    (neo-buffer--node-list-set nil node)
+    (cond ((eq neo-cwd-line-style 'button)
+           (neo-path--insert-header-buttonized node))
+          (t
+           (neo-buffer--insert-with-face (neo-path--shorten node (window-body-width))
+                                         'neo-root-dir-face)))
+    (neo-buffer--newline-and-begin)
+    (when neo-show-updir-line
+      (neo-buffer--insert-fold-symbol 'close node)
+      (insert-button ".."
+                     'action '(lambda (x) (neotree-change-root))
+                     'follow-link t
+                     'face neo-dir-link-face
+                     'neo-full-path (neo-path--updir node))
+      (neo-buffer--newline-and-begin)))
+  (fset 'neo-buffer--insert-root-entry 'maple/neo-buffer--insert-root-entry)
+  (maple/evil-map neotree-mode-map)
   :bind (([f2] . neotree-toggle)
          :map neotree-mode-map
          ("j" . neotree-next-line)

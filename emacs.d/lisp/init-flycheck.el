@@ -43,12 +43,12 @@
       :fringe-face 'flycheck-fringe-info))
   :evil-bind
   (normal flycheck-error-list-mode-map
-          "q" 'quit-window
-          "j" #'flycheck-error-list-next-error
-          "k" #'flycheck-error-list-previous-error
-          "K" #'evil-previous-line
-          "J" #'evil-next-line
-          (kbd "RET") #'flycheck-error-list-goto-error))
+          ("q" . quit-window)
+          ("j" . flycheck-error-list-next-error)
+          ("k" . flycheck-error-list-previous-error)
+          ("K" . evil-previous-line)
+          ("J" . evil-next-line)
+          ((kbd "RET") . flycheck-error-list-goto-error)))
 
 
 ;; 显示tooltip

@@ -58,8 +58,8 @@
   :hook (after-init . global-evil-surround-mode)
   :evil-bind
   (visual evil-surround-mode-map
-          "s" 'evil-surround-region
-          "S" 'evil-substitute))
+          ("s" . evil-surround-region)
+          ("S" . evil-substitute)))
 
 (use-package evil-matchit
   :hook (after-init . global-evil-matchit-mode))
@@ -92,6 +92,7 @@
 (use-package evil-multiedit
   :after evil
   :load-path "site-lisp/evil-multiedit"
+  :commands (evil-multiedit-match-all)
   :config
   (setq evil-multiedit-follow-matches t
         evil-multiedit-state-cursor '(box "firebrick1"))

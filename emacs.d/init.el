@@ -35,8 +35,7 @@
       user-mail-address "xiyang0807@gmail.com"
       gc-cons-threshold (* 256 1024 1024)
       gc-cons-percentage 0.6
-      file-name-handler-alist nil
-      inhibit-startup-echo-area-message user-full-name)
+      file-name-handler-alist nil)
 
 (add-hook 'emacs-startup-hook
           (lambda ()
@@ -60,7 +59,7 @@
 (defconst *develop* t)
 
 (when *common*
-  (require 'init-fonts)
+  (require 'init-font)
   (require 'init-gui) ;;ui设置 显示行号
   (require 'init-ui)  ;; modeline,which-key
 

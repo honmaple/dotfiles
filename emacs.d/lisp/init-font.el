@@ -1,4 +1,4 @@
-;;; init-gui.el --- Initialize golang configurations.	-*- lexical-binding: t -*-
+;;; init-font.el --- Initialize font configurations.	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2015-2018 lin.jiang
 
@@ -20,28 +20,23 @@
 
 ;;; Commentary:
 ;;
-;; Golang configurations.
-;; go get -u github.com/nsf/gocode
-;; go get -u github.com/rogpeppe/godef
-;; go get -u github.com/golang/lint/golint
+;; Character sets.
 ;;
 
 ;;; Code:
 
-(use-package go-mode
-  :config
-  (setq gofmt-show-errors nil)
+(prefer-coding-system 'utf-8)
 
-  (use-package golint)
-  (use-package go-eldoc
-    :hook (go-mode . go-eldoc-setup))
-  :evil-bind
-  (normal go-mode-map
-          ([f6] . gofmt)
-          ("gd" . godef-jump)))
+(use-package fontawesome
+  :commands (counsel-fontawesome))
 
-(use-package company-go
-  :init (maple/company-backend 'go-mode-hook '(company-go company-keywords)))
+;; Changing font sizes
+(use-package default-text-scale
+  :bind (("C-M-=" . default-text-scale-increase)
+         ("C-M--" . default-text-scale-decrease)
+         ("<C-wheel-up>" . default-text-scale-increase)
+         ("<C-wheel-down>" . default-text-scale-decrease)))
 
-(provide 'init-go)
-;;; init-go.el ends here
+(provide 'init-font)
+
+;;; init-font.el ends here

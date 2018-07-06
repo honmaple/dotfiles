@@ -101,17 +101,15 @@
   (interactive)
   (save-excursion
     (when (and (hs-minor-mode) (hs-already-hidden-p))
+      (set-mark (line-beginning-position))
       (end-of-visual-line)
-      (evil-visual-state)
-      (beginning-of-visual-line))
+      (activate-mark))
     (let (beg end)
       (if (region-active-p)
           (setq beg (region-beginning) end (region-end))
         (setq beg (line-beginning-position) end (line-end-position)))
-      (when paste
-        (copy-region-as-kill beg end)
-        (goto-char end)
-        (yank))
+      (when paste (copy-region-as-kill beg end)
+            (goto-char end) (yank))
       (comment-or-uncomment-region beg end))))
 
 (defun maple/copy-and-comment ()
@@ -163,9 +161,14 @@
   (visual-line-mode t)
   (toggle-truncate-lines t))
 
+(defun maple/evil-map(map &optional state)
+  "Make MAP evil with STATE."
+  (with-eval-after-load 'evil
+    (evil-make-overriding-map map (or state 'normal))))
+
 (defun maple/close-nlinum()
   "Close nlinum."
-  (nlinum-mode -1))
+  (display-line-numbers-mode -1))
 
 (defun maple/reopen-buffer(buffer-name &optional restore)
   "Reopen BUFFER-NAME RESTORE."

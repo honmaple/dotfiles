@@ -68,12 +68,12 @@
         image-dired-thumbnail-storage 'standard)
   :evil-bind
   (normal image-dired-thumbnail-mode-map
-          "j"  'image-dired-next-line
-          "k"  'image-dired-previous-line
-          "l"  'image-dired-forward-image
-          "h"  'image-dired-backward-image
-          "q"  'image-dired-kill-buffer-and-window
-          (kbd "RET") 'image-dired-display-thumbnail-original-image))
+          ("j" . image-dired-next-line)
+          ("k" . image-dired-previous-line)
+          ("l" . image-dired-forward-image)
+          ("h" . image-dired-backward-image)
+          ("q" . image-dired-kill-buffer-and-window)
+          ((kbd "RET") . image-dired-display-thumbnail-original-image)))
 
 (use-package diredfl
   :hook (dired-mode . diredfl-mode))
@@ -82,11 +82,11 @@
   :ensure nil
   :evil-bind
   (normal image-mode-map
-          "j"  'image-next-file
-          "k"  'image-previous-file
-          "n"  'image-next-file
-          "p"  'image-previous-file
-          "q"  'quit-window))
+          ("j" . image-next-file)
+          ("k" . image-previous-file)
+          ("n" . image-next-file)
+          ("p" . image-previous-file)
+          ("q" . quit-window)))
 
 (provide 'init-dired)
 

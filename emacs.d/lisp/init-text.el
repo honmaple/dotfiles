@@ -22,7 +22,7 @@
 
 ;; (use-package olivetti
 ;;   :defer t
-;;   :init (add-hook 'org-mode-hook 'olivetti-mode))
+;;   :hook (org-mode . olivetti-mode))
 
 (use-package markdown-toc)
 (use-package yaml-mode)

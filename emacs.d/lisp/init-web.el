@@ -50,9 +50,9 @@
          electric-pair-pairs '((?\' . ?\')))
   :evil-bind
   (normal web-mode-map
-          (kbd "<f5>") 'browse-url-of-file
           ;; (kbd "<f6>") 'web-beautify-html
-          (kbd "za") 'web-mode-fold-or-unfold))
+          ([f5] . browse-url-of-file)
+          ("za" . web-mode-fold-or-unfold)))
 
 (use-package company-web
   :functions maple/company-backend
@@ -74,8 +74,7 @@
       (call-interactively 'emmet-expand-line)))
   :evil-bind
   (insert emmet-mode-keymap
-          (kbd "TAB") 'maple/emmet-expand
-          (kbd "<tab>") 'maple/emmet-expand))
+          ([tab] . maple/emmet-expand)))
 
 (use-package css-mode
   :config

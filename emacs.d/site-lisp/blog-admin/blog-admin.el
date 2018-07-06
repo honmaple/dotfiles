@@ -125,9 +125,15 @@ C   ... Jump to the config          f   ... Filter and show only rows with keywo
 
 (defun -table-build ()
   ;; (when show-help (insert -table-help))
-  (when show-help (insert (propertize -table-help 'font-lock-face '(:foreground "#f92672"))))
+  (when show-help (insert (propertize -table-help 'font-lock-face 'font-lock-keyword-face)))
   (let ((param (copy-ctbl:param ctbl:default-rendering-param)))
     (setf (ctbl:param-fixed-header param) t)
+    (setf (ctbl:param-hline-colors param)
+          '((t . "#909090")))
+    (setf (ctbl:param-draw-hlines param)
+          (lambda (model row-index)
+            (cond ((memq row-index '(0 1 -1)) t)
+                  (t (= 0 (% (1- row-index) 7))))))
     (setf (ctbl:param-bg-colors param)
           (lambda (model row-id col-id str)
             (cond ((= 0 (% (1- row-index) 2)) "#1e90ff")
@@ -207,8 +213,8 @@ C   ... Jump to the config          f   ... Filter and show only rows with keywo
 (defun sort ()
   "Sort by coloum"
   (interactive)
-  (setq choices '("Title" "Publish" "Category" "Date"))
-  (let* ((keyword (completing-read "Order by: " choices)))
+  (let* ((choices '("Title" "Publish" "Category" "Date"))
+         (keyword (completing-read "Order by: " choices)))
     (setq -sort-state
           (cond ((string= keyword "Title") '(-1 1))
                 ((string= keyword "Publish")  '(-2 -1))

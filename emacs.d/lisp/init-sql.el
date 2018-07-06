@@ -39,7 +39,8 @@
     '(maple/truncate-lines maple/close-process))
   :evil-state (sql-interactive-mode . insert))
 
-(use-package sql-indent)
+(use-package sql-indent
+  :hook (sql-mode-hook .  sqlind-minor-mode))
 
 (provide 'init-sql)
 

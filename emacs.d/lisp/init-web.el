@@ -42,9 +42,7 @@
                                                    ("{{-" . " | }")
                                                    ("{{{" . " | }}")
                                                    ("{# " . " #")
-                                                   ("<% " . " %>")
-                                                   ))))
-
+                                                   ("<% " . " %>")))))
   :setq
   (:mode web-mode
          electric-pair-pairs '((?\' . ?\')))
@@ -56,9 +54,11 @@
 
 (use-package company-web
   :functions maple/company-backend
-  :init (maple/company-backend 'web-mode-hook '(company-web-html
-                                                company-css
-                                                company-tern)))
+  :init
+  (maple/company-backend 'css-mode-hook 'company-css)
+  (maple/company-backend 'web-mode-hook '(company-web-html
+                                          company-css
+                                          company-tern)))
 
 (use-package web-beautify
   :commands (web-beautify-html web-beautify-css web-beautify-js))
@@ -78,8 +78,7 @@
 
 (use-package css-mode
   :config
-  (setq css-indent-offset 4)
-  (maple/company-backend 'css-mode-hook 'company-css))
+  (setq css-indent-offset 4))
 
 (use-package sass-mode
   :mode ("\\.sass\\'" . sass-mode))
@@ -88,10 +87,8 @@
   :mode ("\\.scss\\'" . scss-mode)
   :config (setq scss-compile-at-save nil))
 
-
 (use-package less-css-mode
   :mode ("\\.less\\'" . less-css-mode))
-
 
 (provide 'init-web)
 

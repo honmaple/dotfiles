@@ -33,21 +33,22 @@
         js-indent-level 4
         js2-bounce-indent-p nil
         js2-mode-show-parse-errors nil
-        js2-mode-show-strict-warnings nil))
+        js2-mode-show-strict-warnings nil)
+
+  (use-package tern
+    :diminish tern-mode
+    :hook (js2-mode . tern-mode)
+    :config (add-to-list 'tern-command "--no-port-file" 'append))
+
+  (use-package company-tern
+    :functions maple/company-backend
+    :init (maple/company-backend 'js2-mode-hook 'company-tern)))
 
 ;;; Coffeescript
 (use-package coffee-mode
   :mode ("\\.coffee\\.erb\\'" . coffee-mode)
   :config
   (setq coffee-tab-width 4))
-
-(use-package tern
-  :diminish tern-mode
-  :hook (js2-mode . tern-mode)
-  :config (add-to-list 'tern-command "--no-port-file" 'append))
-
-(use-package company-tern
-  :init (maple/company-backend 'js2-mode-hook 'company-tern))
 
 (provide 'init-js)
 

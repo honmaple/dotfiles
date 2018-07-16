@@ -49,7 +49,8 @@
    (insert term-raw-map
            ("C-c C-d" . term-send-eof)
            ("C-c C-z" . term-stop-subjob)
-           ((kbd "<tab>") . term-send-tab)
+           ("C-y" . term-paste)
+           ("<tab>" . term-send-tab)
            ("C-k" . term-send-up)
            ("C-j" . term-send-down))))
 

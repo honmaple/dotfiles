@@ -30,18 +30,39 @@
 
 (use-package go-mode
   :config
-  (setq gofmt-show-errors nil)
+  (setq gofmt-show-errors nil
+        go-packages-function 'maple/go-packages-function)
+
+  ;; speed up go-import-add from https://gist.github.com/juergenhoetzel/8107a01039df08ea3f1c208494ddd7bf
+  (defun maple/go-packages-function()
+    (sort
+     (delete-dups
+      (cl-mapcan
+       (lambda (topdir)
+         (let ((pkgdir (concat topdir "/pkg/")))
+           (mapcar (lambda (file)
+                     (let ((sub (substring file 0 -2)))
+                       (mapconcat #'identity (cdr (split-string sub "/")) "/")))
+                   (split-string (shell-command-to-string
+                                  (format "find \"%s\" -not -path \"%s/tool*\" -not -path \"%s/obj/*\" -name \"*.a\"  -printf \"%%P\\n\""
+                                          pkgdir pkgdir pkgdir))))))
+       (go-root-and-paths)))
+     #'string<))
 
   (use-package golint)
+
   (use-package go-eldoc
     :hook (go-mode . go-eldoc-setup))
+
+  (use-package company-go
+    :functions maple/company-backend
+    :init (maple/company-backend 'go-mode-hook '(company-go company-keywords)))
+
   :evil-bind
   (normal go-mode-map
           ([f6] . gofmt)
           ("gd" . godef-jump)))
 
-(use-package company-go
-  :init (maple/company-backend 'go-mode-hook '(company-go company-keywords)))
 
 (provide 'init-go)
 ;;; init-go.el ends here

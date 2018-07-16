@@ -29,10 +29,11 @@
   :diminish lua-mode
   :config
   (setq lua-indent-level 4
-        lua-indent-string-contents t))
+        lua-indent-string-contents t)
 
-(use-package company-lua
-  :init (maple/company-backend 'lua-mode-hook 'company-lua))
+  (use-package company-lua
+    :functions maple/company-backend
+    :init (maple/company-backend 'lua-mode-hook 'company-lua)))
 
 (provide 'init-lua)
 

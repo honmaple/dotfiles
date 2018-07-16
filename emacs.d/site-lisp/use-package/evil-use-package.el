@@ -45,7 +45,11 @@
     #'(lambda (arg)
         (let ((state (pop arg))
               (map (pop arg))
-              (bind (mapcan (lambda (i) (list (car i) `',(cdr i))) arg)))
+              (bind (mapcan (lambda (i)
+                              (list (if (char-or-string-p (car i))
+                                        (kbd (car i)) (car i))
+                                    `',(cdr i)))
+                            arg)))
           (eval-after-load 'evil
             `(evil-define-key ',state ,map ,@bind))))
     args)

@@ -48,7 +48,7 @@
           ("k" . flycheck-error-list-previous-error)
           ("K" . evil-previous-line)
           ("J" . evil-next-line)
-          ((kbd "RET") . flycheck-error-list-goto-error)))
+          ("RET" . flycheck-error-list-goto-error)))
 
 
 ;; 显示tooltip

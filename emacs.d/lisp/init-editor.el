@@ -73,18 +73,11 @@
   (setq show-paren-when-point-inside-paren t
         show-paren-when-point-in-periphery t))
 
-;; (use-package which-func
-;;   :hook (after-init which-function-mode))
-
 (use-package xref
   :ensure nil
   :config
   (maple/evil-map xref--xref-buffer-mode-map))
 
-;; (use-package dumb-jump
-;;   :evil-bind
-;;   (normal prog-mode-map
-;;           "gd"  'dumb-jump-go))
 (use-package tramp
   :ensure nil
   :config

@@ -293,10 +293,10 @@
   "," 'counsel-M-x
   "/" 'maple/swiper ;;当前文件内容
   "ff" 'find-file
-  "fF" 'counsel-find
+  "fF" 'counsel-file-jump
   "fr" 'counsel-recentf
   "fw" 'counsel-ag
-  "fW" 'counsel-ag
+  "fW" 'maple/counsel-ag-file
   "sj" 'counsel-semantic-or-imenu
   "bb" 'ivy-switch-buffer  ;;显示缓冲区(已经打开的文件)
   "ph"  'counsel-projectile ;;在工程内查找

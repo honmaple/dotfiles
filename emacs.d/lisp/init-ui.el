@@ -36,7 +36,7 @@
   (load-theme user-default-theme t))
 
 ;; (use-package mapleline
-;;   :load-path "site-lisp/maple"
+;;   :ensure nil
 ;;   :hook (after-init . mapleline-default-theme)
 ;;   :config
 ;;   (setq powerline-default-separator 'wave))
@@ -75,12 +75,15 @@
   (which-key-add-key-based-replacements
     ",f" "file"
     ",b" "buffer"
+    ",c" "comment"
     ",o" "orgmode"
     ",e" "flycheck error"
     ",j" "avy"
     ",g" "git"
     ",w" "window"
     ",p" "project"
+    ",q" "emacs"
+    ",S" "search"
     ",sq" "sql"
     ",t" "toggle mode"))
 
@@ -96,9 +99,7 @@
 (use-package fill-column-indicator
   :config
   (setq fci-rule-column 80
-        fci-rule-width 1
-        fci-rule-color "#D0BF8F")
-  (push '(fci-mode "") minor-mode-alist))
+        fci-rule-width 1))
 
 ;; 高亮括号
 (use-package rainbow-delimiters

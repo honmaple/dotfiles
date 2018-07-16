@@ -36,11 +36,13 @@
   :config
   (fset 'evil-visual-update-x-selection 'ignore) ;;粘贴板
   ;; (evil-add-hjkl-bindings package-menu-mode-map 'emacs)
-  (setq evil-insert-state-cursor '((bar . 2) "chartreuse3")
+  (setq evil-kill-on-visual-paste nil
+        evil-insert-state-cursor '((bar . 2) "chartreuse3")
         evil-normal-state-cursor '(box "DarkGoldenrod2")
         evil-visual-state-cursor '((hbox . 2) "gray")
         evil-emacs-state-cursor '(box "SkyBlue2")
         evil-replace-state-cursor '((hbox . 2) "chocolate"))
+
   :custom-face
   (region ((t (:background "#66d9ef" :foreground "#272822"))))
   :bind (:map evil-normal-state-map

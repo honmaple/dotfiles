@@ -34,8 +34,8 @@
   (maple/evil-map esup-mode-map))
 
 ;; (use-package maple-minimap
+;;   :ensure nil
 ;;   :commands (minimap-mode)
-;;   :load-path "site-lisp/maple"
 ;;   :config
 ;;   (maple/evil-map minimap-mode-map))
 
@@ -64,7 +64,8 @@
 
   (maple/add-hook 'blog-admin-mode-hook
     :if (display-graphic-p)
-    (set-face-attribute 'variable-pitch nil :font "-Sony-Sony Fixed-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1")
+    ;; (set-face-attribute 'variable-pitch nil :font "-Sony-Sony Fixed-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1")
+    (set-face-attribute 'variable-pitch nil :font "Inconsolata 12")
     (buffer-face-mode)))
 
 (use-package imenu-list
@@ -113,11 +114,11 @@
   (maple/evil-map 2048-mode-map))
 
 (use-package maple-macro
-  :load-path "site-lisp/maple"
+  :ensure nil
   :hook (after-init . maple/search-init))
 
 (use-package maple-startify
-  :load-path "site-lisp/maple"
+  :ensure nil
   :hook (emacs-startup . startify-mode))
 
 (provide 'init-tool)

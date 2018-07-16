@@ -28,7 +28,11 @@
 (use-package cc-mode
   :config
   (setq c-default-style "linux"
-        c-basic-offset 4))
+        c-basic-offset 4)
+
+  (use-package company-c-headers
+    :functions maple/company-backend
+    :init (maple/company-backend 'anaconda-mode-hook 'company-c-headers)))
 
 (provide 'init-c)
 

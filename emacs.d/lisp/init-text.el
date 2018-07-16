@@ -3,7 +3,9 @@
   (use-package org-table
     :ensure nil
     :diminish orgtbl-mode
-    :hook (markdown-mode . orgtbl-mode))
+    :hook (markdown-mode . orgtbl-mode)
+    :config
+    (when (display-graphic-p) (set-face-attribute 'org-table nil :font "Inconsolata 12")))
 
   (defun cleanup-org-tables ()
     (save-excursion

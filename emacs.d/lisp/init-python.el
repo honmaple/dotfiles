@@ -64,14 +64,13 @@
   :config
   (setq anaconda-mode-installation-directory
         (concat maple-cache-directory "anaconda-mode"))
+
+  (use-package company-anaconda
+    :functions maple/company-backend
+    :init (maple/company-backend 'anaconda-mode-hook 'company-anaconda))
   :evil-bind
   (normal anaconda-mode-map
           ("gd" . anaconda-mode-find-assignments)))
-
-
-(use-package company-anaconda
-  :functions maple/company-backend
-  :init (maple/company-backend 'anaconda-mode-hook 'company-anaconda))
 
 (provide 'init-python)
 

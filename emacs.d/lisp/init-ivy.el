@@ -49,9 +49,7 @@
   (setq enable-recursive-minibuffers t
         completing-read-function 'ivy-completing-read)
 
-  (setq ivy-height 12
-        ivy-do-completion-in-region t
-        ivy-use-selectable-prompt t
+  (setq ivy-use-selectable-prompt t
         ivy-wrap t
         ivy-extra-directories nil
         ivy-fixed-height-minibuffer t
@@ -62,14 +60,12 @@
         ivy-magic-tilde t
         ivy-use-virtual-buffers nil
         ivy-virtual-abbreviate 'full
-        ;; ivy-magic-slash-non-match-action 'ivy-magic-slash-non-match-create)
-        ;; ivy-magic-slash-non-match-action nil
         ;; ivy display
         ivy-count-format ""
         ivy-format-function 'maple/ivy-format-function
         ;; fuzzy match
         ivy-re-builders-alist
-        '((t   . ivy--regex-ignore-order)))
+        '((t   . ivy--regex-plus)))
 
   ;; custom ivy display function
   (advice-add 'ivy-read :around #'maple/ivy-read-around)
@@ -95,13 +91,12 @@
   (defun maple/ivy-done()
     (interactive)
     (ivy-partial-or-done)
-    (when (not (eq this-command last-command))
-      (delete-minibuffer-contents)
-      (let ((ivy-text (ivy-state-current ivy-last)) dir)
-        (insert ivy-text)
-        (when (and (eq (ivy-state-collection ivy-last) #'read-file-name-internal)
-                   (setq dir (ivy-expand-file-if-directory ivy-text)))
-          (ivy--cd dir)))))
+    (let ((ivy-text (ivy-state-current ivy-last)) dir)
+      (ivy-insert-current)
+      (when (and (eq (ivy-state-collection ivy-last) #'read-file-name-internal)
+                 (setq dir (ivy-expand-file-if-directory ivy-text)))
+        (ivy--cd dir)
+        (setq this-command 'ivy--cd))))
 
   ;; ivy-occur custom
   (defun maple/ivy-edit ()
@@ -152,13 +147,18 @@
   :diminish (counsel-mode)
   :hook (ivy-mode . counsel-mode)
   :config
-  (setq counsel-preselect-current-file t)
+  (setq counsel-preselect-current-file t
+        counsel-more-chars-alist '((t . 1)))
 
   (defun maple/counsel-up-directory()
     (interactive)
     (if (string-equal (ivy--input) "")
         (counsel-up-directory)
       (delete-minibuffer-contents)))
+
+  (defun maple/counsel-ag-file()
+    (interactive)
+    (counsel-ag nil (read-file-name "Search in file(s): ")))
 
   ;; custom counsel-ag
   (defun maple/counsel-ag(-counsel-ag &optional initial-input initial-directory extra-ag-args ag-prompt)

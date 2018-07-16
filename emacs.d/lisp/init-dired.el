@@ -47,18 +47,20 @@
   (setq dired-recursive-copies 'always ;;递归拷贝
         dired-recursive-deletes 'always)
   (put 'dired-find-alternate-file 'disabled nil)  ;; 只有一个buffer
+
+  (use-package dired-x
+    :ensure nil
+    :demand
+    :hook (dired-mode . dired-omit-mode)
+    :config
+    (setq dired-omit-verbose nil
+          dired-omit-files
+          (concat dired-omit-files "\\|^\\..+$\\|\\.pdf$\\|\\.tex$\\|\\*~$")))
+
   :bind (:map dired-mode-map
               ("H" . dired-omit-mode)
               ("RET" . dired-find-alternate-file)
               ("C-c C-e" . wdired-change-to-wdired-mode)))
-
-(use-package dired-x
-  :ensure nil
-  :hook (dired-mode . dired-omit-mode)
-  :config
-  (setq dired-omit-verbose nil
-        dired-omit-files
-        (concat dired-omit-files "\\|^\\..+$\\|\\.pdf$\\|\\.tex$\\|\\*~$")))
 
 (use-package image-dired
   :ensure nil
@@ -73,10 +75,10 @@
           ("l" . image-dired-forward-image)
           ("h" . image-dired-backward-image)
           ("q" . image-dired-kill-buffer-and-window)
-          ((kbd "RET") . image-dired-display-thumbnail-original-image)))
+          ("RET" . image-dired-display-thumbnail-original-image)))
 
-(use-package diredfl
-  :hook (dired-mode . diredfl-mode))
+;; (use-package diredfl
+;;   :hook (dired-mode . diredfl-mode))
 
 (use-package image-mode
   :ensure nil

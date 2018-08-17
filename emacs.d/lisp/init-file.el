@@ -124,6 +124,10 @@
   (interactive)
   (find-file "~/org-mode/gtd.org"))
 
+(defun maple/open-test-file()
+  (interactive)
+  (find-file (read-file-name "select test file: " "~/test/")))
+
 (defun maple/dos2unix ()
   "Convert the current buffer to UNIX file format."
   (interactive)
@@ -133,7 +137,6 @@
   "Convert the current buffer to DOS file format."
   (interactive)
   (set-buffer-file-coding-system 'undecided-dos nil))
-
 
 (defun maple/open-in-external-app ()
   "Open current file in external application."

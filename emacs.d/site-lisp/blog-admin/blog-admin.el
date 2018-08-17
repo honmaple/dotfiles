@@ -28,7 +28,6 @@
 ;;
 
 ;;; Code:
-(require 'org)
 (require 'ctable)
 (require 'names)
 (require 'cl-lib)

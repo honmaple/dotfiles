@@ -166,8 +166,8 @@
   (with-eval-after-load 'evil
     (evil-make-overriding-map map (or state 'normal))))
 
-(defun maple/close-nlinum()
-  "Close nlinum."
+(defun maple/disable-line-numbers()
+  "Disable line-numbers."
   (display-line-numbers-mode -1))
 
 (defun maple/reopen-buffer(buffer-name &optional restore)

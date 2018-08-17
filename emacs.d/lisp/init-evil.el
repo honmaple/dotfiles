@@ -43,6 +43,19 @@
         evil-emacs-state-cursor '(box "SkyBlue2")
         evil-replace-state-cursor '((hbox . 2) "chocolate"))
 
+  (evil-define-operator maple/evil-join (beg end)
+    "Join the selected lines."
+    :motion evil-line
+    (let ((sep (read-string "Separator: "))
+          (count (count-lines beg end)))
+      (when (> count 1)
+        (setq count (1- count)))
+      (goto-char beg)
+      (dotimes (_ count)
+        (join-line 1)
+        (delete-horizontal-space)
+        (insert sep))))
+
   :custom-face
   (region ((t (:background "#66d9ef" :foreground "#272822"))))
   :bind (:map evil-normal-state-map

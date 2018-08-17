@@ -167,7 +167,7 @@ Summary:
   "Build the site."
   (interactive)
   (let ((command (format
-                  "cd %s && make html &"
+                  "cd %s && make d &"
                   blog-admin-backend-path)))
     (shell-command command)))
 
@@ -175,7 +175,7 @@ Summary:
   "Deploy the site."
   (interactive)
   (let ((command (format
-                  "cd %s && make publish &"
+                  "cd %s && make p &"
                   blog-admin-backend-path)))
     (shell-command command)))
 

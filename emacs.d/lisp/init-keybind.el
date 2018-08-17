@@ -33,6 +33,7 @@
   "fei" 'maple/open-init-file
   "fek" 'maple/open-keys-file
   "feg" 'maple/open-gtd-file
+  "fet" 'maple/open-test-file
   "fo" 'maple/open-in-external-app
   "fE" 'maple/sudo-edit
   "fy" 'maple/show-and-copy-buffer-filename
@@ -86,8 +87,7 @@
   "ts" 'flycheck-mode
   "tc" 'company-mode
   "tf" 'fci-mode
-  "tn" 'nlinum-mode
-  "tr" 'nlinum-relative-toggle
+  "tn" 'display-line-numbers-mode
   "tv" 'smooth-scrolling-mode
   "tV" 'visual-line-mode
   "th" 'maple/cycle-themes/body
@@ -261,8 +261,7 @@
                   (kbd "C-h") (kbd "<left>")
                   (kbd "C-l") (kbd "<right>")
                   (kbd "C-j") (kbd "<down>")
-                  (kbd "C-k") (kbd "<up>")
-                  (kbd "C-v") 'cua-paste)
+                  (kbd "C-k") (kbd "<up>"))
 
 (maple/define-key evil-visual-state-map
                   (kbd "H") (kbd "^")

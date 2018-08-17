@@ -25,8 +25,12 @@
 
 ;;; Code:
 
+(eval-when-compile (require 'init-basic))
+
 ;; 必须的,使用频率排序
-(use-package smex)
+(use-package smex
+  :config
+  (setq smex-save-file (concat maple-cache-directory "smex-items")))
 
 (use-package wgrep
   :config
@@ -188,7 +192,8 @@
          ("TAB" . maple/ivy-done)
          ("C-<return>" . ivy-immediate-done)))
 
-(use-package counsel-projectile)
+(use-package counsel-projectile
+  :preface (setq projectile-keymap-prefix (kbd "C-c p")))
 
 (use-package swiper
   :config

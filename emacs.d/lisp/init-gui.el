@@ -70,7 +70,7 @@
               x-gtk-use-system-tooltips nil
               x-wait-for-event-timeout nil
               truncate-lines t
-              truncate-partial-width-windows t
+              truncate-partial-width-windows nil
               ad-redefinition-action 'accept)
 
 (setq frame-title-format
@@ -86,6 +86,11 @@
 (setq scroll-preserve-screen-position t
       scroll-margin 15
       scroll-conservatively 101)
+
+(use-package simple
+  :ensure nil
+  :hook (text-mode . visual-line-mode)
+  :diminish visual-line-mode)
 
 (use-package frame
   :ensure nil

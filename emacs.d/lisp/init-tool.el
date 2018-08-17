@@ -28,6 +28,7 @@
 (use-package ctable)
 (use-package docker-tramp)
 (use-package dockerfile-mode)
+(use-package nginx-mode)
 
 (use-package esup
   :config

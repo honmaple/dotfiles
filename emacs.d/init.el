@@ -32,7 +32,7 @@
 
 (setq user-full-name "jianglin"
       user-default-theme 'monokai
-      user-mail-address "xiyang0807@gmail.com"
+      user-mail-address "mail@honmaple.com"
       gc-cons-threshold (* 256 1024 1024)
       gc-cons-percentage 0.6
       file-name-handler-alist nil)

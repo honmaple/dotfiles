@@ -56,18 +56,23 @@
         (delete-horizontal-space)
         (insert sep))))
 
+  (use-package evil-numbers
+    :bind
+    (:map evil-normal-state-map
+          ("+" . evil-numbers/inc-at-pt)
+          ("-" . evil-numbers/dec-at-pt)))
+
+  (use-package expand-region
+    :bind (:map evil-visual-state-map
+                ("v" . er/expand-region)
+                ("V" . er/contract-region)))
+
   :custom-face
   (region ((t (:background "#66d9ef" :foreground "#272822"))))
   :bind (:map evil-normal-state-map
               ("C-k" . evil-scroll-up)
               ("C-j" . evil-scroll-down)))
 
-(use-package evil-numbers
-  :after evil
-  :bind
-  (:map evil-normal-state-map
-        ("+" . evil-numbers/inc-at-pt)
-        ("-" . evil-numbers/dec-at-pt)))
 
 (use-package evil-surround
   :hook (after-init . global-evil-surround-mode)
@@ -80,7 +85,6 @@
   :hook (after-init . global-evil-matchit-mode))
 
 (use-package evil-ediff
-  :commands (evil-ediff-mode)
   :hook (ediff-mode . evil-ediff-mode))
 
 (use-package evil-escape
@@ -127,14 +131,6 @@
               ("C-n" . evil-multiedit-match-and-next)
               ("C-p" . evil-multiedit-match-and-prev)
               ("C-t" . evil-multiedit-skip-and-match-next)))
-
-
-(use-package expand-region
-  :after evil
-  :bind (:map evil-visual-state-map
-              ("v" . er/expand-region)
-              ("V" . er/contract-region)))
-
 
 (provide 'init-evil)
 

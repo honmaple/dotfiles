@@ -130,7 +130,6 @@
 
 (defun maple/define-key (keymap key def &rest bindings)
   "Define multi keybind with KEYMAP KEY DEF BINDINGS."
-  (interactive)
   (while key
     (define-key keymap key def)
     (setq key (pop bindings)

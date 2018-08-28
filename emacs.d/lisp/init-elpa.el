@@ -30,8 +30,7 @@
 (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
                          ("melpa" . "http://elpa.emacs-china.org/melpa/")
                          ("org"   . "http://elpa.emacs-china.org/org/")
-                         ("melpa-stable" . "http://elpa.emacs-china.org/melpa-stable/")
-                         ))
+                         ("melpa-stable" . "http://elpa.emacs-china.org/melpa-stable/")))
 (setq package-enable-at-startup nil)
 (package-initialize)
 

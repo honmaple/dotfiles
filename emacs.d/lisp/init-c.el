@@ -32,7 +32,7 @@
 
   (use-package company-c-headers
     :functions maple/company-backend
-    :init (maple/company-backend 'anaconda-mode-hook 'company-c-headers)))
+    :init (maple/company-backend 'c-mode-hook 'company-c-headers)))
 
 (provide 'init-c)
 

@@ -58,6 +58,45 @@
     :functions maple/company-backend
     :init (maple/company-backend 'go-mode-hook '(company-go company-keywords)))
 
+  (defun maple/go-auto-comment()
+    (interactive)
+    (unless (featurep 'imenu)
+      (require 'imenu nil t))
+    (let* ((imenu-auto-rescan t)
+           (imenu-auto-rescan-maxout (if current-prefix-arg
+                                         (buffer-size)
+                                       imenu-auto-rescan-maxout))
+           (items (imenu--make-index-alist t))
+           (items (delete (assoc "*Rescan*" items) items)))
+      (cl-mapcan
+       (lambda(item)
+         (cl-mapcan
+          (if (string= (car item) "func")
+              'maple/go-func-comment
+            'maple/go-type-comment)
+          (cdr item)))
+       items)))
+
+  (defun maple/go-add-comment(func point)
+    (save-excursion
+      (goto-char point)
+      (forward-line -1)
+      (when (not (looking-at (concat "// " func)))
+        (end-of-line) (newline-and-indent)
+        (insert (concat "// " func " ..")))))
+
+  (defun maple/go-func-comment(f)
+    (let ((func (car f)))
+      (if (and (string-prefix-p "(" func)
+               (string-match "[)] \\(.*\\)[(]\\(.*\\)[)]\\(.*\\)$" func))
+          (maple/go-add-comment (match-string 1 func) (cdr f))
+        (if (string-match "\\(.*\\)[(]\\(.*\\)[)]\\(.*\\)$" func)
+            (maple/go-add-comment (match-string 1 func) (cdr f))
+          (maple/go-add-comment (car f) (cdr f))))))
+
+  (defun maple/go-type-comment(f)
+    (maple/go-add-comment (car f) (cdr f)))
+
   :evil-bind
   (normal go-mode-map
           ([f6] . gofmt)

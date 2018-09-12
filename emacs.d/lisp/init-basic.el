@@ -135,13 +135,15 @@
     (setq key (pop bindings)
           def (pop bindings))))
 
-(defun maple/company-backend (hook backends)
-  "Set HOOK with BACKENDS `company-backends'."
+(defun maple/company-backend (hook backends &optional with-no-yas)
+  "Set HOOK with BACKENDS `company-backends' `WITH-NO-YAS`."
   (declare (indent defun))
   (let ((fn `(set (make-variable-buffer-local 'company-backends)
-                  (append (list (company-backend-with-yas ',backends))
-                          company-default-backends))))
-    (add-hook hook `(lambda() ,fn))))
+                  (append (if ,with-no-yas (list ',backends)
+                            (list (company-backend-with-yas ',backends)))
+                          company-default-backends)))
+        (hooks (if (listp hook) hook (list hook))))
+    (dolist (i hooks) (add-hook i `(lambda() ,fn)))))
 
 (defun maple/get-weekday()
   "Show weekday of today."

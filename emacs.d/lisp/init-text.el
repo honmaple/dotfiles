@@ -22,6 +22,18 @@
   :commands (markdown-preview-mode)
   :load-path "site-lisp/markdown-preview")
 
+(use-package company-english-helper
+  :load-path "site-lisp/company-english-helper"
+  :functions maple/company-backend
+  :commands (company-english-helper-search)
+  :init
+  (maple/company-backend '(org-mode-hook markdown-mode-hook) 'company-english-helper-search t)
+  :setq
+  (:mode org-mode
+         company-tooltip-align-annotations nil)
+  (:mode markdown-mode
+         company-tooltip-align-annotations nil))
+
 ;; (use-package olivetti
 ;;   :defer t
 ;;   :hook (org-mode . olivetti-mode))

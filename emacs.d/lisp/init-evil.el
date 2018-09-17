@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2015-2018 lin.jiang
 
-;; Author: lin.jiang <xiyang0807@gmail.com>
+;; Author: lin.jiang <mail@honmaple.com>
 ;; URL: https://github.com/honmaple/dotfiles/tree/master/emacs.d
 
 ;; This file is free software: you can redistribute it and/or modify

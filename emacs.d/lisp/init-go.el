@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2015-2018 lin.jiang
 
-;; Author: lin.jiang <xiyang0807@gmail.com>
+;; Author: lin.jiang <mail@honmaple.com>
 ;; URL: https://github.com/honmaple/dotfiles/tree/master/emacs.d
 
 ;; This file is free software: you can redistribute it and/or modify
@@ -86,13 +86,14 @@
         (insert (concat "// " func " ..")))))
 
   (defun maple/go-func-comment(f)
-    (let ((func (car f)))
-      (if (and (string-prefix-p "(" func)
-               (string-match "[)] \\(.*\\)[(]\\(.*\\)[)]\\(.*\\)$" func))
-          (maple/go-add-comment (match-string 1 func) (cdr f))
-        (if (string-match "\\(.*\\)[(]\\(.*\\)[)]\\(.*\\)$" func)
-            (maple/go-add-comment (match-string 1 func) (cdr f))
-          (maple/go-add-comment (car f) (cdr f))))))
+    (let* ((point (cdr f))
+           (func (car f))
+           (func (if (and (string-prefix-p "(" func)
+                          (string-match "[)] \\(.*\\)[(]\\(.*\\)[)]\\(.*\\)$" func))
+                     (match-string 1 func)
+                   (if (string-match "\\(.*\\)[(]\\(.*\\)[)]\\(.*\\)$" func)
+                       (match-string 1 func) func))))
+      (maple/go-add-comment func point)))
 
   (defun maple/go-type-comment(f)
     (maple/go-add-comment (car f) (cdr f)))

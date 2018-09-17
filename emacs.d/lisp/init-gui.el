@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2015-2018 lin.jiang
 
-;; Author: lin.jiang <xiyang0807@gmail.com>
+;; Author: lin.jiang <mail@honmaple.com>
 ;; URL: https://github.com/honmaple/dotfiles/tree/master/emacs.d
 
 ;; This file is free software: you can redistribute it and/or modify
@@ -52,8 +52,10 @@
       window-combination-resize t
       indicate-empty-lines t
       transient-mark-mode nil
+      create-lockfiles nil
       backup-directory-alist `(("." . ,(concat maple-cache-directory "auto-save")))
       select-enable-clipboard t) ;;激活粘贴板
+
 
 ;; (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
 ;; important for golden-ratio to better work

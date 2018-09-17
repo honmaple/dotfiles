@@ -1,10 +1,47 @@
+;;; maple-modeline.el --- modeline configurations.	-*- lexical-binding: t -*-
+
+;; Copyright (C) 2015-2018 lin.jiang
+
+;; Author: lin.jiang <mail@honmaple.com>
+;; URL: https://github.com/honmaple/dotfiles/tree/master/emacs.d
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; modeline configurations.
+;;
+
+;;; Code:
+
+
 (require 'powerline)
+(require 'subr-x)
 
 (defface mapleline-highlight
   `((t (:background "DarkGoldenrod2"
                     :foreground "#3E3D31"
                     :inherit 'mode-line)))
-  "Default highlight face for spaceline.")
+  "Default highlight face for modeline.")
+
+(defvar mapleline-priority-table (make-hash-table :test 'equal))
+
+(defun mapleline-get-table-list (hash-table)
+  "Return a list of keys in HASH-TABLE."
+  (let ((l '()))
+    (maphash (lambda (k v) (push (cons k v) l)) hash-table)
+    (sort l (lambda(a b) (< (cdr a) (cdr b))))))
 
 (defmacro mapleline-define (name &rest args)
   "Define modeline with NAME and ARGS."
@@ -12,17 +49,16 @@
            (doc-string 2))
   (let* ((-if (or (plist-get args :if) t))
          (-format (plist-get args :format))
-         (-priority (or (plist-get args :priority) 0)))
+         (-priority (or (plist-get args :priority) 100))
+         (-name (format "%s" name)))
     `(progn
+       ,(puthash -name -priority mapleline-priority-table)
        (defvar ,(intern (format "mapleline-%s-p" name)) t)
        (defun ,(intern (format "mapleline--%s" name)) (&optional face)
-         (let ((width (with-current-buffer (current-buffer)
-                        (+ (window-width)
-                           (or (cdr (window-margins)) 0)
-                           (or (car (window-margins)) 0)))))
-           (when  (and ,-if (> width ,-priority))
-             (powerline-raw ,-format face))))
-       )))
+         (when  (and ,-if
+                     ,(intern (format "mapleline-%s-p" name))
+                     (<= (gethash ,-name mapleline-priority-table) 100))
+           (powerline-raw ,-format face))))))
 
 (defmacro mapleline-define-fill(width)
   "Define mapleline--fill with WIDTH."
@@ -70,7 +106,7 @@
 
 (mapleline-define version-control
   :if (and vc-mode (vc-state (buffer-file-name)))
-  :priority 56
+  :priority 78
   :format
   (format "%s:%s" "Git" (vc-state (buffer-file-name))))
 
@@ -105,9 +141,15 @@
            (or (mapleline-flycheck-lighter 'error) "")
            'face 'flycheck-fringe-error)))
 
+(mapleline-define python-pyvenv
+  :if (and (eq 'python-mode major-mode)
+           (bound-and-true-p pyvenv-virtual-env-name))
+  :format
+  (format "pyvenv:%s" pyvenv-virtual-env-name))
+
 (mapleline-define selection-info
   :if (and (powerline-selected-window-active) (region-active-p))
-  :priority 75
+  :priority 95
   :format
   (let* ((lines (count-lines (region-beginning) (min (1+ (region-end)) (point-max))))
          (chars (- (1+ (region-end)) (region-beginning)))
@@ -152,7 +194,7 @@
            (funcall func face-left face-right)
            (powerline-raw " " face-right)))))
 
-(defun mapleline-display(displays face0 face1 &optional before after)
+(defun mapleline-display(displays face0 face1)
   "Return DISPLAYS FACE0 FACE1."
   (cl-reduce
    (lambda(x y)
@@ -163,7 +205,7 @@
             (ds (funcall (car y) (or face (if odd face0 face1))))
             (sep (if odd (mapleline--separator-right (or face face0) face1)
                    (mapleline--separator-left (or face face1) face0))))
-       (if (or (not ds) (string-equal ds ""))
+       (if (or (not ds) (string= ds ""))
            (append x)
          (append x (list ds (when after sep))))))
    displays :initial-value (list)))
@@ -181,7 +223,8 @@
                  (mapleline--major-mode)
                  (mapleline--flycheck)
                  (mapleline--version-control)))
-         (right '((mapleline--selection-info)
+         (right '((mapleline--python-pyvenv)
+                  (mapleline--selection-info)
                   (mapleline--count)
                   (mapleline--screen
                    :after nil)
@@ -190,9 +233,38 @@
     (mapleline-define-fill (+ 4.5 (powerline-width (mapleline-display right face0 face1))))
     (mapleline-display (append left '((mapleline--fill)) right) face0 face1)))
 
+
+(defun mapleline-width-reset()
+  "Auto reset modeline width."
+  (let* ((p (car (mapleline-get-table-list
+                  mapleline-priority-table)))
+         (key (car p))
+         (value (cdr p)))
+    (puthash key (+ value 100) mapleline-priority-table)))
+
+(defun mapleline-theme ()
+  "Setup modeline."
+  (let* ((display (mapleline-init))
+         (width (with-current-buffer (current-buffer)
+                  (+ (window-width)
+                     (or (cdr (window-margins)) 0)
+                     (or (car (window-margins)) 0))))
+         (modeline-width (powerline-width display)))
+    (while (> modeline-width width)
+      (mapleline-width-reset)
+      (setq display (mapleline-init))
+      (setq modeline-width (powerline-width display)))
+    (maphash
+     (lambda (key value)
+       (when (> value 100)
+         (puthash key (- value 100) mapleline-priority-table)))
+     mapleline-priority-table)
+    display))
+
 (defun mapleline-default-theme ()
   "Setup the default modeline."
   (interactive)
-  (setq-default mode-line-format '("%e" (:eval (mapleline-init)))))
+  (setq-default mode-line-format '("%e" (:eval (mapleline-theme)))))
 
 (provide 'maple-modeline)
+;;; maple-modeline.el ends here

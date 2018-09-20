@@ -1,3 +1,31 @@
+;;; maple-org.el ---  custom org configuration.	-*- lexical-binding: t -*-
+
+;; Copyright (C) 2015-2018 lin.jiang
+
+;; Author: lin.jiang <mail@honmaple.com>
+;; URL: https://github.com/honmaple/dotfiles/tree/master/emacs.d
+
+;; This file is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this file.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; custom org configuration.
+;;
+
+;;; Code:
+(require 'org-capture)
+
 (defvar maple/org-src-path "~/git/pelican/content/org/%s笔记.org")
 
 (defvar maple/org-capture-templates
@@ -44,7 +72,7 @@
      :empty-lines 1)))
 
 
-(defun maple/capture-target ()
+(defun maple/org-capture-target ()
   "Set point for capturing at what capture target file+headline with headline set to %l would do."
   (org-capture-put :target (list
                             'file+headline
@@ -63,19 +91,22 @@
       (insert "* " hd "\n")
       (beginning-of-line 0))))
 
-(defun maple/capture-snip (keybind src &optional tags)
+(defun maple/org-capture-snip (keybind src &optional tags)
+  "Dynamic capture with KEYBIND SRC optional TAGS."
   (add-to-list 'org-capture-templates
                `(,keybind ,src entry (file+function
                                       ,(format maple/org-src-path src)
-                                      maple/capture-target)
+                                      maple/org-capture-target)
                           ,(concat "** %?\t\n#+BEGIN_SRC " src "\n\n#+END_SRC") :tags ,tags)))
 
 (defun maple/insert-org-or-md-img-link (prefix imagename)
+  "Insert link to current buffer with PREFIX and IMAGENAME."
   (if (equal (file-name-extension (buffer-file-name)) "org")
       (insert (format "[[%s]]" prefix))
     (insert (format "![%s](%s)" imagename prefix))))
 
-(defun maple/capture-screenshot (basename)
+(defun maple/org-capture-screenshot (basename)
+  "Screenshot and insert link to current buffer with BASENAME."
   (interactive "sScreenshot name: ")
   (let ((blog-image-path (substitute-in-file-name
                           (format "~/git/pelican/content/images/%s-%s.png" basename (format-time-string "%Y%m%d_%H%M%S")))))
@@ -89,6 +120,7 @@
   (insert "\n"))
 
 (defun maple/org-md-export-to-markdown (&optional directory)
+  "Export current buffer to a markdown file with DIRECTORY."
   (interactive)
   (shell-command
    (format "mv -v %s %s"
@@ -96,6 +128,7 @@
            (or directory (read-file-name "Move to: ")))))
 
 (defun maple/org-html-export-to-html (&optional directory)
+  "Export current buffer to a HTML file with DIRECTORY."
   (interactive)
   (shell-command
    (format "mv -v %s %s"
@@ -103,3 +136,4 @@
            (or directory (read-file-name "Move to: ")))))
 
 (provide 'maple-org)
+;;; maple-org.el ends here

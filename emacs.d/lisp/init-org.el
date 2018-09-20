@@ -92,9 +92,9 @@
     :config
     (setq org-capture-templates maple/org-capture-templates)
 
-    (maple/capture-snip "sp" "python" '("Tool" "Flask" "Tornado"))
-    (maple/capture-snip "sl" "lua" '("Tool" "Nginx"))
-    (maple/capture-snip "sg" "golang" '("Tool")))
+    (maple/org-capture-snip "sp" "python" '("Tool" "Flask" "Tornado"))
+    (maple/org-capture-snip "sl" "lua" '("Tool" "Nginx"))
+    (maple/org-capture-snip "sg" "golang" '("Tool")))
 
   (setq org-refile-targets
         (quote (("~/org-mode/gtd.org" :level . 1)

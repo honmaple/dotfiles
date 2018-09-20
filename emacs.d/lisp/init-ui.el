@@ -56,12 +56,12 @@
 (use-package hydra
   :config
   (use-package maple-theme
-    :commands (maple/cycle-themes/body)
+    :commands (maple/theme-switch/body)
     :load-path "site-lisp/maple"
     :config
-    (defhydra maple/cycle-themes ()
-      ("n" maple/next-theme "next theme")
-      ("p" maple/previous-theme "prev theme"))))
+    (defhydra maple/theme-switch ()
+      ("n" maple/theme-next "next theme")
+      ("p" maple/theme-previous "prev theme"))))
 
 (use-package which-key
   :diminish which-key-mode

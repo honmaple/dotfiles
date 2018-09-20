@@ -84,12 +84,15 @@
   (:mode markdown-mode
          time-stamp-start "Modified[ \t]*:?"))
 
-(use-package header
-  :load-path "site-lisp/header"
-  :hook (before-save . maple/header-auto-update)
+(use-package maple-header
+  :load-path "site-lisp/maple"
+  :defines (maple/header-update-email-p maple/header-update-filename-p)
+  :hook
+  (after-init . maple/header-init)
+  (before-save . maple/header-update)
   :config
-  (setq maple//header-update-filename t
-        maple//header-update-email nil))
+  (setq maple/header-update-filename-p t
+        maple/header-update-email-p nil))
 
 (provide 'init-auto-insert)
 

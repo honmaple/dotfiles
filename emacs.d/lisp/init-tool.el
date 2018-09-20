@@ -114,7 +114,7 @@
   :config
   (maple/evil-map 2048-mode-map))
 
-(use-package maple-macro
+(use-package maple-search
   :ensure nil
   :hook (after-init . maple/search-init))
 

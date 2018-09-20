@@ -90,7 +90,7 @@
   "tn" 'display-line-numbers-mode
   "tv" 'smooth-scrolling-mode
   "tV" 'visual-line-mode
-  "th" 'maple/cycle-themes/body
+  "th" 'maple/theme-switch/body
   )
 
 (evil-leader/set-key

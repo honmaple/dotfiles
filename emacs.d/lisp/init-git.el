@@ -57,3 +57,4 @@
   :commands (browse-at-remote))
 
 (provide 'init-git)
+;;; init-git.el ends here

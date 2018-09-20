@@ -62,7 +62,8 @@
     (interactive)
     (unless (featurep 'imenu)
       (require 'imenu nil t))
-    (let* ((imenu-auto-rescan t)
+    (let* ((imenu-max-item-length "Unlimited")
+           (imenu-auto-rescan t)
            (imenu-auto-rescan-maxout (if current-prefix-arg
                                          (buffer-size)
                                        imenu-auto-rescan-maxout))
@@ -89,9 +90,9 @@
     (let* ((point (cdr f))
            (func (car f))
            (func (if (and (string-prefix-p "(" func)
-                          (string-match "[)] \\(.*\\)[(]\\(.*\\)[)]\\(.*\\)$" func))
+                          (string-match "[)] \\(.*?\\)[(]\\(.*?\\)[)]\\(.*\\)$" func))
                      (match-string 1 func)
-                   (if (string-match "\\(.*\\)[(]\\(.*\\)[)]\\(.*\\)$" func)
+                   (if (string-match "\\(.*?\\)[(]\\(.*?\\)[)]\\(.*\\)$" func)
                        (match-string 1 func) func))))
       (maple/go-add-comment func point)))
 

@@ -94,13 +94,29 @@
   ;; complete or done
   (defun maple/ivy-done()
     (interactive)
-    (ivy-partial-or-done)
-    (let ((ivy-text (ivy-state-current ivy-last)) dir)
-      (ivy-insert-current)
-      (when (and (eq (ivy-state-collection ivy-last) #'read-file-name-internal)
-                 (setq dir (ivy-expand-file-if-directory ivy-text)))
-        (ivy--cd dir)
-        (setq this-command 'ivy--cd))))
+    (let ((dir ivy--directory))
+      (ivy-partial-or-done)
+      (when (string= dir ivy--directory)
+        (ivy-insert-current)
+        (when (and (eq (ivy-state-collection ivy-last) #'read-file-name-internal)
+                   (setq dir (ivy-expand-file-if-directory (ivy-state-current ivy-last))))
+          (ivy--cd dir)
+          (setq this-command 'ivy-cd)))))
+
+  (defun maple/ivy-backward-delete-char ()
+    (interactive)
+    (let ((dir ivy--directory)
+          (p (and ivy--directory (= (minibuffer-prompt-end) (point)))))
+      (ivy-backward-delete-char)
+      (when p (insert (file-name-nondirectory (directory-file-name dir))))))
+
+  (defun maple/ivy-c-h ()
+    (interactive)
+    (if (eq (ivy-state-collection ivy-last) #'read-file-name-internal)
+        (if (string-equal (ivy--input) "")
+            (counsel-up-directory)
+          (delete-minibuffer-contents))
+      (ivy-backward-delete-char)))
 
   ;; ivy-occur custom
   (defun maple/ivy-edit ()
@@ -154,12 +170,6 @@
   (setq counsel-preselect-current-file t
         counsel-more-chars-alist '((t . 1)))
 
-  (defun maple/counsel-up-directory()
-    (interactive)
-    (if (string-equal (ivy--input) "")
-        (counsel-up-directory)
-      (delete-minibuffer-contents)))
-
   (defun maple/counsel-ag-file()
     (interactive)
     (counsel-ag nil (read-file-name "Search in file(s): ")))
@@ -184,10 +194,11 @@
          ("<tab>" . maple/ivy-done)
          ("TAB" . maple/ivy-done)
          ("C-c C-e" . maple/ivy-edit)
-         ("C-h" . [backspace])
+         ("C-h" . maple/ivy-c-h)
          ([escape] . minibuffer-keyboard-quit)
+         ([backspace] . maple/ivy-backward-delete-char)
          :map counsel-find-file-map
-         ("C-h" . maple/counsel-up-directory)
+         ([backspace] . maple/ivy-backward-delete-char)
          ("<tab>" . maple/ivy-done)
          ("TAB" . maple/ivy-done)
          ("C-<return>" . ivy-immediate-done)))

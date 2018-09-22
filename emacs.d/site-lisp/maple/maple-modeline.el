@@ -29,19 +29,40 @@
 (require 'powerline)
 (require 'subr-x)
 
-(defface mapleline-highlight
-  `((t (:background "DarkGoldenrod2"
-                    :foreground "#3E3D31"
-                    :inherit 'mode-line)))
-  "Default highlight face for modeline.")
+(defvar evil-state)
+(defvar evil-previous-state)
+(defvar pyvenv-virtual-env-name)
 
+(defvar mapleline-highlight-face-func 'mapleline-get-face)
 (defvar mapleline-priority-table (make-hash-table :test 'equal))
+
+(dolist (i '((default "DarkGoldenrod2" "Default highlight face for modeline.")
+             (evil-normal "DarkGoldenrod2" "Evil normal state face.")
+             (evil-insert "chartreuse3" "Evil insert state face.")
+             (evil-emacs "SkyBlue2" "Evil emacs state face.")
+             (evil-replace "chocolate" "Evil replace state face.")
+             (evil-visual "gray" "Evil visual state face.")
+             (evil-motion "plum3" "Evil motion state face.")))
+  (eval `(defface ,(intern (format "mapleline-%s-face" (nth 0 i)))
+           '((t (:background ,(nth 1 i)
+                             :foreground "#3E3D31"
+                             :inherit 'mode-line)))
+           ,(nth 2 i))))
 
 (defun mapleline-get-table-list (hash-table)
   "Return a list of keys in HASH-TABLE."
   (let ((l '()))
     (maphash (lambda (k v) (push (cons k v) l)) hash-table)
     (sort l (lambda(a b) (< (cdr a) (cdr b))))))
+
+(defun mapleline-get-face ()
+  "Get face."
+  (if (bound-and-true-p evil-local-mode)
+      (intern (format "mapleline-evil-%s-face"
+                      (if (eq 'operator evil-state)
+                          evil-previous-state
+                        evil-state)))
+    'mapleline-default-face))
 
 (defmacro mapleline-define (name &rest args)
   "Define modeline with NAME and ARGS."
@@ -52,7 +73,7 @@
          (-priority (or (plist-get args :priority) 100))
          (-name (format "%s" name)))
     `(progn
-       ,(puthash -name -priority mapleline-priority-table)
+       (puthash ,-name ,-priority mapleline-priority-table)
        (defvar ,(intern (format "mapleline-%s-p" name)) t)
        (defun ,(intern (format "mapleline--%s" name)) (&optional face)
          (when  (and ,-if
@@ -129,6 +150,7 @@
 
 (mapleline-define flycheck
   :if (bound-and-true-p flycheck-mode)
+  :priority 72
   :format
   (format "%s%s%s"
           (propertize
@@ -167,16 +189,17 @@
                 (match-string 1 buf-coding) buf-coding)) "%l" "%c"))
 
 (mapleline-define screen
-  :priority 79
+  :priority 80
   :format  "%p ")
 
 (mapleline-define hud
   :if powerline-display-hud
   :priority 79
   :format
-  (powerline-render (list (powerline-hud 'mapleline-highlight (or face 'powerline-active0)))))
+  (powerline-render (list (powerline-hud 'mapleline-default-face (or face 'powerline-active0)))))
 
 (defun mapleline--separator-left(face-left face-right)
+  "Separator-left with FACE-LEFT FACE-RIGHT."
   (let ((func (intern (format "powerline-%s-%s"
                               (powerline-current-separator)
                               (car powerline-default-separator-dir)))))
@@ -186,6 +209,7 @@
            (powerline-raw " " face-right)))))
 
 (defun mapleline--separator-right(face-left face-right)
+  "Separator-right with FACE-LEFT FACE-RIGHT."
   (let ((func (intern (format "powerline-%s-%s"
                               (powerline-current-separator)
                               (cdr powerline-default-separator-dir)))))
@@ -215,8 +239,9 @@
   (let* ((active (powerline-selected-window-active))
          (face0  (if active 'powerline-active0 'powerline-inactive0))
          (face1  (if active 'powerline-active1 'powerline-inactive1))
-         (face2  (if active 'powerline-active2  'powerline-inactive2))
-         (face3  (if active 'mapleline-highlight  'powerline-inactive1))
+         ;; (face2  (if active 'powerline-active2  'powerline-inactive2))
+         (face3  (if active (funcall mapleline-highlight-face-func)
+                   'powerline-inactive1))
          (left `((mapleline--window-number
                   :face ,face3)
                  (mapleline--buffer-info)

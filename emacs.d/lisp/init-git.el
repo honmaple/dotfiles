@@ -5,10 +5,6 @@
 
 
 ;;; Code:
-(use-package evil-magit
-  :demand t
-  :after magit)
-
 (use-package magit
   :commands (magit-status)
   :config
@@ -16,6 +12,9 @@
         magit-revision-show-gravatars '("^Author:     " . "^Commit:     ")
         magit-process-popup-time 10
         magit-diff-refine-hunk t)
+  (use-package evil-magit
+    :demand)
+
   (with-eval-after-load 'fullframe
     (fullframe magit-status magit-mode-quit-window))
   :bind
@@ -38,7 +37,7 @@
 
 (use-package git-gutter-fringe
   :diminish git-gutter-mode
-  :hook (after-init . global-git-gutter-mode)
+  :hook (maple-init . global-git-gutter-mode)
   :init
   (with-eval-after-load 'git-gutter
     (require 'git-gutter-fringe))

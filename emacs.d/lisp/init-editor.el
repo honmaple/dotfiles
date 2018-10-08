@@ -34,7 +34,7 @@
 ;; 修改外部文件自动载入
 (use-package autorevert
   :ensure nil
-  :hook (after-init . global-auto-revert-mode)
+  :hook (maple-init . global-auto-revert-mode)
   :config
   (setq global-auto-revert-non-file-buffers t
         auto-revert-verbose nil)
@@ -42,7 +42,7 @@
 
 (use-package semantic
   :ensure nil
-  :hook (after-init . semantic-mode)
+  :hook (maple-init . semantic-mode)
   :config
   (setq semanticdb-default-save-directory
         (concat maple-cache-directory "semantic/"))
@@ -60,7 +60,7 @@
 
 (use-package elec-pair
   :ensure nil
-  :hook (after-init . electric-pair-mode)
+  :hook (maple-init . electric-pair-mode)
   :config
   ;; (setq electric-pair-pairs '((?\' . ?\')))
   (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
@@ -68,7 +68,7 @@
 ;; 高亮括号配对
 (use-package paren
   :ensure nil
-  :hook (after-init . show-paren-mode)
+  :hook (maple-init . show-paren-mode)
   :config
   (setq show-paren-when-point-inside-paren t
         show-paren-when-point-in-periphery t))
@@ -123,7 +123,7 @@
 
 (use-package projectile
   :diminish projectile-mode "ⓟ"
-  :hook (after-init . projectile-mode)
+  :hook (maple-init . projectile-mode)
   :config
   (setq projectile-sort-order 'recentf
         projectile-cache-file

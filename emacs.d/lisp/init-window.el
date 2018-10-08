@@ -32,13 +32,13 @@
 
 (use-package winner
   :ensure nil
-  :hook (after-init . winner-mode))
+  :hook (maple-init . winner-mode))
 
 (use-package window-numbering
-  :hook (after-init . window-numbering-mode))
+  :hook (maple-theme . window-numbering-mode))
 
 (use-package popwin
-  :hook (after-init . popwin-mode)
+  :hook (maple-init . popwin-mode)
   :config
   (setq popwin:special-display-config
         '(("*Help*" :dedicated t :position bottom :stick nil :noselect nil)
@@ -55,7 +55,7 @@
 
 (use-package golden-ratio  ;;黄金分割
   :diminish golden-ratio-mode
-  :hook (after-init . golden-ratio-mode)
+  :hook (maple-init . golden-ratio-mode)
   :config
   (setq golden-ratio-exclude-modes '("calc-mode"
                                      "ediff-mode"

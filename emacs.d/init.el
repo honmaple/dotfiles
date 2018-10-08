@@ -27,7 +27,7 @@
 
 ;;; Code:
 
-(defvar default-file-name-handler-alist file-name-handler-alist)
+(defvar maple/file-name-handler-alist file-name-handler-alist)
 (defvar user-default-theme nil)
 
 (setq user-full-name "jianglin"
@@ -40,13 +40,16 @@
 (add-hook 'emacs-startup-hook
           (lambda ()
             "Restore defalut values after init"
-            (setq file-name-handler-alist default-file-name-handler-alist
+            (setq file-name-handler-alist maple/file-name-handler-alist
                   gc-cons-threshold 800000
                   gc-cons-percentage 0.1)))
 
+(defmacro maple/require (pkg)
+  "Load PKG."
+  `(load (file-truename (format "%s/lisp/%s" (expand-file-name user-emacs-directory) ,pkg))  t t))
+
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
-
 ;;----------------------------------------------------------------------------
 ;; Bootstrap config
 ;;----------------------------------------------------------------------------

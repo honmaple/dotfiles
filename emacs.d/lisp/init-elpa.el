@@ -20,36 +20,39 @@
 
 ;;; Commentary:
 ;;
-;; Evil configurations.
+;; package configurations.
 ;; enter表示安装,d表示删除,x表示执行删除
 ;;
 
 ;;; Code:
 
-(require 'package)
 (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
                          ("melpa" . "http://elpa.emacs-china.org/melpa/")
                          ("org"   . "http://elpa.emacs-china.org/org/")
-                         ("melpa-stable" . "http://elpa.emacs-china.org/melpa-stable/")))
-(setq package-enable-at-startup nil)
-(package-initialize)
+                         ("melpa-stable" . "http://elpa.emacs-china.org/melpa-stable/"))
+      package-enable-at-startup nil
+      package--init-file-ensured t)
+
+;; (setq load-path (append load-path (directory-files package-user-dir t "^[^.]" t)))
+;; (setq package--initialized t)
+(eval-when-compile
+  (require 'package)
+  (package-initialize)
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package)))
 
 ;; Setup `use-package'
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
 (eval-when-compile
-  (require 'use-package))
-
-(setq use-package-verbose nil
-      use-package-always-ensure t
-      use-package-always-defer t
-      use-package-expand-minimally t
-      use-package-minimum-reported-time 0.01)
+  (require 'use-package)
+  (setq use-package-verbose nil
+        use-package-always-ensure t
+        use-package-always-defer t
+        use-package-expand-minimally t
+        use-package-minimum-reported-time 0.01))
 
 (use-package evil-use-package
-  :demand t
+  :demand
   :load-path "site-lisp/use-package")
 
 ;;显示状态mode
@@ -60,7 +63,7 @@
 
 (use-package async-bytecomp
   :ensure async
-  :hook (after-init . async-bytecomp-package-mode)
+  :hook (maple-init . async-bytecomp-package-mode)
   :config
   (setq async-bytecomp-allowed-packages '(all)))
 
@@ -84,9 +87,8 @@
 
 (use-package server
   :ensure nil
-  :commands (server-running-p server-start)
-  :init (unless (server-running-p) (server-start)))
+  :commands (server-running-p)
+  :init (unless (server-running-p) (run-with-idle-timer 3 nil #'server-start)))
 
 (provide 'init-elpa)
-
 ;;; init-elpa.el ends here

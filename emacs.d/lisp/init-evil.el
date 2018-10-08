@@ -25,14 +25,8 @@
 
 ;;; Code:
 
-;;leader 要在evil-mode前,否则messages无法激活
-(use-package evil-leader
-  :hook (after-init . global-evil-leader-mode)
-  :config
-  (evil-leader/set-leader ","))
-
 (use-package evil
-  :hook (after-init . evil-mode)
+  :hook (maple-init . evil-mode)
   :config
   (fset 'evil-visual-update-x-selection 'ignore) ;;粘贴板
   ;; (evil-add-hjkl-bindings package-menu-mode-map 'emacs)
@@ -73,22 +67,26 @@
               ("C-k" . evil-scroll-up)
               ("C-j" . evil-scroll-down)))
 
+(use-package evil-leader
+  :hook (maple-init . global-evil-leader-mode)
+  :config
+  (evil-leader/set-leader ","))
 
 (use-package evil-surround
-  :hook (after-init . global-evil-surround-mode)
+  :hook (maple-init . global-evil-surround-mode)
   :evil-bind
   (visual evil-surround-mode-map
           ("s" . evil-surround-region)
           ("S" . evil-substitute)))
 
 (use-package evil-matchit
-  :hook (after-init . global-evil-matchit-mode))
+  :hook (maple-init . global-evil-matchit-mode))
 
 (use-package evil-ediff
   :hook (ediff-mode . evil-ediff-mode))
 
 (use-package evil-escape
-  :hook (after-init . evil-escape-mode)
+  :hook (maple-init . evil-escape-mode)
   :diminish 'evil-escape-mode
   :config
   (setq evil-escape-key-sequence "jj"

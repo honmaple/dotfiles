@@ -37,16 +37,16 @@
 
 ;; (use-package maple-modeline
 ;;   :ensure nil
-;;   :hook (after-init . mapleline-default-theme)
+;;   :hook (maple-theme . mapleline-default-theme)
 ;;   :config
 ;;   (setq powerline-default-separator 'wave))
 
 ;; (use-package powerline
-;;   :hook (after-init . powerline-center-evil-theme))
+;;   :hook (maple-theme . powerline-center-evil-theme))
 
 (use-package spaceline-config
   :ensure spaceline
-  :hook (after-init . spaceline-spacemacs-theme)
+  :hook (maple-theme . spaceline-spacemacs-theme)
   :config
   (setq powerline-default-separator (if (display-graphic-p) 'wave 'utf-8)
         spaceline-byte-compile nil
@@ -65,7 +65,7 @@
 
 (use-package which-key
   :diminish which-key-mode
-  :hook (after-init . which-key-mode)
+  :hook (maple-init . which-key-mode)
   :config
   (setq which-key-echo-keystrokes 0.02
         which-key-max-description-length 32
@@ -131,7 +131,7 @@
 
 
 (use-package volatile-highlights
-  :hook (after-init . volatile-highlights-mode)
+  :hook (maple-init . volatile-highlights-mode)
   :config
   ;; additional extensions
   ;; evil

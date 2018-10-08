@@ -96,11 +96,9 @@
 
 ;; (use-package cal-china-x
 ;;   :config
-;;   (progn
-;;     (setq mark-holidays-in-calendar t)
-;;     (setq cal-china-x-important-holidays cal-china-x-chinese-holidays)
-;;     (setq calendar-holidays cal-china-x-important-holidays)
-;;     ))
+;;   (setq mark-holidays-in-calendar t)
+;;   (setq cal-china-x-important-holidays cal-china-x-chinese-holidays)
+;;   (setq calendar-holidays cal-china-x-important-holidays))
 
 (use-package avy
   :commands (avy-pop-mark)
@@ -116,12 +114,11 @@
 
 (use-package maple-search
   :ensure nil
-  :hook (after-init . maple/search-init))
+  :hook (maple-init . maple/search-init))
 
 (use-package maple-startify
   :ensure nil
-  :hook (emacs-startup . startify-mode))
+  :hook (maple-init . startify-mode))
 
 (provide 'init-tool)
-
 ;;; init-tool.el ends here

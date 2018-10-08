@@ -27,7 +27,7 @@
 
 (use-package yasnippet
   :diminish yas-minor-mode
-  :hook (after-init . yas-global-mode)
+  :hook (maple-init . yas-global-mode)
   :config
   (setq yas-triggers-in-field t
         yas-prompt-functions '(yas-completing-prompt))
@@ -35,7 +35,7 @@
 
 (use-package company
   :diminish company-mode " ⓐ"
-  :hook (after-init . global-company-mode)
+  :hook (maple-init . global-company-mode)
   :config
   (setq company-idle-delay 0.1
         company-show-numbers t

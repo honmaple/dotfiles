@@ -45,7 +45,7 @@
 
 (use-package ivy
   :diminish (ivy-mode)
-  :hook (after-init . ivy-mode)
+  :hook (maple-init . ivy-mode)
   :defines
   (magit-completing-read-function
    projectile-completion-system)
@@ -201,7 +201,10 @@
          ([backspace] . maple/ivy-backward-delete-char)
          ("<tab>" . maple/ivy-done)
          ("TAB" . maple/ivy-done)
-         ("C-<return>" . ivy-immediate-done)))
+         ("C-<return>" . ivy-immediate-done)
+         :map counsel-ag-map
+         ("C-j" . ivy-next-line-and-call)
+         ("C-k" . ivy-previous-line-and-call)))
 
 (use-package counsel-projectile
   :preface (setq projectile-keymap-prefix (kbd "C-c p")))

@@ -27,6 +27,12 @@
 
 (eval-when-compile (require 'cl))
 
+(defvar maple-init-hook nil
+  "Custom init hook.")
+
+(defvar maple-theme-hook nil
+  "Custom theme hook.")
+
 (defconst maple-cache-directory
   (expand-file-name (concat user-emacs-directory "cache/"))
   "Maple storage area for persistent files.")
@@ -49,9 +55,9 @@
 (defmacro maple/add-hook(hook &rest args)
   "Custom hook with HOOK and ARGS no need lambda."
   (declare (indent defun))
-  (let ((if-p (maple/plist-get args :if t))
-        (local-p (maple/plist-get args :local))
-        (append-p (maple/plist-get args :append))
+  (let ((-if (maple/plist-get args :if t))
+        (-local (maple/plist-get args :local))
+        (-append (maple/plist-get args :append t))
         (hooks (if (cdr-safe (cadr hook))
                    (cadr hook)
                  (list (cadr hook))))
@@ -64,8 +70,18 @@
     (dolist (fn funcs)
       (setq fn `(function ,fn))
       (dolist (i hooks)
-        (push `(add-hook ',i ,fn ,append-p ,local-p) forms)))
-    `(progn (when ,if-p ,@forms))))
+        (push `(add-hook ',i ,fn ,-append ,-local) forms)))
+    `(progn (when ,-if ,@forms))))
+
+(defmacro maple/add-hook-once (hook f &optional append local)
+  "Like `add-hook`, remove after call with HOOK F &OPTIONAL APPEND LOCAL."
+  (let ((func (intern (format "maple/run-once-%s"
+                              (symbol-name f)))))
+    `(progn
+       (defun ,func ()
+         (remove-hook ',hook ',func ,local)
+         (funcall ',f))
+       (add-hook ',hook ',func ,append ,local))))
 
 (defun maple/close-process ()
   "Close current term buffer when `exit' from term buffer."
@@ -186,8 +202,12 @@
   (dolist (buffer '("*Messages*" "*Compile-Log*"))
     (and (get-buffer buffer) (maple/reopen-buffer buffer t))))
 
-(add-hook 'emacs-startup-hook 'maple/startup-buffer)
+(defadvice load-theme (after run-maple-theme-hook activate)
+  "Run `maple-theme-hook'."
+  (run-hooks 'maple-theme-hook))
+
+(maple/add-hook 'emacs-startup-hook
+  (run-with-idle-timer 0.2 nil (lambda() (run-hooks 'maple-init-hook))))
 
 (provide 'init-basic)
-
 ;;; init-basic.el ends here

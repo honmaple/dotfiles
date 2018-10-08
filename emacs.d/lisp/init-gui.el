@@ -25,26 +25,28 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-basic))
+(eval-when-compile (require 'init-basic))
 
 ;;----------------------------------------------------------------------------
 ;; Suppress GUI features
 ;;----------------------------------------------------------------------------
-;; 关闭文件滑动控件
-(when (featurep 'scroll-bar) (scroll-bar-mode -1))
-;; 关闭工具栏
-(when (featurep 'tool-bar) (tool-bar-mode -1))
-;;关闭菜单栏
-(when (featurep 'menu-bar) (menu-bar-mode -1))
-
+;; (add-to-list 'default-frame-alist '(tool-bar-lines 0))
+;; (add-to-list 'default-frame-alist '(menu-bar-lines 0))
+;; (add-to-list 'default-frame-alist '(vertical-scroll-bars))
 (maple/add-hook 'after-init-hook
-  ;; (setq initial-major-mode 'fundamental-mode)
+  ;; 关闭文件滑动控件
+  (when (featurep 'scroll-bar) (scroll-bar-mode -1))
+  ;; 关闭工具栏
+  (when (featurep 'tool-bar) (tool-bar-mode -1))
+  ;; 关闭菜单栏
+  (when (featurep 'menu-bar) (menu-bar-mode -1))
+
   (fset 'yes-or-no-p 'y-or-n-p)
   (fset 'display-startup-echo-area-message 'ignore)
   (setq inhibit-startup-screen t
         inhibit-compacting-font-caches t
         inhibit-startup-echo-area-message user-full-name
+        ;; initial-major-mode 'fundamental-mode
         initial-scratch-message (maple/initial-message ";; ")))
 
 (setq use-file-dialog nil
@@ -114,7 +116,7 @@
 ;;高亮当前行
 (use-package hl-line
   :ensure nil
-  :hook (after-init . global-hl-line-mode))
+  :hook (maple-init . global-hl-line-mode))
 
 (use-package ediff
   :ensure nil

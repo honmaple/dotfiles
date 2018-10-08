@@ -88,7 +88,7 @@
   :load-path "site-lisp/maple"
   :defines (maple/header-update-email-p maple/header-update-filename-p)
   :hook
-  (after-init . maple/header-init)
+  (maple-init . maple/header-init)
   (before-save . maple/header-update)
   :config
   (setq maple/header-update-filename-p t

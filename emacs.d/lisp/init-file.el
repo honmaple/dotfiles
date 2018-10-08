@@ -43,7 +43,7 @@
 
 (use-package savehist
   :ensure nil
-  :hook (after-init . savehist-mode)
+  :hook (maple-init . savehist-mode)
   :config
   ;; Minibuffer history
   (setq savehist-file (concat maple-cache-directory "savehist")
@@ -54,7 +54,7 @@
 
 (use-package saveplace
   :ensure nil
-  :hook (after-init . save-place-mode)
+  :hook (maple-init . save-place-mode)
   :config
   (setq save-place-file (concat maple-cache-directory "places")))
 
@@ -101,7 +101,7 @@
 
 (use-package undo-tree
   :ensure nil
-  :hook (after-init . global-undo-tree-mode)
+  :hook (maple-init . global-undo-tree-mode)
   :config
   (setq undo-tree-auto-save-history t
         undo-tree-visualizer-timestamps t

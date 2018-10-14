@@ -116,9 +116,10 @@
   :ensure nil
   :hook (maple-init . maple/search-init))
 
-(use-package maple-startify
-  :ensure nil
-  :hook (maple-init . startify-mode))
+(use-package maple-scratch
+  :load-path "site-lisp/maple"
+  :hook (window-setup . maple-scratch-mode)
+  :config (setq maple/scratch-source nil))
 
 (provide 'init-tool)
 ;;; init-tool.el ends here

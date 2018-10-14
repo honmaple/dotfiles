@@ -206,8 +206,8 @@
   "Run `maple-theme-hook'."
   (run-hooks 'maple-theme-hook))
 
-(maple/add-hook 'emacs-startup-hook
-  (run-with-idle-timer 0.2 nil (lambda() (run-hooks 'maple-init-hook))))
+(maple/add-hook 'after-init-hook
+  (run-with-idle-timer 0.5 nil (lambda() (run-hooks 'maple-init-hook))))
 
 (provide 'init-basic)
 ;;; init-basic.el ends here

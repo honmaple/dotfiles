@@ -203,8 +203,7 @@
          ("TAB" . maple/ivy-done)
          ("C-<return>" . ivy-immediate-done)
          :map counsel-ag-map
-         ("C-j" . ivy-next-line-and-call)
-         ("C-k" . ivy-previous-line-and-call)))
+         ("<tab>" . ivy-call)))
 
 (use-package counsel-projectile
   :preface (setq projectile-keymap-prefix (kbd "C-c p")))

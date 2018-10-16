@@ -48,26 +48,15 @@
   :config
   (maple/evil-map quickrun--mode-map))
 
-(use-package blog-admin
-  :load-path "site-lisp/blog-admin"
-  :commands blog-admin-start
+(use-package blog-mode
+  :load-path "site-lisp/blog-mode"
+  :commands blog-start
   :config
-  (setq blog-admin-backend-type 'pelican
-        blog-admin-backend-new-post-in-drafts t ;; create new post in drafts by default
-        blog-admin-backend-new-post-with-same-name-dir nil ;; create same-name directory with new post
-        blog-admin-backend-path "~/git/pelican"
-        blog-admin-backend-pelican-config-file "pelicanconf.py"
-        blog-admin-backend-pelican-posts-dir "content/org"
-        blog-admin-backend-pelican-org-mode-dir "content/org"
-        blog-admin-backend-pelican-markdown-dir "content/markdown"
-        blog-admin-backend-pelican-drafts-dir "content/draft")
-  (add-hook 'blog-admin-backend-after-new-post-hook 'find-file)
-
-  (maple/add-hook 'blog-admin-mode-hook
-    :if (display-graphic-p)
-    ;; (set-face-attribute 'variable-pitch nil :font "-Sony-Sony Fixed-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1")
-    (set-face-attribute 'variable-pitch nil :font "Inconsolata 12")
-    (buffer-face-mode)))
+  (setq blog-root-path "~/git/pelican"
+        blog-org-path "content/org"
+        blog-md-path "content/markdown"
+        blog-draft-path "content/draft")
+  (maple/evil-map blog-mode-map))
 
 (use-package imenu-list
   :commands (imenu-list-minor-mode)

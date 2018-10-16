@@ -59,6 +59,7 @@
 
 (use-package anaconda-mode
   :diminish anaconda-mode
+  :unless maple/company-lsp
   :hook ((python-mode . anaconda-mode)
          (python-mode . anaconda-eldoc-mode))
   :config

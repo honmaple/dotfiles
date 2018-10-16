@@ -170,7 +170,7 @@
   "bR" 'maple/safe-revert-buffer
   "bP"  'maple/copy-clipboard-to-whole-buffer
   "bY"  'maple/copy-whole-buffer-to-clipboard
-  "bl"  'blog-admin-start
+  "bl"  'blog-start
   "bi"  'imenu-list-minor-mode
   )
 

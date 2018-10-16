@@ -28,7 +28,10 @@
 ;;; Code:
 
 (defvar maple/file-name-handler-alist file-name-handler-alist)
+(defvar maple/company-lsp nil)
 (defvar user-default-theme nil)
+(defconst *common* t)
+(defconst *develop* t)
 
 (setq user-full-name "jianglin"
       user-default-theme 'monokai
@@ -58,9 +61,6 @@
 ;;----------------------------------------------------------------------------
 ;; Load configs for specific features and modes
 ;;----------------------------------------------------------------------------
-(defconst *common* t)
-(defconst *develop* t)
-
 (when *common*
   (require 'init-font)
   (require 'init-gui) ;;ui设置 显示行号
@@ -93,6 +93,9 @@
   (require 'init-text) ;; markdown rst
   (require 'init-org)
   (require 'init-tool))
+
+(when maple/company-lsp
+  (require 'init-lsp))
 
 (with-eval-after-load 'evil-leader
   (require 'init-keybind))

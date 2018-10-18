@@ -171,7 +171,7 @@
   "bP"  'maple/copy-clipboard-to-whole-buffer
   "bY"  'maple/copy-whole-buffer-to-clipboard
   "bl"  'blog-start
-  "bi"  'imenu-list-minor-mode
+  "bi"  'maple-imenu
   )
 
 (evil-leader/set-key

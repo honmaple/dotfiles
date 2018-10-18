@@ -25,7 +25,6 @@
 
 ;;; Code:
 
-(use-package ctable)
 (use-package docker-tramp)
 (use-package dockerfile-mode)
 (use-package nginx-mode)
@@ -58,23 +57,11 @@
         blog-draft-path "content/draft")
   (maple/evil-map blog-mode-map))
 
-(use-package imenu-list
-  :commands (imenu-list-minor-mode)
+(use-package maple-imenu
+  :load-path "site-lisp/maple"
+  :commands (maple-imenu)
   :config
-  (maple/evil-map imenu-list-major-mode-map)
-  (setq imenu-list-focus-after-activation t
-        imenu-list-auto-resize t
-        imenu-list-mode-line-format mode-line-format)
-  :custom-face
-  (imenu-list-entry-face-0 ((t (:foreground "#f92672"))))
-  :bind (:map evil-leader--default-map
-              ("bi" . imenu-list-minor-mode)
-              :map imenu-list-major-mode-map
-              ("d" . imenu-list-display-entry)
-              ("q" . imenu-list-minor-mode)
-              ("tb" . imenu-list-minor-mode)
-              ("j" . next-line)
-              ("k" . previous-line)))
+  (maple/evil-map maple-imenu-mode-map))
 
 (use-package youdao-dictionary
   :config

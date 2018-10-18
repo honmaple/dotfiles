@@ -25,7 +25,6 @@
 
 ;;; Code:
 (require 'tabulated-list)
-(require 'f)
 (require 's)
 
 (defgroup blog-mode nil
@@ -86,7 +85,7 @@ Summary:
        (list post
              (vector
               `(,date
-                face 'font-lock-comment-face
+                face font-lock-comment-face
                 follow-link t
                 action (lambda(&optional _) (find-file (tabulated-list-get-id))))
               `(,title
@@ -184,25 +183,25 @@ Summary:
                             blog-org-path blog-md-path)
                       blog-draft-path)))
     (when (file-exists-p path)
-      (rename-file path (f-join dest-path (file-name-nondirectory path))))
+      (rename-file path (expand-file-name
+                         (file-name-nondirectory path)
+                         (blog--full-path dest-path)))
+      (let ((buffer (find-buffer-visiting path)))
+        (when buffer (kill-buffer buffer))))
     (blog-refresh) (goto-char point)))
 
 (defun blog-new-post (filename)
   "New post with FILENAME."
   (interactive "sPost's filename(new-post.org, new-post.md etc):")
   (if (or (s-ends-with? ".org" filename) (s-ends-with? ".md" filename))
-      (let ((file-path (f-join blog-draft-path filename)))
+      (let ((file-path (expand-file-name filename (blog--full-path blog-draft-path))))
         (find-file file-path)
         (insert
          (format
           (if (s-ends-with? ".org" filename) blog-org-template blog-md-template)
-          (f-no-ext filename)
+          (file-name-base filename)
           (format-time-string "%F %T" (current-time))
-          (f-no-ext filename)
-          ))
-        (save-buffer)
-        (kill-buffer)
-        (blog-refresh))
+          (file-name-base filename))))
     (message "Post's filename must end with .org or .md!")))
 
 (defun blog-delete-post ()
@@ -211,6 +210,9 @@ Summary:
   (let ((file-path (tabulated-list-get-id)))
     (when (y-or-n-p (format "Do you really want to delete %s ? " file-path))
       (delete-file file-path t)
+
+      (let ((buffer (find-buffer-visiting file-path)))
+        (when buffer (kill-buffer buffer)))
       ;; remove asset directory if exist
       (let ((dir-path (file-name-sans-extension file-path)))
         (if (file-exists-p dir-path)
@@ -250,6 +252,10 @@ Summary:
     (define-key map "f" 'blog-filter)
     (define-key map "gg" 'beginning-of-buffer)
     (define-key map "G" 'end-of-buffer)
+    (define-key map "l" 'forward-char)
+    (define-key map "h" 'backward-char)
+    (define-key map "A" 'end-of-line)
+    (define-key map "I" 'beginning-of-line)
     map)
   "Blog mode map.")
 
@@ -259,7 +265,7 @@ Summary:
 \\{blog-mode-map}"
   (setq tabulated-list-format [("Date"     16 t)
                                ("Title"    36 t)
-                               ("Publish"  12 t)
+                               ("Publish"  16 t)
                                ("Category" 16 t)
                                ("Tags"     0  nil)])
   (tabulated-list-init-header)

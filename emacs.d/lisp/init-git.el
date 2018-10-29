@@ -10,7 +10,7 @@
   :config
   (setq magit-completing-read-function 'magit-builtin-completing-read
         magit-revision-show-gravatars '("^Author:     " . "^Commit:     ")
-        magit-process-popup-time 10
+        magit-process-popup-time 3
         magit-diff-refine-hunk t)
   (use-package evil-magit
     :demand)
@@ -18,12 +18,10 @@
   (with-eval-after-load 'fullframe
     (fullframe magit-status magit-mode-quit-window))
   :bind
-  (("C-x g" . magit-status)
-   ("C-x M-g" . magit-dispatch-popup)
-   :map magit-mode-map
-   ("C-M-<up>" . magit-section-up)
-   ("<tab>" . magit-section-cycle)
-   ("C-<tab>" . magit-section-toggle)))
+  (:map magit-mode-map
+        ("C-M-<up>" . magit-section-up)
+        ("<tab>" . magit-section-cycle)
+        ("C-<tab>" . magit-section-toggle)))
 
 (use-package git-commit
   :hook (git-commit-mode . goto-address-mode))

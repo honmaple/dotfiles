@@ -79,25 +79,23 @@
                                          'neo-root-dir-face)))
     (neo-buffer--newline-and-begin)
     (when neo-show-updir-line
-      (neo-buffer--insert-fold-symbol 'close node)
+      (neo-buffer--insert-fold-symbol 'close (neo-path--updir node))
       (insert-button ".."
                      'action '(lambda (x) (neotree-change-root))
                      'follow-link t
                      'face neo-dir-link-face
                      'neo-full-path (neo-path--updir node))
+      (neo-buffer--node-list-set nil (neo-path--updir node))
       (neo-buffer--newline-and-begin)))
   (fset 'neo-buffer--insert-root-entry 'maple/neo-buffer--insert-root-entry)
   (maple/evil-map neotree-mode-map)
   :bind (([f2] . neotree-toggle)
          :map neotree-mode-map
-         ("j" . neotree-next-line)
-         ("k" . neotree-previous-line)
          ("C" . neotree-copy-node)
          ("D" . neotree-delete-node)
          ("R" . neotree-rename-node)
          ("+" . neotree-create-node)
-         ("^" . neotree-select-up-node))
-  )
+         ("^" . neotree-select-up-node)))
 
 (use-package undo-tree
   :ensure nil

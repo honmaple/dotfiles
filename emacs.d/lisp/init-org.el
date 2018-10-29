@@ -30,6 +30,7 @@
   :ensure nil
   :config
   (setq org-tags-column 80
+        org-imenu-depth 5
         org-image-actual-width '(600)
         org-export-with-sub-superscripts '{}
         org-descriptive-links nil ;; 不要锁定连接，保持原样

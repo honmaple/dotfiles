@@ -45,17 +45,12 @@
   :hook (maple-init . semantic-mode)
   :config
   (setq semanticdb-default-save-directory
-        (concat maple-cache-directory "semantic/"))
-  :config
+        (concat maple-cache-directory "semantic/")
+        semanticdb-find-default-throttle '(file local project))
   (add-to-list 'semantic-default-submodes
-               'global-semantic-stickyfunc-mode)
-  (add-to-list 'semantic-default-submodes
-               'global-semantic-idle-summary-mode))
+               'global-semantic-idle-summary-mode)
 
-(use-package imenu
-  :ensure nil
-  :config
-  (when (bound-and-true-p semantic-mode)
+  (with-eval-after-load 'imenu
     (setq imenu-create-index-function 'semantic-create-imenu-index)))
 
 (use-package elec-pair

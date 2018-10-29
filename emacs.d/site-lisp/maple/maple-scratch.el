@@ -82,7 +82,7 @@ SEQ, START and END are the same arguments as for `cl-subseq'"
   (insert-button
    (format "%s" label)
    'action
-   `(lambda (_) (funcall ,action))
+   `(lambda (_) (call-interactively (or (command-remapping ,action) ,action)))
    'follow-link t
    'face (or -face 'font-lock-keyword-face)
    'help-echo (or -help label)))
@@ -92,9 +92,9 @@ SEQ, START and END are the same arguments as for `cl-subseq'"
   (insert "\n")
   (maple/dolist (index item source)
     (insert "[")
-    (maple/scratch--button index `(lambda () (funcall ',action ,item)))
+    (maple/scratch--button index `(lambda ()(interactive) `(,action ,item)))
     (insert "]\t")
-    (maple/scratch--button item `(lambda () (funcall ',action ,item)) 'font-lock-comment-face)
+    (maple/scratch--button item `(lambda ()(interactive) (,action ,item)) 'font-lock-comment-face)
     (insert "\n")))
 
 (defun maple/scratch--text (text &optional face)

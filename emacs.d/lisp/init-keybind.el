@@ -202,7 +202,7 @@
   )
 
 (evil-leader/set-key-for-mode 'web-mode
-  "rc" 'web-mode-element-clone
+  "ra" 'web-mode-element-clone
   "rd" 'web-mode-element-vanish
   "rk" 'web-mode-element-kill
   "rr" 'web-mode-element-rename

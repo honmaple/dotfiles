@@ -33,12 +33,6 @@
   :config
   (maple/evil-map esup-mode-map))
 
-;; (use-package maple-minimap
-;;   :ensure nil
-;;   :commands (minimap-mode)
-;;   :config
-;;   (maple/evil-map minimap-mode-map))
-
 (use-package pangu-spacing
   :commands (pangu-spacing-space-current-buffer))
 
@@ -69,12 +63,6 @@
         youdao-dictionary-search-history-file (concat maple-cache-directory "youdao")
         youdao-dictionary-use-chinese-word-segmentation t)
   (maple/evil-map youdao-dictionary-mode-map))
-
-;; (use-package cal-china-x
-;;   :config
-;;   (setq mark-holidays-in-calendar t)
-;;   (setq cal-china-x-important-holidays cal-china-x-chinese-holidays)
-;;   (setq calendar-holidays cal-china-x-important-holidays))
 
 (use-package avy
   :commands (avy-pop-mark)

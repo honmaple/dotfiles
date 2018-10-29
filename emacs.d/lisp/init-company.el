@@ -58,7 +58,9 @@
     "Enable yasnippet for all backends.")
 
   (defun company-backend-with-yas (backend)
-    (if (or (not company-enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
+    (if (or (not company-enable-yas)
+            (and (listp backend)
+                 (member 'company-yasnippet backend)))
         backend
       (append (if (consp backend) backend (list backend))
               '(:with company-yasnippet))))
@@ -72,6 +74,7 @@
               (company-dabbrev
                company-gtags
                company-etags))))
+
   (setq company-backends company-default-backends)
   :custom-face
   (company-tooltip-common

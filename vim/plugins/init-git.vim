@@ -1,5 +1,5 @@
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 
 " vim-fugitive {
     nnoremap <silent> <leader>gs :Gstatus<CR>

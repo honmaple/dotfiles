@@ -170,6 +170,8 @@
   (setq counsel-preselect-current-file t
         counsel-more-chars-alist '((t . 1)))
 
+  (setq counsel-find-file-ignore-regexp "\\.\\(pyc\\|pyo\\)\\'")
+
   (defun maple/counsel-ag-file()
     (interactive)
     (counsel-ag nil (read-file-name "Search in file(s): ")))

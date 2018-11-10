@@ -45,7 +45,8 @@
   :hook (dired-mode . dired-async-mode)
   :config
   (setq dired-recursive-copies 'always ;;递归拷贝
-        dired-recursive-deletes 'always)
+        dired-recursive-deletes 'always
+        dired-dwim-target t)
   (put 'dired-find-alternate-file 'disabled nil)  ;; 只有一个buffer
 
   (use-package dired-x

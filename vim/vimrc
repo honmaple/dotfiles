@@ -10,7 +10,6 @@ else
 endif
 
 set viminfo+=n$HOME/.vim/viminfo
-set rtp+=$HOME/.vim/bundle/Vundle.vim
 
 
 function s:require(file)
@@ -22,14 +21,6 @@ function s:require(file)
     endif
 endfunction
 
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-call vundle#end()            " required
-filetype plugin indent on    " required
-
-" call plug#begin('~/.vim/plugged')
-" call plug#end()
-
 
 let require_list = [
   \ 'init-gui',
@@ -39,12 +30,24 @@ let require_list = [
   \ 'init-file',
   \ 'init-auto-insert',
   \ 'init-git',
-  \ 'init-develop',
-  \ 'init-python',
-  \ 'init-html',
-  \ 'init-text',
   \ 'init-keybind']
 
-for file in require_list
-    call s:require(file)
-endfor
+" let require_list = [
+"   \ 'init-gui',
+"   \ 'init-ui',
+"   \ 'init-editor',
+"   \ 'init-buffer',
+"   \ 'init-file',
+"   \ 'init-auto-insert',
+"   \ 'init-git',
+"   \ 'init-develop',
+"   \ 'init-python',
+"   \ 'init-html',
+"   \ 'init-text',
+"   \ 'init-keybind']
+
+call plug#begin('~/.vim/plugged')
+    for file in require_list
+        call s:require(file)
+    endfor
+call plug#end()

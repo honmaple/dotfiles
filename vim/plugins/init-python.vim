@@ -1,4 +1,4 @@
-Plugin 'klen/python-mode'
+Plug 'klen/python-mode'
 
 " PyMode {
     " Disable if python support not present

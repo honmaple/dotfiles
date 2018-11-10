@@ -43,14 +43,21 @@
                                                    ("{{{" . " | }}")
                                                    ("{# " . " #")
                                                    ("<% " . " %>")))))
-  :setq
-  (:mode web-mode
-         electric-pair-pairs '((?\' . ?\')))
+
+  (fset 'maple/put-text-property (symbol-function 'put-text-property))
+  (defun maple/web-mode-put-text(p q prop value)
+    (if (and (eq prop 'invisible) value) (hs-make-overlay p q 'code)
+      (maple/put-text-property p q prop value)))
+  (defun maple/web-mode-fold-or-unfold()
+    (interactive)
+    (cl-letf (((symbol-function 'put-text-property) 'maple/web-mode-put-text))
+      (web-mode-fold-or-unfold)))
+  (maple/add-hook 'web-mode-hook
+    (setq electric-pair-pairs '((?\' . ?\'))))
   :evil-bind
   (normal web-mode-map
-          ;; (kbd "<f6>") 'web-beautify-html
           ([f5] . browse-url-of-file)
-          ("za" . web-mode-fold-or-unfold)))
+          ("za" . maple/web-mode-fold-or-unfold)))
 
 (use-package company-web
   :functions maple/company-backend

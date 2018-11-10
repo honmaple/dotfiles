@@ -1,12 +1,12 @@
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'tomasr/molokai'
-" Plugin 'spf13/vim-colors'
-Plugin 'bling/vim-airline'
-Plugin 'powerline/fonts'
-Plugin 'luochen1990/rainbow'
-Plugin 'Yggdroot/indentLine'
-Plugin 'liuchengxu/space-vim-dark'
-Plugin 'mhinz/vim-startify'
+Plug 'altercation/vim-colors-solarized'
+Plug 'tomasr/molokai'
+" Plug 'spf13/vim-colors'
+Plug 'bling/vim-airline'
+Plug 'powerline/fonts'
+Plug 'luochen1990/rainbow'
+Plug 'Yggdroot/indentLine'
+Plug 'liuchengxu/space-vim-dark'
+Plug 'mhinz/vim-startify'
 
 
 

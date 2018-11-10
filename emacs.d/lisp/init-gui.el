@@ -58,8 +58,9 @@
       backup-directory-alist `(("." . ,(concat maple-cache-directory "auto-save")))
       select-enable-clipboard t) ;;激活粘贴板
 
+;; (when (not (display-graphic-p))
+;;   (setq interprogram-paste-function 'x-cut-buffer-or-selection-value))
 
-;; (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
 ;; important for golden-ratio to better work
 (setq-default tab-width 4
               major-mode 'conf-mode

@@ -1,8 +1,8 @@
-Plugin 'w0rp/ale'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-" Plugin 'Shougo/neocomplete.vim'
-Plugin 'Valloric/YouCompleteMe'
+Plug 'w0rp/ale'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+" Plug 'Shougo/neocomplete.vim'
+Plug 'Valloric/YouCompleteMe'
 
 " ale {
     let g:ale_linters = {

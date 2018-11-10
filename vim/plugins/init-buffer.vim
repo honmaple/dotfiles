@@ -1,5 +1,5 @@
-Plugin 'bling/vim-bufferline'
-Plugin 'sjl/gundo.vim'
+Plug 'bling/vim-bufferline'
+Plug 'sjl/gundo.vim'
 
 " gundo {
     set undodir=~/.vim/.cache/undo

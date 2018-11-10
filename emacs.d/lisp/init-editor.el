@@ -115,6 +115,15 @@
   :diminish hs-minor-mode
   :hook ((yaml-mode conf-mode prog-mode) . hs-minor-mode))
 
+(use-package anzu
+  :hook (maple-init . global-anzu-mode)
+  :config
+  (setq anzu-cons-mode-line-p nil
+        anzu-mode-lighter ""
+        anzu-search-threshold 1000
+        anzu-replace-to-string-separator " → ")
+  :custom-face
+  (anzu-replace-to ((t (:inherit query-replace)))))
 
 (use-package projectile
   :diminish projectile-mode "ⓟ"

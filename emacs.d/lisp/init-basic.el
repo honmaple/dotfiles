@@ -139,6 +139,13 @@
   (save-excursion
     (indent-region (point-min) (point-max) nil)))
 
+(defun maple/company-or-indent ()
+  "Company buffer or indent."
+  (interactive)
+  (if (minibufferp)
+      (minibuffer-complete)
+    (company-indent-or-complete-common)))
+
 (defun maple/reload-user-init-file()
   "Reload init file."
   (interactive)

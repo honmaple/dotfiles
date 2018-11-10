@@ -1,13 +1,13 @@
-Plugin 'groenewege/vim-less'
-Plugin 'pangloss/vim-javascript'
-Plugin 'briancollins/vim-jst'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'amirh/HTML-AutoCloseTag'
-Plugin 'mattn/emmet-vim'
-"Plugin 'ap/vim-css-color'
-Plugin 'hail2u/vim-css3-syntax'
-Plugin 'gorodinskiy/vim-coloresque'
-Plugin 'tpope/vim-haml'
+Plug 'groenewege/vim-less'
+Plug 'pangloss/vim-javascript'
+Plug 'briancollins/vim-jst'
+Plug 'kchmck/vim-coffee-script'
+" Plug 'amirh/HTML-AutoCloseTag'
+Plug 'mattn/emmet-vim'
+"Plug 'ap/vim-css-color'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'gorodinskiy/vim-coloresque'
+Plug 'tpope/vim-haml'
 
 " javascript {
     let g:html_indent_inctags = "html,body,head,tbody"

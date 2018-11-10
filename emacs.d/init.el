@@ -28,10 +28,10 @@
 ;;; Code:
 
 (defvar maple/file-name-handler-alist file-name-handler-alist)
-(defvar maple/company-lsp nil)
 (defvar user-default-theme nil)
-(defconst *common* t)
-(defconst *develop* t)
+(defvar *company-lsp* nil)
+(defvar *common* t)
+(defvar *develop* t)
 
 (setq user-full-name "jianglin"
       user-default-theme 'monokai
@@ -94,7 +94,7 @@
   (require 'init-org)
   (require 'init-tool))
 
-(when maple/company-lsp
+(when *company-lsp*
   (require 'init-lsp))
 
 (with-eval-after-load 'evil-leader

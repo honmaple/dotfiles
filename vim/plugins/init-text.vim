@@ -1,5 +1,5 @@
-Plugin 'tpope/vim-markdown'
-Plugin 'iamcco/markdown-preview.vim'
+Plug 'tpope/vim-markdown'
+Plug 'iamcco/markdown-preview.vim'
 
 " vim-markdown {
     au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=markdown

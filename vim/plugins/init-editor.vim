@@ -1,13 +1,13 @@
-Plugin 'tpope/vim-surround'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'vim-scripts/matchit.zip'
-Plugin 'gcmt/wildfire.vim'
-Plugin 'godlygeek/tabular'
-Plugin 'majutsushi/tagbar'
-Plugin 'kristijanhusak/vim-multiple-cursors'
-Plugin 'tpope/vim-commentary'
-Plugin 'Chiel92/vim-autoformat'
-Plugin 'thinca/vim-quickrun'
+Plug 'tpope/vim-surround'
+Plug 'jiangmiao/auto-pairs'
+Plug 'vim-scripts/matchit.zip'
+Plug 'gcmt/wildfire.vim'
+Plug 'godlygeek/tabular'
+Plug 'majutsushi/tagbar'
+Plug 'kristijanhusak/vim-multiple-cursors'
+Plug 'tpope/vim-commentary'
+Plug 'Chiel92/vim-autoformat'
+Plug 'thinca/vim-quickrun'
 
 " tagbar {
     "nmap tb :TlistClose<CR>:TagbarToggle<CR>

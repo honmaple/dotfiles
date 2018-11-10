@@ -25,6 +25,9 @@
 ;;
 
 ;;; Code:
+;; (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+;;                          ("org"   . "https://orgmode.org/elpa/")
+;;                          ("gnu"   . "https://elpa.gnu.org/packages/")))
 
 (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
                          ("melpa" . "http://elpa.emacs-china.org/melpa/")
@@ -88,7 +91,7 @@
 (use-package server
   :ensure nil
   :commands (server-running-p)
-  :init (unless (server-running-p) (run-with-idle-timer 3 nil #'server-start)))
+  :hook (maple-init . (lambda() (unless (server-running-p) (server-start)))))
 
 (provide 'init-elpa)
 ;;; init-elpa.el ends here

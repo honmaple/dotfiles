@@ -24,6 +24,7 @@
 ;; go get -u github.com/nsf/gocode
 ;; go get -u github.com/rogpeppe/godef
 ;; go get -u github.com/golang/lint/golint
+;; go get -u github.com/haya14busa/gopkgs/cmd/gopkgs
 ;;
 
 ;;; Code:
@@ -33,21 +34,9 @@
   (setq gofmt-show-errors nil
         go-packages-function 'maple/go-packages-function)
 
-  ;; speed up go-import-add from https://gist.github.com/juergenhoetzel/8107a01039df08ea3f1c208494ddd7bf
   (defun maple/go-packages-function()
-    (sort
-     (delete-dups
-      (cl-mapcan
-       (lambda (topdir)
-         (let ((pkgdir (concat topdir "/pkg/")))
-           (mapcar (lambda (file)
-                     (let ((sub (substring file 0 -2)))
-                       (mapconcat #'identity (cdr (split-string sub "/")) "/")))
-                   (split-string (shell-command-to-string
-                                  (format "find \"%s\" -not -path \"%s/tool*\" -not -path \"%s/obj/*\" -name \"*.a\"  -printf \"%%P\\n\""
-                                          pkgdir pkgdir pkgdir))))))
-       (go-root-and-paths)))
-     #'string<))
+    "Return a list of all Go packages, using `gopkgs'."
+    (sort (process-lines "gopkgs") #'string<))
 
   (use-package golint)
 

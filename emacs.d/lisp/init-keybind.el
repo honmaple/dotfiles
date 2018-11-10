@@ -51,7 +51,7 @@
   "'" 'shell-pop
   "=" 'maple/indent-buffer
   "se" 'evil-multiedit-match-all
-  "ss" 'replace-regexp
+  "ss" 'anzu-query-replace
   "sd" 'delete-matching-lines
   "sD" 'delete-non-matching-lines
   "sp" 'flyspell-correct-word-generic
@@ -189,7 +189,7 @@
 (evil-leader/set-key
   "oa" 'org-agenda
   "oc" 'org-capture
-  "ob" 'org-iswitchb
+  "ob" 'org-switchb
   "od" 'youdao-dictionary-search-at-point+
   "oD" 'youdao-dictionary-search-at-point
   "op" 'browse-at-remote
@@ -280,11 +280,7 @@
                               (evil-visual-restore)))
 
 (global-set-key [f6] 'maple/indent-buffer)
-(global-set-key [tab] (lambda()
-                        (interactive)
-                        (if (minibufferp)
-                            (minibuffer-complete)
-                          (company-indent-or-complete-common))))
+(global-set-key [tab] 'maple/company-or-indent)
 
 
 ;; ivy

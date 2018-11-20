@@ -47,58 +47,62 @@
                   gc-cons-threshold 800000
                   gc-cons-percentage 0.1)))
 
+;; (defmacro maple/require (pkg)
+;;   "Load PKG."
+;;   `(load (file-truename (format "%s/lisp/%s" (expand-file-name user-emacs-directory) ,pkg))  t t))
+
 (defmacro maple/require (pkg)
   "Load PKG."
-  `(load (file-truename (format "%s/lisp/%s" (expand-file-name user-emacs-directory) ,pkg))  t t))
+  `(require ,pkg (file-truename (format "%s/lisp/%s" (expand-file-name user-emacs-directory) ,pkg))))
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
 ;;----------------------------------------------------------------------------
 ;; Bootstrap config
 ;;----------------------------------------------------------------------------
-(require 'init-basic)
-(require 'init-elpa)      ;; Machinery for installing required packages
+(maple/require 'init-basic)
+(maple/require 'init-elpa)      ;; Machinery for installing required packages
 ;;----------------------------------------------------------------------------
 ;; Load configs for specific features and modes
 ;;----------------------------------------------------------------------------
 (when *common*
-  (require 'init-font)
-  (require 'init-gui) ;;ui设置 显示行号
-  (require 'init-ui)  ;; modeline,which-key
+  (maple/require 'init-font)
+  (maple/require 'init-gui) ;;ui设置 显示行号
+  (maple/require 'init-ui)  ;; modeline,which-key
 
-  (require 'init-editor) ;;自动补全括号等
-  (require 'init-auto-insert)  ;;自动插入文件头
-  (require 'init-evil)
+  (maple/require 'init-editor) ;;自动补全括号等
+  (maple/require 'init-auto-insert)  ;;自动插入文件头
+  (maple/require 'init-evil)
 
-  (require 'init-ivy)
-  (require 'init-dired)   ;;自带文件管理
-  (require 'init-file)   ;;文件操作
-  (require 'init-buffer)   ;;buffer操作
-  (require 'init-window))
+  (maple/require 'init-ivy)
+  (maple/require 'init-dired)   ;;自带文件管理
+  (maple/require 'init-file)   ;;文件操作
+  (maple/require 'init-buffer)   ;;buffer操作
+  (maple/require 'init-window))
 
 (when *develop*
-  (require 'init-flycheck)
-  (require 'init-company)
+  (maple/require 'init-flycheck)
+  (maple/require 'init-company)
 
-  (require 'init-git)
+  (maple/require 'init-git)
 
-  (require 'init-shell) ;;shell
-  (require 'init-web)
-  (require 'init-js)
-  (require 'init-python)
-  (require 'init-go)
-  (require 'init-lua)
-  (require 'init-c)
-  (require 'init-sql)
-  (require 'init-text) ;; markdown rst
-  (require 'init-org)
-  (require 'init-tool))
+  (maple/require 'init-shell) ;;shell
+  (maple/require 'init-web)
+  (maple/require 'init-js)
+  (maple/require 'init-python)
+  (maple/require 'init-go)
+  (maple/require 'init-lua)
+  (maple/require 'init-c)
+  (maple/require 'init-sql)
+  (maple/require 'init-text) ;; markdown rst
+  (maple/require 'init-org)
+  (maple/require 'init-tool))
 
 (when *company-lsp*
-  (require 'init-lsp))
+  (maple/require 'init-lsp))
 
 (with-eval-after-load 'evil-leader
-  (require 'init-keybind))
+  (maple/require 'init-keybind))
 
 ;;----------------------------------------------------------------------------
 ;; Variables configured via the interactive 'customize' interface

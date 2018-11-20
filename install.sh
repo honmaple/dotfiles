@@ -5,7 +5,7 @@
 #Author: jianglin
 #Email: xiyang0807@gmail.com
 #Created: 2016-06-21 14:38:53 (CST)
-#Last Update: Monday 2018-08-28 10:00:45 (CST)
+#Last Update: Monday 2018-11-19 14:57:42 (CST)
 #          By:
 #Description:
 #**************************************************************************/
@@ -25,7 +25,7 @@
 #   exit 1
 # fi
 
-link_file() {
+install() {
     from="$1"
     to="$2"
     read -p "Linking '$from' to '$to' [Y/n/q]? "  answer
@@ -39,11 +39,11 @@ link_file() {
     # rm -f "$to"
     # ln -s "$from" "$to"
 }
-link_file emacs.d $HOME/.emacs.d
-link_file vim $HOME/.vim
-link_file i3 $HOME/.i3
-link_file bashrc $HOME/.bashrc
-link_file codeblocks $HOME/.codeblocks
+install emacs.d $HOME/.emacs.d
+install vim $HOME/.vim
+install i3 $HOME/.i3
+install bashrc $HOME/.bashrc
+install codeblocks $HOME/.codeblocks
 
 # for location in $(find home -name '.*'); do
 #   file="${location##*/}"

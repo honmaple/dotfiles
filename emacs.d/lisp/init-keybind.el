@@ -197,6 +197,7 @@
 
 (evil-leader/set-key
   "qr" 'restart-emacs
+  "qR" 'maple/restart-emacs
   "qk" 'kill-emacs
   "qc" 'maple/reload-user-init-file
   )

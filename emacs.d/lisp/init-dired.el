@@ -42,7 +42,7 @@
 
 (use-package dired
   :ensure nil
-  :hook (dired-mode . dired-async-mode)
+  :commands dired-jump
   :config
   (setq dired-recursive-copies 'always ;;递归拷贝
         dired-recursive-deletes 'always
@@ -51,12 +51,17 @@
 
   (use-package dired-x
     :ensure nil
-    :demand
+    :diminish dired-omit-mode
     :hook (dired-mode . dired-omit-mode)
     :config
     (setq dired-omit-verbose nil
           dired-omit-files
           (concat dired-omit-files "\\|^\\..+$\\|\\.pdf$\\|\\.tex$\\|\\*~$")))
+
+  (use-package dired-async
+    :ensure async
+    :diminish dired-async-mode
+    :hook (dired-mode-hook . dired-async-mode))
 
   :bind (:map dired-mode-map
               ("H" . dired-omit-mode)

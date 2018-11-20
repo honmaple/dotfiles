@@ -219,7 +219,7 @@ bindsym $mod+Shift+Escape mode "$mode_system"
 
 bindsym $mod+m bar mode toggle
 bar {
-    # status_command i3status --config ~/.config/i3/i3status.conf
+    # status_command i3status --config $HOME/.config/i3/i3status.conf
     # status_command conky -c $HOME/.config/i3/conkyrc_bar
     status_command py3status -c $HOME/.config/i3/py3status.conf
     # i3bar_command i3bar -t
@@ -228,7 +228,7 @@ bar {
     workspace_buttons yes
     separator_symbol "|"
     # binding_mode_indicator yes
-    # tray_output primary
+    tray_output primary
     font pango:DejaVu Sans Mono,FontAwesome 10
     colors {
         background #070c44
@@ -249,20 +249,20 @@ client.unfocused        #333333 #333333 #888888 #292d2e
 client.urgent           #2f343a #900000 #ffffff #900000
 
 
-exec --no-startup-id feh --bg-scale ~/Pictures/308556.jpg
+exec --no-startup-id feh --bg-scale $HOME/.config/i3/wallpaper.png
 exec --no-startup-id xcompmgr &
 # exec --no-startup-id feh --bg-scale /tmp/earth.png
 # exec --no-startup-id feh --bg-scale ~/Pictures/bg1.jpg
 exec --no-startup-id xset dpms 600
-exec --no-startup-id xautolock -time 20 -locker 'i3lock -i ~/Pictures/308556.png' -notify 30 -notifier "notify-send -t 29000 -- 'LOCKING screen in 30 seconds'"
+exec --no-startup-id xautolock -time 20 -locker 'i3lock -i $HOME/.config/i3/wallpaper.png' -notify 30 -notifier "notify-send -t 29000 -- 'LOCKING screen in 30 seconds'"
 #exec --no-startup-id xfce4-notifyd
-exec --no-startup-id fcitx
-# exec --no-startup-id oneko -tomoyo &
+# exec --no-startup-id oneko -tomoyo
 exec --no-startup-id conky
 #exec --no-startup-id xcompmgr -c -C -t-5 -l-5 -r4.2 -o.55 &
 
 # exec --no-startup-id xfce4-power-manager
-exec --no-startup-id dunst -config ~/.config/i3/dunstrc
+exec --no-startup-id dunst -config $HOME/.config/i3/dunstrc
+exec --no-startup-id fcitx -r
 exec --no-startup-id nm-applet
 #exec pulseaudio --start
 #exec --no-startup-id xfce4-panel

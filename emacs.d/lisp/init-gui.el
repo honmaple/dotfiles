@@ -46,8 +46,10 @@
   (setq inhibit-startup-screen t
         inhibit-compacting-font-caches t
         inhibit-startup-echo-area-message user-full-name
-        ;; initial-major-mode 'fundamental-mode
-        initial-scratch-message (maple/initial-message ";; ")))
+        initial-major-mode 'fundamental-mode
+        initial-scratch-message (propertize (maple/initial-message)
+                                            'font-lock-face
+                                            'font-lock-comment-face)))
 
 (setq use-file-dialog nil
       use-dialog-box nil

@@ -83,13 +83,11 @@
   :ensure nil
   :hook (maple-init . global-undo-tree-mode)
   :config
-  (setq undo-tree-auto-save-history t
-        undo-tree-visualizer-timestamps t
-        undo-tree-visualizer-diff t
-        undo-tree-history-directory-alist
-        (list (cons "." (concat maple-cache-directory "undo-tree"))))
-  (unless (file-exists-p (concat maple-cache-directory "undo-tree"))
-    (make-directory (concat maple-cache-directory "undo-tree")))
+  (setq undo-tree-visualizer-timestamps t
+        undo-tree-visualizer-diff t)
+  (let ((dir (concat maple-cache-directory "undo-tree")))
+    (unless (file-exists-p dir) (make-directory dir))
+    (setq undo-tree-history-directory-alist (list (cons "." dir))))
   :diminish undo-tree-mode)
 
 (defun maple/open-init-file()

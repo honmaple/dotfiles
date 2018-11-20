@@ -81,8 +81,13 @@
 
 (use-package cl-lib)
 (use-package fullframe)
-(use-package restart-emacs)
-;; :config (setq restart-emacs-restore-frames t))
+(use-package restart-emacs
+  :init
+  (defun maple/restart-emacs()
+    "Restart Emacs."
+    (interactive)
+    (setq restart-emacs-restore-frames t)
+    (restart-emacs)))
 
 (use-package exec-path-from-shell
   :if maple-system-is-mac

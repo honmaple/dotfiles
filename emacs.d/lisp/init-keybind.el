@@ -200,6 +200,7 @@
   "qR" 'maple/restart-emacs
   "qk" 'kill-emacs
   "qc" 'maple/reload-user-init-file
+  "qQ" 'maple/kill-emacs
   )
 
 (evil-leader/set-key-for-mode 'web-mode

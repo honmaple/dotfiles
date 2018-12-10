@@ -52,6 +52,14 @@
       (plist-get (cdr args) key)
       default))
 
+(defmacro maple/add-path (parent-dir)
+  "Add every non-hidden subdir of PARENT-DIR to `load-path'."
+  (declare (indent defun))
+  `(let ((dirs (cl-remove-if-not
+                (lambda (dir) (file-directory-p dir))
+                (directory-files ,parent-dir t "^[^\\.]"))))
+     (setq load-path (append dirs load-path))))
+
 (defmacro maple/add-hook(hook &rest args)
   "Custom hook with HOOK and ARGS no need lambda."
   (declare (indent defun))
@@ -97,20 +105,19 @@
 (defun maple/initial-message(&optional prefix)
   "Show initial message when PREFIX comment."
   (interactive)
-  (if (executable-find "fortune")
-      (format (concat prefix "%s\n\n%s")
-              (replace-regexp-in-string
-               "\\[[0-9]*m" "" ; remove chinese shell char
-               (replace-regexp-in-string
-                "\n" (concat "\n" prefix) ; comment each line
-                (replace-regexp-in-string
-                 "\s*$" ""    ; remove spaces
-                 (replace-regexp-in-string
-                  "\n$" ""    ; remove trailing linebreak
-                  (shell-command-to-string
-                   "fortune -a | fmt -80 -s | cowsay -$(shuf -n 1 -e b d g p s t w y) -f $(shuf -n 1 -e $(cowsay -l | tail -n +2)) -n")))))
-              (concat prefix "Happy hacking, " user-login-name " - Emacs ♥ you!\n\n"))
-    (concat prefix "Happy hacking, " user-login-name " - Emacs ♥ you!\n\n")))
+  (concat (when (executable-find "fortune")
+            (format (concat prefix "%s\n\n")
+                    (replace-regexp-in-string
+                     "\\[[0-9]*m" "" ; remove chinese shell char
+                     (replace-regexp-in-string
+                      "\n" (concat "\n" prefix) ; comment each line
+                      (replace-regexp-in-string
+                       "\s*$" ""    ; remove spaces
+                       (replace-regexp-in-string
+                        "\n$" ""    ; remove trailing linebreak
+                        (shell-command-to-string
+                         "fortune -a | fmt -80 -s | cowsay -$(shuf -n 1 -e b d g p s t w y) -f $(shuf -n 1 -e $(cowsay -l | tail -n +2)) -n")))))))
+          (concat prefix "Happy hacking, " user-login-name " - Emacs ♥ you!\n\n")))
 
 (defun maple/comment-or-uncomment (&optional paste)
   "Comments or uncomments the region or the current line if there's no active region with no `PASTE`."
@@ -192,7 +199,22 @@
 
 (defun maple/disable-line-numbers()
   "Disable line-numbers."
+  (interactive)
   (display-line-numbers-mode -1))
+
+(defun maple/kill-emacs ()
+  "Like `kill-emacs', but ignore `kill-emacs-hook'."
+  (interactive)
+  (let (kill-emacs-hook) (kill-emacs)))
+
+(defun maple/compile-emacs ()
+  "Compile el files."
+  (interactive)
+  (let* ((dir (expand-file-name (concat user-emacs-directory "lisp/")))
+         (compile-files (nreverse (directory-files-recursively dir "\\.el$"))))
+    (dolist (file compile-files)
+      (message file)
+      (byte-compile-dest-file file))))
 
 (defun maple/reopen-buffer(buffer-name &optional restore)
   "Reopen BUFFER-NAME RESTORE."
@@ -204,17 +226,14 @@
           (when restore (insert buffer-text))))
     (message (format "%s buffer is not exists" buffer-name))))
 
-(defun maple/startup-buffer()
-  "Start buffer."
-  (dolist (buffer '("*Messages*" "*Compile-Log*"))
-    (and (get-buffer buffer) (maple/reopen-buffer buffer t))))
-
 (defadvice load-theme (after run-maple-theme-hook activate)
   "Run `maple-theme-hook'."
   (run-hooks 'maple-theme-hook))
 
-(maple/add-hook 'after-init-hook
-  (run-with-idle-timer 0.5 nil (lambda() (run-hooks 'maple-init-hook))))
+(maple/add-hook 'emacs-startup-hook
+  (run-with-idle-timer 0.2 nil (lambda() (run-hooks 'maple-init-hook))))
+
+(maple/add-path (expand-file-name "site-lisp" user-emacs-directory))
 
 (provide 'init-basic)
 ;;; init-basic.el ends here

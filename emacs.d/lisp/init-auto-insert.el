@@ -85,7 +85,7 @@
          time-stamp-start "Modified[ \t]*:?"))
 
 (use-package maple-header
-  :load-path "site-lisp/maple"
+  :ensure nil
   :defines (maple/header-update-email-p maple/header-update-filename-p)
   :hook
   (maple-init . maple/header-init)

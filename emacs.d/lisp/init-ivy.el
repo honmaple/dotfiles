@@ -35,13 +35,8 @@
 (use-package wgrep
   :config
   (setq wgrep-auto-save-buffer t)
-
-  (defun maple/wgrep-finish-edit()
-    (interactive)
-    (wgrep-finish-edit)
-    (quit-window))
   :bind (:map wgrep-mode-map
-              ("C-c C-c" . maple/wgrep-finish-edit)))
+              ("C-c C-c" . wgrep-finish-edit)))
 
 (use-package ivy
   :diminish (ivy-mode)
@@ -147,7 +142,10 @@
             (keyboard-quit))))))
 
   ;; completion-system
-  (maple/evil-map ivy-occur-mode-map)
+  ;; (maple/evil-map ivy-occur-mode-map)
+  (with-eval-after-load 'evil
+    (evil-set-initial-state 'ivy-occur-grep-mode 'normal)
+    (evil-make-overriding-map ivy-occur-mode-map 'normal))
 
   (with-eval-after-load 'projectile
     (setq projectile-completion-system 'ivy))
@@ -213,7 +211,6 @@
 
 (use-package swiper
   :config
-  ;; custom swiper
   (defun maple/swiper()
     (interactive)
     (maple/ivy-search-at-point 'swiper)))

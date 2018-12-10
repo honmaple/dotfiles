@@ -26,26 +26,27 @@
 ;; (package-initialize); You may delete these explanatory comments.
 
 ;;; Code:
+(eval-and-compile
+  (defvar maple/file-name-handler-alist file-name-handler-alist)
+  (defvar user-default-theme nil)
+  (defvar *company-lsp* nil)
+  (defvar *common* t)
+  (defvar *develop* t)
 
-(defvar maple/file-name-handler-alist file-name-handler-alist)
-(defvar user-default-theme nil)
-(defvar *company-lsp* nil)
-(defvar *common* t)
-(defvar *develop* t)
+  (setq user-full-name "jianglin"
+        user-default-theme 'monokai
+        user-mail-address "mail@honmaple.com"
+        gc-cons-threshold (* 256 1024 1024)
+        gc-cons-percentage 0.6
+        file-name-handler-alist nil)
 
-(setq user-full-name "jianglin"
-      user-default-theme 'monokai
-      user-mail-address "mail@honmaple.com"
-      gc-cons-threshold (* 256 1024 1024)
-      gc-cons-percentage 0.6
-      file-name-handler-alist nil)
+  (defun maple/finish()
+    "Restore defalut values after init"
+    (setq file-name-handler-alist maple/file-name-handler-alist
+          gc-cons-threshold 800000
+          gc-cons-percentage 0.1))
 
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            "Restore defalut values after init"
-            (setq file-name-handler-alist maple/file-name-handler-alist
-                  gc-cons-threshold 800000
-                  gc-cons-percentage 0.1)))
+  (add-hook 'emacs-startup-hook 'maple/finish))
 
 ;; (defmacro maple/require (pkg)
 ;;   "Load PKG."
@@ -56,7 +57,6 @@
   `(require ,pkg (file-truename (format "%s/lisp/%s" (expand-file-name user-emacs-directory) ,pkg))))
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-(add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
 ;;----------------------------------------------------------------------------
 ;; Bootstrap config
 ;;----------------------------------------------------------------------------

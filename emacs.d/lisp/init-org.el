@@ -28,6 +28,12 @@
 
 (use-package org
   :ensure nil
+  :init
+  ;; markup记号前后允许中文, 必须在(require 'org)前
+  (setq org-emphasis-regexp-components
+        (list (concat "- \t('\"{"            "[:nonascii:]")
+              (concat "- \t.,:!?;'\")}\\["   "[:nonascii:]")
+              " \t\r\n,\"'" "." 1))
   :config
   (setq org-tags-column 80
         org-imenu-depth 5

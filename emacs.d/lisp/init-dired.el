@@ -42,7 +42,6 @@
 
 (use-package dired
   :ensure nil
-  :commands dired-jump
   :config
   (setq dired-recursive-copies 'always ;;递归拷贝
         dired-recursive-deletes 'always
@@ -51,7 +50,7 @@
 
   (use-package dired-x
     :ensure nil
-    :diminish dired-omit-mode
+    :demand
     :hook (dired-mode . dired-omit-mode)
     :config
     (setq dired-omit-verbose nil

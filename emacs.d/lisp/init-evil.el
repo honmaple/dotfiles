@@ -108,7 +108,7 @@
 
 (use-package evil-multiedit
   :after evil
-  :load-path "site-lisp/evil-multiedit"
+  :ensure nil
   :commands (evil-multiedit-match-all)
   :config
   (setq evil-multiedit-follow-matches t

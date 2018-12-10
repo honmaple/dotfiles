@@ -123,7 +123,9 @@
         anzu-search-threshold 1000
         anzu-replace-to-string-separator " → ")
   :custom-face
-  (anzu-replace-to ((t (:inherit query-replace)))))
+  (anzu-replace-to ((t (:inherit query-replace))))
+  :bind (:map query-replace-map
+              ([return] . 'automatic)))
 
 (use-package projectile
   :diminish projectile-mode "ⓟ"

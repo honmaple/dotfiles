@@ -36,10 +36,11 @@
       package-enable-at-startup nil
       package--init-file-ensured t)
 
+;; (let ((default-directory "~/.emacs.d/elpa"))
+;;   (normal-top-level-add-subdirs-to-load-path))
 ;; (setq load-path (append load-path (directory-files package-user-dir t "^[^.]" t)))
-;; (setq package--initialized t)
+
 (eval-when-compile
-  (require 'package)
   (package-initialize)
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
@@ -55,8 +56,8 @@
         use-package-minimum-reported-time 0.01))
 
 (use-package evil-use-package
-  :demand
-  :load-path "site-lisp/use-package")
+  :ensure nil
+  :demand)
 
 ;;显示状态mode
 (use-package diminish)

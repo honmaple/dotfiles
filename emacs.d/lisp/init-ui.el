@@ -56,8 +56,8 @@
 (use-package hydra
   :config
   (use-package maple-theme
+    :ensure nil
     :commands (maple/theme-switch/body)
-    :load-path "site-lisp/maple"
     :config
     (defhydra maple/theme-switch ()
       ("n" maple/theme-next "next theme")

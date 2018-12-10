@@ -11,7 +11,8 @@
   (setq magit-completing-read-function 'magit-builtin-completing-read
         magit-revision-show-gravatars '("^Author:     " . "^Commit:     ")
         magit-process-popup-time 3
-        magit-diff-refine-hunk t)
+        magit-diff-refine-hunk t
+        magit-section-visibility-indicator nil)
   (use-package evil-magit
     :demand)
 

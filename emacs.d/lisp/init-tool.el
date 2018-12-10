@@ -42,7 +42,7 @@
   (maple/evil-map quickrun--mode-map))
 
 (use-package blog-mode
-  :load-path "site-lisp/blog-mode"
+  :ensure nil
   :commands blog-start
   :config
   (setq blog-root-path "~/git/pelican"
@@ -52,7 +52,7 @@
   (maple/evil-map blog-mode-map))
 
 (use-package maple-imenu
-  :load-path "site-lisp/maple"
+  :ensure nil
   :commands (maple-imenu)
   :config
   (maple/evil-map maple-imenu-mode-map))
@@ -81,7 +81,7 @@
   :hook (maple-init . maple/search-init))
 
 (use-package maple-scratch
-  :load-path "site-lisp/maple"
+  :ensure nil
   :hook (window-setup . maple-scratch-mode)
   :config (setq maple/scratch-source nil))
 

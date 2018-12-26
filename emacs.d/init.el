@@ -48,15 +48,9 @@
 
   (add-hook 'emacs-startup-hook 'maple/finish))
 
-;; (defmacro maple/require (pkg)
-;;   "Load PKG."
-;;   `(load (file-truename (format "%s/lisp/%s" (expand-file-name user-emacs-directory) ,pkg))  t t))
-
 (defmacro maple/require (pkg)
   "Load PKG."
-  `(require ,pkg (file-truename (format "%s/lisp/%s" (expand-file-name user-emacs-directory) ,pkg))))
-
-(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+  `(require ,pkg (file-truename (format "%s/lisp/%s.el" (expand-file-name user-emacs-directory) ,pkg))))
 ;;----------------------------------------------------------------------------
 ;; Bootstrap config
 ;;----------------------------------------------------------------------------
@@ -110,10 +104,6 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 ;; (when (file-exists-p custom-file)
 ;;   (load custom-file))
-
-;;----------------------------------------------------------------------------
-;; Allow access from emacsclient
-;;----------------------------------------------------------------------------
 
 (provide 'init)
 

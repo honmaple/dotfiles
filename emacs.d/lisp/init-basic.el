@@ -58,7 +58,7 @@
   `(let ((dirs (cl-remove-if-not
                 (lambda (dir) (file-directory-p dir))
                 (directory-files ,parent-dir t "^[^\\.]"))))
-     (setq load-path (append dirs load-path))))
+     (setq load-path (append (if dirs dirs (list ,parent-dir)) load-path))))
 
 (defmacro maple/add-hook(hook &rest args)
   "Custom hook with HOOK and ARGS no need lambda."
@@ -233,6 +233,7 @@
 (maple/add-hook 'emacs-startup-hook
   (run-with-idle-timer 0.2 nil (lambda() (run-hooks 'maple-init-hook))))
 
+(maple/add-path (expand-file-name "lisp" user-emacs-directory))
 (maple/add-path (expand-file-name "site-lisp" user-emacs-directory))
 
 (provide 'init-basic)

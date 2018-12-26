@@ -25,8 +25,7 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-basic))
+(eval-when-compile (require 'init-basic))
 
 ;; (use-package adaptive-wrap
 ;;   :hook (visual-line-mode adaptive-wrap-prefix-mode))

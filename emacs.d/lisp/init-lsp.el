@@ -28,8 +28,9 @@
 (use-package lsp-mode
   :diminish lsp-mode
   :config
-  (setq lsp-inhibit-message t)
-  (setq lsp-message-project-root-warning t)
+  (setq lsp-inhibit-message t
+        lsp-message-project-root-warning t
+        lsp-prefer-flymake nil)
 
   (use-package company-lsp
     :functions maple/company-backend

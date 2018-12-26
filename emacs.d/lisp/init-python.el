@@ -50,8 +50,6 @@
 (use-package pyvenv)
 
 (use-package yapfify
-  ;; 保存时自动格式化
-  ;; :hook (python-mode . yapf-mode)
   :evil-bind
   (normal python-mode-map
           ([f6] . yapfify-buffer)))

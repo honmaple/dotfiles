@@ -33,9 +33,7 @@
 ;; Changing font sizes
 (use-package default-text-scale
   :bind (("C-M-=" . default-text-scale-increase)
-         ("C-M--" . default-text-scale-decrease)
-         ("<C-wheel-up>" . default-text-scale-increase)
-         ("<C-wheel-down>" . default-text-scale-decrease)))
+         ("C-M--" . default-text-scale-decrease)))
 
 (provide 'init-font)
 

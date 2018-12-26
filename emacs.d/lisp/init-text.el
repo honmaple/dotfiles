@@ -42,14 +42,13 @@
     (add-hook 'after-save-hook 'cleanup-org-tables  nil 'make-it-local))
 
   (use-package markdown-toc)
-
-  (use-package markdown-preview-mode
-    :ensure nil
-    :commands (markdown-preview-mode))
-
   :bind
   (:map markdown-mode-map
         ([f5] . markdown-toggle-markup-hiding)))
+
+(use-package maple-preview
+  :ensure nil
+  :commands (maple-preview-mode))
 
 (use-package company-english-helper
   :ensure nil

@@ -1,6 +1,6 @@
 ;;; init-keybind.el --- Keybind configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2015-2018 lin.jiang
+;; Copyright (C) 2015-2019 lin.jiang
 
 ;; Author: lin.jiang <mail@honmaple.com>
 ;; URL: https://github.com/honmaple/dotfiles/tree/master/emacs.d
@@ -26,22 +26,22 @@
 ;;; Code:
 
 (evil-leader/set-key
-  "fj" 'dired-jump
-  "fl" 'find-file-literally
-  "fS" 'evil-write-all
-  "fs" 'save-buffer
-  "fei" 'maple/open-init-file
-  "fek" 'maple/open-keys-file
-  "feg" 'maple/open-gtd-file
-  "fet" 'maple/open-test-file
-  "fo" 'maple/open-in-external-app
-  "fE" 'maple/sudo-edit
-  "fy" 'maple/show-and-copy-buffer-filename
-  "fY" 'maple/copy-buffer-filename
-  "fCd" 'maple/unix2dos
-  "fCu" 'maple/dos2unix
-  "fD" 'maple/delete-current-buffer-file
-  "fR" 'maple/rename-current-buffer-file
+  "fj"  'dired-jump
+  "fl"  'find-file-literally
+  "fS"  'evil-write-all
+  "fs"  'save-buffer
+  "fei" 'maple-file/open-init
+  "fek" 'maple-file/open-keybind
+  "feg" 'maple-file/open-gtd
+  "fet" 'maple-file/open-test
+  "fo"  'maple-file/open-in-external-app
+  "fE"  'maple-file/sudo-edit
+  "fy"  'maple-file/show-and-copy-buffer-filename
+  "fY"  'maple-file/copy-buffer-filename
+  "fCd" 'maple-file/unix2dos
+  "fCu" 'maple-file/dos2unix
+  "fD"  'maple-file/delete
+  "fR"  'maple-file/rename
   )
 
 (evil-leader/set-key
@@ -51,7 +51,7 @@
   "'" 'shell-pop
   "=" 'maple/indent-buffer
   "se" 'evil-multiedit-match-all
-  "ss" 'anzu-query-replace
+  "ss" 'anzu-query-replace-regexp
   "sd" 'delete-matching-lines
   "sD" 'delete-non-matching-lines
   "sp" 'flyspell-correct-word-generic
@@ -155,23 +155,23 @@
   )
 
 (evil-leader/set-key
-  "<tab>" 'maple/switch-to-previous-buffer
-  "TAB" 'maple/switch-to-previous-buffer
+  "<tab>" 'maple-buffer/switch-to-previous
+  "TAB" 'maple-buffer/switch-to-previous
   "bk" 'kill-this-buffer
-  "be" 'maple/safe-erase-buffer
-  "bh" 'maple/switch-to-scratch-buffer
-  "bK" 'maple/kill-other-buffers
+  "be" 'maple-buffer/safe-erase
+  "bh" 'maple-buffer/switch-to-scratch
+  "bK" 'maple-buffer/kill-others
+  "bR" 'maple-buffer/safe-revert
+  "bP" 'maple-buffer/copy-clipboard
+  "bY" 'maple-buffer/copy-to-clipboard
   "bm" 'bookmark-set
   "bj" 'bookmark-jump
   "bs" 'bookmark-save
   "bw" 'read-only-mode
   "bp" 'evil-prev-buffer
   "bn" 'evil-next-buffer
-  "bR" 'maple/safe-revert-buffer
-  "bP"  'maple/copy-clipboard-to-whole-buffer
-  "bY"  'maple/copy-whole-buffer-to-clipboard
-  "bl"  'blog-start
-  "bi"  'maple-imenu
+  "bl" 'blog-start
+  "bi" 'maple-imenu
   )
 
 (evil-leader/set-key
@@ -245,41 +245,41 @@
   )
 
 (maple/define-key evil-normal-state-map
-                  (kbd "M-J") 'evil-window-move-very-bottom
-                  (kbd "M-K") 'evil-window-move-very-top
-                  (kbd "M-L") 'evil-window-move-far-right
-                  (kbd "M-H") 'evil-window-move-far-left
-                  (kbd "M-j") 'evil-window-down
-                  (kbd "M-k") 'evil-window-up
-                  (kbd "M-l") 'evil-window-right
-                  (kbd "M-h") 'evil-window-left
-                  (kbd "H") (kbd "^")
-                  (kbd "L") (kbd "$")
-                  (kbd "U") 'undo-tree-redo
-                  ;; (kbd "RET") 'maple/evil-insert-line-below
-                  (kbd "S-<return>") 'maple/evil-insert-line-above)
+  (kbd "M-J") 'evil-window-move-very-bottom
+  (kbd "M-K") 'evil-window-move-very-top
+  (kbd "M-L") 'evil-window-move-far-right
+  (kbd "M-H") 'evil-window-move-far-left
+  (kbd "M-j") 'evil-window-down
+  (kbd "M-k") 'evil-window-up
+  (kbd "M-l") 'evil-window-right
+  (kbd "M-h") 'evil-window-left
+  (kbd "H") (kbd "^")
+  (kbd "L") (kbd "$")
+  (kbd "U") 'undo-tree-redo
+  ;; (kbd "RET") 'maple-evil/insert-line-below
+  (kbd "S-<return>") 'maple-evil/insert-line-above)
 
 (maple/define-key evil-insert-state-map
-                  (kbd "C-h") (kbd "<left>")
-                  (kbd "C-l") (kbd "<right>")
-                  (kbd "C-j") (kbd "<down>")
-                  (kbd "C-k") (kbd "<up>"))
+  (kbd "C-h") (kbd "<left>")
+  (kbd "C-l") (kbd "<right>")
+  (kbd "C-j") (kbd "<down>")
+  (kbd "C-k") (kbd "<up>"))
 
 (maple/define-key evil-visual-state-map
-                  (kbd "H") (kbd "^")
-                  (kbd "L") (lambda ()
-                              (interactive)
-                              (evil-end-of-line))
-                  (kbd "<") (lambda ()
-                              (interactive)
-                              (call-interactively 'evil-shift-left)
-                              (evil-normal-state)
-                              (evil-visual-restore))
-                  (kbd ">") (lambda ()
-                              (interactive)
-                              (call-interactively 'evil-shift-right)
-                              (evil-normal-state)
-                              (evil-visual-restore)))
+  (kbd "H") (kbd "^")
+  (kbd "L") (lambda ()
+              (interactive)
+              (evil-end-of-line))
+  (kbd "<") (lambda ()
+              (interactive)
+              (call-interactively 'evil-shift-left)
+              (evil-normal-state)
+              (evil-visual-restore))
+  (kbd ">") (lambda ()
+              (interactive)
+              (call-interactively 'evil-shift-right)
+              (evil-normal-state)
+              (evil-visual-restore)))
 
 (global-set-key [f6] 'maple/indent-buffer)
 (global-set-key [tab] 'maple/company-or-indent)

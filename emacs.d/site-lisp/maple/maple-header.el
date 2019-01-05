@@ -1,6 +1,6 @@
 ;;; maple-header.el ---  file header configuration.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2015-2018 lin.jiang
+;; Copyright (C) 2015-2019 lin.jiang
 
 ;; Author: lin.jiang <mail@honmaple.com>
 ;; URL: https://github.com/honmaple/dotfiles/tree/master/emacs.d
@@ -26,14 +26,14 @@
 ;;; Code:
 (require 'subr-x)
 
-(defvar maple/header-alist
+(defvar maple-header/alist
   '(("filename" ".*\\(File Name:\\)\\(.*\\)"
      (file-name-nondirectory (buffer-file-name)))
     ("email" ".*\\(Email:\\)\\(.*\\)" user-mail-address)))
 
-(defvar maple/header-max-limit 7)
+(defvar maple-header/limit 7)
 
-(defun maple/header-action(default)
+(defun maple-header/action(default)
   "Action with DEFAULT value."
   (let ((beg (match-beginning 2))
         (end (match-end 2)))
@@ -42,48 +42,52 @@
       (delete-region beg end)
       (insert " " default))))
 
-(defmacro maple/header-define (name &rest args)
+(defmacro maple-header/define (name &rest args)
   "Define header update with NAME, ARGS."
   (declare (indent 1)
            (doc-string 2))
   (let ((-regex (plist-get args :regex))
         (-default (or (plist-get args :default) ""))
-        (-limit (or (plist-get args :limit) maple/header-max-limit)))
+        (-limit (or (plist-get args :limit) maple-header/limit)))
     `(progn
-       (defvar ,(intern (format "maple/header-update-%s-p" name)) t)
-       (defun ,(intern (format "maple/header-update-%s" name)) (&optional current)
+       (defvar ,(intern (format "maple-header/%s-p" name)) t)
+       (defun ,(intern (format "maple-header/%s" name)) (&optional current)
          ,(format "Update %s header with regex." name)
          (interactive)
          (if current
-             (when (looking-at ,-regex) (maple/header-action ,-default))
+             (when (looking-at ,-regex) (maple-header/action ,-default))
            (save-excursion
              (goto-char (point-min))
              (dotimes (_ ,-limit)
-               (when (looking-at ,-regex) (maple/header-action ,-default))
+               (when (looking-at ,-regex) (maple-header/action ,-default))
                (forward-line 1))))))))
 
-;;;###autoload
-(defun maple/header-update()
+(defun maple-header/update()
   "Header auto update."
   (interactive)
   (save-excursion
     (goto-char (point-min))
-    (dotimes (_ maple/header-max-limit)
+    (dotimes (_ maple-header/limit)
       (cl-mapcan
        (lambda(item)
-         (when (symbol-value (intern (format "maple/header-update-%s-p" (car item))))
-           (funcall (intern (format "maple/header-update-%s" (car item))) t)))
-       maple/header-alist)
+         (when (symbol-value (intern (format "maple-header/%s-p" (car item))))
+           (funcall (intern (format "maple-header/%s" (car item))) t)))
+       maple-header/alist)
       (forward-line 1))))
 
-
 ;;;###autoload
-(defun maple/header-init()
-  "Header init."
-  (dolist (item maple/header-alist)
-    (eval `(maple/header-define ,(nth 0 item)
-                                :regex ,(nth 1 item)
-                                :default ,(nth 2 item)))))
+(define-minor-mode maple-header-mode
+  "Maple header mode"
+  :group      'maple-header
+  :init-value nil
+  :global     t
+  (if (not maple-header-mode)
+      (remove-hook 'before-save-hook  'maple-header/update)
+    (dolist (item maple-header/alist)
+      (eval `(maple-header/define ,(nth 0 item)
+               :regex ,(nth 1 item)
+               :default ,(nth 2 item))))
+    (add-hook 'before-save-hook  'maple-header/update)))
 
 (provide 'maple-header)
 ;;; maple-header.el ends here

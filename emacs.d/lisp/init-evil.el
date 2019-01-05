@@ -1,6 +1,6 @@
 ;;; init-evil.el --- Initialize evil configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2015-2018 lin.jiang
+;; Copyright (C) 2015-2019 lin.jiang
 
 ;; Author: lin.jiang <mail@honmaple.com>
 ;; URL: https://github.com/honmaple/dotfiles/tree/master/emacs.d
@@ -49,6 +49,24 @@
         (join-line 1)
         (delete-horizontal-space)
         (insert sep))))
+
+  (defun maple-evil/insert-line-below (count)
+    "Insert one of several lines below the current point's line without changing
+the current state and point position."
+    (interactive "p")
+    (save-excursion
+      (evil-save-state (evil-open-below count)))
+    (evil-normal-state)
+    (evil-next-line count))
+
+  (defun maple-evil/insert-line-above (count)
+    "Insert one of several lines above the current point's line without changing
+ the current state and point position."
+    (interactive "p")
+    (save-excursion
+      (evil-save-state (evil-open-above count)))
+    (evil-previous-line count)
+    (evil-escape))
 
   (use-package evil-numbers
     :bind

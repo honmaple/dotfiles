@@ -1,6 +1,6 @@
 ;;; init-auto-insert.el --- Auto insert file header.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2015-2018 lin.jiang
+;; Copyright (C) 2015-2019 lin.jiang
 
 ;; Author: lin.jiang <mail@honmaple.com>
 ;; URL: https://github.com/honmaple/dotfiles/tree/master/emacs.d
@@ -86,13 +86,11 @@
 
 (use-package maple-header
   :ensure nil
-  :defines (maple/header-update-email-p maple/header-update-filename-p)
-  :hook
-  (maple-init . maple/header-init)
-  (before-save . maple/header-update)
+  :defines (maple-header/email-p maple-header/filename-p)
+  :hook (maple-init . maple-header-mode)
   :config
-  (setq maple/header-update-filename-p t
-        maple/header-update-email-p nil))
+  (setq maple-header/filename-p t
+        maple-header/email-p nil))
 
 (provide 'init-auto-insert)
 

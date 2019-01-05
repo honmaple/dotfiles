@@ -1,6 +1,6 @@
 ;;; init.el --- Initialize configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2015-2018 lin.jiang
+;; Copyright (C) 2015-2019 lin.jiang
 
 ;; Author: lin.jiang <mail@honmaple.com>
 ;; URL: https://github.com/honmaple/dotfiles/tree/master/emacs.d
@@ -71,7 +71,6 @@
   (maple/require 'init-ivy)
   (maple/require 'init-dired)   ;;自带文件管理
   (maple/require 'init-file)   ;;文件操作
-  (maple/require 'init-buffer)   ;;buffer操作
   (maple/require 'init-window))
 
 (when *develop*

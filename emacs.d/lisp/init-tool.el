@@ -1,6 +1,6 @@
 ;;; init-tool.el --- Initialize tool configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2015-2018 lin.jiang
+;; Copyright (C) 2015-2019 lin.jiang
 
 ;; Author: lin.jiang <mail@honmaple.com>
 ;; URL: https://github.com/honmaple/dotfiles/tree/master/emacs.d
@@ -84,6 +84,10 @@
   :ensure nil
   :hook (window-setup . maple-scratch-mode)
   :config (setq maple/scratch-source nil))
+
+(use-package mapleline
+  :ensure nil
+  :commands (mapleline-enable mapleline-disable))
 
 (provide 'init-tool)
 ;;; init-tool.el ends here

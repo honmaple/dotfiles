@@ -1,6 +1,6 @@
 ;;; init-basic.el --- Initialize basic configurations.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2015-2018 lin.jiang
+;; Copyright (C) 2015-2019 lin.jiang
 
 ;; Author: lin.jiang <mail@honmaple.com>
 ;; URL: https://github.com/honmaple/dotfiles/tree/master/emacs.d
@@ -160,6 +160,7 @@
 
 (defun maple/define-key (keymap key def &rest bindings)
   "Define multi keybind with KEYMAP KEY DEF BINDINGS."
+  (declare (indent defun))
   (while key
     (define-key keymap key def)
     (setq key (pop bindings)

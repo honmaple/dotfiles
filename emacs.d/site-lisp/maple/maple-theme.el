@@ -28,7 +28,7 @@
 ;; (defvar  maple/theme-alist (mapcar 'symbol-name (custom-available-themes)))
 ;; (defvar  maple/theme-alist (delete "doom-one-light"
 ;;                                  (mapcar 'symbol-name (custom-available-themes))))
-(defvar maple/theme-alist '(monokai
+(defvar maple-theme/alist '(monokai
                             spacemacs-dark
                             solarized-light
                             solarized-dark
@@ -37,9 +37,9 @@
                             doom-peacock
                             doom-vibrant))
 
-(defun maple/theme-cycle (&optional backward)
+(defun maple-theme/cycle (&optional backward)
   "Theme switch with BACKWARD."
-  (let* ((themes (if backward (reverse maple/theme-alist) maple/theme-alist))
+  (let* ((themes (if backward (reverse maple-theme/alist) maple-theme/alist))
          (next-theme (car (or (cdr (memq (car custom-enabled-themes) themes)) themes))))
     (mapc 'disable-theme custom-enabled-themes)
     (let ((progress-reporter
@@ -51,16 +51,16 @@
       (progress-reporter-done progress-reporter))))
 
 ;;;###autoload
-(defun maple/theme-next()
+(defun maple-theme/next()
   "Next theme."
   (interactive)
-  (maple/theme-cycle))
+  (maple-theme/cycle))
 
 ;;;###autoload
-(defun maple/theme-previous()
+(defun maple-theme/previous()
   "Previous theme."
   (interactive)
-  (maple/theme-cycle t))
+  (maple-theme/cycle t))
 
 (provide 'maple-theme)
 ;;; maple-theme.el ends here

@@ -57,11 +57,11 @@
   :config
   (use-package maple-theme
     :ensure nil
-    :commands (maple/theme-switch/body)
+    :commands (maple-theme/switch/body)
     :config
-    (defhydra maple/theme-switch ()
-      ("n" maple/theme-next "next theme")
-      ("p" maple/theme-previous "prev theme"))))
+    (defhydra maple-theme/switch ()
+      ("n" maple-theme/next "next theme")
+      ("p" maple-theme/previous "prev theme"))))
 
 (use-package which-key
   :diminish which-key-mode

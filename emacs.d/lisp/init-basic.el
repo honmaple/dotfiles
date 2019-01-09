@@ -232,9 +232,8 @@
   (run-hooks 'maple-theme-hook))
 
 (maple/add-hook 'emacs-startup-hook
-  (run-with-idle-timer 0.2 nil (lambda() (run-hooks 'maple-init-hook))))
+  (run-with-idle-timer 0.1 nil (lambda() (run-hooks 'maple-init-hook))))
 
-(maple/add-path (expand-file-name "lisp" user-emacs-directory))
 (maple/add-path (expand-file-name "site-lisp" user-emacs-directory))
 
 (provide 'init-basic)

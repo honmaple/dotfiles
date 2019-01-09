@@ -92,6 +92,7 @@
 
 (use-package maple-file
   :ensure nil
+  :demand
   :hook (find-file . maple-file/check-large))
 
 (use-package maple-buffer

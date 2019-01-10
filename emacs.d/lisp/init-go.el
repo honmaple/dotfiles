@@ -30,6 +30,7 @@
 ;;; Code:
 
 (use-package go-mode
+  :mode "\\.go\\'"
   :config
   (setq gofmt-show-errors nil
         go-packages-function 'maple/go-packages-function)

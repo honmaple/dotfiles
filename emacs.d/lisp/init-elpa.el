@@ -62,7 +62,8 @@
   :demand)
 
 ;;显示状态mode
-(use-package diminish)
+(use-package diminish
+  :diminish abbrev-mode)
 
 ;;缓冲区
 (use-package scratch)

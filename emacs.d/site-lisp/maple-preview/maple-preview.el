@@ -54,38 +54,17 @@
   :type 'boolean
   :group 'maple-preview)
 
-(defvar maple-preview:websocket nil)
-(defvar maple-preview:websocket-server nil
-  "`maple-preview' websocket server.")
 (defvar maple-preview:http-server nil
   "`maple-preview' http server.")
+(defvar maple-preview:websocket-server nil
+  "`maple-preview' websocket server.")
+(defvar maple-preview:websocket nil)
 
 (defvar maple-preview:home-path (file-name-directory load-file-name))
 (defvar maple-preview:preview-file (concat maple-preview:home-path "index.html"))
 (defvar maple-preview:css-file '("/static/css/markdown.css"))
 (defvar maple-preview:js-file nil)
 
-
-(defun maple-preview:init-websocket ()
-  "Init websocket."
-  (maple-preview:start-ws-server))
-
-(defun maple-preview:start-ws-server ()
-  "Start websocket server."
-  (when (not maple-preview:websocket-server)
-    (setq maple-preview:websocket-server
-          (websocket-server
-           maple-preview:websocket-port
-           :host maple-preview:host
-           :on-message (lambda (ws _frame)
-                         (maple-preview:send-preview ws))
-           :on-open (lambda (ws)
-                      (setq maple-preview:websocket ws)
-                      (message "websocket: I'm opened."))
-           :on-error (lambda (_websocket _type _err)
-                       (message "error connecting"))
-           :on-close (lambda (_websocket)
-                       (setq maple-preview:websocket-server nil))))))
 
 (defun maple-preview:send-preview (websocket)
   "Send file content to `WEBSOCKET`."
@@ -156,16 +135,45 @@
             "<!-- iframe -->"))
           (t (buffer-substring-no-properties (point-min) (point-max))))))
 
+(defun maple-preview:init-websocket ()
+  "Init websocket."
+  (when (not maple-preview:websocket-server)
+    (setq maple-preview:websocket-server
+          (websocket-server
+           maple-preview:websocket-port
+           :host maple-preview:host
+           :on-message (lambda (ws _frame)
+                         (maple-preview:send-preview ws))
+           :on-open (lambda (ws)
+                      (setq maple-preview:websocket ws)
+                      (message "websocket: I'm opened."))
+           :on-error (lambda (_websocket _type _err)
+                       (message "error connecting"))
+           :on-close (lambda (_websocket)
+                       (message "close connecting"))))))
+
 (defun maple-preview:init-http-server ()
   "Start http server at PORT to serve preview file via http."
   (when (not maple-preview:http-server)
-    (fset 'httpd-log 'ignore)
-    (setq httpd-root maple-preview:home-path
-          httpd-host maple-preview:host
-          httpd-port maple-preview:port)
-    (httpd-stop) (httpd-start)
-    (defservlet preview text/html (_path)
-      (insert (maple-preview:preview-template)))))
+    (when (process-status "maple-preview")
+      (delete-process "maple-preview"))
+    (cl-letf (((symbol-function 'httpd-log) 'ignore))
+      (setq httpd-root maple-preview:home-path
+            httpd-host maple-preview:host
+            httpd-port maple-preview:port)
+      (setq maple-preview:http-server
+            (make-network-process
+             :name     "maple-preview"
+             :service  httpd-port
+             :server   t
+             :host     httpd-host
+             :family   httpd-ip-family
+             :filter   'httpd--filter
+             :filter-multibyte nil
+             :coding   'binary
+             :log      'httpd--log))
+      (defservlet preview text/html (_path)
+        (insert (maple-preview:preview-template))))))
 
 (defun maple-preview:open-browser ()
   "Open browser."
@@ -177,24 +185,25 @@
   (maple-preview:init-websocket)
   (maple-preview:init-http-server)
   (when maple-preview:browser-open (maple-preview:open-browser))
-  (add-hook 'post-self-insert-hook #'maple-preview:send-to-server nil t)
-  (add-hook 'after-save-hook #'maple-preview:send-to-server nil t))
+  (add-hook 'post-self-insert-hook #'maple-preview:send-to-server)
+  (add-hook 'after-save-hook #'maple-preview:send-to-server))
 
 (defun maple-preview:finalize ()
   "Preview close."
   (when maple-preview:websocket-server
-    (websocket-server-close maple-preview:websocket-server))
+    (websocket-server-close maple-preview:websocket-server)
+    (setq maple-preview:websocket-server nil))
   (when maple-preview:http-server
-    (when (process-status maple-preview:http-server)
-      (delete-process maple-preview:http-server)
-      ;; close connection
-      (dolist (i (process-list))
-        (when (and (string-prefix-p "httpd <127.0.0.1" (process-name i))
-                   (equal (process-type i) 'network))
-          (delete-process i))))
+    (when (process-status "maple-preview")
+      (delete-process "maple-preview"))
+    ;; close connection
+    (dolist (i (process-list))
+      (when (and (string-prefix-p "maple-preview" (process-name i))
+                 (equal (process-type i) 'network))
+        (delete-process i)))
     (setq maple-preview:http-server nil))
-  (remove-hook 'post-self-insert-hook 'maple-preview:send-to-server t)
-  (remove-hook 'after-save-hook 'maple-preview:send-to-server t))
+  (remove-hook 'post-self-insert-hook 'maple-preview:send-to-server)
+  (remove-hook 'after-save-hook 'maple-preview:send-to-server))
 
 ;;;###autoload
 (defun maple-preview-cleanup ()
@@ -207,11 +216,10 @@
   "Maple preview mode"
   :group      'maple-preview
   :init-value nil
-  :global     nil
+  :global     t
   (if maple-preview-mode
       (maple-preview:init)
     (maple-preview:finalize)))
 
 (provide 'maple-preview)
-
 ;;; maple-preview.el ends here

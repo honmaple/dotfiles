@@ -1,4 +1,4 @@
-;;; maple-package.el ---  package configuration.	-*- lexical-binding: t -*-
+;;; maple-package.el ---  package configuration.    -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2015-2019 lin.jiang
 
@@ -36,6 +36,7 @@
                   auto-mode-alist ',auto-mode-alist
                   package-activated-list ',package-activated-list)
            (current-buffer))
+    (insert "\n\n")
     (save-excursion
       (dolist (spec (maple-package/package-alist))
         (let* ((desc (cdr spec))
@@ -85,6 +86,8 @@
 ;;;###autoload
 (defun maple-package/initialize(&optional no-activate)
   "Initialize NO-ACTIVATE."
+  (when (not (file-exists-p maple-package/autoload-file))
+    (package-initialize))
   (setq package-alist nil)
   (package-load-all-descriptors)
   ;; (package-read-all-archive-contents)
@@ -96,6 +99,7 @@
   (setq package--initialized t)
   (package--build-compatibility-table)
   (when no-activate (maple-package/initialize-autoload)))
+
 
 (provide 'maple-package)
 ;;; maple-package.el ends here

@@ -51,6 +51,7 @@
 (defmacro maple/require (pkg)
   "Load PKG."
   `(require ,pkg (file-truename (format "%s/lisp/%s.el" (expand-file-name user-emacs-directory) ,pkg))))
+
 ;;----------------------------------------------------------------------------
 ;; Bootstrap config
 ;;----------------------------------------------------------------------------

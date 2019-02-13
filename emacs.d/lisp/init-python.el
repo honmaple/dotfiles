@@ -24,13 +24,6 @@
 ;;
 
 ;;; Code:
-
-(use-package elpy
-  :disabled)
-
-(use-package pip-requirements
-  :diminish pip-requirements-mode)
-
 (use-package python
   :ensure nil
   :config
@@ -46,6 +39,9 @@
   :bind (:map python-mode-map
               ([f5] . maple/run-python)))
 
+(use-package pip-requirements
+  :diminish pip-requirements-mode)
+
 (use-package py-isort)
 (use-package pyvenv)
 
@@ -59,10 +55,11 @@
   :diminish anaconda-mode
   :unless *company-lsp*
   :hook ((python-mode . anaconda-mode)
-         (python-mode . anaconda-eldoc-mode))
+         (anaconda-mode . anaconda-eldoc-mode))
   :config
   (setq anaconda-mode-installation-directory
         (concat maple-cache-directory "anaconda-mode"))
+  ;; (anaconda-mode-stop)
 
   (use-package company-anaconda
     :functions maple/company-backend

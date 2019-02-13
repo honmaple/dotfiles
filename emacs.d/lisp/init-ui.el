@@ -35,23 +35,23 @@
 (maple/add-hook 'after-init-hook
   (load-theme user-default-theme t))
 
-;; (use-package maple-modeline
-;;   :ensure nil
-;;   :hook (maple-theme . mapleline-default-theme)
-;;   :config
-;;   (setq powerline-default-separator 'wave))
-
 ;; (use-package powerline
 ;;   :hook (maple-theme . powerline-center-evil-theme))
 
-(use-package spaceline-config
-  :ensure spaceline
-  :hook (maple-theme . spaceline-spacemacs-theme)
+(use-package maple-modeline
+  :ensure nil
+  :hook (maple-theme . maple-modeline-init)
   :config
-  (setq powerline-default-separator (if (display-graphic-p) 'wave 'utf-8)
-        spaceline-byte-compile nil
-        spaceline-window-numbers-unicode t
-        spaceline-highlight-face-func 'spaceline-highlight-face-evil-state))
+  (setq maple-modeline-sep 'default))
+
+;; (use-package spaceline-config
+;;   :ensure spaceline
+;;   :hook (maple-theme . spaceline-spacemacs-theme)
+;;   :config
+;;   (setq powerline-default-separator (if (display-graphic-p) 'wave 'utf-8)
+;;         spaceline-byte-compile nil
+;;         spaceline-window-numbers-unicode t
+;;         spaceline-highlight-face-func 'spaceline-highlight-face-evil-state))
 
 (use-package hydra
   :config

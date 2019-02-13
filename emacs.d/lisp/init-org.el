@@ -35,8 +35,7 @@
               (concat "- \t.,:!?;'\")}\\["   "[:nonascii:]")
               " \t\r\n,\"'" "." 1))
   :config
-  (setq org-tags-column 80
-        org-imenu-depth 5
+  (setq org-imenu-depth 5
         org-image-actual-width '(600)
         org-export-with-sub-superscripts '{}
         org-descriptive-links nil ;; 不要锁定连接，保持原样
@@ -51,6 +50,13 @@
     ;; (set-face-attribute 'org-table nil :font "-jis-fixed-medium-r-normal--16-*-75-75-c-160-jisx0208.1983-0")
     ;; (set-face-attribute 'org-table nil :font "-Sony-Sony Fixed-normal-normal-normal-*-16-*-*-*-c-80-iso10646-1")
     )
+
+  (when (version< "9.1.4" (org-version))
+    (add-to-list 'org-modules 'org-tempo)
+    (maple/add-hook 'org-mode-hook
+      (setq electric-pair-inhibit-predicate
+            (lambda (c)
+              (if (char-equal c ?<) t (electric-pair-default-inhibit c))))))
 
   (use-package org-crypt
     :ensure nil

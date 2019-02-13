@@ -29,10 +29,10 @@
 ;;                          ("org"   . "https://orgmode.org/elpa/")
 ;;                          ("gnu"   . "https://elpa.gnu.org/packages/")))
 
-(setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
-                         ("melpa" . "http://elpa.emacs-china.org/melpa/")
-                         ("org"   . "http://elpa.emacs-china.org/org/")
-                         ("melpa-stable" . "http://elpa.emacs-china.org/melpa-stable/"))
+(setq package-archives '(("gnu"   . "https://elpa.emacs-china.org/gnu/")
+                         ("melpa" . "https://elpa.emacs-china.org/melpa/")
+                         ("org"   . "https://elpa.emacs-china.org/org/")
+                         ("melpa-stable" . "https://elpa.emacs-china.org/melpa-stable/"))
       package-enable-at-startup nil
       package--init-file-ensured t)
 
@@ -44,6 +44,7 @@
 (eval-when-compile
   (require 'maple-package)
   (maple-package/initialize 'no-activate)
+  ;; (package-initialize)
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
     (package-install 'use-package)))

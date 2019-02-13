@@ -1,3 +1,6 @@
 [submodule "emacs.d/site-lisp/maple-preview"]
     path = emacs.d/site-lisp/maple-preview
     url = git@github.com:honmaple/emacs-maple-preview.git
+[submodule "emacs.d/site-lisp/maple-modeline"]
+	path = emacs.d/site-lisp/maple-modeline
+	url = git@github.com:honmaple/emacs-maple-modeline.git

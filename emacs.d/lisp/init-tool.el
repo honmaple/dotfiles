@@ -83,11 +83,21 @@
 (use-package maple-scratch
   :ensure nil
   :hook (window-setup . maple-scratch-mode)
-  :config (setq maple/scratch-source nil))
+  :config
+  (setq maple-scratch-alist
+        (append (butlast maple-scratch-alist)
+                '(("Init"
+                   :action 'maple/open-init-file
+                   :desc "Open Init File")
+                  ("Test"
+                   :action 'maple/open-test-file
+                   :desc "Open Test File"))
+                (last maple-scratch-alist))
+        maple-scratch-source nil))
 
-(use-package mapleline
+(use-package maple-echoarea
   :ensure nil
-  :commands (mapleline-enable mapleline-disable))
+  :commands (maple-echoarea-enable maple-echoarea-disable))
 
 (provide 'init-tool)
 ;;; init-tool.el ends here

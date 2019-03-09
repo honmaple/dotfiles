@@ -43,7 +43,7 @@
 
 (eval-when-compile
   (require 'maple-package)
-  (maple-package/initialize 'no-activate)
+  (maple-package-initialize 'no-activate)
   ;; (package-initialize)
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
@@ -66,9 +66,6 @@
 (use-package diminish
   :diminish abbrev-mode)
 
-;;缓冲区
-(use-package scratch)
-
 (use-package async-bytecomp
   :ensure async
   :hook (maple-init . async-bytecomp-package-mode)
@@ -78,11 +75,6 @@
 ;; (use-package benchmark-init
 ;;   :init (benchmark-init/activate)
 ;;   :hook (after-init . benchmark-init/deactivate))
-
-(use-package package-utils
-  :commands (package-utils-upgrade-all)
-  :init
-  (defalias 'package-upgrade 'package-utils-upgrade-all))
 
 (use-package cl-lib)
 (use-package fullframe)

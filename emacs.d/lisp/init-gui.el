@@ -47,9 +47,7 @@
         inhibit-compacting-font-caches t
         inhibit-startup-echo-area-message user-full-name
         initial-major-mode 'fundamental-mode
-        initial-scratch-message (propertize (maple/initial-message)
-                                            'font-lock-face
-                                            'font-lock-comment-face)))
+        initial-scratch-message ""))
 
 (setq use-file-dialog nil
       use-dialog-box nil
@@ -59,7 +57,6 @@
       create-lockfiles nil
       backup-directory-alist `(("." . ,(concat maple-cache-directory "auto-save")))
       select-enable-clipboard t) ;;激活粘贴板
-
 ;; (when (not (display-graphic-p))
 ;;   (setq interprogram-paste-function 'x-cut-buffer-or-selection-value))
 

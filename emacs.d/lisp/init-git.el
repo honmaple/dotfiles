@@ -15,6 +15,11 @@
         magit-section-visibility-indicator nil)
   (use-package evil-magit
     :demand)
+  ;; https://github.com/magit/transient/issues/18
+  (use-package transient
+    :config
+    (transient-bind-q-to-quit)
+    (setq transient-mode-line-format mode-line-format))
 
   (with-eval-after-load 'fullframe
     (fullframe magit-status magit-mode-quit-window))

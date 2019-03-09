@@ -170,7 +170,7 @@
   "bw" 'read-only-mode
   "bp" 'evil-prev-buffer
   "bn" 'evil-next-buffer
-  "bl" 'blog-start
+  "bl" 'maple-note
   "bi" 'maple-imenu
   )
 

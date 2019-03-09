@@ -129,6 +129,7 @@ the current state and point position."
   :ensure nil
   :commands (evil-multiedit-match-all)
   :config
+  (use-package iedit)
   (setq evil-multiedit-follow-matches t
         evil-multiedit-state-cursor '(box "firebrick1"))
   (defhydra maple/evil-multiedit ()

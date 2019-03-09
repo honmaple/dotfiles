@@ -2,17 +2,23 @@
     path = emacs.d/site-lisp/maple-preview
     url = git@github.com:honmaple/emacs-maple-preview.git
 [submodule "emacs.d/site-lisp/maple-modeline"]
-	path = emacs.d/site-lisp/maple-modeline
-	url = git@github.com:honmaple/emacs-maple-modeline.git
+    path = emacs.d/site-lisp/maple-modeline
+    url = git@github.com:honmaple/emacs-maple-modeline.git
 [submodule "emacs.d/site-lisp/maple-imenu"]
-	path = emacs.d/site-lisp/maple-imenu
-	url = git@github.com:honmaple/emacs-maple-imenu.git
+    path = emacs.d/site-lisp/maple-imenu
+    url = git@github.com:honmaple/emacs-maple-imenu.git
 [submodule "emacs.d/site-lisp/maple-mode"]
-	path = emacs.d/site-lisp/maple-mode
-	url = git@github.com:honmaple/emacs-maple-mode.git
+    path = emacs.d/site-lisp/maple-mode
+    url = git@github.com:honmaple/emacs-maple-mode.git
 [submodule "emacs.d/site-lisp/maple-echoarea"]
-	path = emacs.d/site-lisp/maple-echoarea
-	url = git@github.com:honmaple/emacs-maple-echoarea.git
+    path = emacs.d/site-lisp/maple-echoarea
+    url = git@github.com:honmaple/emacs-maple-echoarea.git
 [submodule "emacs.d/site-lisp/maple-scratch"]
-	path = emacs.d/site-lisp/maple-scratch
-	url = git@github.com:honmaple/emacs-maple-scratch.git
+    path = emacs.d/site-lisp/maple-scratch
+    url = git@github.com:honmaple/emacs-maple-scratch.git
+[submodule "emacs.d/site-lisp/maple-package"]
+    path = emacs.d/site-lisp/maple-package
+    url = git@github.com:honmaple/emacs-maple-package.git
+[submodule "emacs.d/site-lisp/maple-note"]
+    path = emacs.d/site-lisp/maple-note
+    url = git@github.com:honmaple/emacs-maple-note.git

@@ -66,31 +66,13 @@
            "/*"
            (string-trim-left (maple/insert-string " ")) "*/\n"))))
 
-
-(use-package time-stamp
-  :ensure nil
-  :hook (before-save . time-stamp)
-  :config
-  (setq time-stamp-active t
-        time-stamp-line-limit 11
-        time-stamp-start "[lL]ast[ -][uU]pdate[ \t]*:?"
-        time-stamp-end "\n"
-        time-stamp-format (concat " " (maple/get-weekday)
-                                  " %Y-%02m-%02d %02H:%02M:%02S (%Z)"))
-  :setq
-  (:mode org-mode
-         time-stamp-start "MODIFIED[ \t]*?"
-         time-stamp-format " %Y-%02m-%02d %02H:%02M:%02S")
-  (:mode markdown-mode
-         time-stamp-start "Modified[ \t]*:?"))
-
 (use-package maple-header
   :ensure nil
-  :defines (maple-header/email-p maple-header/filename-p)
+  :defines (maple-header-email-p maple-header-filename-p)
   :hook (maple-init . maple-header-mode)
   :config
-  (setq maple-header/filename-p t
-        maple-header/email-p nil))
+  (setq maple-header-filename-p t
+        maple-header-email-p nil))
 
 (provide 'init-auto-insert)
 

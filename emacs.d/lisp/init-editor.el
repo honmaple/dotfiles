@@ -27,10 +27,6 @@
 
 (eval-when-compile (require 'init-basic))
 
-;; (use-package adaptive-wrap
-;;   :hook (visual-line-mode adaptive-wrap-prefix-mode))
-
-;; 修改外部文件自动载入
 (use-package autorevert
   :ensure nil
   :hook (maple-init . global-auto-revert-mode)
@@ -38,19 +34,6 @@
   (setq global-auto-revert-non-file-buffers t
         auto-revert-verbose nil)
   :diminish auto-revert-mode)
-
-(use-package semantic
-  :ensure nil
-  :hook (maple-init . semantic-mode)
-  :config
-  (setq semanticdb-default-save-directory
-        (concat maple-cache-directory "semantic/")
-        semanticdb-find-default-throttle '(file local project))
-  (add-to-list 'semantic-default-submodes
-               'global-semantic-idle-summary-mode)
-
-  (with-eval-after-load 'imenu
-    (setq imenu-create-index-function 'semantic-create-imenu-index)))
 
 (use-package elec-pair
   :ensure nil

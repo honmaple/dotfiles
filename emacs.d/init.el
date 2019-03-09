@@ -50,7 +50,7 @@
 
 (defmacro maple/require (pkg)
   "Load PKG."
-  `(require ,pkg (file-truename (format "%s/lisp/%s.el" (expand-file-name user-emacs-directory) ,pkg))))
+  `(require ,pkg (format "%s/%s.el" (expand-file-name "lisp" user-emacs-directory) ,pkg)))
 
 ;;----------------------------------------------------------------------------
 ;; Bootstrap config
@@ -82,7 +82,6 @@
 
   (maple/require 'init-shell) ;;shell
   (maple/require 'init-web)
-  (maple/require 'init-js)
   (maple/require 'init-python)
   (maple/require 'init-go)
   (maple/require 'init-lua)

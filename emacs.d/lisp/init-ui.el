@@ -40,9 +40,7 @@
 
 (use-package maple-modeline
   :ensure nil
-  :hook (maple-theme . maple-modeline-init)
-  :config
-  (setq maple-modeline-sep 'default))
+  :hook (maple-theme . maple-modeline-init))
 
 ;; (use-package spaceline-config
 ;;   :ensure spaceline

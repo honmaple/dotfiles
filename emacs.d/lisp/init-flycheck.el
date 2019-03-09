@@ -33,6 +33,10 @@
   (setq flycheck-check-syntax-automatically '(save idle-change mode-enabled)
         flycheck-idle-change-delay 0.8)
 
+  (let ((govet (flycheck-checker-get 'go-vet 'command)))
+    (when (equal (cadr govet) "tool")
+      (setf (cdr govet) (cddr govet))))
+
   (when (and (fboundp 'define-fringe-bitmap))
     (define-fringe-bitmap 'maple-flycheck-fringe-indicator
       (vector #b00000000

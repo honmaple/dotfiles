@@ -33,8 +33,7 @@
         web-mode-enable-current-element-highlight t
         web-mode-enable-auto-indentation nil
         web-mode-enable-css-colorization nil
-        web-mode-engines-alist '(("django" . "\\.html\\'")
-                                 ("django" . "\\.vue\\'"))
+        web-mode-engines-alist '(("django" . "\\.\\(vue\\|html?\\)$"))
         web-mode-engines-auto-pairs '(("django" . (("{{ " . " }")
                                                    ("{% " . " %")
                                                    ("{%-" . " | %")
@@ -96,6 +95,30 @@
 
 (use-package less-css-mode
   :mode ("\\.less\\'" . less-css-mode))
+
+(use-package js2-mode
+  :mode ("\\.js\\'" . js2-mode)
+  :hook (js2-mode . js2-imenu-extras-mode)
+  :config
+  (setq js2-basic-offset 4
+        js-indent-level 4
+        js2-bounce-indent-p nil
+        js2-mode-show-parse-errors nil
+        js2-mode-show-strict-warnings nil)
+
+  (use-package tern
+    :diminish tern-mode
+    :hook (js2-mode . tern-mode)
+    :config (add-to-list 'tern-command "--no-port-file" 'append))
+
+  (use-package company-tern
+    :functions maple/company-backend
+    :init (maple/company-backend 'js2-mode-hook 'company-tern)))
+
+(use-package coffee-mode
+  :mode ("\\.coffee\\.erb\\'" . coffee-mode)
+  :config
+  (setq coffee-tab-width 4))
 
 (provide 'init-web)
 

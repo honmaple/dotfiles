@@ -34,22 +34,27 @@
   (maple/evil-map esup-mode-map))
 
 (use-package pangu-spacing
-  :commands (pangu-spacing-space-current-buffer))
+  :commands (pangu-spacing-space-current-buffer)
+  :config
+  (defun pangu-spacing-search-and-replace (match regexp)
+    "Replace regexp with match in buffer."
+    (let* ((p (region-active-p))
+           (start (if p (region-beginning) (point-min)))
+           (end (if p (region-end) (point-max))))
+      (pangu-spacing-search-buffer regexp start end (replace-match match nil nil)))))
 
 (use-package quickrun
   :hook (quickrun--mode . maple/truncate-lines)
   :config
   (maple/evil-map quickrun--mode-map))
 
-(use-package blog-mode
+(use-package maple-note
   :ensure nil
-  :commands blog-start
+  :commands maple-note
   :config
-  (setq blog-root-path "~/git/pelican"
-        blog-org-path "content/org"
-        blog-md-path "content/markdown"
-        blog-draft-path "content/draft")
-  (maple/evil-map blog-mode-map))
+  (setq maple-note-root-path "~/git/pelican"
+        maple-note-draft-path "content/draft")
+  (maple/evil-map maple-note-mode-map))
 
 (use-package maple-imenu
   :ensure nil
@@ -84,13 +89,14 @@
   :ensure nil
   :hook (window-setup . maple-scratch-mode)
   :config
+  (maple/evil-map maple-scratch-mode-map)
   (setq maple-scratch-alist
         (append (butlast maple-scratch-alist)
                 '(("Init"
-                   :action 'maple/open-init-file
+                   :action 'maple-file/open-init
                    :desc "Open Init File")
                   ("Test"
-                   :action 'maple/open-test-file
+                   :action 'maple-file/open-test
                    :desc "Open Test File"))
                 (last maple-scratch-alist))
         maple-scratch-source nil))

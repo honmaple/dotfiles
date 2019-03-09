@@ -102,23 +102,6 @@
                               (when (> (count-windows) 1)
                                 (delete-window)))))))
 
-(defun maple/initial-message(&optional prefix)
-  "Show initial message when PREFIX comment."
-  (interactive)
-  (concat (when (executable-find "fortune")
-            (format (concat prefix "%s\n\n")
-                    (replace-regexp-in-string
-                     "\\[[0-9]*m" "" ; remove chinese shell char
-                     (replace-regexp-in-string
-                      "\n" (concat "\n" prefix) ; comment each line
-                      (replace-regexp-in-string
-                       "\s*$" ""    ; remove spaces
-                       (replace-regexp-in-string
-                        "\n$" ""    ; remove trailing linebreak
-                        (shell-command-to-string
-                         "fortune -a | fmt -80 -s | cowsay -$(shuf -n 1 -e b d g p s t w y) -f $(shuf -n 1 -e $(cowsay -l | tail -n +2)) -n")))))))
-          (concat prefix "Happy hacking, " user-login-name " - Emacs ♥ you!\n\n")))
-
 (defun maple/comment-or-uncomment (&optional paste)
   "Comments or uncomments the region or the current line if there's no active region with no `PASTE`."
   (interactive)
@@ -175,17 +158,6 @@
                           company-default-backends)))
         (hooks (if (listp hook) hook (list hook))))
     (dolist (i hooks) (add-hook i `(lambda() ,fn)))))
-
-(defun maple/get-weekday()
-  "Show weekday of today."
-  (car (rassq (string-to-number (format-time-string "%w"))
-              '(("Sunday" . 0)
-                ("Monday" . 1)
-                ("Tuesday" . 2)
-                ("Wednesday" . 3)
-                ("Thursday" . 4)
-                ("Friday" . 5)
-                ("Saturday" . 6)))))
 
 (defun maple/truncate-lines()
   "Turn on `truncate-lines`."

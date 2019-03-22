@@ -6,48 +6,82 @@ from datetime import datetime
 
 cityid = sys.argv[1]
 if sys.argv[2] == 'sixdays':
-	url = 'http://m.weather.com.cn/data/%s.html' % cityid
+    url = 'http://m.weather.com.cn/data/%s.html' % cityid
 else:
-	url = "http://www.weather.com.cn/data/sk/%s.html" % cityid
+    url = "http://www.weather.com.cn/data/sk/%s.html" % cityid
 
 try:
-	data = urllib.request.urlopen(url).read()
+    data = urllib.request.urlopen(url).read()
 except IOError:
-	exit(1)
+    exit(1)
 
 data = json.loads(data.decode('utf-8'))
 weatherinfo = data['weatherinfo']
 
 if sys.argv[2] == 'sixdays':
 
-	def weather2char(weather):
-		map_dict = {
-			'雨夹雪': 'x', '大到暴雪': 'r', '暴雪': 'r', '中到大雪': 'q', '大雪': 'q',
-			'小到中雪': 'p', '中雪': 'p', '小雪': 'o', '雷雨': 'l', '雷阵雨': 'k',
-			'大到暴雨': 'j', '暴雨': 'j', '中到大雨': 'i', '大雨': 'i', '小到中雨': 'h',
-			'中雨': 'h', '小雨': 's', '阵雨': 'g', '阴': 'f', '多云': 'e', '雾': '9',
-			'晴'	: 'a'
-		}
-		char = map_dict.get(weather.split('转')[0], '')
-		if (datetime.today().hour + 6) % 24 < 12 and char in ('a', 'b', 'c', 'd', 'g', 'k', 'o'):
-			char = char.upper()
-		return char
+    def weather2char(weather):
+        map_dict = {
+            '雨夹雪': 'x',
+            '大到暴雪': 'r',
+            '暴雪': 'r',
+            '中到大雪': 'q',
+            '大雪': 'q',
+            '小到中雪': 'p',
+            '中雪': 'p',
+            '小雪': 'o',
+            '雷雨': 'l',
+            '雷阵雨': 'k',
+            '大到暴雨': 'j',
+            '暴雨': 'j',
+            '中到大雨': 'i',
+            '大雨': 'i',
+            '小到中雨': 'h',
+            '中雨': 'h',
+            '小雨': 's',
+            '阵雨': 'g',
+            '阴': 'f',
+            '多云': 'e',
+            '雾': '9',
+            '晴': 'a'
+        }
+        char = map_dict.get(weather.split('转')[0], '')
+        if (datetime.today().hour + 6) % 24 < 12 and char in ('a', 'b', 'c',
+                                                              'd', 'g', 'k',
+                                                              'o'):
+            char = char.upper()
+        return char
 
-	def fixunit(temp):
-		return temp.replace('℃', 'ºC')
+    def fixunit(temp):
+        return temp.replace('℃', 'ºC')
 
-	print("${voffset 8}${color0}${font ConkyWeather:size=17}%s${font}${color}${voffset -14}${goto 32}24h: ${color2}%s${color}${goto 145}气温: ${font Ubuntu:style=Bold:size=8}${color2}%s${color}${font}\n${goto 32}48h: ${color2}%s${color}${goto 145}气温: ${font Ubuntu:style=Bold:size=8}${color2}%s${color}${font}\n${goto 32}72h: ${color2}%s${color}${goto 145}气温: ${font Ubuntu:style=Bold:size=8}${color2}%s${color}${font}" % (weather2char(weatherinfo['weather1']), weatherinfo['weather1'], fixunit(weatherinfo['temp1']), weatherinfo['weather2'], fixunit(weatherinfo['temp2']), weatherinfo['weather3'], fixunit(weatherinfo['temp3'])))
+    print(
+        "${voffset 8}${color0}${font ConkyWeather:size=17}%s${font}${color}${voffset -14}${goto 32}24h: ${color2}%s${color}${goto 145}气温: ${font Monospace:style=Bold:size=8}${color2}%s${color}${font}\n${goto 32}48h: ${color2}%s${color}${goto 145}气温: ${font Monospace:style=Bold:size=8}${color2}%s${color}${font}\n${goto 32}72h: ${color2}%s${color}${goto 145}气温: ${font Monospace:style=Bold:size=8}${color2}%s${color}${font}"
+        % (weather2char(weatherinfo['weather1']), weatherinfo['weather1'],
+           fixunit(weatherinfo['temp1']), weatherinfo['weather2'],
+           fixunit(weatherinfo['temp2']), weatherinfo['weather3'],
+           fixunit(weatherinfo['temp3'])))
 else:
 
-	def wd2char(wd):
-		map_dict = {
-			'东风': 'm', '西风': 'e', '南风': 'a', '北风': 'i',
-			'东南风': 'o', '东北风': 'k', '西南风': 'c', '西北风': 'g'
-		}
-		return map_dict.get(wd, '')
+    def wd2char(wd):
+        map_dict = {
+            '东风': 'm',
+            '西风': 'e',
+            '南风': 'a',
+            '北风': 'i',
+            '东南风': 'o',
+            '东北风': 'k',
+            '西南风': 'c',
+            '西北风': 'g'
+        }
+        return map_dict.get(wd, '')
 
-	def sd2char(sd):
-		idx = int((int(sd[:-1]) + 2.5) / 5)
-		return chr(idx + ord('a'))
+    def sd2char(sd):
+        idx = int((int(sd[:-1]) + 2.5) / 5)
+        return chr(idx + ord('a'))
 
-	print("${voffset 8}${color0}${font Arrows:size=18}%s${font}${color}${voffset -8}${goto 32}城市: ${color2}%s${color}${goto 145}温度: ${font Ubuntu:style=Bold:size=8}${color1}%sºC${color}${font}\n${goto 32}风向: ${color1}%s %s${color}${goto 145}湿度: ${font Ubuntu:style=Bold:size=8}${color1}%s${color}${font}${voffset -12}${goto 210}${font Pie charts for maps:size=18}${color2}%s${color}${font}" % (wd2char(weatherinfo['WD']), weatherinfo['city'], weatherinfo['temp'], weatherinfo['WD'], weatherinfo['WS'], weatherinfo['SD'], sd2char(weatherinfo['SD'])))
+    print(
+        "${voffset 8}${color0}${font Arrows:size=18}%s${font}${color}${voffset -8}${goto 32}城市: ${color2}%s${color}${goto 145}温度: ${font Monospace:style=Bold:size=8}${color1}%sºC${color}${font}\n${goto 32}风向: ${color1}%s %s${color}${goto 145}湿度: ${font Monospace:style=Bold:size=8}${color1}%s${color}${font}${voffset -12}${goto 210}${font Pie charts for maps:size=18}${color2}%s${color}${font}"
+        % (wd2char(weatherinfo['WD']), weatherinfo['city'],
+           weatherinfo['temp'], weatherinfo['WD'], weatherinfo['WS'],
+           weatherinfo['SD'], sd2char(weatherinfo['SD'])))

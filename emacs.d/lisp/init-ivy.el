@@ -122,27 +122,22 @@
     (ivy-occur))
 
   (defun maple/ivy-search-at-point (func)
-    (let* ((region (region-active-p))
-           (string (if (not region) ""
-                     (buffer-substring-no-properties
-                      (region-beginning) (region-end))))
-           (ivy-initial-inputs-alist
-            (list (cons func string))))
-      (when region (deactivate-mark))
-      (funcall func)))
+    (let* ((string (if (region-active-p)
+                       (buffer-substring-no-properties
+                        (region-beginning) (region-end)) ""))
+           (ivy-initial-inputs-alist (list (cons func string))))
+      (deactivate-mark) (funcall func)))
 
   ;; custom find-file
   (defadvice find-file (before make-directory-maybe (filename &optional wildcards) activate)
     "Create parent directory if not exists while visiting file."
-    (unless (file-exists-p filename)
-      (let ((dir (file-name-directory filename)))
-        (unless (file-exists-p dir)
-          (if (y-or-n-p (format "Directory %s does not exist,do you want you create it? " dir))
-              (make-directory dir)
-            (keyboard-quit))))))
+    (let ((dir (file-name-directory filename)))
+      (unless (file-exists-p dir)
+        (if (y-or-n-p (format "Directory %s does not exist,do you want you create it? " dir))
+            (make-directory dir)
+          (keyboard-quit)))))
 
   ;; completion-system
-  ;; (maple/evil-map ivy-occur-mode-map)
   (with-eval-after-load 'evil
     (evil-set-initial-state 'ivy-occur-grep-mode 'normal)
     (evil-make-overriding-map ivy-occur-mode-map 'normal))
@@ -159,6 +154,10 @@
     (setq ivy-rich-path-style 'abbrev
           ivy-rich-switch-buffer-align-virtual-buffer t))
 
+  (use-package ivy-xref
+    :init
+    (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
+
   :custom-face
   (ivy-highlight-face ((t (:background nil)))))
 
@@ -171,9 +170,9 @@
 
   (setq counsel-find-file-ignore-regexp "\\.\\(pyc\\|pyo\\)\\'")
 
-  (defun maple/counsel-ag-file()
+  (defun maple/counsel-ag-directory()
     (interactive)
-    (counsel-ag nil (read-file-name "Search in file(s): ")))
+    (counsel-ag nil (read-directory-name "Search in directory: ")))
 
   ;; custom counsel-ag
   (defun maple/counsel-ag(-counsel-ag &optional initial-input initial-directory extra-ag-args ag-prompt)
@@ -185,6 +184,9 @@
     (funcall -counsel-ag initial-input initial-directory extra-ag-args ag-prompt))
 
   (advice-add 'counsel-ag :around #'maple/counsel-ag)
+
+  (use-package counsel-projectile
+    :preface (setq projectile-keymap-prefix (kbd "C-c p")))
 
   :bind (("M-x" . counsel-M-x)
          ("C-x C-m" . counsel-M-x)
@@ -206,9 +208,6 @@
          :map counsel-ag-map
          ("<tab>" . ivy-call)))
 
-(use-package counsel-projectile
-  :preface (setq projectile-keymap-prefix (kbd "C-c p")))
-
 (use-package swiper
   :config
   (defun maple/swiper()
@@ -216,5 +215,4 @@
     (maple/ivy-search-at-point 'swiper)))
 
 (provide 'init-ivy)
-
 ;;; init-ivy.el ends here

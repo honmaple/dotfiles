@@ -123,6 +123,11 @@
   (interactive)
   (maple/comment-or-uncomment t))
 
+(defun maple/toggle-indent-mode ()
+  "Toggle indent tab mode."
+  (interactive)
+  (setq indent-tabs-mode (not indent-tabs-mode)))
+
 (defun maple/indent-buffer ()
   "Format buffer with `indent-region`."
   (interactive)

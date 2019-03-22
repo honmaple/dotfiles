@@ -24,7 +24,7 @@
 ;;
 
 ;;; Code:
-
+;; (setq font-use-system-font t)
 (prefer-coding-system 'utf-8)
 
 (use-package fontawesome

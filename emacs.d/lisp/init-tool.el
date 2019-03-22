@@ -88,6 +88,7 @@
 (use-package maple-scratch
   :ensure nil
   :hook (window-setup . maple-scratch-mode)
+  :defines (maple-scratch-mode-map maple-scratch-alist maple-scratch-source)
   :config
   (maple/evil-map maple-scratch-mode-map)
   (setq maple-scratch-alist

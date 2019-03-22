@@ -22,3 +22,6 @@
 [submodule "emacs.d/site-lisp/maple-note"]
     path = emacs.d/site-lisp/maple-note
     url = git@github.com:honmaple/emacs-maple-note.git
+[submodule "emacs.d/site-lisp/maple-xpm"]
+	path = emacs.d/site-lisp/maple-xpm
+	url = git@github.com:honmaple/emacs-maple-xpm.git

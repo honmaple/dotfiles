@@ -30,17 +30,38 @@
 (use-package monokai-theme)
 (use-package solarized-theme)
 (use-package spacemacs-theme)
-(use-package doom-themes)
+(use-package doom-themes
+  :custom-face (show-paren-match ((t (:background "#51afef")))))
 
 (maple/add-hook 'after-init-hook
   (load-theme user-default-theme t))
 
-;; (use-package powerline
-;;   :hook (maple-theme . powerline-center-evil-theme))
-
 (use-package maple-modeline
   :ensure nil
-  :hook (maple-theme . maple-modeline-init))
+  :hook (maple-theme . maple-modeline-init)
+  :config
+  (use-package maple-xpm
+    :ensure nil
+    :config
+    (setq maple-xpm-style (if (display-graphic-p) 'wave 'default)))
+
+  (defun maple-modeline-reset-face(color &optional frame)
+    "Reset face when theme change with FRAME."
+    (setq maple-xpm-cache nil)
+    (set-face-background 'maple-modeline-active1 color frame)
+    (set-face-background 'maple-modeline-inactive1 color frame))
+
+  (defun maple/modeline-theme(theme &rest args)
+    (pcase theme
+      ('spacemacs-dark
+       (maple-modeline-reset-face (if (display-graphic-p) "#5d4d7a" "#444444")))
+      (_
+       (maple-modeline-reset-face (if (display-graphic-p) "#35331D" "#333333")))))
+
+  (advice-add 'load-theme :after #'maple/modeline-theme))
+
+;; (use-package powerline
+;;   :hook (maple-theme . powerline-center-evil-theme))
 
 ;; (use-package spaceline-config
 ;;   :ensure spaceline
@@ -110,7 +131,9 @@
   :config
   (setq hl-paren-colors '("Springgreen3"
                           "IndianRed1"
+                          "#51afef"
                           "IndianRed3"
+                          "#da8548"
                           "IndianRed4"))
   (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold)
   :diminish highlight-parentheses-mode)

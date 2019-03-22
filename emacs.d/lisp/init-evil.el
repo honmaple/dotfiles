@@ -79,6 +79,30 @@ the current state and point position."
                 ("v" . er/expand-region)
                 ("V" . er/contract-region)))
 
+  (use-package evil-multiedit
+    :ensure nil
+    :commands (evil-multiedit-match-all)
+    :config
+    (use-package iedit)
+    (setq evil-multiedit-follow-matches t
+          evil-multiedit-state-cursor '(box "firebrick1"))
+    (defhydra maple/evil-multiedit ()
+      ("n" evil-multiedit-match-and-next "next")
+      ("t" evil-multiedit-skip-and-match-next "skip and next")
+      ("p" evil-multiedit-match-and-prev "prev"))
+    :custom-face
+    (iedit-occurrence ((t (:background "chocolate" :foreground "#272822"))))
+    (hydra-face-red ((t (:foreground "chocolate" :weight bold))))
+    :bind (:map evil-visual-state-map
+                ("n" . maple/evil-multiedit/body)
+                ("C-n" . evil-multiedit-match-and-next)
+                ("C-p" . evil-multiedit-match-and-prev)
+                ("C-t" . evil-multiedit-skip-and-match-next)
+                :map evil-multiedit-state-map
+                ("C-n" . evil-multiedit-match-and-next)
+                ("C-p" . evil-multiedit-match-and-prev)
+                ("C-t" . evil-multiedit-skip-and-match-next)))
+
   :custom-face
   (region ((t (:background "#66d9ef" :foreground "#272822"))))
   :bind (:map evil-normal-state-map
@@ -123,31 +147,6 @@ the current state and point position."
                                            imenu-list-major-mode)
         evil-escape-inhibit-functions '(evil-visual-state-p
                                         evil-escape--is-magit-buffer)))
-
-(use-package evil-multiedit
-  :after evil
-  :ensure nil
-  :commands (evil-multiedit-match-all)
-  :config
-  (use-package iedit)
-  (setq evil-multiedit-follow-matches t
-        evil-multiedit-state-cursor '(box "firebrick1"))
-  (defhydra maple/evil-multiedit ()
-    ("n" evil-multiedit-match-and-next "next")
-    ("t" evil-multiedit-skip-and-match-next "skip and next")
-    ("p" evil-multiedit-match-and-prev "prev"))
-  :custom-face
-  (iedit-occurrence ((t (:background "chocolate" :foreground "#272822"))))
-  (hydra-face-red ((t (:foreground "chocolate" :weight bold))))
-  :bind (:map evil-visual-state-map
-              ("n" . maple/evil-multiedit/body)
-              ("C-n" . evil-multiedit-match-and-next)
-              ("C-p" . evil-multiedit-match-and-prev)
-              ("C-t" . evil-multiedit-skip-and-match-next)
-              :map evil-multiedit-state-map
-              ("C-n" . evil-multiedit-match-and-next)
-              ("C-p" . evil-multiedit-match-and-prev)
-              ("C-t" . evil-multiedit-skip-and-match-next)))
 
 (provide 'init-evil)
 

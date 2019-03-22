@@ -104,7 +104,7 @@
   "gi" 'magit-init
   "gs" 'magit-status
   "gb" 'magit-branch
-  "gd" 'magit-diff
+  "gd" 'magit-diff-dwim
   "gD" 'magit-branch-delete
   "gc" 'magit-branch-or-checkout
   "gt" 'git-timemachine
@@ -293,7 +293,7 @@
   "fF" 'counsel-file-jump
   "fr" 'counsel-recentf
   "fw" 'counsel-ag
-  "fW" 'maple/counsel-ag-file
+  "fW" 'maple/counsel-ag-directory
   "sj" 'counsel-semantic-or-imenu
   "bb" 'ivy-switch-buffer  ;;显示缓冲区(已经打开的文件)
   "ph"  'counsel-projectile ;;在工程内查找

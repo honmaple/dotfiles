@@ -1,11 +1,11 @@
 #!/bin/bash
 #**************************************************************************
-#Copyright © 2016 jianglin
+#Copyright © 2016-2019 jianglin
 #File Name: install.sh
 #Author: jianglin
-#Email: xiyang0807@gmail.com
+#Email: mail@honmaple.com
 #Created: 2016-06-21 14:38:53 (CST)
-#Last Update: Monday 2018-11-19 14:57:42 (CST)
+#Last Update: Friday 2019-03-22 10:54:44 (CST)
 #          By:
 #Description:
 #**************************************************************************/
@@ -39,11 +39,24 @@ install() {
     # rm -f "$to"
     # ln -s "$from" "$to"
 }
+clean() {
+    to="$1"
+    read -p "Clean '$to' [Y/n/q]? "  answer
+    answer="${answer:-Y}"
+
+    if [ "$answer" == "Y" ] || [ "$answer" == "y" ];then
+        echo "Clean '$to'"
+    elif [ "$answer" == "q" ];then
+        exit 0
+    fi
+}
+
 install emacs.d $HOME/.emacs.d
 install vim $HOME/.vim
 install i3 $HOME/.i3
 install bashrc $HOME/.bashrc
 install codeblocks $HOME/.codeblocks
+install fonts $HOME/.local/share/fonts
 
 # for location in $(find home -name '.*'); do
 #   file="${location##*/}"

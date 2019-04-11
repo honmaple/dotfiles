@@ -58,7 +58,7 @@
         use-package-expand-minimally t
         use-package-minimum-reported-time 0.01))
 
-(use-package evil-use-package
+(use-package maple-use-package
   :ensure nil
   :demand)
 

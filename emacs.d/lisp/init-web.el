@@ -42,7 +42,6 @@
                                                    ("{{{" . " | }}")
                                                    ("{# " . " #")
                                                    ("<% " . " %>")))))
-
   (fset 'maple/put-text-property (symbol-function 'put-text-property))
   (defun maple/web-mode-put-text(p q prop value)
     (if (and (eq prop 'invisible) value) (hs-make-overlay p q 'code)

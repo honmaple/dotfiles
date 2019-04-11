@@ -122,11 +122,8 @@
     (ivy-occur))
 
   (defun maple/ivy-search-at-point (func)
-    (let* ((string (if (region-active-p)
-                       (buffer-substring-no-properties
-                        (region-beginning) (region-end)) ""))
-           (ivy-initial-inputs-alist (list (cons func string))))
-      (deactivate-mark) (funcall func)))
+    (let ((ivy-initial-inputs-alist (list (cons func (maple/region-string)))))
+      (funcall func)))
 
   ;; custom find-file
   (defadvice find-file (before make-directory-maybe (filename &optional wildcards) activate)
@@ -176,12 +173,11 @@
 
   ;; custom counsel-ag
   (defun maple/counsel-ag(-counsel-ag &optional initial-input initial-directory extra-ag-args ag-prompt)
-    (when (and (not initial-input) (region-active-p))
-      (setq initial-input (buffer-substring-no-properties
-                           (region-beginning) (region-end)))
-      (deactivate-mark))
-    (unless initial-directory (setq initial-directory default-directory))
-    (funcall -counsel-ag initial-input initial-directory extra-ag-args ag-prompt))
+    (funcall -counsel-ag
+             (or initial-input (maple/region-string))
+             (or initial-directory default-directory)
+             extra-ag-args
+             ag-prompt))
 
   (advice-add 'counsel-ag :around #'maple/counsel-ag)
 

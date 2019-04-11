@@ -38,7 +38,7 @@
   :config
   (defun pangu-spacing-search-and-replace (match regexp)
     "Replace regexp with match in buffer."
-    (let* ((p (region-active-p))
+    (let* ((p (use-region-p))
            (start (if p (region-beginning) (point-min)))
            (end (if p (region-end) (point-max))))
       (pangu-spacing-search-buffer regexp start end (replace-match match nil nil)))))

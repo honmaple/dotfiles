@@ -33,7 +33,7 @@
   (defun maple/run-python ()
     (interactive)
     (or (python-shell-get-process) (call-interactively 'run-python))
-    (if (region-active-p)
+    (if (use-region-p)
         (python-shell-send-region (region-beginning) (region-end) t)
       (python-shell-send-buffer t)))
   :bind (:map python-mode-map

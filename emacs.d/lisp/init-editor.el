@@ -65,12 +65,12 @@
   :ensure nil
   :config
   (defun maple/evil-search-paste()
-    (when (region-active-p)
+    (when (use-region-p)
       (isearch-yank-string
-       (save-excursion
-         (buffer-substring-no-properties
-          (region-beginning) (1+ (region-end)))))
+       (buffer-substring-no-properties
+        (region-beginning) (1+ (region-end))))
       (deactivate-mark)))
+
   :hook (isearch-mode . maple/evil-search-paste)
   :bind (:map isearch-mode-map
               ([remap isearch-delete-char] . isearch-del-char)))
@@ -95,7 +95,14 @@
 (use-package hideshow
   :ensure nil
   :diminish hs-minor-mode
-  :hook ((yaml-mode conf-mode prog-mode) . hs-minor-mode))
+  :hook ((conf-mode prog-mode) . hs-minor-mode))
+
+(use-package origami
+  :hook (yaml-mode . origami-mode)
+  :diminish origami-mode
+  :evil-bind
+  (normal yaml-mode-map
+          ("za" . origami-toggle-node)))
 
 (use-package anzu
   :hook (maple-init . global-anzu-mode)

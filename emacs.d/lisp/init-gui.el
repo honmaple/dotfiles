@@ -128,8 +128,7 @@
   :ensure nil
   :config
   (setq bookmark-default-file (concat maple-cache-directory "bookmarks")
-        bookmark-save-flag 1)
-  :evil-leader ("fb" . bookmark-jump))
+        bookmark-save-flag 1))
 
 (provide 'init-gui)
 

@@ -53,6 +53,8 @@
 
   (defun maple/modeline-theme(theme &rest args)
     (pcase theme
+      ('doom-one
+       (maple-modeline-reset-face (if (display-graphic-p) "#333333" "#444444")))
       ('spacemacs-dark
        (maple-modeline-reset-face (if (display-graphic-p) "#5d4d7a" "#444444")))
       (_

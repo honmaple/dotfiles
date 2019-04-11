@@ -79,7 +79,7 @@
       (setq fn `(function ,fn))
       (dolist (i hooks)
         (push `(add-hook ',i ,fn ,-append ,-local) forms)))
-    `(progn (when ,-if ,@forms))))
+    `(when ,-if ,@forms)))
 
 (defmacro maple/add-hook-once (hook f &optional append local)
   "Like `add-hook`, remove after call with HOOK F &OPTIONAL APPEND LOCAL."
@@ -163,6 +163,14 @@
                           company-default-backends)))
         (hooks (if (listp hook) hook (list hook))))
     (dolist (i hooks) (add-hook i `(lambda() ,fn)))))
+
+(defun maple/region-string()
+  "Get region string."
+  (if (not (use-region-p)) ""
+    (let* ((beg (region-beginning))
+           (end (region-end))
+           (eol (save-excursion (goto-char beg) (line-end-position))))
+      (deactivate-mark) (buffer-substring-no-properties beg (min end eol)))))
 
 (defun maple/truncate-lines()
   "Turn on `truncate-lines`."

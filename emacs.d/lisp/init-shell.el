@@ -44,15 +44,15 @@
     (interactive)
     (term-send-raw-string "\t"))
   :evil-bind
-  ((normal term-raw-map
-           ("p" . term-paste))
-   (insert term-raw-map
-           ("C-c C-d" . term-send-eof)
-           ("C-c C-z" . term-stop-subjob)
-           ("C-y" . term-paste)
-           ("<tab>" . term-send-tab)
-           ("C-k" . term-send-up)
-           ("C-j" . term-send-down))))
+  (normal term-raw-map
+          ("p" . term-paste))
+  (insert term-raw-map
+          ("C-c C-d" . term-send-eof)
+          ("C-c C-z" . term-stop-subjob)
+          ("C-y" . term-paste)
+          ("<tab>" . term-send-tab)
+          ("C-k" . term-send-up)
+          ("C-j" . term-send-down)))
 
 (use-package xterm-color
   :hook (comint-preoutput-filter-functions . xterm-color-filter)

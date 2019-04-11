@@ -53,18 +53,19 @@
     :diminish dired-async-mode
     :hook (dired-mode-hook . dired-async-mode))
 
+  (use-package dired-x
+    :ensure nil
+    :demand
+    :hook (dired-mode . dired-omit-mode)
+    :config
+    (setq dired-omit-verbose nil
+          dired-omit-files
+          (concat dired-omit-files "\\|^\\..+$\\|\\.pdf$\\|\\.tex$\\|\\*~$")))
+
   :bind (:map dired-mode-map
               ("H" . dired-omit-mode)
               ("RET" . dired-find-alternate-file)
               ("C-c C-e" . wdired-change-to-wdired-mode)))
-
-(use-package dired-x
-  :ensure nil
-  :hook (dired-mode . dired-omit-mode)
-  :config
-  (setq dired-omit-verbose nil
-        dired-omit-files
-        (concat dired-omit-files "\\|^\\..+$\\|\\.pdf$\\|\\.tex$\\|\\*~$")))
 
 (use-package image-dired
   :ensure nil
@@ -80,9 +81,6 @@
           ("h" . image-dired-backward-image)
           ("q" . image-dired-kill-buffer-and-window)
           ("RET" . image-dired-display-thumbnail-original-image)))
-
-;; (use-package diredfl
-;;   :hook (dired-mode . diredfl-mode))
 
 (use-package image-mode
   :ensure nil

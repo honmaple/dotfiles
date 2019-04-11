@@ -32,6 +32,12 @@
         lsp-message-project-root-warning t
         lsp-prefer-flymake nil)
 
+  (use-package lsp-go
+    :hook (go-mode . lsp-go-enable))
+
+  (use-package lsp-python
+    :hook (python-mode . lsp-python-enable))
+
   (use-package company-lsp
     :functions maple/company-backend
     :init (maple/company-backend 'lsp-mode-hook 'company-lsp)))
@@ -42,12 +48,6 @@
   (:map lsp-ui-mode-map
         ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
         ([remap xref-find-references] . lsp-ui-peek-find-references)))
-
-(use-package lsp-go
-  :hook (go-mode . lsp-go-enable))
-
-(use-package lsp-python
-  :hook (python-mode . lsp-python-enable))
 
 (provide 'init-lsp)
 

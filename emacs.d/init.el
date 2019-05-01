@@ -29,7 +29,7 @@
 (eval-and-compile
   (defvar maple/file-name-handler-alist file-name-handler-alist)
   (defvar user-default-theme nil)
-  (defvar *company-lsp* nil)
+  (defvar *lsp* nil)
   (defvar *common* t)
   (defvar *develop* t)
 
@@ -91,7 +91,7 @@
   (maple/require 'init-org)
   (maple/require 'init-tool))
 
-(when *company-lsp*
+(when *lsp*
   (maple/require 'init-lsp))
 
 (with-eval-after-load 'evil-leader

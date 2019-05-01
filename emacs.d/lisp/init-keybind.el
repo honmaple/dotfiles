@@ -290,10 +290,15 @@
         ((or defining-kbd-macro executing-kbd-macro) nil)
         ((keyboard-quit))))
 
+(defun maple-sidebar()
+  "Toggle sidebar."
+  (interactive)
+  (maple-imenu)
+  (neotree-toggle))
+
 (global-set-key [remap keyboard-quit] 'maple/escape)
 (global-set-key [f6] 'maple/indent-buffer)
 (global-set-key [tab] 'maple/company-or-indent)
-
 
 ;; ivy
 (evil-leader/set-key
@@ -306,9 +311,10 @@
   "fW" 'maple/counsel-ag-directory
   "sj" 'counsel-semantic-or-imenu
   "bb" 'ivy-switch-buffer  ;;显示缓冲区(已经打开的文件)
-  "ph"  'counsel-projectile ;;在工程内查找
-  "pw"  'counsel-projectile-ag
-  "pb"  'counsel-projectile-switch-to-buffer)
+  "bi" 'maple-sidebar
+  "ph" 'counsel-projectile ;;在工程内查找
+  "pw" 'counsel-projectile-ag
+  "pb" 'counsel-projectile-switch-to-buffer)
 
 (provide 'init-keybind)
 ;;; init-keybind.el ends here

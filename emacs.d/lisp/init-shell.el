@@ -44,9 +44,9 @@
     (interactive)
     (term-send-raw-string "\t"))
   :evil-bind
-  (normal term-raw-map
+  (:state normal :map term-raw-map
           ("p" . term-paste))
-  (insert term-raw-map
+  (:state insert :map term-raw-map
           ("C-c C-d" . term-send-eof)
           ("C-c C-z" . term-stop-subjob)
           ("C-y" . term-paste)

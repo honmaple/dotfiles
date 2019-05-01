@@ -36,24 +36,25 @@
     (if (use-region-p)
         (python-shell-send-region (region-beginning) (region-end) t)
       (python-shell-send-buffer t)))
+
+  (use-package pip-requirements
+    :diminish pip-requirements-mode)
+
+  (use-package py-isort)
+
+  (use-package pyvenv)
+
+  (use-package yapfify
+    :demand
+    :evil-bind
+    (:state normal :map python-mode-map
+            ([f6] . yapfify-buffer)))
   :bind (:map python-mode-map
               ([f5] . maple/run-python)))
 
-(use-package pip-requirements
-  :diminish pip-requirements-mode)
-
-(use-package py-isort)
-(use-package pyvenv)
-
-(use-package yapfify
-  :evil-bind
-  (normal python-mode-map
-          ([f6] . yapfify-buffer)))
-
-
 (use-package anaconda-mode
   :diminish anaconda-mode
-  :unless *company-lsp*
+  :unless *lsp*
   :hook ((python-mode . anaconda-mode)
          (anaconda-mode . anaconda-eldoc-mode))
   :config
@@ -65,7 +66,7 @@
     :functions maple/company-backend
     :init (maple/company-backend 'anaconda-mode-hook 'company-anaconda))
   :evil-bind
-  (normal anaconda-mode-map
+  (:state normal :map anaconda-mode-map
           ("gd" . anaconda-mode-find-assignments)))
 
 (provide 'init-python)

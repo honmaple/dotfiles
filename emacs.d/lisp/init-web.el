@@ -53,7 +53,7 @@
   (maple/add-hook 'web-mode-hook
     (setq electric-pair-pairs '((?\' . ?\'))))
   :evil-bind
-  (normal web-mode-map
+  (:state normal :map web-mode-map
           ([f5] . browse-url-of-file)
           ("za" . maple/web-mode-fold-or-unfold)))
 
@@ -78,7 +78,7 @@
         (call-interactively 'emmet-expand-yas)
       (call-interactively 'emmet-expand-line)))
   :evil-bind
-  (insert emmet-mode-keymap
+  (:state insert :map emmet-mode-keymap
           ([tab] . maple/emmet-expand)))
 
 (use-package css-mode

@@ -71,6 +71,11 @@
         neo-auto-indent-point t
         neo-vc-integration '(face))
   (maple/evil-map neotree-mode-map)
+
+  (defun neo-default-display-fn(buffer _alist)
+    (let ((window-pos (if (eq neo-window-position 'left) 'left 'right)))
+      (display-buffer-in-side-window buffer `((side . ,window-pos)(slot . -2)))))
+
   :bind (([f2] . neotree-toggle)
          :map neotree-mode-map
          ("C" . neotree-copy-node)
@@ -86,7 +91,7 @@
   (setq undo-tree-visualizer-timestamps t
         undo-tree-visualizer-diff t)
   (let ((dir (concat maple-cache-directory "undo-tree")))
-    (unless (file-exists-p dir) (make-directory dir))
+    (unless (file-exists-p dir) (make-directory dir t))
     (setq undo-tree-history-directory-alist (list (cons "." dir))))
   :diminish undo-tree-mode)
 

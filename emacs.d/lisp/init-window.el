@@ -37,43 +37,49 @@
 (use-package window-numbering
   :hook (maple-theme . window-numbering-mode))
 
-(use-package popwin
-  :hook (maple-init . popwin-mode)
+(use-package zoom
+  :hook (maple-init . zoom-mode)
   :config
-  (setq popwin:special-display-config
-        '(("*Help*" :dedicated t :position bottom :stick nil :noselect nil)
-          ("*compilation*" :dedicated t :position bottom :stick t :noselect t :height 0.2)
-          ("*Compile-Log*" :dedicated t :position bottom :stick t :noselect nil :height 0.2)
-          ("*Warnings*" :dedicated t :position bottom :stick t :noselect t)
-          ("*Completions*" :dedicated t :position bottom :stick t :noselect nil :height 0.2)
-          ("*Shell Command Output*" :dedicated t :position bottom :stick t :noselect nil)
-          ("*Python*" :dedicated t :position right :stick nil :noselect nil)
+  (setq zoom-size '(0.618 . 0.618)
+        zoom-ignored-major-modes '(term-mode flycheck-error-list-mode))
 
-          ("\*Async Shell Command\*.+" :regexp t :position bottom :stick t :noselect nil)
-          ("\*flycheck errors\*.+*$" :regexp t :position bottom :stick t :noselect nil)
-          ("*Anaconda*" :regexp t :position bottom :stick t :noselect t))))
+  (defun maple/balance-windows(func &optional window-or-frame)
+    (unless (zoom--window-ignored-p)
+      (funcall func window-or-frame)))
 
-(use-package golden-ratio  ;;黄金分割
-  :diminish golden-ratio-mode
-  :hook (maple-init . golden-ratio-mode)
+  (advice-add 'balance-windows :around 'maple/balance-windows)
+
+  (defmacro with-zoom-disable(body)
+    (declare (indent defun))
+    (let ((zoom-mode-p (when (featurep 'zoom) zoom-mode))
+          res)
+      (when zoom-mode-p (zoom-mode -1))
+      (setq res `,@body)
+      (when zoom-mode-p (zoom-mode zoom-mode-p))
+      res)))
+
+(use-package shackle
+  :hook (maple-init . shackle-mode)
   :config
-  (setq golden-ratio-exclude-modes '("calc-mode"
-                                     "ediff-mode"
-                                     "gud-mode"
-                                     "term-mode"
-                                     "restclient-mode"
-                                     "anaconda-view-mode")
-        golden-ratio-exclude-buffer-regexp '("^\\*[hH]elm.*"
-                                             "^\\*Flycheck.*")
-        golden-ratio-exclude-buffer-names '(" *NeoTree*"
-                                            "*LV*"
-                                            " *which-key*"
-                                            "*Ilist*"
-                                            " *MINIMAP*")
-        golden-ratio-extra-commands nil)
-  (defadvice select-window (after select-window activate)
-    (golden-ratio)))
+  (setq shackle-default-size 0.3
+        shackle-default-alignment 'below
+        shackle-default-rule nil
+        shackle-rules
+        '(("*Help*" :select t :align 'below :autoclose t)
+          ("*compilation*" :align 'below :autoclose t)
+          ("*Completions*" :align 'below :autoclose t)
+          ("*ert*" :align 'below :autoclose t)
+          ("*Backtrace*" :select t :size 15 :align 'below)
+          ("*Warnings*" :align 'below :autoclose t)
+          ("*Messages*" :align 'below :autoclose t)
+          ("^\\*.*Shell Command.*\\*$" :regexp t :align 'below :autoclose t)
+          ("\\*[Wo]*Man.*\\*" :regexp t :select t :align 'below :autoclose t)
+          (" *undo-tree*" :select t)
+
+          (flycheck-error-list-mode :select t :align 'below :autoclose t)
+          (inferior-python-mode :select t)
+          (comint-mode :align 'below)
+          (process-menu-mode :select t :align 'below :autoclose t))))
 
 (provide 'init-window)
-
 ;;; init-window.el ends here

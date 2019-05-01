@@ -36,11 +36,6 @@
       package-enable-at-startup nil
       package--init-file-ensured t)
 
-;; (let ((default-directory "~/.emacs.d/elpa"))
-;;   (normal-top-level-add-subdirs-to-load-path))
-;; (setq load-path (append load-path (directory-files package-user-dir t "^[^.]" t)))
-;; (setq load-path (append load-path (list (expand-file-name "site-lisp" user-emacs-directory))))
-
 (eval-when-compile
   (require 'maple-package)
   (maple-package-initialize 'no-activate)

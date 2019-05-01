@@ -131,7 +131,7 @@
     (let ((dir (file-name-directory filename)))
       (unless (file-exists-p dir)
         (if (y-or-n-p (format "Directory %s does not exist,do you want you create it? " dir))
-            (make-directory dir)
+            (make-directory dir t)
           (keyboard-quit)))))
 
   ;; completion-system

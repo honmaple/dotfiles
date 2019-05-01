@@ -70,7 +70,7 @@
           org-crypt-key "21305E7E"))
 
   :evil-bind
-  (normal org-mode-map
+  (:state normal :map org-mode-map
           ("RET" . org-open-at-point)
           ("t" . org-todo)
           ("TAB" . org-cycle)

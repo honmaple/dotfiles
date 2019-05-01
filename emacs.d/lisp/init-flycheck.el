@@ -74,7 +74,7 @@
       :fringe-bitmap bitmap
       :fringe-face 'flycheck-fringe-info))
   :evil-bind
-  (normal flycheck-error-list-mode-map
+  (:state normal :map flycheck-error-list-mode-map
           ("q" . quit-window)
           ("j" . flycheck-error-list-next-error)
           ("k" . flycheck-error-list-previous-error)

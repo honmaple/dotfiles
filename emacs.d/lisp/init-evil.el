@@ -79,9 +79,10 @@ the current state and point position."
                 ("v" . er/expand-region)
                 ("V" . er/contract-region)))
 
+
   (use-package evil-multiedit
     :ensure nil
-    :commands (evil-multiedit-match-all)
+    :commands (evil-multiedit-match-all evil-multiedit-match-and-next evil-multiedit-match-and-prev)
     :config
     (use-package iedit
       :config
@@ -121,7 +122,7 @@ the current state and point position."
 (use-package evil-surround
   :hook (maple-init . global-evil-surround-mode)
   :evil-bind
-  (visual evil-surround-mode-map
+  (:state visual :map evil-surround-mode-map
           ("s" . evil-surround-region)
           ("S" . evil-substitute)))
 

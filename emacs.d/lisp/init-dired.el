@@ -74,7 +74,7 @@
   (setq image-dired-dir (concat maple-cache-directory "image-dired")
         image-dired-thumbnail-storage 'standard)
   :evil-bind
-  (normal image-dired-thumbnail-mode-map
+  (:state normal :map image-dired-thumbnail-mode-map
           ("j" . image-dired-next-line)
           ("k" . image-dired-previous-line)
           ("l" . image-dired-forward-image)
@@ -85,7 +85,7 @@
 (use-package image-mode
   :ensure nil
   :evil-bind
-  (normal image-mode-map
+  (:state normal :map image-mode-map
           ("j" . image-next-file)
           ("k" . image-previous-file)
           ("n" . image-next-file)

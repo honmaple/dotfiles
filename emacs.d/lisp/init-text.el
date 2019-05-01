@@ -56,7 +56,7 @@
   :commands (company-english-helper-search)
   :init
   (maple/company-backend '(org-mode-hook markdown-mode-hook) 'company-english-helper-search t)
-  :setq
+  :custom
   (:mode org-mode
          company-tooltip-align-annotations nil)
   (:mode markdown-mode

@@ -90,7 +90,7 @@
     (maple/go-add-comment (car f) (cdr f)))
 
   :evil-bind
-  (normal go-mode-map
+  (:state normal :map go-mode-map
           ([f6] . gofmt)
           ("gd" . godef-jump)))
 

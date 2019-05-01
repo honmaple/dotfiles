@@ -40,6 +40,11 @@
   :ensure nil
   :hook (maple-theme . maple-modeline-init)
   :config
+  (use-package maple-modeline-icon
+    :if (display-graphic-p)
+    :ensure nil
+    :demand)
+
   (use-package maple-xpm
     :ensure nil
     :config
@@ -61,6 +66,7 @@
        (maple-modeline-reset-face (if (display-graphic-p) "#35331D" "#333333")))))
 
   (advice-add 'load-theme :after #'maple/modeline-theme))
+
 
 ;; (use-package powerline
 ;;   :hook (maple-theme . powerline-center-evil-theme))
@@ -93,6 +99,10 @@
         which-key-sort-order 'which-key-key-order-alpha
         which-key-idle-delay 0.2
         which-key-allow-evil-operators t)
+
+  (maple/add-hook 'which-key-init-buffer-hook
+    (setq window-size-fixed 'height))
+
   (which-key-add-key-based-replacements
     ",f" "file"
     ",b" "buffer"
@@ -108,19 +118,12 @@
     ",sq" "sql"
     ",t" "toggle mode"))
 
-
 ;; this is ugly
 (use-package display-line-numbers
   :ensure nil
   :hook ((prog-mode text-mode) . display-line-numbers-mode)
   :config
   (setq display-line-numbers-type 'relative))
-
-;; 80列
-(use-package fill-column-indicator
-  :config
-  (setq fci-rule-column 80
-        fci-rule-width 1))
 
 ;; 高亮括号
 (use-package rainbow-delimiters
@@ -177,7 +180,7 @@
 ;; 显示缩进
 (use-package highlight-indent-guides
   :if (display-graphic-p)
-  :hook (prog-mode . highlight-indent-guides-mode)
+  :hook ((prog-mode yaml-mode) . highlight-indent-guides-mode)
   :config
   (setq highlight-indent-guides-method 'character)
   :diminish highlight-indent-guides-mode)

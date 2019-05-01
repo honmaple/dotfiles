@@ -60,7 +60,8 @@
   :ensure nil
   :commands (maple-imenu)
   :config
-  (maple/evil-map maple-imenu-mode-map))
+  (maple/evil-map maple-imenu-mode-map)
+  (setq maple-imenu-display-alist '((side . left) (slot . -1))))
 
 (use-package youdao-dictionary
   :config

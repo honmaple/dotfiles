@@ -101,16 +101,17 @@
   :hook (yaml-mode . origami-mode)
   :diminish origami-mode
   :evil-bind
-  (normal yaml-mode-map
+  (:state normal :map yaml-mode-map
           ("za" . origami-toggle-node)))
 
 (use-package anzu
   :hook (maple-init . global-anzu-mode)
   :config
   (setq anzu-cons-mode-line-p nil
-        anzu-mode-lighter ""
+        anzu-kode-lighter ""
         anzu-search-threshold 1000
         anzu-replace-to-string-separator " → ")
+  ;; (use-package evil-anzu :after evil :demand)
   :custom-face
   (anzu-replace-to ((t (:inherit query-replace))))
   :bind (:map query-replace-map

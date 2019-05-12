@@ -60,7 +60,6 @@
   :config
   (setq anaconda-mode-installation-directory
         (concat maple-cache-directory "anaconda-mode"))
-  ;; (anaconda-mode-stop)
 
   (use-package company-anaconda
     :functions maple/company-backend

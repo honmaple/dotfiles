@@ -125,14 +125,15 @@
     (let ((ivy-initial-inputs-alist (list (cons func (maple/region-string)))))
       (funcall func)))
 
-  ;; custom find-file
-  (defadvice find-file (before make-directory-maybe (filename &optional wildcards) activate)
+  (defun maple/ivy-make-directory-maybe ()
     "Create parent directory if not exists while visiting file."
-    (let ((dir (file-name-directory filename)))
+    (let ((dir (file-name-directory buffer-file-name)))
       (unless (file-exists-p dir)
         (if (y-or-n-p (format "Directory %s does not exist,do you want you create it? " dir))
             (make-directory dir t)
           (keyboard-quit)))))
+
+  (add-to-list 'find-file-not-found-functions 'maple/ivy-make-directory-maybe nil #'eq)
 
   ;; completion-system
   (with-eval-after-load 'evil
@@ -154,6 +155,12 @@
   (use-package ivy-xref
     :init
     (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
+
+  (use-package all-the-icons-ivy
+    :if (and (display-graphic-p) *icon*)
+    :hook (ivy-mode . all-the-icons-ivy-setup)
+    :config
+    (setq all-the-icons-spacer " "))
 
   :custom-face
   (ivy-highlight-face ((t (:background nil)))))
@@ -179,6 +186,17 @@
              extra-ag-args
              ag-prompt))
 
+  (defun maple/ivy-dired-occur()
+    (interactive)
+    (find-name-dired
+     (or (projectile-project-root) default-directory) (concat (ivy--input) "*"))
+    (ivy-exit-with-action
+     (lambda (_)
+       (pop-to-buffer (get-buffer "*Find*"))
+       (dired-hide-details-mode)
+       (wdired-change-to-wdired-mode)
+       (when (bound-and-true-p evil-local-mode) (evil-normal-state)))))
+
   (advice-add 'counsel-ag :around #'maple/counsel-ag)
 
   (use-package counsel-projectile
@@ -201,6 +219,7 @@
          ("<tab>" . maple/ivy-done)
          ("TAB" . maple/ivy-done)
          ("C-<return>" . ivy-immediate-done)
+         ("C-c C-e" . maple/ivy-dired-occur)
          :map counsel-ag-map
          ("<tab>" . ivy-call)))
 

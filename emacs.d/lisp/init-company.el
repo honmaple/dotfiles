@@ -93,8 +93,7 @@
 (use-package company-statistics
   :hook (company-mode . company-statistics-mode)
   :config
-  (setq company-statistics-file (concat maple-cache-directory
-                                        "company-statistics.el")))
+  (setq company-statistics-file (concat maple-cache-directory "company-statistics.el")))
 
 (use-package company-quickhelp
   :disabled
@@ -105,5 +104,4 @@
   (setq company-quickhelp-delay 1))
 
 (provide 'init-company)
-
 ;;; init-company.el ends here

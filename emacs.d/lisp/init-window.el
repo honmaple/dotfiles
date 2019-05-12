@@ -41,7 +41,7 @@
   :hook (maple-init . zoom-mode)
   :config
   (setq zoom-size '(0.618 . 0.618)
-        zoom-ignored-major-modes '(term-mode flycheck-error-list-mode))
+        zoom-ignored-major-modes '(term-mode flycheck-error-list-mode ediff-mode))
 
   (defun maple/balance-windows(func &optional window-or-frame)
     (unless (zoom--window-ignored-p)

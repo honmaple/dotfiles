@@ -53,6 +53,8 @@
 
   (when (version< "9.1.4" (org-version))
     (add-to-list 'org-modules 'org-tempo)
+    ;; disable auto add comma prepended
+    (fset 'org-escape-code-in-region 'ignore)
     (maple/add-hook 'org-mode-hook
       (setq electric-pair-inhibit-predicate
             (lambda (c)
@@ -62,9 +64,7 @@
     :ensure nil
     :demand
     :config
-    ;; 當被加密的部份要存入硬碟時，自動加密回去
     (org-crypt-use-before-save-magic)
-    ;; 設定要加密的 tag 標籤為 secret
     (setq org-crypt-tag-matcher "secret"
           org-tags-exclude-from-inheritance (quote ("secret"))
           org-crypt-key "21305E7E"))

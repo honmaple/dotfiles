@@ -30,7 +30,7 @@
   "Auto update file header."
   :group 'maple-header)
 
-(defcustom maple-header-limit 8
+(defcustom maple-header-limit 9
   "The number of search limit."
   :group 'maple-header
   :type 'number)
@@ -43,10 +43,12 @@
      :find ".*\\(Email:\\)\\(.*\\)"
      :replace user-mail-address)
     ("modify"
-     :find ".*\\(Modified:\\|MODIFIED[: ]\\|[lL]ast[ -][uU]pdate:\\)\\(.*\\)"
+     :find
+     (cond ((apply 'derived-mode-p '(org-mode markdown-mode))
+            ".*\\(Modified:\\|MODIFIED[: ]\\)\\(.*\\)")
+           (t ".*\\([lL]ast[ -][uU]pdate:\\)\\(.*\\)"))
      :replace
-     (cond ((or (eq major-mode 'org-mode)
-                (eq major-mode 'markdown-mode))
+     (cond ((apply 'derived-mode-p '(org-mode markdown-mode))
             (format-time-string "%Y-%02m-%02d %02H:%02M:%02S"))
            (t (let ((system-time-locale "en_US.UTF-8"))
                 (format-time-string "%A %Y-%02m-%02d %02H:%02M:%02S (%Z)"))))))

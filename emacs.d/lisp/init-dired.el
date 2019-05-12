@@ -62,6 +62,11 @@
           dired-omit-files
           (concat dired-omit-files "\\|^\\..+$\\|\\.pdf$\\|\\.tex$\\|\\*~$")))
 
+  (use-package all-the-icons-dired
+    :defines *icon*
+    :if (and (display-graphic-p) *icon*)
+    :hook (dired-mode . all-the-icons-dired-mode))
+
   :bind (:map dired-mode-map
               ("H" . dired-omit-mode)
               ("RET" . dired-find-alternate-file)

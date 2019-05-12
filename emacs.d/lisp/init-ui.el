@@ -41,7 +41,7 @@
   :hook (maple-theme . maple-modeline-init)
   :config
   (use-package maple-modeline-icon
-    :if (display-graphic-p)
+    :if (and (display-graphic-p) *icon*)
     :ensure nil
     :demand)
 

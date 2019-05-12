@@ -130,7 +130,7 @@ the current state and point position."
   :hook (maple-init . global-evil-matchit-mode))
 
 (use-package evil-ediff
-  :hook (ediff-mode . evil-ediff-mode))
+  :hook (ediff-mode . evil-ediff-init))
 
 (use-package evil-escape
   :hook (maple-init . evil-escape-mode)

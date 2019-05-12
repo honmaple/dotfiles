@@ -27,10 +27,10 @@
 
 ;;; Code:
 (eval-and-compile
-  (defvar maple/file-name-handler-alist file-name-handler-alist)
+  (defvar user-handler-alist file-name-handler-alist)
   (defvar user-default-theme nil)
   (defvar *lsp* nil)
-  (defvar *common* t)
+  (defvar *icon* t)
   (defvar *develop* t)
 
   (setq user-full-name "jianglin"
@@ -42,7 +42,7 @@
 
   (defun maple/finish()
     "Restore defalut values after init"
-    (setq file-name-handler-alist maple/file-name-handler-alist
+    (setq file-name-handler-alist user-handler-alist
           gc-cons-threshold 800000
           gc-cons-percentage 0.1))
 
@@ -56,30 +56,22 @@
 ;; Bootstrap config
 ;;----------------------------------------------------------------------------
 (maple/require 'init-basic)
-(maple/require 'init-elpa)      ;; Machinery for installing required packages
-;;----------------------------------------------------------------------------
-;; Load configs for specific features and modes
-;;----------------------------------------------------------------------------
-(when *common*
-  (maple/require 'init-font)
-  (maple/require 'init-gui) ;;ui设置 显示行号
-  (maple/require 'init-ui)  ;; modeline,which-key
-
-  (maple/require 'init-editor) ;;自动补全括号等
-  (maple/require 'init-auto-insert)  ;;自动插入文件头
-  (maple/require 'init-evil)
-
-  (maple/require 'init-ivy)
-  (maple/require 'init-dired)   ;;自带文件管理
-  (maple/require 'init-file)   ;;文件操作
-  (maple/require 'init-window))
+(maple/require 'init-elpa)        ;; Machinery for installing required packages
+(maple/require 'init-font)
+(maple/require 'init-gui)         ;;ui设置 显示行号
+(maple/require 'init-ui)          ;; modeline,which-key
+(maple/require 'init-editor)      ;;自动补全括号等
+(maple/require 'init-auto-insert) ;;自动插入文件头
+(maple/require 'init-evil)
+(maple/require 'init-ivy)
+(maple/require 'init-dired)       ;;自带文件管理
+(maple/require 'init-file)        ;;文件操作
+(maple/require 'init-window)
 
 (when *develop*
   (maple/require 'init-flycheck)
   (maple/require 'init-company)
-
   (maple/require 'init-git)
-
   (maple/require 'init-shell) ;;shell
   (maple/require 'init-web)
   (maple/require 'init-python)
@@ -105,5 +97,4 @@
 ;;   (load custom-file))
 
 (provide 'init)
-
 ;;; init.el ends here

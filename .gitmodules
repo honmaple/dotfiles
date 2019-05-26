@@ -25,3 +25,6 @@
 [submodule "emacs.d/site-lisp/maple-xpm"]
 	path = emacs.d/site-lisp/maple-xpm
 	url = git@github.com:honmaple/emacs-maple-xpm.git
+[submodule "emacs.d/site-lisp/maple-tabbar"]
+	path = emacs.d/site-lisp/maple-tabbar
+	url = git@github.com:honmaple/emacs-maple-tabbar.git

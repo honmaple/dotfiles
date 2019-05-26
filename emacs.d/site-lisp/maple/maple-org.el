@@ -49,6 +49,7 @@
     ("nr" "阅读"
      entry (file+headline "~/org-mode/notes.org" "阅读")
      "*  %?               :Book:\n  %T\n %i\n"
+
      :empty-lines 1)
     ("b" "博客"
      entry (file+headline "~/org-mode/blog.org" "博客")
@@ -112,11 +113,9 @@
                           (format "~/git/pelican/content/images/%s-%s.png" basename (format-time-string "%Y%m%d_%H%M%S")))))
     (if (file-exists-p blog-image-path)
         (message "the path '%s' already exists!" blog-image-path)
-      (progn
-        (shell-command
-         (format "scrot -s %s" blog-image-path))
-        (maple/insert-org-or-md-img-link blog-image-path basename)))
-    )
+      (shell-command
+       (format "scrot -s %s" blog-image-path))
+      (maple/insert-org-or-md-img-link blog-image-path basename)))
   (insert "\n"))
 
 (defun maple/org-md-export-to-markdown (&optional directory)

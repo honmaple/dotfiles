@@ -5,7 +5,7 @@ install:
 	@$(EMACS) --load $(INITFILE)
 
 clean:
-	@rm cache/autoload.el*
+	@rm ~/.emacs.d/cache/autoloads.pkg.el*
 
 upgrade:
 	@$(EMACS) --load $(INITFILE) --eval '(maple-package-upgrade)'

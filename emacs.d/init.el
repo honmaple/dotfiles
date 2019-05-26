@@ -34,7 +34,7 @@
   (defvar *develop* t)
 
   (setq user-full-name "jianglin"
-        user-default-theme 'monokai
+        user-default-theme 'doom-one
         user-mail-address "mail@honmaple.com"
         gc-cons-threshold (* 256 1024 1024)
         gc-cons-percentage 0.6
@@ -72,14 +72,14 @@
   (maple/require 'init-flycheck)
   (maple/require 'init-company)
   (maple/require 'init-git)
-  (maple/require 'init-shell) ;;shell
+  (maple/require 'init-shell)     ;;shell
   (maple/require 'init-web)
   (maple/require 'init-python)
   (maple/require 'init-go)
   (maple/require 'init-lua)
   (maple/require 'init-c)
   (maple/require 'init-sql)
-  (maple/require 'init-text) ;; markdown rst
+  (maple/require 'init-text)      ;; markdown rst
   (maple/require 'init-org)
   (maple/require 'init-tool))
 

@@ -119,6 +119,9 @@
   :config
   (setq coffee-tab-width 4))
 
+(use-package npm-mode
+  :hook (js2-mode . npm-mode))
+
 (provide 'init-web)
 
 ;;; init-web.el ends here

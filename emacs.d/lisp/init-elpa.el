@@ -29,10 +29,15 @@
 ;;                          ("org"   . "https://orgmode.org/elpa/")
 ;;                          ("gnu"   . "https://elpa.gnu.org/packages/")))
 
-(setq package-archives '(("gnu"   . "https://elpa.emacs-china.org/gnu/")
-                         ("melpa" . "https://elpa.emacs-china.org/melpa/")
-                         ("org"   . "https://elpa.emacs-china.org/org/")
-                         ("melpa-stable" . "https://elpa.emacs-china.org/melpa-stable/"))
+;; (setq package-archives '(("gnu"   . "https://elpa.emacs-china.org/gnu/")
+;;                          ("melpa" . "https://elpa.emacs-china.org/melpa/")
+;;                          ("org"   . "https://elpa.emacs-china.org/org/")
+;;                          ("melpa-stable" . "https://elpa.emacs-china.org/melpa-stable/")))
+
+(setq package-archives '(("gnu"   . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                         ("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+                         ("org"   . "https://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+                         ("melpa-stable" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/"))
       package-enable-at-startup nil
       package--init-file-ensured t)
 

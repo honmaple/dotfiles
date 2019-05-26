@@ -60,13 +60,13 @@
 ;; (when (not (display-graphic-p))
 ;;   (setq interprogram-paste-function 'x-cut-buffer-or-selection-value))
 
-;; important for golden-ratio to better work
 (setq-default tab-width 4
               major-mode 'conf-mode
               fill-column 80
               case-fold-search t
               column-number-mode t
               ;; delete-selection-mode t ;;粘贴删除选中区域
+              cursor-in-non-selected-windows nil
               indent-tabs-mode nil
               make-backup-files nil ;;禁止生成类似init.el~文件
               save-interprogram-paste-before-kill t

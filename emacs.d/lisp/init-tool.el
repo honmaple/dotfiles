@@ -107,5 +107,9 @@
   :ensure nil
   :commands (maple-echoarea-enable maple-echoarea-disable))
 
+(use-package maple-tabbar
+  :ensure nil
+  :commands (maple-tabbar-mode))
+
 (provide 'init-tool)
 ;;; init-tool.el ends here

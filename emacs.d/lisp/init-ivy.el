@@ -64,8 +64,7 @@
         ivy-format-function 'maple/ivy-format-function
         ;; fuzzy match
         ivy-re-builders-alist
-        '((counsel-ag . ivy--regex-plus)
-          (t . ivy--regex-ignore-order)))
+        '((t . ivy--regex-ignore-order)))
 
   ;; custom ivy display function
   (advice-add 'ivy-read :around #'maple/ivy-read-around)

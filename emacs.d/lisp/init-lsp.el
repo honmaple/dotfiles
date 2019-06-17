@@ -29,8 +29,11 @@
   :diminish lsp-mode
   :hook ((python-mode go-mode) . lsp)
   :config
-  (setq lsp-prefer-flymake nil
-        lsp-auto-guess-root t)
+  (setq lsp-auto-guess-root t
+        lsp-prefer-flymake :none
+        lsp-restart 'ignore
+        lsp-enable-symbol-highlighting nil
+        lsp-session-file (concat maple-cache-directory "lsp-session-v1"))
 
   ;; pip install python-language-server
   (use-package lsp-pyls
@@ -42,6 +45,7 @@
           lsp-clients-python-library-directories '("/usr/" "~/repo/python/lib/python3.7/")))
 
   ;; go get -u github.com/sourcegraph/go-langserver
+  ;; go get -u golang.org/x/tools/cmd/gopls
   (use-package lsp-go
     :ensure nil)
 
@@ -53,19 +57,15 @@
   :hook (lsp-mode . lsp-ui-mode)
   :config
   (setq lsp-ui-doc-enable t
-        lsp-ui-doc-header t
-        lsp-ui-doc-include-signature t
+        lsp-ui-imenu-enable nil
         lsp-ui-sideline-enable nil
         lsp-ui-sideline-ignore-duplicate t)
-  (fset 'lsp-ui-flycheck-enable 'ignore)
   :custom-face
   (lsp-ui-doc-background ((t (:background nil))))
-  (lsp-ui-doc-header ((t (:inherit (font-lock-string-face italic)))))
   :bind
   (:map lsp-ui-mode-map
         ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
         ([remap xref-find-references] . lsp-ui-peek-find-references)))
 
 (provide 'init-lsp)
-
 ;;; init-lsp.el ends here

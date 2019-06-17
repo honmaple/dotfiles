@@ -25,10 +25,9 @@
 
 ;;; Code:
 
-;;默认分屏
 (use-package window
   :ensure nil
-  :init (setq split-width-threshold 1))
+  :init (setq split-width-threshold 100))
 
 (use-package winner
   :ensure nil

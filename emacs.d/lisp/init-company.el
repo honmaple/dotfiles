@@ -24,6 +24,7 @@
 ;;
 
 ;;; Code:
+(eval-when-compile (require 'init-basic))
 
 (use-package yasnippet
   :diminish yas-minor-mode
@@ -34,7 +35,7 @@
   (use-package yasnippet-snippets))
 
 (use-package company
-  :diminish company-mode " ⓐ"
+  :diminish company-mode
   :hook (maple-init . global-company-mode)
   :config
   (setq company-idle-delay 0.1
@@ -89,16 +90,37 @@
               ("<tab>" . company-complete-common-or-cycle)
               ("<RET>" . company-complete-selection)))
 
-
 (use-package company-statistics
   :hook (company-mode . company-statistics-mode)
   :config
   (setq company-statistics-file (concat maple-cache-directory "company-statistics.el")))
 
+(use-package company-box
+  :if (and (display-graphic-p) *icon*)
+  :hook (company-mode . company-box-mode)
+  :config
+  (setq company-box-backends-colors nil
+        company-box-show-single-candidate t
+        company-box-max-candidates 50
+        company-box-doc-delay 0.5
+        company-box-icons-alist 'company-box-icons-all-the-icons)
+
+  (defun company-box-icons--elisp (candidate)
+    (when (derived-mode-p 'emacs-lisp-mode)
+      (let ((sym (intern candidate)))
+        (cond ((fboundp sym) 'Function)
+              ((featurep sym) 'Module)
+              ((facep sym) 'Color)
+              ((boundp sym) 'Variable)
+              (t  'Unknown)))))
+
+  (defun company-box-icons--yasnippet (candidate)
+    (when (get-text-property 0 'yas-annotation candidate)
+      'Snippet)))
+
 (use-package company-quickhelp
   :disabled
   :if (display-graphic-p)
-  :commands company-quickhelp-manual-begin
   :hook (company-mode . company-quickhelp-mode)
   :config
   (setq company-quickhelp-delay 1))

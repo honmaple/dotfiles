@@ -28,3 +28,6 @@
 [submodule "emacs.d/site-lisp/maple-tabbar"]
 	path = emacs.d/site-lisp/maple-tabbar
 	url = git@github.com:honmaple/emacs-maple-tabbar.git
+[submodule "emacs.d/site-lisp/maple-line"]
+	path = emacs.d/site-lisp/maple-line
+	url = git@github.com:honmaple/emacs-maple-line.git

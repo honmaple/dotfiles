@@ -29,12 +29,12 @@
 (eval-and-compile
   (defvar user-handler-alist file-name-handler-alist)
   (defvar user-default-theme nil)
-  (defvar *lsp* nil)
+  (defvar *lsp* t)
   (defvar *icon* t)
   (defvar *develop* t)
 
   (setq user-full-name "jianglin"
-        user-default-theme 'doom-one
+        user-default-theme 'monokai
         user-mail-address "mail@honmaple.com"
         gc-cons-threshold (* 256 1024 1024)
         gc-cons-percentage 0.6

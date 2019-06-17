@@ -45,6 +45,7 @@
     :hook (go-mode . go-eldoc-setup))
 
   (use-package company-go
+    :unless *lsp*
     :functions maple/company-backend
     :init (maple/company-backend 'go-mode-hook '(company-go company-keywords)))
 
@@ -59,14 +60,12 @@
                                        imenu-auto-rescan-maxout))
            (items (imenu--make-index-alist t))
            (items (delete (assoc "*Rescan*" items) items)))
-      (cl-mapcan
-       (lambda(item)
-         (cl-mapcan
-          (if (string= (car item) "func")
-              'maple/go-func-comment
-            'maple/go-type-comment)
-          (cdr item)))
-       items)))
+      (dolist (item items)
+        (cl-mapcan
+         (if (string= (car item) "func")
+             'maple/go-func-comment
+           'maple/go-type-comment)
+         (cdr item)))))
 
   (defun maple/go-add-comment(func point)
     (save-excursion

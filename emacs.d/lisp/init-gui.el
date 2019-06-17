@@ -39,15 +39,15 @@
   ;; 关闭工具栏
   (when (featurep 'tool-bar) (tool-bar-mode -1))
   ;; 关闭菜单栏
-  (when (featurep 'menu-bar) (menu-bar-mode -1))
+  (when (featurep 'menu-bar) (menu-bar-mode -1)))
 
-  (fset 'yes-or-no-p 'y-or-n-p)
-  (fset 'display-startup-echo-area-message 'ignore)
-  (setq inhibit-startup-screen t
-        inhibit-compacting-font-caches t
-        inhibit-startup-echo-area-message user-full-name
-        initial-major-mode 'fundamental-mode
-        initial-scratch-message ""))
+(fset 'yes-or-no-p 'y-or-n-p)
+(fset 'display-startup-echo-area-message 'ignore)
+(setq inhibit-startup-screen t
+      inhibit-compacting-font-caches t
+      inhibit-startup-echo-area-message user-full-name
+      initial-major-mode 'fundamental-mode
+      initial-scratch-message "")
 
 (setq use-file-dialog nil
       use-dialog-box nil
@@ -56,7 +56,11 @@
       transient-mark-mode nil
       create-lockfiles nil
       backup-directory-alist `(("." . ,(concat maple-cache-directory "auto-save")))
-      select-enable-clipboard t) ;;激活粘贴板
+      select-enable-clipboard t ;;激活粘贴板
+      frame-title-format
+      '("Happy Hacking - Emacs ♥ You" " "
+        (:eval (if (buffer-file-name)
+                   (abbreviate-file-name (buffer-file-name)) "%b"))))
 ;; (when (not (display-graphic-p))
 ;;   (setq interprogram-paste-function 'x-cut-buffer-or-selection-value))
 
@@ -77,11 +81,7 @@
               truncate-partial-width-windows nil
               ad-redefinition-action 'accept)
 
-(setq frame-title-format
-      '("GNU Emacs " emacs-version " "
-        (:eval (if (buffer-file-name)
-                   (abbreviate-file-name (buffer-file-name))
-                 "%b"))))
+
 
 (setq mouse-yank-at-point t
       mouse-wheel-scroll-amount '(1 ((shift) . 1))

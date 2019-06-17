@@ -105,11 +105,15 @@
 
 (use-package maple-echoarea
   :ensure nil
-  :commands (maple-echoarea-enable maple-echoarea-disable))
+  :commands (maple-echoarea-mode))
 
 (use-package maple-tabbar
   :ensure nil
   :commands (maple-tabbar-mode))
+
+(use-package maple-line
+  :ensure nil
+  :commands (maple-line-mode))
 
 (provide 'init-tool)
 ;;; init-tool.el ends here

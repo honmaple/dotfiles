@@ -117,6 +117,12 @@
   :bind (:map query-replace-map
               ([return] . 'automatic)))
 
+(use-package wgrep
+  :config
+  (setq wgrep-auto-save-buffer t)
+  :bind (:map wgrep-mode-map
+              ("C-c C-c" . wgrep-finish-edit)))
+
 (use-package projectile
   :diminish projectile-mode "ⓟ"
   :hook (maple-init . projectile-mode)

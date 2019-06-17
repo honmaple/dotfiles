@@ -19,7 +19,7 @@
   (use-package transient
     :config
     (transient-bind-q-to-quit)
-    (setq transient-mode-line-format mode-line-format))
+    (setq transient-mode-line-format nil))
 
   (with-eval-after-load 'fullframe
     (fullframe magit-status magit-mode-quit-window))

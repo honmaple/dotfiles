@@ -32,12 +32,6 @@
   :config
   (setq smex-save-file (concat maple-cache-directory "smex-items")))
 
-(use-package wgrep
-  :config
-  (setq wgrep-auto-save-buffer t)
-  :bind (:map wgrep-mode-map
-              ("C-c C-c" . wgrep-finish-edit)))
-
 (use-package ivy
   :diminish (ivy-mode)
   :hook (maple-init . ivy-mode)
@@ -60,30 +54,38 @@
         ivy-use-virtual-buffers nil
         ivy-virtual-abbreviate 'full
         ;; ivy display
-        ivy-count-format ""
-        ivy-format-function 'maple/ivy-format-function
+        ivy-format-functions-alist
+        '((t . maple/ivy-format-function))
         ;; fuzzy match
         ivy-re-builders-alist
         '((t . ivy--regex-ignore-order)))
 
+  ;; (defun maple/ivy-set-display-transformer (cmd transformer)
+  ;;   "Advice ivy-set-display-transformer with `CMD` and `TRANSFORMER`."
+  ;;   (let* ((tf (plist-get ivy--display-transformers-list cmd))
+  ;;          (tf (if tf `(lambda(str) (,transformer (,tf str))) transformer)))
+  ;;     (setq ivy--display-transformers-list
+  ;;           (plist-put ivy--display-transformers-list cmd tf))))
+
+  ;; (advice-add 'ivy-set-display-transformer :override #'maple/ivy-set-display-transformer)
+
   ;; custom ivy display function
-  (advice-add 'ivy-read :around #'maple/ivy-read-around)
+  (defvar ivy-format-padding nil)
 
-  (defvar maple/ivy-format-padding nil)
+  (defun maple/ivy-read-before (&rest args)
+    "Advice ivy-read with `ARGS`."
+    (setq ivy-format-padding (make-string (window-left-column) ?\s)
+          ivy-count-format (concat ivy-format-padding "(%d/%d) ")))
 
-  (defun maple/ivy-read-around (-ivy-read &rest args)
-    "Advice ivy-read `-IVY-READ` `ARGS`."
-    (let ((maple/ivy-format-padding (make-string (window-left-column) ?\s)))
-      (setcar args (concat maple/ivy-format-padding (car args)))
-      (apply -ivy-read args)))
+  (advice-add 'ivy-read :before #'maple/ivy-read-before)
 
   (defun maple/ivy-format-function (cands)
     "Transform CANDS into a string for minibuffer."
     (ivy--format-function-generic
      (lambda (str)
-       (concat maple/ivy-format-padding (ivy--add-face str 'ivy-current-match)))
+       (concat ivy-format-padding (ivy--add-face str 'ivy-current-match)))
      (lambda (str)
-       (concat maple/ivy-format-padding str))
+       (concat ivy-format-padding str))
      cands "\n"))
 
   ;; complete or done
@@ -145,21 +147,9 @@
   (with-eval-after-load 'magit
     (setq magit-completing-read-function 'ivy-completing-read))
 
-  (use-package ivy-rich
-    :hook (ivy-mode . ivy-rich-mode)
-    :config
-    (setq ivy-rich-path-style 'abbrev
-          ivy-rich-switch-buffer-align-virtual-buffer t))
-
   (use-package ivy-xref
     :init
     (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
-
-  (use-package all-the-icons-ivy
-    :if (and (display-graphic-p) *icon*)
-    :hook (ivy-mode . all-the-icons-ivy-setup)
-    :config
-    (setq all-the-icons-spacer " "))
 
   :custom-face
   (ivy-highlight-face ((t (:background nil)))))
@@ -221,6 +211,36 @@
          ("C-c C-e" . maple/ivy-dired-occur)
          :map counsel-ag-map
          ("<tab>" . ivy-call)))
+
+(use-package ivy-rich
+  :hook (counsel-mode . ivy-rich-mode)
+  :config
+  (setq ivy-rich-path-style 'abbrev
+        ivy-rich-switch-buffer-align-virtual-buffer t)
+
+  (when (and (display-graphic-p) *icon*)
+    (use-package all-the-icons-ivy
+      :demand
+      :config
+      (setq all-the-icons-spacer " "))
+
+    (defun maple/ivy-rich-candidate (candidate)
+      "Advice ivy-rich-candidate with `CANDIDATE`."
+      (if (memq (ivy-state-caller ivy-last) '(ivy-switch-buffer counsel-recentf))
+          (all-the-icons-ivy-buffer-transformer candidate)
+        candidate))
+
+    (defun maple/ivy-read-file-transformer(candidate)
+      "Advice ivy-read-file-transformer with `CANDIDATE`."
+      (if (memq (ivy-state-caller ivy-last) all-the-icons-ivy-file-commands)
+          (all-the-icons-ivy-file-transformer
+           (if (ivy--dirname-p candidate)
+               (propertize candidate 'face 'ivy-subdir)
+             candidate))
+        candidate))
+
+    (advice-add 'ivy-rich-candidate :override #'maple/ivy-rich-candidate)
+    (advice-add 'ivy-read-file-transformer :override #'maple/ivy-read-file-transformer)))
 
 (use-package swiper
   :config

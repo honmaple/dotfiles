@@ -61,7 +61,7 @@
   :commands (maple-imenu)
   :config
   (maple/evil-map maple-imenu-mode-map)
-  (setq maple-imenu-display-alist '((side . left) (slot . -1))))
+  (setq maple-imenu-display-alist '((side . left) (slot . 1))))
 
 (use-package youdao-dictionary
   :config
@@ -114,6 +114,10 @@
 (use-package maple-line
   :ensure nil
   :commands (maple-line-mode))
+
+(use-package maple-env
+  :ensure nil
+  :hook (maple-init . maple-env-mode))
 
 (provide 'init-tool)
 ;;; init-tool.el ends here

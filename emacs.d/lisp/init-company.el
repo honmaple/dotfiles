@@ -96,6 +96,7 @@
   (setq company-statistics-file (concat maple-cache-directory "company-statistics.el")))
 
 (use-package company-box
+  :disabled
   :if (and (display-graphic-p) *icon*)
   :hook (company-mode . company-box-mode)
   :config

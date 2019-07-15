@@ -29,11 +29,27 @@
   :diminish lsp-mode
   :hook ((python-mode go-mode) . lsp)
   :config
-  (setq lsp-auto-guess-root t
-        lsp-prefer-flymake :none
+  (setq lsp-prefer-flymake :none
         lsp-restart 'ignore
+        lsp-enable-snippet nil
         lsp-enable-symbol-highlighting nil
         lsp-session-file (concat maple-cache-directory "lsp-session-v1"))
+
+  (defun maple/lsp-message(func &rest args)
+    (if (car args)
+        (let ((str (apply 'format-message args)))
+          (unless (string-match "\\(no identifier found\\|no object for ident\\)" str)
+            (funcall func str)))
+      (apply func args)))
+
+  (advice-add 'message :around 'maple/lsp-message)
+
+  (setq lsp-auto-guess-root t)
+
+  (defun maple/lsp--calculate-root(session file-name)
+    (ignore file-name)
+    (lsp--find-root-interactively session))
+  (advice-add 'lsp--calculate-root :after-until 'maple/lsp--calculate-root)
 
   ;; pip install python-language-server
   (use-package lsp-pyls
@@ -42,7 +58,11 @@
     (setq lsp-pyls-plugins-pycodestyle-enabled nil
           lsp-pyls-plugins-pyflakes-enabled nil
           lsp-pyls-configuration-sources ["flake8"]
-          lsp-clients-python-library-directories '("/usr/" "~/repo/python/lib/python3.7/")))
+          lsp-clients-python-library-directories '("/usr/" "~/repo/python/lib/python3.7/"))
+
+    (with-eval-after-load 'pyvenv
+      (add-hook 'pyvenv-post-activate-hooks 'lsp-restart-workspace)
+      (add-hook 'pyvenv-post-deactivate-hooks 'lsp-restart-workspace)))
 
   ;; go get -u github.com/sourcegraph/go-langserver
   ;; go get -u golang.org/x/tools/cmd/gopls
@@ -58,8 +78,7 @@
   :config
   (setq lsp-ui-doc-enable t
         lsp-ui-imenu-enable nil
-        lsp-ui-sideline-enable nil
-        lsp-ui-sideline-ignore-duplicate t)
+        lsp-ui-sideline-enable nil)
   :custom-face
   (lsp-ui-doc-background ((t (:background nil))))
   :bind

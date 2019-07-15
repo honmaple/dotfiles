@@ -1,79 +1,65 @@
-function! SetTitle()
-    "如果文件类型为.sh文件
-    if &filetype == 'sh'
-        call setline(1,"\#!/bin/bash")
-        call append(line("."), "")
-    elseif &filetype == 'markdown'
-        call setline(1,          "Title: ".expand("%"))
-        call append(line("."),   "Author: honmaple ")
-        call append(line(".")+1, "Date: ".strftime("%F"))
-        call append(line(".")+2, "Category: ")
-        call append(line(".")+3, "Tags: []")
-        call append(line(".")+4, "Slug: ".expand("%"))
-        call append(line(".")+5, "Summary: ")
-        call append(line(".")+6, "")
-    elseif &filetype == 'python' || &filetype == 'ruby'
-        if &filetype == 'python'
-            call setline(1,     "#!/usr/bin/env python")
-            call append(line("."),"# -*- coding=UTF-8 -*-")
-        elseif &filetype == 'ruby'
-            call setline(1,      "#!/usr/bin/env ruby")
-            call append(line("."),"# encoding: utf-8")
-        endif
-        call append(line(".")+1,  "#*************************************************************************")
-        call append(line(".")+2,  "# Copyright © 2015 JiangLin. All rights reserved.")
-        call append(line(".")+3,  "# File Name: ".expand("%"))
-        call append(line(".")+4,  "# Author:JiangLin ")
-        call append(line(".")+5,  "# Mail:xiyang0807@gmail.com ")
-        call append(line(".")+6,  "# Created Time: ".strftime("%F %T"))
-        call append(line(".")+7,  "# Last Update: ")
-        call append(line(".")+8,  "#          By: ")
-        call append(line(".")+9,  "# Description: ")
-        call append(line(".")+10,  "#*************************************************************************")
-        call append(line(".")+11, "")
+function! InsertHeader()
+    let number=0
+    let char=repeat('*', 79)
+    let message=[char,
+                \'Copyright © '.strftime('%Y'),
+                \'File Name: '.expand('%'),
+                \'Author: '.'honmaple',
+                \'Email: '.'mail@honmaple.com',
+                \'Created: '..strftime('%F %T (%Z)'),
+                \'Last Update: ',
+                \'         By: ',
+                \'Description: ',
+                \char]
+    let header=join(message, '\n')
+    let start = []
+    let end = []
+    let comment = '# '
+    let ext = expand('%:e')
+    let isblock = 0
+
+    if ext == 'py'
+        let start = ['#!/usr/bin/env python', '# -*- coding=UTF-8 -*-']
+    elseif ext == 'rb'
+        let start = ['#!/usr/bin/env ruby', '# encoding: utf-8']
+    elseif ext == 'sh'
+        let start = ['#!/bin/bash']
+    elseif ext == 'go'
+        let isblock = 1
+    elseif ext == 'c'
+        let isblock = 1
+        let end = ['#include<stdio.h>', '#include<string.h>']
+    elseif ext == 'cpp'
+        let isblock = 1
+        let end = ['#include<iostream>', 'using namespace std;']
     endif
 
-    if expand("%:e") == 'cpp' ||expand("%:e") == 'c' ||expand("%:e") == "h" ||expand("%:e") == 'asm'
-        call setline(1,          "/**************************************************************************")
-        call append(line("."),   "  Copyright © 2015 JiangLin. All rights reserved.")
-        call append(line(".")+1, "  File Name: ".expand("%"))
-        call append(line(".")+2, "  Author:JiangLin ")
-        call append(line(".")+3, "  Mail:xiyang0807@gmail.com ")
-        call append(line(".")+4, "  Created Time: ".strftime("%F %T"))
-        call append(line(".")+7, "  Last Update: ")
-        call append(line(".")+8, "           By: ")
-        call append(line(".")+9, "  Description: ")
-        call append(line(".")+10, "**************************************************************************/")
-        if expand("%:e") == 'h'
-            call append(line(".")+6, "#ifndef _".toupper(expand("%:r"))."_H")
-            call append(line(".")+7, "#define _".toupper(expand("%:r"))."_H")
-            call append(line(".")+8, "#endif")
-            call append(line(".")+9, "")
-        elseif expand("%:e") == 'c'
-            call append(line(".")+6, "#include<stdio.h>")
-            call append(line(".")+7, "#include<string.h>")
-            call append(line(".")+8, "")
-        elseif expand("%:e") == 'cpp'
-            call append(line(".")+6, "#include<iostream>")
-            call append(line(".")+7, "using namespace std;")
-            call append(line(".")+8, "")
-        elseif expand("%:e") == 'asm'
-            call append(line(".")+6, "")
-        endif
-    "elseif expand("%:e") == 'html' || expand("%:e") == 'xml' ||  expand("%:e") == 'xhtml'
-        "call setline(1, "<!--")
-        "call append(line("."),   "  Copyright © 2015 JiangLin. All rights reserved.")
-        "call append(line(".")+1, "  File Name: ".expand("%"))
-        "call append(line(".")+2, "  Author:JiangLin ")
-        "call append(line(".")+3, "  Mail:xiyang0807@gmail.com ")
-        "call append(line(".")+4, "  Created Time: ".strftime("%F %T"))
-        "call append(line(".")+5, "-->")
-        "call append(line(".")+6, "")
+    if isblock
+        let message[0] = '/' . message[0]
+        let message[-1] = message[-1] . '/'
+        let comment = ''
     endif
+
+    for m in start
+        call append(number, m)
+        let number += 1
+    endfor
+
+    for m in message
+        call append(number,comment . m)
+        let number += 1
+    endfor
+
+    for m in end
+        call append(number,m)
+        let number += 1
+    endfor
 endfunction
-autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.py,*.asm,*md exec ":call SetTitle()"
+
+autocmd BufNewFile *.cpp,*.[ch],*.go,*.sh,*.rb,*.py,*.asm,*md exec ":call InsertHeader()"
 "新建文件后，自动定位到文件末尾
 autocmd BufNewFile * normal G
+
 function! SetLastModifiedTime()
     let n=8
     while n < 11
@@ -85,7 +71,7 @@ function! SetLastModifiedTime()
         endif
         if line =~ '^\#\s*\S*Last\sUpdate:\S*.*$'
             normal m'
-            execute '/# *Last Update:/s@:.*$@\=strftime(": %F %T")@'
+            execute '/# *Last Update:/s@:.*$@\=strftime("%A %Y-%02m-%02d %02H:%02M:%02S (%Z)")@'
             normal ''
         endif
         if line =~ '^\#\s*\S*By:\S*.*$'

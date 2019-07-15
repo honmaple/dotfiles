@@ -30,7 +30,6 @@
 ;;; Code:
 
 (use-package go-mode
-  :mode "\\.go\\'"
   :config
   (setq gofmt-show-errors nil
         go-packages-function 'maple/go-packages-function)
@@ -40,8 +39,10 @@
     (sort (process-lines "gopkgs") #'string<))
 
   (use-package golint)
+  (use-package go-rename)
 
   (use-package go-eldoc
+    :unless *lsp*
     :hook (go-mode . go-eldoc-setup))
 
   (use-package company-go
@@ -92,7 +93,6 @@
   (:state normal :map go-mode-map
           ([f6] . gofmt)
           ("gd" . godef-jump)))
-
 
 (provide 'init-go)
 ;;; init-go.el ends here

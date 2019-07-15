@@ -31,3 +31,6 @@
 [submodule "emacs.d/site-lisp/maple-line"]
 	path = emacs.d/site-lisp/maple-line
 	url = git@github.com:honmaple/emacs-maple-line.git
+[submodule "emacs.d/site-lisp/maple-env"]
+	path = emacs.d/site-lisp/maple-env
+	url = git@github.com:honmaple/emacs-maple-env.git

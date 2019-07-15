@@ -222,11 +222,14 @@
     (use-package all-the-icons-ivy
       :demand
       :config
-      (setq all-the-icons-spacer " "))
+      (setq all-the-icons-spacer " "
+            all-the-icons-scale-factor 1.15))
+
+    (add-to-list 'all-the-icons-ivy-buffer-commands 'counsel-recentf)
 
     (defun maple/ivy-rich-candidate (candidate)
       "Advice ivy-rich-candidate with `CANDIDATE`."
-      (if (memq (ivy-state-caller ivy-last) '(ivy-switch-buffer counsel-recentf))
+      (if (memq (ivy-state-caller ivy-last) all-the-icons-ivy-buffer-commands)
           (all-the-icons-ivy-buffer-transformer candidate)
         candidate))
 
@@ -238,6 +241,10 @@
                (propertize candidate 'face 'ivy-subdir)
              candidate))
         candidate))
+
+    (with-eval-after-load 'projectile
+      (ivy-set-display-transformer
+       'projectile-completing-read 'all-the-icons-ivy-file-transformer))
 
     (advice-add 'ivy-rich-candidate :override #'maple/ivy-rich-candidate)
     (advice-add 'ivy-read-file-transformer :override #'maple/ivy-read-file-transformer)))

@@ -117,7 +117,18 @@
 
 (use-package maple-env
   :ensure nil
-  :hook (maple-init . maple-env-mode))
+  :hook (maple-init . maple-env-mode)
+  :config
+  (with-eval-after-load 'pyvenv
+    (add-hook 'pyvenv-post-activate-hooks 'maple-env-mode-on)
+    (add-hook 'pyvenv-post-deactivate-hooks 'maple-env-mode-on))
+
+  (setq maple-env:python-packages
+        '("flake8" "isort" "yapf" "python-language-server")
+        maple-env:golang-packages
+        '()
+        maple-env:npm-packages
+        '("js-beautify")))
 
 (provide 'init-tool)
 ;;; init-tool.el ends here

@@ -255,5 +255,20 @@
     (interactive)
     (maple/ivy-search-at-point 'swiper)))
 
+(use-package ivy-posframe
+  :disabled
+  :hook (ivy-mode . ivy-posframe-mode)
+  :config
+  (defun ivy-posframe-get-size ()
+    (list
+     :height (or ivy-posframe-height (+ ivy-height 1))
+     :width (or ivy-posframe-width (window-pixel-width))))
+
+  (setq ivy-posframe-style 'window-bottom-left
+        ivy-posframe-parameters
+        '((left-fringe . 5)
+          (right-fringe . 5)
+          (minibuffer . only))))
+
 (provide 'init-ivy)
 ;;; init-ivy.el ends here

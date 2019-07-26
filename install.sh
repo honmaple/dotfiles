@@ -5,7 +5,7 @@
 #Author: jianglin
 #Email: mail@honmaple.com
 #Created: 2016-06-21 14:38:53 (CST)
-#Last Update: Friday 2019-03-22 10:54:44 (CST)
+#Last Update: Wednesday 2019-07-17 16:07:02 (CST)
 #          By:
 #Description:
 #**************************************************************************/
@@ -57,6 +57,7 @@ install i3 $HOME/.i3
 install bashrc $HOME/.bashrc
 install codeblocks $HOME/.codeblocks
 install fonts $HOME/.local/share/fonts
+install yapf $HOME/.config/yapf
 
 # for location in $(find home -name '.*'); do
 #   file="${location##*/}"

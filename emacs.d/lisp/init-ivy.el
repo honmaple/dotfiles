@@ -51,6 +51,7 @@
         ;; disable magic slash on non-match
         ;; ~ to /home/user
         ivy-magic-tilde t
+        ivy-magic-slash-non-match-action nil
         ivy-use-virtual-buffers nil
         ivy-virtual-abbreviate 'full
         ;; ivy display

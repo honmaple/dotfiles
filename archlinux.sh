@@ -5,7 +5,7 @@
 # Author: jianglin
 # Email: mail@honmaple.com
 # Created: 2019-08-01 11:44:49 (CST)
-# Last Update: Thursday 2019-08-01 15:45:49 (CST)
+# Last Update: Thursday 2019-08-01 16:32:51 (CST)
 #          By:
 # Description:
 # ********************************************************************************
@@ -85,61 +85,24 @@ conf_base(){
 
     export -f yes_or_no
     export -f conf_chroot
-    export -f conf_i3
+    export -f conf_desktop
+    export -f conf_vbox
     export -f conf_hostname
     export -f conf_user
     export -f conf_grub
 
     cat <<EOF >/mnt/root/setup
 conf_chroot
-conf_i3
 conf_hostname
 conf_user
+conf_desktop
+conf_vbox
 conf_grub
+conf_other
 exit
 EOF
     chmod 0755 /mnt/root/setup
     arch-chroot /mnt /root/setup
-}
-
-conf_i3(){
-    pacman -S vim sudo wqy-microhei
-    if $(yes_or_no "Whether install i3wm");then
-        pacman -S xorg-server xf86-video-vesa xorg-xinit
-        pacman -S i3-wm py3status i3status feh dmenu
-    fi
-}
-
-conf_hostname(){
-    echo "Configure hostname"
-    read -p "Input hostname: " HOST
-    echo "$HOST" > /etc/hostname
-    echo "127.0.0.1 $h.localdomain $HOST" >> /etc/hosts
-    cat /etc/hosts
-    if $(yes_or_no "Whether edit /etc/hosts"); then
-        vi /etc/hosts
-    fi
-}
-
-conf_user(){
-    echo "Configure user"
-    passwd
-    if $(yes_or_no "Whether add new user"); then
-        read -p "Add new user for: " USERNAME
-        useradd -m -g users -s /bin/bash $USERNAME
-        passwd $USERNAME
-    fi
-}
-
-conf_grub(){
-    echo "Configure grub"
-    pacman -S grub
-    fdisk -l
-    read -p "Input dest sdx: " SDX
-    SDX="${SDX:-/dev/sda}"
-
-    grub-install --target=i386-pc $SDX
-    grub-mkconfig -o /boot/grub/grub.cfg
 }
 
 conf_chroot() {
@@ -164,6 +127,74 @@ conf_chroot() {
         echo 'LANG=en_US.UTF-8'  > /etc/locale.conf
     fi
     locale-gen
+}
+
+conf_hostname(){
+    echo "Configure hostname"
+    read -p "Input hostname: " HOST
+    echo "$HOST" > /etc/hostname
+    echo "127.0.0.1 localhost" >> /etc/hosts
+    echo "::1       localhost" >> /etc/hosts
+    echo "127.0.0.1 $HOST.localdomain $HOST" >> /etc/hosts
+    cat /etc/hosts
+    if $(yes_or_no "Whether edit /etc/hosts"); then
+        vi /etc/hosts
+    fi
+}
+
+conf_user(){
+    echo "Configure user"
+    passwd
+    if $(yes_or_no "Whether add new user"); then
+        read -p "Add new user for: " USERNAME
+        useradd -m -g users -s /bin/bash $USERNAME
+        passwd $USERNAME
+    fi
+}
+
+conf_desktop(){
+    echo "Configure desktop"
+    if $(yes_or_no "Whether install i3wm");then
+        pacman -S xorg-server xf86-video-vesa xorg-xinit
+        pacman -S i3-wm py3status i3status feh dmenu dunst
+    fi
+    pacman -S emacs sudo git the_silver_searcher
+    pacman -S lxappearance lxterminal
+    pacman -S xcompmgr sl screenfetch htop
+    pacman -S netease-cloud-music google-chrome filezilla gimp
+    pacman -S fortune-mod-zh wqy-microhei fcitx fcitx-sunpinyin fcitx-cloudpinyin fcitx-configtool
+    pacman -S ttf-inconsolata ttf-font-awesome deepin-icon-theme
+}
+
+conf_vbox(){
+    if $(yes_or_no "Whether install vbox support");then
+        if $(yes_or_no "Whether install X support");then
+            pacman -S virtualbox-guest-utils
+        else
+            pacman -S virtualbox-guest-utils-nox
+        fi
+        systemctl enable dhcpcd
+        systemctl enable vboxservice
+    fi
+}
+
+conf_other(){
+    if $(yes_or_no "Whether Configure others within chroot"); then
+        echo "Use exit to exit bash"
+        bash
+        echo "Now is normal chroot bash"
+    fi
+}
+
+conf_grub(){
+    echo "Configure grub"
+    pacman -S grub
+    fdisk -l
+    read -p "Input dest disk [/dev/sda]: " SDX
+    SDX="${SDX:-/dev/sda}"
+
+    grub-install --target=i386-pc $SDX
+    grub-mkconfig -o /boot/grub/grub.cfg
 }
 
 main(){

@@ -5,11 +5,11 @@
 # Author: jianglin
 # Email: mail@honmaple.com
 # Created: 2019-08-01 11:44:49 (CST)
-# Last Update: Thursday 2019-08-01 16:32:51 (CST)
+# Last Update: Friday 2019-08-02 21:05:55 (CST)
 #          By:
 # Description:
 # ********************************************************************************
-EXIT=1
+PACMAN="pacman"
 
 yes_or_no(){
     local m="$1"
@@ -158,12 +158,12 @@ conf_desktop(){
         pacman -S xorg-server xf86-video-vesa xorg-xinit
         pacman -S i3-wm py3status i3status feh dmenu dunst
     fi
-    pacman -S emacs sudo git the_silver_searcher
+    pacman -S emacs sudo git the_silver_searcher bash-completion
     pacman -S lxappearance lxterminal
     pacman -S xcompmgr sl screenfetch htop
     pacman -S netease-cloud-music google-chrome filezilla gimp
     pacman -S fortune-mod-zh wqy-microhei fcitx fcitx-sunpinyin fcitx-cloudpinyin fcitx-configtool
-    pacman -S ttf-inconsolata ttf-font-awesome deepin-icon-theme
+    pacman -S ttf-inconsolata ttf-font-awesome deepin-icon-theme deepin-gtk-theme
 }
 
 conf_vbox(){
@@ -197,18 +197,82 @@ conf_grub(){
     grub-mkconfig -o /boot/grub/grub.cfg
 }
 
+conf_dotfiles(){
+    if $(yes_or_no "Whether configure from github.com/honmaple/dotfiles"); then
+        if [ ! -f "/bin/git" ];then
+            $PACMAN -S git
+        fi
+
+        local dir="$PWD/dotfiles"
+        read -p "Input dest directory [$dir]: " DIR
+        DIR="${DIR:-$dir}"
+
+        if [ ! -d "$DIR" ];then
+            git clone https://github.com/honmaple/dotfiles $DIR
+        fi
+
+        local dirs=("script  $HOME/.script"
+                    "emacs.d $HOME/.emacs.d"
+                    "vim     $HOME/.vim"
+                    "moc     $HOME/.moc"
+                    "i3      $HOME/.config/i3"
+                    "yapf    $HOME/.config/yapf"
+                    "fonts   $HOME/.local/share/fonts"
+                    "bashrc  $HOME/.bashrc"
+                    "xinitrc $HOME/.xinitrc"
+                    "inputrc $HOME/.inputrc"
+                    "Xmodmap $HOME/.Xmodmap")
+        for dir in "${dirs[@]}";do
+            local dir=($dir)
+            local from="$DIR/${dir[0]}"
+            local to="${dir[1]}"
+            if $(yes_or_no "Linking $from to $to");then
+                ln -s "$from" "$to"
+            fi
+        done
+    fi
+}
+
 main(){
-    conf_network
-    conf_time
-    conf_mirror
-    conf_partition
-    conf_mount
-    conf_base
-    conf_unmount
+    if $(yes_or_no "Whether install archlinux"); then
+        conf_network
+        conf_time
+        conf_mirror
+        conf_partition
+        conf_mount
+        conf_base
+        conf_unmount
+    fi
 
     if $(yes_or_no "Whether reboot");then
         reboot
     fi
 }
 
-main
+conf(){
+    if $(yes_or_no "Whether use sudo"); then
+        PACMAN="sudo pacman"
+    fi
+
+    if $(yes_or_no "Whether configure archlinux"); then
+        conf_desktop
+        conf_dotfiles
+    fi
+}
+
+usage(){
+    echo -e "install:\n\tsh archlinux.sh install"
+    echo -e "configure:\n\tsh archlinux.sh config"
+}
+
+case "$1" in
+    install)
+        main
+        ;;
+    config)
+        conf
+        ;;
+    *)
+        usage
+        ;;
+esac

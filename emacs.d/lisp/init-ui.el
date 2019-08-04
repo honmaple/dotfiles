@@ -97,14 +97,17 @@
 ;;         spaceline-highlight-face-func 'spaceline-highlight-face-evil-state))
 
 (use-package hydra
-  :config
-  (use-package maple-theme
-    :ensure nil
-    :commands (maple-theme/switch/body)
-    :config
-    (defhydra maple-theme/switch ()
-      ("n" maple-theme/next "next theme")
-      ("p" maple-theme/previous "prev theme"))))
+  :custom-face
+  (hydra-face-red ((t (:foreground "chocolate" :weight bold)))))
+
+(use-package maple-theme
+  :ensure nil
+  :commands (maple-theme/switch/body)
+  :hydra
+  (maple-theme/switch
+   ()
+   ("n" maple-theme/next "next theme")
+   ("p" maple-theme/previous "prev theme")))
 
 (use-package which-key
   :diminish which-key-mode

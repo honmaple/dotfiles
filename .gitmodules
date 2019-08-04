@@ -34,3 +34,6 @@
 [submodule "emacs.d/site-lisp/maple-env"]
 	path = emacs.d/site-lisp/maple-env
 	url = git@github.com:honmaple/emacs-maple-env.git
+[submodule "emacs.d/site-lisp/maple-iedit"]
+	path = emacs.d/site-lisp/maple-iedit
+	url = git@github.com:honmaple/emacs-maple-iedit.git

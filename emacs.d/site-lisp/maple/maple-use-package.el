@@ -52,10 +52,12 @@
 (add-to-list 'use-package-keywords :evil-bind t)
 (add-to-list 'use-package-keywords :evil-leader t)
 (add-to-list 'use-package-keywords :evil-state t)
+(add-to-list 'use-package-keywords :hydra t)
 
 (defalias 'use-package-normalize/:evil-bind 'use-package-normalize-forms)
 (defalias 'use-package-normalize/:evil-leader 'use-package-normalize-forms)
 (defalias 'use-package-normalize/:evil-state 'use-package-normalize-forms)
+(defalias 'use-package-normalize/:hydra 'use-package-normalize-forms)
 
 (defun maple-use-package/plist-get (plist prop)
   "Get the values associated PLIST to PROP, a modified plist."
@@ -72,27 +74,32 @@
     (pop tail)
     (while (and (consp tail) (not (keywordp (car tail))))
       (push (pop tail) result))
-    ;; maybe define prop multi times
-    (if tail
-        (append (list (nreverse common) (nreverse result))
-                (maple-use-package/plist-get tail prop))
-      (cl-remove-if nil (list (nreverse common) (nreverse result))))))
+    (append (cl-remove-if nil (list (nreverse common) (nreverse result)))
+            ;; maybe define prop multi times
+            (when tail (maple-use-package/plist-get tail prop)))))
 
 (defun maple-use-package/evil-state(args)
   "Evil bind ARGS."
   `((evil-set-initial-state ',(car args) ',(cdr args))))
 
-(defun maple-use-package/mode-custom(args)
+(defun maple-use-package/hydra(args)
+  "Evil bind ARGS."
+  `((defhydra ,@args)))
+
+(defun maple-use-package/custom-keyword(args)
   "Custom variable with ARGS."
-  (when (not (featurep 'mode-local))
-    (require 'mode-local))
-  (cl-loop for arg in (maple-use-package/plist-get args :mode) collect
-           `(setq-mode-local ,(car arg) ,@(cdr arg))))
+  (pcase (car args)
+    (:default `((setq-default ,@(cdr args))))
+    (:mode (unless (featurep 'mode-local)
+             (require 'mode-local))
+           (cl-loop for arg in (maple-use-package/plist-get args :mode) collect
+                    `(setq-mode-local ,(car arg) ,@(cdr arg))))
+    (:face `((custom-set-faces ,@(cdr args))))))
 
 (defun maple-use-package/custom(args)
   "Custom variable with ARGS."
   (if (keywordp (car args))
-      (maple-use-package/mode-custom args)
+      (maple-use-package/custom-keyword args)
     (let ((variable (nth 0 args))
           (value (nth 1 args))
           (comment (nth 2 args)))
@@ -125,6 +132,13 @@
   "NAME KEYWORD ARGS REST STATE."
   (use-package-concat
    (mapcan 'maple-use-package/custom args)
+   (use-package-process-keywords name rest state)))
+
+(defun use-package-handler/:hydra (name _keyword args rest state)
+  "NAME KEYWORD ARGS REST STATE."
+  (use-package-concat
+   `((with-eval-after-load 'hydra
+       ,@(mapcan 'maple-use-package/hydra args)))
    (use-package-process-keywords name rest state)))
 
 (provide 'maple-use-package)

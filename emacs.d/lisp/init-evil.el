@@ -69,44 +69,32 @@ the current state and point position."
     (evil-escape))
 
   (use-package evil-numbers
-    :bind
-    (:map evil-normal-state-map
-          ("+" . evil-numbers/inc-at-pt)
-          ("-" . evil-numbers/dec-at-pt)))
+    :bind (:map evil-normal-state-map
+                ("+" . evil-numbers/inc-at-pt)
+                ("-" . evil-numbers/dec-at-pt)))
 
   (use-package expand-region
     :bind (:map evil-visual-state-map
                 ("v" . er/expand-region)
                 ("V" . er/contract-region)))
 
-
-  (use-package evil-multiedit
+  (use-package maple-iedit
     :ensure nil
-    :commands (evil-multiedit-match-all evil-multiedit-match-and-next evil-multiedit-match-and-prev)
-    :config
-    (use-package iedit
-      :config
-      (maple/add-hook 'iedit-mode-hook
-        (setq case-fold-search nil)))
-
-    (setq evil-multiedit-follow-matches t
-          evil-multiedit-state-cursor '(box "firebrick1"))
-    (defhydra maple/evil-multiedit ()
-      ("n" evil-multiedit-match-and-next "next")
-      ("t" evil-multiedit-skip-and-match-next "skip and next")
-      ("p" evil-multiedit-match-and-prev "prev"))
+    :commands (maple-iedit-match-all maple-iedit-match-next maple-iedit-match-previous)
+    :hydra
+    (maple/iedit
+     ()
+     ("n" maple-iedit-match-next "next")
+     ("t" maple-iedit-skip-and-match-next "skip and next")
+     ("T" maple-iedit-skip-and-match-previous "skip and previous")
+     ("p" maple-iedit-match-previous "prev"))
     :custom-face
     (iedit-occurrence ((t (:background "chocolate" :foreground "#272822"))))
-    (hydra-face-red ((t (:foreground "chocolate" :weight bold))))
     :bind (:map evil-visual-state-map
-                ("n" . maple/evil-multiedit/body)
-                ("C-n" . evil-multiedit-match-and-next)
-                ("C-p" . evil-multiedit-match-and-prev)
-                ("C-t" . evil-multiedit-skip-and-match-next)
-                :map evil-multiedit-state-map
-                ("C-n" . evil-multiedit-match-and-next)
-                ("C-p" . evil-multiedit-match-and-prev)
-                ("C-t" . evil-multiedit-skip-and-match-next)))
+                ("n" . maple/iedit/body)
+                ("C-n" . maple-iedit-match-next)
+                ("C-p" . maple-iedit-match-previous)
+                ("C-t" . maple-iedit-skip-and-match-next)))
 
   :custom-face
   (region ((t (:background "#66d9ef" :foreground "#272822"))))

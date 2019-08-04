@@ -51,7 +51,7 @@
   "u"  'undo-tree-visualize
   "'" 'shell-pop
   "=" 'maple/indent-buffer
-  "se" 'evil-multiedit-match-all
+  "se" 'maple-iedit-match-all
   "ss" 'anzu-query-replace-regexp
   "sd" 'delete-matching-lines
   "sD" 'delete-non-matching-lines

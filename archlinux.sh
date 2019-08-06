@@ -5,7 +5,7 @@
 # Author: jianglin
 # Email: mail@honmaple.com
 # Created: 2019-08-01 11:44:49 (CST)
-# Last Update: Friday 2019-08-02 21:05:55 (CST)
+# Last Update: Tuesday 2019-08-06 23:21:29 (CST)
 #          By:
 # Description:
 # ********************************************************************************
@@ -211,17 +211,18 @@ conf_dotfiles(){
             git clone https://github.com/honmaple/dotfiles $DIR
         fi
 
-        local dirs=("script  $HOME/.script"
-                    "emacs.d $HOME/.emacs.d"
-                    "vim     $HOME/.vim"
-                    "moc     $HOME/.moc"
-                    "i3      $HOME/.config/i3"
-                    "yapf    $HOME/.config/yapf"
-                    "fonts   $HOME/.local/share/fonts"
-                    "bashrc  $HOME/.bashrc"
-                    "xinitrc $HOME/.xinitrc"
-                    "inputrc $HOME/.inputrc"
-                    "Xmodmap $HOME/.Xmodmap")
+        local dirs=("script    $HOME/.script"
+                    "emacs.d   $HOME/.emacs.d"
+                    "vim       $HOME/.vim"
+                    "moc       $HOME/.moc"
+                    "i3        $HOME/.config/i3"
+                    "yapf      $HOME/.config/yapf"
+                    "fonts     $HOME/.local/share/fonts"
+                    "bashrc    $HOME/.bashrc"
+                    "xinitrc   $HOME/.xinitrc"
+                    "inputrc   $HOME/.inputrc"
+                    "Xmodmap   $HOME/.Xmodmap"
+                    "gitconfig $HOME/.gitconfig")
         for dir in "${dirs[@]}";do
             local dir=($dir)
             local from="$DIR/${dir[0]}"

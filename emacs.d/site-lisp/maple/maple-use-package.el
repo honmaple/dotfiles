@@ -49,15 +49,21 @@
 (require 'use-package)
 (require 'maple-keybind)
 
-(add-to-list 'use-package-keywords :evil-bind t)
-(add-to-list 'use-package-keywords :evil-leader t)
-(add-to-list 'use-package-keywords :evil-state t)
-(add-to-list 'use-package-keywords :hydra t)
-
 (defalias 'use-package-normalize/:evil-bind 'use-package-normalize-forms)
 (defalias 'use-package-normalize/:evil-leader 'use-package-normalize-forms)
 (defalias 'use-package-normalize/:evil-state 'use-package-normalize-forms)
 (defalias 'use-package-normalize/:hydra 'use-package-normalize-forms)
+
+(defun maple-use-package/set-keyword (keyword &optional position refer)
+  "Execute KEYWORD forms before or after REFER POSITION."
+  (unless (member keyword use-package-keywords)
+    (setq use-package-keywords
+          (let* ((pos  (cl-position (or refer :init) use-package-keywords))
+                 (pos  (cond ((eq position 'before) pos)
+                             ((eq position 'after)  (+ pos 1))))
+                 (head (cl-subseq use-package-keywords 0 pos))
+                 (tail (nthcdr pos use-package-keywords)))
+            (append head (list keyword) tail)))))
 
 (defun maple-use-package/plist-get (plist prop)
   "Get the values associated PLIST to PROP, a modified plist."
@@ -140,6 +146,43 @@
    `((with-eval-after-load 'hydra
        ,@(mapcan 'maple-use-package/hydra args)))
    (use-package-process-keywords name rest state)))
+
+(defun use-package-normalize/:quelpa (name keyword args)
+  "NAME KEYWORD ARGS."
+  (use-package-only-one (symbol-name keyword) args
+    (lambda (_label arg)
+      (pcase arg
+        ((or `nil `t)   (list name))
+        ((pred symbolp) (list arg))
+        ((pred listp)
+         (cond
+          ((listp (car arg)) arg)
+          ((keywordp (car arg)) (list (append (list name) arg)))
+          ((symbolp (car arg)) (list arg))))
+        (_ nil)))))
+
+(defun use-package-handler/:quelpa (name _keyword args rest state)
+  "NAME KEYWORD ARGS REST STATE."
+  (setq load-path (delete (format "%s/%s" (expand-file-name "site-lisp" user-emacs-directory) name) load-path))
+  (use-package-concat
+   `((unless (package-installed-p ',(pcase (car args)
+                                      ((pred listp)   (caar args))
+                                      ((pred symbolp) (car args))))
+       (apply 'quelpa ',args)))
+   (use-package-process-keywords name rest state)))
+
+(defun use-package-handler/:quelpa-ensure (func name keyword ensure rest state)
+  "FUNC NAME KEYWORD ENSURE REST STATE."
+  (let ((ensure (if (plist-member rest :quelpa) nil ensure)))
+    (funcall func name keyword ensure rest state)))
+
+(advice-add 'use-package-handler/:ensure :around 'use-package-handler/:quelpa-ensure)
+
+(maple-use-package/set-keyword :evil-bind   'after :init)
+(maple-use-package/set-keyword :evil-leader 'after :init)
+(maple-use-package/set-keyword :evil-state  'after :init)
+(maple-use-package/set-keyword :hydra       'after :init)
+(maple-use-package/set-keyword :quelpa      'after :unless)
 
 (provide 'maple-use-package)
 ;;; maple-use-package.el ends here

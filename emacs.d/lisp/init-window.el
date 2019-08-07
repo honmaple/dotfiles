@@ -34,7 +34,9 @@
   :hook (maple-init . winner-mode))
 
 (use-package window-numbering
-  :hook (maple-theme . window-numbering-mode))
+  :hook (maple-theme . window-numbering-mode)
+  :config
+  (fset 'window-numbering-install-mode-line 'ignore))
 
 (use-package zoom
   :hook (maple-init . zoom-mode)

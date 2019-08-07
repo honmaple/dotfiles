@@ -78,24 +78,6 @@ the current state and point position."
                 ("v" . er/expand-region)
                 ("V" . er/contract-region)))
 
-  (use-package maple-iedit
-    :ensure nil
-    :commands (maple-iedit-match-all maple-iedit-match-next maple-iedit-match-previous)
-    :hydra
-    (maple/iedit
-     ()
-     ("n" maple-iedit-match-next "next")
-     ("t" maple-iedit-skip-and-match-next "skip and next")
-     ("T" maple-iedit-skip-and-match-previous "skip and previous")
-     ("p" maple-iedit-match-previous "prev"))
-    :custom-face
-    (iedit-occurrence ((t (:background "chocolate" :foreground "#272822"))))
-    :bind (:map evil-visual-state-map
-                ("n" . maple/iedit/body)
-                ("C-n" . maple-iedit-match-next)
-                ("C-p" . maple-iedit-match-previous)
-                ("C-t" . maple-iedit-skip-and-match-next)))
-
   :custom-face
   (region ((t (:background "#66d9ef" :foreground "#272822"))))
   :bind (:map evil-normal-state-map

@@ -48,25 +48,11 @@
   :config
   (maple/evil-map quickrun--mode-map))
 
-(use-package maple-note
-  :ensure nil
-  :commands maple-note
-  :config
-  (setq maple-note-root-path "~/git/pelican"
-        maple-note-draft-path "content/draft")
-  (maple/evil-map maple-note-mode-map))
-
-(use-package maple-imenu
-  :ensure nil
-  :commands (maple-imenu)
-  :config
-  (maple/evil-map maple-imenu-mode-map)
-  (setq maple-imenu-display-alist '((side . left) (slot . 1))))
-
 (use-package youdao-dictionary
   :config
   (setq url-automatic-caching t
-        youdao-dictionary-search-history-file (concat maple-cache-directory "youdao")
+        youdao-dictionary-search-history-file
+        (expand-file-name "youdao" maple-cache-directory)
         youdao-dictionary-use-chinese-word-segmentation t)
   (maple/evil-map youdao-dictionary-mode-map))
 
@@ -81,54 +67,6 @@
 (use-package 2048-game
   :config
   (maple/evil-map 2048-mode-map))
-
-(use-package maple-search
-  :ensure nil
-  :hook (maple-init . maple/search-init))
-
-(use-package maple-scratch
-  :ensure nil
-  :hook (window-setup . maple-scratch-mode)
-  :defines (maple-scratch-mode-map maple-scratch-alist maple-scratch-source)
-  :config
-  (maple/evil-map maple-scratch-mode-map)
-  (setq maple-scratch-alist
-        (append (butlast maple-scratch-alist)
-                '(("Init"
-                   :action 'maple-file/open-init
-                   :desc "Open Init File")
-                  ("Test"
-                   :action 'maple-file/open-test
-                   :desc "Open Test File"))
-                (last maple-scratch-alist))
-        maple-scratch-source nil))
-
-(use-package maple-echoarea
-  :ensure nil
-  :commands (maple-echoarea-mode))
-
-(use-package maple-tabbar
-  :ensure nil
-  :commands (maple-tabbar-mode))
-
-(use-package maple-line
-  :ensure nil
-  :commands (maple-line-mode))
-
-(use-package maple-env
-  :ensure nil
-  :hook (maple-init . maple-env-mode)
-  :config
-  (with-eval-after-load 'pyvenv
-    (add-hook 'pyvenv-post-activate-hooks 'maple-env-mode-on)
-    (add-hook 'pyvenv-post-deactivate-hooks 'maple-env-mode-on))
-
-  (setq maple-env:python-packages
-        '("flake8" "isort" "yapf" "python-language-server")
-        maple-env:golang-packages
-        '()
-        maple-env:npm-packages
-        '("js-beautify")))
 
 (provide 'init-tool)
 ;;; init-tool.el ends here

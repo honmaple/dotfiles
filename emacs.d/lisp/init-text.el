@@ -46,10 +46,6 @@
   (:map markdown-mode-map
         ([f5] . markdown-toggle-markup-hiding)))
 
-(use-package maple-preview
-  :ensure nil
-  :commands (maple-preview-mode))
-
 (use-package company-english-helper
   :ensure nil
   :functions maple/company-backend

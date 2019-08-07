@@ -67,6 +67,7 @@
 (maple/require 'init-dired)       ;;自带文件管理
 (maple/require 'init-file)        ;;文件操作
 (maple/require 'init-window)
+(maple/require 'init-maple)
 
 (when *develop*
   (maple/require 'init-flycheck)

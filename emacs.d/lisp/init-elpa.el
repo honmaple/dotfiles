@@ -42,9 +42,9 @@
       package--init-file-ensured t)
 
 (eval-when-compile
-  (require 'maple-package)
-  (maple-package-initialize 'no-activate)
-  ;; (package-initialize)
+  ;; (require 'maple-package)
+  ;; (maple-package-initialize 'no-activate)
+  (package-initialize)
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
     (package-install 'use-package)))
@@ -58,9 +58,17 @@
         use-package-expand-minimally t
         use-package-minimum-reported-time 0.01))
 
+(use-package quelpa
+  :demand
+  :config
+  (setq quelpa-verbose nil
+        quelpa-checkout-melpa-p nil
+        quelpa-update-melpa-p nil
+        quelpa-melpa-recipe-stores nil
+        quelpa-self-upgrade-p nil))
+
 (use-package maple-use-package
-  :ensure nil
-  :demand)
+  :ensure nil :demand)
 
 ;;显示状态mode
 (use-package diminish

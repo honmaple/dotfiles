@@ -54,7 +54,7 @@
 
 (use-package maple-theme
   :ensure nil
-  :commands (maple-theme/switch/body)
+  :commands (maple-theme/switch/body maple-theme/next maple-theme/previous)
   :hydra
   (maple-theme/switch
    ()

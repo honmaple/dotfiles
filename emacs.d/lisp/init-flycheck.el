@@ -33,6 +33,8 @@
   (setq flycheck-check-syntax-automatically '(save idle-change mode-enabled)
         flycheck-idle-change-delay 0.8)
 
+  (when *python3* (setq flycheck-python-flake8-executable "python3"))
+
   (let ((govet (flycheck-checker-get 'go-vet 'command)))
     (when (equal (cadr govet) "tool")
       (setf (cdr govet) (cddr govet))))

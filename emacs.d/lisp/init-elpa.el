@@ -93,10 +93,6 @@
     (setq restart-emacs-restore-frames t)
     (restart-emacs)))
 
-(use-package exec-path-from-shell
-  :if maple-system-is-mac
-  :init (exec-path-from-shell-initialize))
-
 (use-package xclip
   :if maple-system-is-linux
   :hook (maple-init . xclip-mode))

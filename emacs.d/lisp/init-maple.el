@@ -153,17 +153,27 @@
   :quelpa (:fetcher github :repo "honmaple/emacs-maple-env")
   :hook (maple-init . maple-env-mode)
   :config
+
+  (use-package exec-path-from-shell
+    :if maple-system-is-mac
+    :init (exec-path-from-shell-initialize))
+
   (with-eval-after-load 'pyvenv
     (add-hook 'pyvenv-post-activate-hooks 'maple-env-mode-on)
     (add-hook 'pyvenv-post-deactivate-hooks 'maple-env-mode-on))
 
-  (setq maple-env:python-packages
-        '("flake8" "isort" "yapf" "python-language-server")
+  (setq maple-env:path (substitute-in-file-name "$HOME/repo")
+        maple-env:python-command (if *python3* "pip3" "pip")
+        maple-env:python-packages
+        '("flake8" "isort" "yapf" "python-language-server[all]")
         maple-env:golang-packages
-        '()
+        '("github.com/nsf/gocode"
+          "github.com/rogpeppe/godef"
+          "github.com/golang/lint/golint"
+          "github.com/haya14busa/gopkgs/cmd/gopkgs"
+          "golang.org/x/tools/cmd/gopls")
         maple-env:npm-packages
         '("js-beautify")))
-
 
 (provide 'init-maple)
 ;;; init-maple.el ends here

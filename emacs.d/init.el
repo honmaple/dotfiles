@@ -32,6 +32,7 @@
   (defvar *lsp* t)
   (defvar *icon* t)
   (defvar *develop* t)
+  (defvar *python3* t)
 
   (setq user-full-name "jianglin"
         user-default-theme 'monokai

@@ -45,10 +45,10 @@
   (use-package pyvenv)
 
   (use-package yapfify
-    :demand
     :evil-bind
     (:state normal :map python-mode-map
             ([f6] . yapfify-buffer)))
+
   :bind (:map python-mode-map
               ([f5] . maple/run-python)))
 

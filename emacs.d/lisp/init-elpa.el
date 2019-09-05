@@ -67,9 +67,6 @@
         quelpa-melpa-recipe-stores nil
         quelpa-self-upgrade-p nil))
 
-(use-package maple-use-package
-  :ensure nil :demand)
-
 ;;显示状态mode
 (use-package diminish
   :diminish abbrev-mode)

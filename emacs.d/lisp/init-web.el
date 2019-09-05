@@ -52,10 +52,11 @@
       (web-mode-fold-or-unfold)))
   (maple/add-hook 'web-mode-hook
     (setq electric-pair-pairs '((?\' . ?\'))))
-  :evil-bind
-  (:state normal :map web-mode-map
-          ([f5] . browse-url-of-file)
-          ("za" . maple/web-mode-fold-or-unfold)))
+  :custom
+  (:language
+   "web-mode"
+   :run 'browse-url-of-file
+   :fold 'maple/web-mode-fold-or-unfold))
 
 (use-package company-web
   :functions maple/company-backend

@@ -150,7 +150,7 @@
   "Define multi keybind with KEYMAP KEY DEF BINDINGS."
   (declare (indent defun))
   (while key
-    (define-key keymap key def)
+    (define-key keymap (if (char-or-string-p key) (kbd key) key) def)
     (setq key (pop bindings)
           def (pop bindings))))
 

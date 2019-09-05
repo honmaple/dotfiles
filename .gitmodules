@@ -37,3 +37,6 @@
 [submodule "emacs.d/site-lisp/maple-iedit"]
 	path = emacs.d/site-lisp/maple-iedit
 	url = git@github.com:honmaple/emacs-maple-iedit.git
+[submodule "emacs.d/site-lisp/maple-minibuffer"]
+	path = emacs.d/site-lisp/maple-minibuffer
+	url = git@github.com:honmaple/emacs-maple-minibuffer.git

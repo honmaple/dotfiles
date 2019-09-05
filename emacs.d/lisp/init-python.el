@@ -45,12 +45,13 @@
   (use-package pyvenv)
 
   (use-package yapfify
-    :evil-bind
-    (:state normal :map python-mode-map
-            ([f6] . yapfify-buffer)))
+    :commands (yapfify-buffer))
 
-  :bind (:map python-mode-map
-              ([f5] . maple/run-python)))
+  :custom
+  (:language
+   "python-mode"
+   :run        'maple/run-python
+   :indent 'yapfify-buffer))
 
 (use-package anaconda-mode
   :diminish anaconda-mode
@@ -64,9 +65,10 @@
   (use-package company-anaconda
     :functions maple/company-backend
     :init (maple/company-backend 'anaconda-mode-hook 'company-anaconda))
-  :evil-bind
-  (:state normal :map anaconda-mode-map
-          ("gd" . anaconda-mode-find-assignments)))
+  :custom
+  (:language
+   "anaconda-mode"
+   :definition 'anaconda-mode-find-assignments))
 
 (provide 'init-python)
 

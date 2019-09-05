@@ -24,12 +24,15 @@
 ;;
 
 ;;; Code:
+(use-package maple-use-package
+  :ensure nil :demand)
+
 (use-package maple-search
   :ensure nil
-  :hook (maple-init . maple/search-init))
+  :hook (maple-init . maple-search-init))
 
 (use-package maple-preview
-  :quelpa (:fetcher github :repo "honmaple/emacs-maple-preview" :files ("*.el" "static"))
+  :quelpa (:fetcher github :repo "honmaple/emacs-maple-preview" :files ("*.el" "index.html" "static"))
   :commands (maple-preview-mode))
 
 (use-package maple-note
@@ -55,6 +58,11 @@
   :quelpa (:fetcher github :repo "honmaple/emacs-maple-line" :files ("maple-line-hide.el"))
   :commands (maple-line-hide-mode))
 
+(use-package maple-xpm
+  :quelpa (:fetcher github :repo "honmaple/emacs-maple-xpm" :files ("*.el"))
+  :config
+  (setq maple-xpm-style (if (display-graphic-p) 'wave 'default)))
+
 (use-package maple-modeline
   :quelpa (:fetcher github :repo "honmaple/emacs-maple-modeline" :files ("*.el"))
   :hook (maple-theme . maple-modeline-init)
@@ -65,15 +73,8 @@
   (maple/add-hook 'maple-imenu-mode-hook
     (setq-local maple-modeline-style 'sidebar))
 
-  (use-package maple-modeline-icon
-    :if (and (display-graphic-p) *icon*)
-    :ensure nil
-    :demand)
-
-  (use-package maple-xpm
-    :quelpa (:fetcher github :repo "honmaple/emacs-maple-xpm")
-    :config
-    (setq maple-xpm-style (if (display-graphic-p) 'wave 'default)))
+  (when (and (display-graphic-p) *icon*)
+    (require 'maple-modeline-icon))
 
   (defun maple-modeline-reset-face(color &optional frame)
     "Reset face when theme change with FRAME."
@@ -153,11 +154,6 @@
   :quelpa (:fetcher github :repo "honmaple/emacs-maple-env")
   :hook (maple-init . maple-env-mode)
   :config
-
-  (use-package exec-path-from-shell
-    :if maple-system-is-mac
-    :init (exec-path-from-shell-initialize))
-
   (with-eval-after-load 'pyvenv
     (add-hook 'pyvenv-post-activate-hooks 'maple-env-mode-on)
     (add-hook 'pyvenv-post-deactivate-hooks 'maple-env-mode-on))
@@ -173,7 +169,11 @@
           "github.com/haya14busa/gopkgs/cmd/gopkgs"
           "golang.org/x/tools/cmd/gopls")
         maple-env:npm-packages
-        '("js-beautify")))
+        '("js-beautify"))
+
+  (use-package exec-path-from-shell
+    :if maple-system-is-mac
+    :init (exec-path-from-shell-initialize)))
 
 (provide 'init-maple)
 ;;; init-maple.el ends here

@@ -38,6 +38,7 @@
   (setq org-imenu-depth 5
         org-image-actual-width '(600)
         org-export-with-sub-superscripts '{}
+        org-export-with-broken-links t
         org-descriptive-links nil ;; 不要锁定连接，保持原样
         org-todo-keywords
         '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")

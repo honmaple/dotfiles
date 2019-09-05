@@ -89,10 +89,11 @@
   (defun maple/go-type-comment(f)
     (maple/go-add-comment (car f) (cdr f)))
 
-  :evil-bind
-  (:state normal :map go-mode-map
-          ([f6] . gofmt)
-          ("gd" . godef-jump)))
+  :custom
+  (:language
+   "go-mode"
+   :indent 'gofmt
+   :definition 'godef-jump))
 
 (provide 'init-go)
 ;;; init-go.el ends here

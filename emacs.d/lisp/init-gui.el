@@ -81,8 +81,6 @@
               truncate-partial-width-windows nil
               ad-redefinition-action 'accept)
 
-
-
 (setq mouse-yank-at-point t
       mouse-wheel-scroll-amount '(1 ((shift) . 1))
       xterm-mouse-mode 1)
@@ -92,10 +90,7 @@
       scroll-margin 15
       scroll-conservatively 101)
 
-(use-package ns-win
-  :if maple-system-is-mac
-  :ensure nil
-  :config
+(when maple-system-is-mac
   (setq mac-option-modifier 'super
         mac-command-modifier 'meta
         mac-function-modifier 'hyper)
@@ -109,11 +104,7 @@
       end if
     end tell' &>/dev/null"))
 
-  (add-hook 'focus-in-hook 'maple/mac-switch-input-source)
-  :bind (("s-v" . yank)
-         ("s-c" . evil-yank)
-         ("s-a" . mark-whole-buffer)
-         ("s-x" . kill-region)))
+  (add-hook 'focus-in-hook 'maple/mac-switch-input-source))
 
 (use-package simple
   :ensure nil
@@ -135,7 +126,8 @@
   :ensure nil
   :config
   (setq browse-url-browser-function 'browse-url-generic
-        browse-url-generic-program "google-chrome-stable"))
+        browse-url-generic-program
+        (if maple-system-is-mac "open" "google-chrome-stable")))
 
 ;;高亮当前行
 (use-package hl-line
@@ -151,7 +143,7 @@
 (use-package bookmark
   :ensure nil
   :config
-  (setq bookmark-default-file (concat maple-cache-directory "bookmarks")
+  (setq bookmark-default-file (expand-file-name "bookmarks" maple-cache-directory)
         bookmark-save-flag 1))
 
 (provide 'init-gui)

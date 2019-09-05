@@ -58,6 +58,7 @@
 ;;----------------------------------------------------------------------------
 (maple/require 'init-basic)
 (maple/require 'init-elpa)        ;; Machinery for installing required packages
+(maple/require 'init-maple)
 (maple/require 'init-font)
 (maple/require 'init-gui)         ;;ui设置 显示行号
 (maple/require 'init-ui)          ;; modeline,which-key
@@ -68,7 +69,6 @@
 (maple/require 'init-dired)       ;;自带文件管理
 (maple/require 'init-file)        ;;文件操作
 (maple/require 'init-window)
-(maple/require 'init-maple)
 
 (when *develop*
   (maple/require 'init-flycheck)
@@ -88,8 +88,7 @@
 (when *lsp*
   (maple/require 'init-lsp))
 
-(with-eval-after-load 'evil-leader
-  (maple/require 'init-keybind))
+(maple/require 'init-keybind)
 
 ;;----------------------------------------------------------------------------
 ;; Variables configured via the interactive 'customize' interface

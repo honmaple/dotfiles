@@ -48,6 +48,7 @@
 ;;; Code:
 (require 'use-package)
 (require 'maple-keybind)
+(require 'maple-language)
 
 (defalias 'use-package-normalize/:evil-bind 'use-package-normalize-forms)
 (defalias 'use-package-normalize/:evil-leader 'use-package-normalize-forms)
@@ -100,6 +101,7 @@
              (require 'mode-local))
            (cl-loop for arg in (maple-use-package/plist-get args :mode) collect
                     `(setq-mode-local ,(car arg) ,@(cdr arg))))
+    (:language `((maple-language:define ,@(cdr args))))
     (:face `((custom-set-faces ,@(cdr args))))))
 
 (defun maple-use-package/custom(args)
@@ -163,11 +165,11 @@
 
 (defun use-package-handler/:quelpa (name _keyword args rest state)
   "NAME KEYWORD ARGS REST STATE."
-  (setq load-path (delete (format "%s/%s" (expand-file-name "site-lisp" user-emacs-directory) name) load-path))
   (use-package-concat
-   `((unless (package-installed-p ',(pcase (car args)
-                                      ((pred listp)   (caar args))
-                                      ((pred symbolp) (car args))))
+   `((unless (or (locate-library ,(format "%s" name))
+                 (package-installed-p ',(pcase (car args)
+                                          ((pred listp)   (caar args))
+                                          ((pred symbolp) (car args)))))
        (apply 'quelpa ',args)))
    (use-package-process-keywords name rest state)))
 

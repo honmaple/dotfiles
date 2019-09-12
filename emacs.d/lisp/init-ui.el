@@ -156,7 +156,6 @@
   (setq highlight-indent-guides-method 'character)
   :diminish highlight-indent-guides-mode)
 
-
 (use-package whitespace
   :ensure nil
   :hook ((prog-mode conf-mode) . whitespace-mode)

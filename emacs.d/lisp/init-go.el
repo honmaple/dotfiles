@@ -41,58 +41,30 @@
   (use-package golint)
   (use-package go-rename)
 
-  (use-package go-eldoc
-    :unless *lsp*
-    :hook (go-mode . go-eldoc-setup))
-
-  (use-package company-go
-    :unless *lsp*
-    :functions maple/company-backend
-    :init (maple/company-backend 'go-mode-hook '(company-go company-keywords)))
+  (defun maple/go-add-comment(items &optional name)
+    (dolist (item items)
+      (if (listp (cdr item))
+          (maple/go-add-comment (cdr item) (car item))
+        (let ((func (car item))
+              (point (cdr item)))
+          (string-match "\\(.*?\\)(\\(.*\\))$" func)
+          (unless (string= (match-string 1 func) "")
+            (setq name (match-string 1 func)))
+          (unless (string= (match-string 2 func) "Field")
+            (save-excursion
+              (goto-char point) (forward-line -1) (end-of-line)
+              (unless (nth 4 (syntax-ppss))
+                (newline-and-indent)
+                (insert (concat "// " (string-trim name) " ..")))))))))
 
   (defun maple/go-auto-comment()
     (interactive)
-    (unless (featurep 'imenu)
-      (require 'imenu nil t))
-    (let* ((imenu-max-item-length "Unlimited")
-           (imenu-auto-rescan t)
-           (imenu-auto-rescan-maxout (if current-prefix-arg
-                                         (buffer-size)
-                                       imenu-auto-rescan-maxout))
-           (items (imenu--make-index-alist t))
-           (items (delete (assoc "*Rescan*" items) items)))
-      (dolist (item items)
-        (cl-mapcan
-         (if (string= (car item) "func")
-             'maple/go-func-comment
-           'maple/go-type-comment)
-         (cdr item)))))
-
-  (defun maple/go-add-comment(func point)
-    (save-excursion
-      (goto-char point)
-      (forward-line -1)
-      (when (not (looking-at (concat "// " func)))
-        (end-of-line) (newline-and-indent)
-        (insert (concat "// " func " ..")))))
-
-  (defun maple/go-func-comment(f)
-    (let* ((point (cdr f))
-           (func (car f))
-           (func (if (and (string-prefix-p "(" func)
-                          (string-match "[)] \\(.*?\\)[(]\\(.*?\\)[)]\\(.*\\)$" func))
-                     (match-string 1 func)
-                   (if (string-match "\\(.*?\\)[(]\\(.*?\\)[)]\\(.*\\)$" func)
-                       (match-string 1 func) func))))
-      (maple/go-add-comment func point)))
-
-  (defun maple/go-type-comment(f)
-    (maple/go-add-comment (car f) (cdr f)))
+    (maple/go-add-comment (maple-language:imenu-items)))
 
   :custom
   (:language
    "go-mode"
-   :indent 'gofmt
+   :indent     'gofmt
    :definition 'godef-jump))
 
 (provide 'init-go)

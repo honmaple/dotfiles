@@ -37,38 +37,21 @@
         (python-shell-send-region (region-beginning) (region-end) t)
       (python-shell-send-buffer t)))
 
-  (use-package pip-requirements
-    :diminish pip-requirements-mode)
-
-  (use-package py-isort)
-
+  (use-package pip-requirements)
   (use-package pyvenv)
-
+  (use-package py-isort
+    :commands (py-isort-buffer))
   (use-package yapfify
     :commands (yapfify-buffer))
 
   :custom
   (:language
    "python-mode"
-   :run        'maple/run-python
-   :indent 'yapfify-buffer))
+   :run      'maple/run-python
+   :indent   'yapfify-buffer))
 
-(use-package anaconda-mode
-  :diminish anaconda-mode
-  :unless *lsp*
-  :hook ((python-mode . anaconda-mode)
-         (anaconda-mode . anaconda-eldoc-mode))
-  :config
-  (setq anaconda-mode-installation-directory
-        (concat maple-cache-directory "anaconda-mode"))
-
-  (use-package company-anaconda
-    :functions maple/company-backend
-    :init (maple/company-backend 'anaconda-mode-hook 'company-anaconda))
-  :custom
-  (:language
-   "anaconda-mode"
-   :definition 'anaconda-mode-find-assignments))
+(use-package pyenv-mode
+  :hook (python-mode . pyenv-mode))
 
 (provide 'init-python)
 

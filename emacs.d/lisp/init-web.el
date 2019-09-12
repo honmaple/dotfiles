@@ -55,16 +55,11 @@
   :custom
   (:language
    "web-mode"
-   :run 'browse-url-of-file
-   :fold 'maple/web-mode-fold-or-unfold))
+   :run      'browse-url-of-file
+   :fold     'maple/web-mode-fold-or-unfold
+   :complete '(company-web-html company-css company-tern :with company-yasnippet)))
 
-(use-package company-web
-  :functions maple/company-backend
-  :init
-  (maple/company-backend 'css-mode-hook 'company-css)
-  (maple/company-backend 'web-mode-hook '(company-web-html
-                                          company-css
-                                          company-tern)))
+(use-package company-web)
 
 (use-package web-beautify
   :commands (web-beautify-html web-beautify-css web-beautify-js))
@@ -84,7 +79,11 @@
 
 (use-package css-mode
   :config
-  (setq css-indent-offset 4))
+  (setq css-indent-offset 4)
+  :custom
+  (:language
+   "css-mode"
+   :complete '(company-css :with company-yasnippet)))
 
 (use-package sass-mode
   :mode ("\\.sass\\'" . sass-mode))
@@ -111,9 +110,11 @@
     :hook (js2-mode . tern-mode)
     :config (add-to-list 'tern-command "--no-port-file" 'append))
 
-  (use-package company-tern
-    :functions maple/company-backend
-    :init (maple/company-backend 'js2-mode-hook 'company-tern)))
+  (use-package company-tern)
+  :custom
+  (:language
+   "js2-mode"
+   :complete '(company-tern)))
 
 (use-package coffee-mode
   :mode ("\\.coffee\\.erb\\'" . coffee-mode)

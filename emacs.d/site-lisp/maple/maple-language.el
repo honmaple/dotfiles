@@ -59,25 +59,80 @@
   :type 'function
   :group 'maple-language)
 
+(defcustom maple-language:complete-enable-snippet t
+  "Language auto completion enable company-yasnippet."
+  :type 'boolean
+  :group 'maple-language)
+
+(defcustom maple-language:complete-backends
+  '((company-dabbrev-code
+     company-capf
+     company-keywords
+     company-files
+     :with company-yasnippet)
+    (company-dabbrev
+     company-gtags
+     company-etags
+     :with company-yasnippet))
+  "Language auto completion default backends."
+  :type '(list)
+  :group 'maple-language)
+
+(defun maple-language:complete-backend(backend &optional with-snippet)
+  "Return BACKENDs WITH-SNIPPET or not."
+  (let ((backend (if (listp backend) backend (list backend))))
+    (append (list (if with-snippet (maple-language:complete-backend-with-snippet backend) backend))
+            maple-language:complete-backends)))
+
+(defun maple-language:complete-backend-with-snippet(backend)
+  "Return BACKEND with company-yasnippet."
+  (if (or (not maple-language:complete-enable-snippet)
+          (and (listp backend)
+               (member 'company-yasnippet backend)))
+      backend
+    (append (if (consp backend) backend (list backend))
+            '(:with company-yasnippet))))
+
+(defun maple-language:imenu-items()
+  "Get all definition with imenu."
+  (unless (featurep 'imenu)
+    (require 'imenu nil t))
+  (let* ((imenu-max-item-length "Unlimited")
+         (imenu-auto-rescan t)
+         (imenu-auto-rescan-maxout (buffer-size))
+         (items (imenu--make-index-alist t))
+         (items (delete (assoc "*Rescan*" items) items)))
+    (ignore imenu-max-item-length)
+    (ignore imenu-auto-rescan)
+    (ignore imenu-auto-rescan-maxout)
+    items))
+
 (defmacro maple-language:define (mode &rest args)
   "Language define with MODE ARGS."
   (declare (indent defun))
-  (let ((hook (intern (format "%s-hook" mode)))
-        (run (plist-get args :run))
+  (let ((run (plist-get args :run))
         (fold (plist-get args :fold))
         (indent (plist-get args :indent))
+        (complete (plist-get args :complete))
         (definition (plist-get args :definition))
         (references (plist-get args :references))
-        (documentation (plist-get args :documentation)))
-    (add-hook
-     `,hook
-     `(lambda()
-        (when ,run (setq-local maple-language:run ,run))
-        (when ,fold (setq-local maple-language:fold ,fold))
-        (when ,indent (setq-local maple-language:indent ,indent))
-        (when ,definition (setq-local maple-language:definition ,definition))
-        (when ,references (setq-local maple-language:references ,references))
-        (when ,documentation (setq-local maple-language:documentation ,documentation))))))
+        (documentation (plist-get args :documentation))
+        (hooks (if (listp mode)
+                   (mapcar (lambda(x) (intern (format "%s-hook" x))) mode)
+                 (list (intern (format "%s-hook" mode)))))
+        forms)
+    (when run (push `(setq-local maple-language:run ,run) forms))
+    (when fold (push `(setq-local maple-language:fold ,fold) forms))
+    (when indent (push `(setq-local maple-language:indent ,indent) forms))
+    (when definition (push `(setq-local maple-language:definition ,definition) forms))
+    (when references (push `(setq-local maple-language:references ,references) forms))
+    (when documentation (push `(setq-local maple-language:documentation ,documentation) forms))
+    (when complete
+      (push `(setq-local company-backends (maple-language:complete-backend ,complete)) forms))
+    (when forms
+      (let* ((fn `(lambda() ,@forms))
+             (fns (cl-loop for hook in hooks collect `(add-hook ',hook ,fn))))
+        `(progn ,@fns)))))
 
 (defun maple-language:default-indent()
   "Call default indent."

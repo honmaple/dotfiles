@@ -29,7 +29,7 @@
   :ensure nil
   :config
   (setq sql-input-ring-file-name
-        (concat maple-cache-directory "sql.history")
+        (expand-file-name "sql.history" user-emacs-directory)
         sql-postgres-login-params
         '((user :default "postgres")
           (database :default "postgres")

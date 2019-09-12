@@ -76,7 +76,7 @@
   :ensure nil
   :commands (image-dired)
   :config
-  (setq image-dired-dir (concat maple-cache-directory "image-dired")
+  (setq image-dired-dir (expand-file-name "image-dired" maple-cache-directory)
         image-dired-thumbnail-storage 'standard)
   :evil-bind
   (:state normal :map image-dired-thumbnail-mode-map

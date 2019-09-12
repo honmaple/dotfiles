@@ -69,9 +69,11 @@
   (use-package lsp-go
     :ensure nil)
 
-  (use-package company-lsp
-    :functions maple/company-backend
-    :init (maple/company-backend 'lsp-mode-hook 'company-lsp)))
+  (use-package company-lsp)
+  :custom
+  (:language
+   "lsp-mode"
+   :complete '(company-lsp :with company-yasnippet)))
 
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode)

@@ -97,10 +97,10 @@
   "Custom variable with ARGS."
   (pcase (car args)
     (:default `((setq-default ,@(cdr args))))
-    (:mode (unless (featurep 'mode-local)
-             (require 'mode-local))
-           (cl-loop for arg in (maple-use-package/plist-get args :mode) collect
-                    `(setq-mode-local ,(car arg) ,@(cdr arg))))
+    (:mode (let ((mode (cadr args)))
+             (unless (featurep 'mode-local) (require 'mode-local))
+             (cl-loop for i in (if (listp mode) mode (list mode)) collect
+                      `(setq-mode-local ,i ,@(cddr args)))))
     (:language `((maple-language:define ,@(cdr args))))
     (:face `((custom-set-faces ,@(cdr args))))))
 

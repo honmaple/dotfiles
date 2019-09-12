@@ -67,5 +67,15 @@ Repeated invocations toggle between the two most recently open buffers."
     (mapc 'kill-buffer (delq (current-buffer) (buffer-list)))
     (message "Buffers deleted!")))
 
+(defun maple-buffer/reopen(buffer-name &optional restore)
+  "Reopen BUFFER-NAME RESTORE."
+  (if (get-buffer buffer-name)
+      (let ((buffer-text (with-current-buffer buffer-name
+                           (buffer-substring (point-min) (point-max)))))
+        (kill-buffer buffer-name)
+        (with-current-buffer (get-buffer-create buffer-name)
+          (when restore (insert buffer-text))))
+    (message (format "%s buffer is not exists" buffer-name))))
+
 (provide 'maple-buffer)
 ;;; maple-buffer.el ends here

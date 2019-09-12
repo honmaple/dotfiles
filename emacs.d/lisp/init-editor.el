@@ -97,13 +97,6 @@
   :diminish hs-minor-mode
   :hook ((conf-mode prog-mode) . hs-minor-mode))
 
-(use-package origami
-  :hook (yaml-mode . origami-mode)
-  :diminish origami-mode
-  :evil-bind
-  (:state normal :map yaml-mode-map
-          ("za" . origami-toggle-node)))
-
 (use-package anzu
   :hook (maple-init . global-anzu-mode)
   :config
@@ -129,9 +122,9 @@
   :config
   (setq projectile-sort-order 'recentf
         projectile-cache-file
-        (concat maple-cache-directory "projectile.cache")
+        (expand-file-name "projectile.cache" maple-cache-directory)
         projectile-known-projects-file
-        (concat maple-cache-directory "projectile-bookmarks.eld")))
+        (expand-file-name "projectile-bookmarks.eld" maple-cache-directory)))
 
 
 (provide 'init-editor)

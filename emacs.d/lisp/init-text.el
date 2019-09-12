@@ -42,29 +42,39 @@
     (add-hook 'after-save-hook 'cleanup-org-tables  nil 'make-it-local))
 
   (use-package markdown-toc)
-  :bind
-  (:map markdown-mode-map
-        ([f5] . markdown-toggle-markup-hiding)))
-
-(use-package company-english-helper
-  :ensure nil
-  :functions maple/company-backend
-  :commands (company-english-helper-search)
-  :init
-  (maple/company-backend '(org-mode-hook markdown-mode-hook) 'company-english-helper-search t)
   :custom
-  (:mode org-mode
-         company-tooltip-align-annotations nil)
-  (:mode markdown-mode
-         company-tooltip-align-annotations nil))
+  (:language
+   "markdown-mode"
+   :run 'markdown-toggle-markup-hiding))
 
-(use-package yaml-mode)
 (use-package vimrc-mode)
+(use-package yaml-mode)
 (use-package json-mode)
+(use-package nginx-mode)
+
+(use-package origami
+  :diminish origami-mode
+  :hook (yaml-mode . origami-mode)
+  :custom
+  (:language
+   "yaml-mode"
+   :fold 'origami-toggle-node))
+
 (use-package writeroom-mode
   :config
   (setq writeroom-mode-line t
         writeroom-bottom-divider-width 0))
+
+(use-package company-english-helper
+  :quelpa (:fetcher github :repo "manateelazycat/company-english-helper")
+  :commands (company-english-helper-search)
+  :custom
+  (:mode
+   (org-mode markdown-mode)
+   company-tooltip-align-annotations nil)
+  (:language
+   (markdown-mode org-mode)
+   :complete 'company-english-helper-search))
 
 (provide 'init-text)
 ;;; init-text.el ends here

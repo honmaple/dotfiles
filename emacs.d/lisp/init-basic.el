@@ -34,11 +34,15 @@
   "Custom theme hook.")
 
 (defconst maple-cache-directory
-  (expand-file-name (concat user-emacs-directory "cache/"))
+  (expand-file-name "cache/" user-emacs-directory)
   "Maple storage area for persistent files.")
 
 (defconst maple-system-is-mac
   (eq system-type 'darwin))
+
+(defconst maple-system-is-macport
+  (and (eq system-type 'darwin)
+       (boundp 'mac-carbon-version-string)))
 
 (defconst maple-system-is-linux
   (eq system-type 'gnu/linux))
@@ -128,12 +132,6 @@
   (interactive)
   (setq indent-tabs-mode (not indent-tabs-mode)))
 
-(defun maple/indent-buffer ()
-  "Format buffer with `indent-region`."
-  (interactive)
-  (save-excursion
-    (indent-region (point-min) (point-max) nil)))
-
 (defun maple/company-or-indent ()
   "Company buffer or indent."
   (interactive)
@@ -150,19 +148,9 @@
   "Define multi keybind with KEYMAP KEY DEF BINDINGS."
   (declare (indent defun))
   (while key
-    (define-key keymap (if (char-or-string-p key) (kbd key) key) def)
+    (define-key keymap key def)
     (setq key (pop bindings)
           def (pop bindings))))
-
-(defun maple/company-backend (hook backends &optional with-no-yas)
-  "Set HOOK with BACKENDS `company-backends' `WITH-NO-YAS`."
-  (declare (indent defun))
-  (let ((fn `(set (make-variable-buffer-local 'company-backends)
-                  (append (if ,with-no-yas (list ',backends)
-                            (list (company-backend-with-yas ',backends)))
-                          company-default-backends)))
-        (hooks (if (listp hook) hook (list hook))))
-    (dolist (i hooks) (add-hook i `(lambda() ,fn)))))
 
 (defun maple/region-string()
   "Get region string."
@@ -201,16 +189,6 @@
     (dolist (file compile-files)
       (message file)
       (byte-compile-dest-file file))))
-
-(defun maple/reopen-buffer(buffer-name &optional restore)
-  "Reopen BUFFER-NAME RESTORE."
-  (if (get-buffer buffer-name)
-      (let ((buffer-text (with-current-buffer buffer-name
-                           (buffer-substring (point-min) (point-max)))))
-        (kill-buffer buffer-name)
-        (with-current-buffer (get-buffer-create buffer-name)
-          (when restore (insert buffer-text))))
-    (message (format "%s buffer is not exists" buffer-name))))
 
 (defadvice load-theme (after run-maple-theme-hook activate)
   "Run `maple-theme-hook'."

@@ -169,7 +169,7 @@
           "github.com/haya14busa/gopkgs/cmd/gopkgs"
           "golang.org/x/tools/cmd/gopls")
         maple-env:npm-packages
-        '("js-beautify"))
+        '("js-beautify" "tern"))
 
   (use-package exec-path-from-shell
     :if maple-system-is-mac

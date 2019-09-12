@@ -30,10 +30,11 @@
   (setq c-default-style "linux"
         c-basic-offset 4)
 
-  (use-package company-c-headers
-    :functions maple/company-backend
-    :init (maple/company-backend 'c-mode-hook 'company-c-headers)))
+  (use-package company-c-headers)
+  :custom
+  (:language
+   "c-mode"
+   :complete 'company-c-headers))
 
 (provide 'init-c)
-
 ;;; init-c.el ends here

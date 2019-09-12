@@ -55,28 +55,7 @@
                                    inferior-python-mode
                                    shell-mode
                                    evil-command-window-mode))
-  (defvar company-enable-yas t
-    "Enable yasnippet for all backends.")
-
-  (defun company-backend-with-yas (backend)
-    (if (or (not company-enable-yas)
-            (and (listp backend)
-                 (member 'company-yasnippet backend)))
-        backend
-      (append (if (consp backend) backend (list backend))
-              '(:with company-yasnippet))))
-
-  (defvar company-default-backends
-    (mapcar #'company-backend-with-yas
-            '((company-dabbrev-code
-               company-capf
-               company-keywords
-               company-files)
-              (company-dabbrev
-               company-gtags
-               company-etags))))
-
-  (setq company-backends company-default-backends)
+  (setq company-backends maple-language:complete-backends)
   :custom-face
   (company-tooltip-common
    ((t (:inherit company-tooltip :weight bold :underline nil))))
@@ -93,7 +72,7 @@
 (use-package company-statistics
   :hook (company-mode . company-statistics-mode)
   :config
-  (setq company-statistics-file (concat maple-cache-directory "company-statistics.el")))
+  (setq company-statistics-file (expand-file-name "company-statistics.el" maple-cache-directory)))
 
 (use-package company-box
   :disabled

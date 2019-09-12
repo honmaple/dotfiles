@@ -218,8 +218,8 @@
     )
 
   (evil-leader/set-key-for-mode 'python-mode
-    "va" 'pyvenv-workon
-    "vc" 'pyvenv-deactivate
+    "va" 'pyenv-mode-set
+    "vc" 'pyenv-mode-unset
     "rI" 'py-isort-buffer
     )
 
@@ -322,13 +322,13 @@
 
 (when maple-system-is-mac
   (maple/define-key (current-global-map)
-    "s-c"  'copy-region-as-kill
-    "s-x"  'kill-region
-    "s-v"  'yank
-    "s-s"  'save-buffer
-    "s-z"  'undo
-    "s-a"  'mark-whole-buffer
-    "s-q"  'save-buffer-kill-emacs))
+    (kbd "s-c")  'copy-region-as-kill
+    (kbd "s-x")  'kill-region
+    (kbd "s-v")  'yank
+    (kbd "s-s")  'save-buffer
+    (kbd "s-z")  'undo
+    (kbd "s-a")  'mark-whole-buffer
+    (kbd "s-q")  'save-buffer-kill-emacs))
 
 (provide 'init-keybind)
 ;;; init-keybind.el ends here

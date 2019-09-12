@@ -86,7 +86,7 @@
   :config
   (setq undo-tree-visualizer-timestamps t
         undo-tree-visualizer-diff t)
-  (let ((dir (concat maple-cache-directory "undo-tree")))
+  (let ((dir (expand-file-name "undo-tree" maple-cache-directory)))
     (unless (file-exists-p dir) (make-directory dir t))
     (setq undo-tree-history-directory-alist (list (cons "." dir))))
   :diminish undo-tree-mode)

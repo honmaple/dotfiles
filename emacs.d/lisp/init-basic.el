@@ -97,14 +97,14 @@
 
 (defun maple/close-process ()
   "Close current term buffer when `exit' from term buffer."
-  (when (ignore-errors (get-buffer-process (current-buffer)))
-    (set-process-sentinel (get-buffer-process (current-buffer))
-                          (lambda (proc change)
-                            (when (string-match "\\(finished\\|exited\\)"
-                                                change)
-                              (kill-buffer (process-buffer proc))
-                              (when (> (count-windows) 1)
-                                (delete-window)))))))
+  (let ((process (get-buffer-process (current-buffer))))
+    (when process
+      (set-process-sentinel
+       process
+       (lambda (_proc change)
+         (when (and (string-match-p "\\(?:finished\\|exited\\)" change)
+                    (> (count-windows) 1))
+           (delete-window)))))))
 
 (defun maple/comment-or-uncomment (&optional paste)
   "Comments or uncomments the region or the current line if there's no active region with no `PASTE`."

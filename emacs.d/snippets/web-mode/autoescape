@@ -1,3 +1,0 @@
-{% autoescape ${1:true} %}
-$2
-{% endautoescape %}

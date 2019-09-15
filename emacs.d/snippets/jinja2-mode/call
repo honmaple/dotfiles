@@ -1,3 +1,0 @@
-{% call ${1:function} -%}
-$2
-{%- endcall %}

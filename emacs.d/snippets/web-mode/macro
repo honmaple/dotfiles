@@ -1,3 +1,0 @@
-{% macro ${1:function} -%}
-$0
-{%- endmacro %}

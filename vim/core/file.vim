@@ -3,11 +3,21 @@ Plug 'tacahiroy/ctrlp-funky'
 Plug 'dyng/ctrlsf.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
+Plug 'bling/vim-bufferline'
+Plug 'sjl/gundo.vim'
+
+" gundo {
+    set undodir=~/.vim/.cache/undo
+    set undofile
+    set undolevels=10         " Maximum number of changes that can be undone
+    set undoreload=10        " Maximum number lines to save for undo on a buffer reload
+" }
 
 " ctrlp {
-    let g:ctrlp_working_path_mode = 'ra'
     let g:ctrlp_map = '<c-p>'
     let g:ctrlp_cmd = 'CtrlP'
+    let g:ctrlp_working_path_mode = 'ra'
+    let g:ctrlp_match_window_reversed = 0
 
     let g:ctrlp_custom_ignore = {
         \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
@@ -16,10 +26,6 @@ Plug 'jistr/vim-nerdtree-tabs'
 
     if executable('ag')
         let s:ctrlp_fallback = 'ag %s --nocolor -l -g ""'
-    elseif executable('ack-grep')
-        let s:ctrlp_fallback = 'ack-grep %s --nocolor -f'
-    elseif executable('ack')
-        let s:ctrlp_fallback = 'ack %s --nocolor -f'
     else
         let s:ctrlp_fallback = 'find %s -type f'
     endif
@@ -35,7 +41,6 @@ Plug 'jistr/vim-nerdtree-tabs'
                 \ }
 
 " }
-
 
 " ctrlp-funky {
     " CtrlP extensions

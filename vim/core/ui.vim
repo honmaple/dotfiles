@@ -8,23 +8,20 @@ Plug 'Yggdroot/indentLine'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'mhinz/vim-startify'
 
-
-
+set background=dark
 if $TERM=~'cons25'
     colorscheme default
 elseif g:is_gui
-    set background=dark
     " let g:solarized_termcolors=256
     " let g:solarized_termtrans = 0
     " colorscheme solarized
     let g:molokai_original = 1
     colorscheme molokai
 else
-    set background=dark
     let g:solarized_termcolors=256
     let g:solarized_termtrans = 0
-    " colorscheme molokai
-    colorscheme solarized
+    colorscheme molokai
+    " colorscheme solarized
 endif
 " indentLine {
     " 用于显示对齐线

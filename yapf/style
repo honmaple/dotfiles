@@ -1,6 +1,12 @@
 [style]
 based_on_style = pep8
-column_limit=79
-dedent_closing_brackets=False
-split_before_first_argument=True
-split_before_logical_operator=True
+column_limit=80
+dedent_closing_brackets=false
+# # https://github.com/google/yapf/issues/392
+# # indent_dictionary_value=true
+allow_split_before_dict_value=false
+# split_before_first_argument=true
+# split_before_logical_operator=true
+# split_arguments_when_comma_terminated=true
+# split_all_comma_separated_values=true
+# split_all_top_level_comma_separated_values=true

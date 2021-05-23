@@ -1,11 +1,13 @@
 [user]
-	name = honmaple
-	email = xiyang0807@gmail.com
+    name = honmaple
+    email = xiyang0807@gmail.com
 [alias]
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     co = checkout
     ci = commit
     br = branch
     st = status
 [magit]
-	hideCampaign = true
+    hideCampaign = true
+[url "https://github.com.cnpmjs.org"]
+  insteadOf = https://github.com

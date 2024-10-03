@@ -1,63 +1,58 @@
-local window = require "window"
-local layout = require "layout"
-local launch = require "launch"
-local screen = require "screen"
+local yabai = require "yabai"
 local bind = hs.hotkey.bind
 
-local modkey =  {"cmd"}
-local modkey1 = {"cmd", "shift"}
-local screens = {"main", "brower", "terminal", "global"}
-local layouts = {"vertical", "horizontal", "fullscreen"}
-
 hs.window.animationDuration = 0
-layout.init(layouts)
 
-bind(modkey, "H", window.focus_left)
-bind(modkey, "L", window.focus_right)
-bind(modkey, "K", window.focus_up)
-bind(modkey, "J", window.focus_down)
+yabai.init()
 
-bind(modkey, "E", layout.cycle)
-bind(modkey, "-", function() launch.hide_or_show("终端", true) end)
-bind(modkey, "G", function() launch.hide_or_show("Google Chrome", true) end)
-bind(modkey, "M", function() launch.hide_or_show("launchpad", true) end)
+bind({"cmd"}, "H", function() yabai.exec("window --focus west") end)
+bind({"cmd"}, "L", function() yabai.exec("window --focus east") end)
+bind({"cmd"}, "J", function() yabai.exec("window --focus south") end)
+bind({"cmd"}, "K", function() yabai.exec("window --focus north") end)
 
-bind(modkey1, "H", window.move_left)
-bind(modkey1, "L", window.move_right)
-bind(modkey1, "K", screen.move_up)
-bind(modkey1, "J", screen.move_down)
+bind({"cmd", "shift"}, "H", function() yabai.exec("window --swap west") end)
+bind({"cmd", "shift"}, "L", function() yabai.exec("window --swap east") end)
+bind({"cmd", "shift"}, "J", function() yabai.exec("window --swap south") end)
+bind({"cmd", "shift"}, "K", function() yabai.exec("window --swap north") end)
 
-bind(modkey1, "F", window.fullscreen)
-bind(modkey1, "SPACE", window.toggle_float)
+bind({"cmd"}, "E", function() yabai.exec("window --toggle split") end)
+bind({"cmd"}, "B", function() yabai.exec("window --toggle border") end)
+bind({"cmd"}, "W", function() yabai.exec("window --toggle zoom-parent") end)
 
-bind(modkey1, "X", function() hs.caffeinate.lockScreen() end)
-bind(modkey1, "R", function() hs.reload() end)
+bind({"cmd", "shift"}, "F", function() yabai.exec("window --toggle zoom-fullscreen") end)
+bind({"cmd", "shift"}, "SPACE", function() yabai.exec("window --toggle float --grid 4:4:1:1:2:2") end)
+
+-- bind({"cmd"}, "-", function() yabai.show_scratchpad() end)
+-- bind({"cmd", "shift"}, "-", function() yabai.move_to_scratchpad() end)
+
+bind({"cmd"}, "-", function() yabai.hide_or_show("终端", true) end)
+bind({"cmd"}, "G", function() yabai.hide_or_show("Google Chrome", true) end)
+bind({"cmd"}, "M", function() yabai.hide_or_show("launchpad", true) end)
+
+bind({"cmd", "shift"}, "X", function() hs.caffeinate.lockScreen() end)
+bind({"cmd", "shift"}, "R", function() hs.reload() end)
 
 function mode(name, mod, key)
     local modal = hs.hotkey.modal.new(mod, key)
+    local alert = {}
 
     function modal:entered()
-        hs.alert(string.format("Entered %s mode", name))
+        alert = hs.alert.show(string.format("Entered %s mode", name), "always")
     end
 
     function modal:exited()
-        hs.alert(string.format('Exited %s mode', name))
+        hs.alert.closeSpecific(alert)
+        hs.alert.show(string.format('Exited %s mode', name))
     end
 
     modal:bind('', 'escape', function() modal:exit() end)
     return modal
 end
 
-local window_resize = mode("resize", modkey, "R")
-window_resize:bind("", "H", window.resize_left)
-window_resize:bind("", "L", window.resize_right)
-window_resize:bind("", "K", window.resize_up)
-window_resize:bind("", "J", window.resize_down)
-
--- local window_move = mode("move", modkey, "M")
--- window_move:bind("", "H", window.move_left)
--- window_move:bind("", "L", window.move_right)
--- window_move:bind("", "K", window.move_up)
--- window_move:bind("", "J", window.move_down)
+local window_resize = mode("resize", {"cmd"}, "R")
+window_resize:bind("", "H", function() yabai.exec({"window --resize left:-20:0",   "window --resize right:-20:0"}, "OR") end)
+window_resize:bind("", "L", function() yabai.exec({"window --resize left:20:0",    "window --resize right:20:0"}, "OR") end)
+window_resize:bind("", "K", function() yabai.exec({"window --resize bottom:0:-20", "window --resize top:0:-20"}, "OR") end)
+window_resize:bind("", "J", function() yabai.exec({"window --resize bottom:0:20",  "window --resize top:0:20"}, "OR") end)
 
 hs.notify.new({title="Hammerspoon", informativeText="配置已成功加载"}):send()

@@ -9,5 +9,9 @@
     st = status
 [magit]
     hideCampaign = true
-[url "https://github.com.cnpmjs.org"]
-  insteadOf = https://github.com
+# [url "https://github.com.cnpmjs.org"]
+#   insteadOf = https://github.com
+[http "https://gitlab.com"]
+    proxy = http://127.0.0.1:1080
+[core]
+	ignorecase = false

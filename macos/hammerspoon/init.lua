@@ -1,4 +1,5 @@
 local yabai = require "yabai"
+local space = require "space"
 local bind = hs.hotkey.bind
 
 hs.window.animationDuration = 0
@@ -21,6 +22,15 @@ bind({"cmd"}, "W", function() yabai.exec("window --toggle zoom-parent") end)
 
 bind({"cmd", "shift"}, "F", function() yabai.exec("window --toggle zoom-fullscreen") end)
 bind({"cmd", "shift"}, "SPACE", function() yabai.exec("window --toggle float --grid 4:4:1:1:2:2") end)
+
+bind({"cmd"}, "0", function() space.show() end)
+bind({"cmd"}, "1", function() space.switchTo(1) end)
+bind({"cmd"}, "2", function() space.switchTo(2) end)
+bind({"cmd"}, "3", function() space.switchTo(2) end)
+bind({"cmd", "shift"}, "0", function() space.create() end)
+bind({"cmd", "shift"}, "1", function() space.moveTo(1) end)
+bind({"cmd", "shift"}, "2", function() space.moveTo(2) end)
+bind({"cmd", "shift"}, "3", function() space.moveTo(2) end)
 
 -- bind({"cmd"}, "-", function() yabai.show_scratchpad() end)
 -- bind({"cmd", "shift"}, "-", function() yabai.move_to_scratchpad() end)

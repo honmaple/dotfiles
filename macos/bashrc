@@ -3,25 +3,30 @@ alias rm='rm -i'
 alias ln='ln -i'
 alias kssh='$HOME/Git/knownsec/ssh/kssh.sh'
 alias kscp='$HOME/Git/knownsec/ssh/kscp.sh'
-alias kssh_socks5='ssh -qTfnN -D 7070 -i ~/Git/knownsec/ssh/id_rsa_knownsec jiangl3@rtcp.jiasule.com'
 alias luarocks='luarocks --tree=$HOME/repo/lua'
 alias flutter='flutter --no-version-check'
 
+export PATH=/opt/homebrew/bin:$PATH
+
 if which brew > /dev/null;then
     export HOMEBREW_NO_AUTO_UPDATE=true
-    export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=true
-    export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
+    # export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=true
+    # export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
     # export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
+    eval "$(brew shellenv)"
 fi
 
 # export GOPROXY=https://goproxy.io
-export GOPROXY=https://proxy.golang.com.cn,direct
+# export GOPROXY=https://proxy.golang.com.cn,direct
+export GOPROXY=https://goproxy.cn,direct
 export GOPATH=$HOME/repo/golang
 
 export NODE_PATH="$HOME/repo/npm/lib/node_modules:$NODE_PATH"
 
 export RUSTUP_HOME=$HOME/repo/rust/rustup
 export CARGO_HOME=$HOME/repo/rust/cargo
+export RUSTUP_DIST_SERVER=https://rsproxy.cn
+export RUSTUP_UPDATE_ROOT=https://rsproxy.cn/rustup
 
 export GEM_HOME=$HOME/repo/ruby/gem
 export GEM_PATH=$HOME/repo/ruby/gem
@@ -30,11 +35,18 @@ export PATH=$GEM_HOME/bin:$PATH
 
 # export LUA_PATH="$HOME/repo/lua/share/lua/5.3/?.lua;$HOME/repo/lua/share/lua/5.3/?/init.lua;$LUA_PATH;"
 # export LUA_CPATH="$HOME/repo/lua/lib/lua/5.3/?.so;$LUA_CPATH;"
-export PUB_HOSTED_URL=https://pub.dev
+export PUB_HOSTED_URL=https://pub.flutter-io.cn
 export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
+# export FLUTTER_STORAGE_BASE_URL="https://mirrors.tuna.tsinghua.edu.cn/git/flutter"
+# export PUB_HOSTED_URL="https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
+# export FLUTTER_STORAGE_BASE_URL="https://mirrors.tuna.tsinghua.edu.cn/git/flutter"
+
+# export PUB_HOSTED_URL=https://mirror.sjtu.edu.cn/dart-pub
+# export FLUTTER_STORAGE_BASE_URL=https://mirror.sjtu.edu.cn
 # export ANDROID_SDK_ROOT=/usr/local/share/android-sdk
 # export ANDROID_HOME=/usr/local/share/android-sdk
 export ANDROID_HOME=$HOME/repo/android/sdk
+export NDK_HOME="$ANDROID_HOME/ndk/26.2.11394342"
 # export GRADLE_HOME=$HOME/repo/android/gradle-8.3
 # export JAVA_HOME=/usr/local/opt/openjdk@11
 export JAVA_HOME='/Applications/Android Studio.app/Contents/jbr/Contents/Home'
